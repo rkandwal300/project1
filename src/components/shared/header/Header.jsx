@@ -1,14 +1,15 @@
-import { AppBar, Toolbar } from "@mui/material";
+import { AppBar, Toolbar, useTheme } from "@mui/material";
 import SubMenu from "./SubMenu/SubMenu";
 import Logo from "./Logo";
 import Title from "./Title";
 
 export default function Header() {
+  const theme = useTheme()
   return (
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "black",
+        backgroundColor: theme.palette.dark.default,
         zIndex: 1006,
         height: "64px",
         justifyContent: { md: "center" },

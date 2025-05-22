@@ -1,4 +1,11 @@
-import { IconButton, Typography, Button, Box, Tooltip } from "@mui/material";
+import {
+  IconButton,
+  Typography,
+  Button,
+  Box,
+  Tooltip,
+  useTheme,
+} from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DescriptionIcon from "@mui/icons-material/Description";
 import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
@@ -9,30 +16,30 @@ import SupportMenu from "./SupportMenu";
 import MenuHoc from "../../../ui/Menu";
 import UserMenu from "./UserMEnu";
 
-const iconButtonStyle = {
-  width: 24,
-  height: 24,
-  padding: 0,
-};
-
-const tooltipProps = {
-  componentsProps: {
-    tooltip: {
-      sx: {
-        backgroundColor: "#333",
-        color: "#fff",
-        fontSize: 12,
-        padding: "6px 12px",
-        borderRadius: 1,
-        boxShadow: 3,
-      },
-    },
-  },
-};
-
 function SubMenuList() {
+  const theme = useTheme();
   const userEmail = "testuser@infobellit.com";
 
+  const iconButtonStyle = {
+    width: 24,
+    height: 24,
+    padding: 0,
+  };
+
+  const tooltipProps = {
+    componentsProps: {
+      tooltip: {
+        sx: {
+          backgroundColor: theme.palette.dark.secondary,
+          color: theme.palette.text.primary,
+          fontSize: 12,
+          padding: "6px 12px",
+          borderRadius: 1,
+          boxShadow: 3,
+        },
+      },
+    },
+  };
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }}>
       {/* Stat Collector Button */}
@@ -41,8 +48,8 @@ function SubMenuList() {
         startIcon={<DownloadIcon />}
         id="btn-manageportfolio-upload"
         sx={{
-          borderColor: "white",
-          color: "white",
+          borderColor: theme.palette.text.primary,
+          color: theme.palette.text.primary,
           textTransform: "none",
           whiteSpace: "nowrap",
           paddingX: 1.5,
@@ -58,7 +65,7 @@ function SubMenuList() {
             <IconButton onClick={onClick}>
               <DescriptionIcon
                 id="btn-header-release-notes"
-                sx={{ fontSize: 24, color: "white" }}
+                sx={{ fontSize: 24, color: theme.palette.text.primary }}
               />
             </IconButton>
           </Tooltip>
@@ -74,9 +81,9 @@ function SubMenuList() {
               sx={{
                 ...iconButtonStyle,
                 borderRadius: "50%",
-                backgroundColor: "white",
+                backgroundColor: theme.palette.text.primary,
                 "&:hover": {
-                  backgroundColor: "#e0e0e0",
+                  backgroundColor: theme.palette.text.primary,
                 },
               }}
             >
@@ -84,25 +91,25 @@ function SubMenuList() {
             </IconButton>
           </Tooltip>
         )}
-      >
-        <SupportMenu />
-      </MenuHoc>
+        content={() => <SupportMenu />}
+      />
+
       <MenuHoc
         trigger={({ onClick }) => (
-         
-      <Tooltip title="Profile" {...tooltipProps}>
-        <IconButton sx={{ ...iconButtonStyle, pr: "5px" }} onClick={onClick}>
-          <AccountCircleIcon
-            id="btn-header-user-profile"
-            sx={{ color: "white", fontSize: 24 }}
-          />
-        </IconButton>
-      </Tooltip>
+          <Tooltip title="Profile" {...tooltipProps}>
+            <IconButton
+              sx={{ ...iconButtonStyle, pr: "5px" }}
+              onClick={onClick}
+            >
+              <AccountCircleIcon
+                id="btn-header-user-profile"
+                sx={{ color: theme.palette.text.primary, fontSize: 24 }}
+              />
+            </IconButton>
+          </Tooltip>
         )}
-      >
-        <UserMenu />
-      </MenuHoc>
-
+        content={() => <UserMenu />}
+      />
 
       <Tooltip title={userEmail} {...tooltipProps}>
         <Box
@@ -117,7 +124,7 @@ function SubMenuList() {
             variant="body2"
             className="username-container"
             sx={{
-              color: "white",
+              color: theme.palette.text.primary,
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",

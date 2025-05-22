@@ -5,6 +5,7 @@ const theme = createTheme({
     mode: "light",
     primary: {
       main: "#000000",
+      
     },
     secondary: {
       main: "#f44336",
@@ -12,6 +13,11 @@ const theme = createTheme({
     background: {
       default: "#f9f9f9",
       paper:  "#000000",
+    },
+    dark: {
+      default: "#000000",
+      paper:  "#000000",
+      secondary:"#333"
     },
     text: {
       default: "#000000",
