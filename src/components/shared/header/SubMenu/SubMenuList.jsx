@@ -14,7 +14,7 @@ import DialogHoc from "../../../ui/Dialog";
 import ReleaseNotes from "./ReleaseNotes/ReleaseNotes";
 import SupportMenu from "./SupportMenu";
 import MenuHoc from "../../../ui/Menu";
-import UserMenu from "./UserMEnu";
+import UserMenu from "./UserMenu";
 
 function SubMenuList() {
   const theme = useTheme();

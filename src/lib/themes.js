@@ -5,27 +5,38 @@ const theme = createTheme({
     mode: "light",
     primary: {
       main: "#000000",
-      
     },
     secondary: {
-      main: "#f44336",
+      main: "#E8E8E8",
+      default:"#6F7072"
+    },
+    error: {
+      main: "#f44336",  
+      contrastText: "#fff",
+    },
+    success: {
+      main: "#4caf50",  
+      contrastText: "#fff",
     },
     background: {
       default: "#f9f9f9",
-      paper:  "#000000",
+      paper: "#000000", 
     },
     dark: {
       default: "#000000",
-      paper:  "#000000",
-      secondary:"#333"
+      paper: "#000000",
+      secondary: "#333",
+    },
+    custom: {
+      black: "#000000",
+      grayDark: "#333333",
     },
     text: {
       default: "#000000",
       primary: "#ffffff",
       secondary: "#555555",
     },
-    divider: "#fffff"
-
+    divider: "#fffff",
   },
   typography: {
     fontFamily: "Inter, Arial, sans-serif",

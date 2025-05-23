@@ -12,6 +12,8 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HelpIcon from "@mui/icons-material/Help";
+import HeadsetMicIcon from "@mui/icons-material/HeadsetMic"; // ✅ Missing import
+import DialogHoc from "@/components/ui/Dialog";
 
 function UserMenu() {
   const theme = useTheme();
@@ -24,62 +26,76 @@ function UserMenu() {
 
   const iconStyles = {
     color: textColor,
+    minWidth: '36px', // consistent icon alignment
   };
 
   const items = [
     {
       label: "User Profile",
-      value: "",
+      value: "#",
       type: "link",
-      action: () => {},
       icon: <AccountCircleIcon />,
     },
     {
       label: "User Guide",
-      value: "",
+      value: "https://eia-prod.amd.com/assets/EIA%20User%20Guide-ywdnNCnh.pdf",
       type: "link",
-      action: () => {},
       icon: <MenuBookIcon />,
     },
     {
       label: "Help",
-      value: "",
+      value: "Help content goes here...",
       type: "dialog",
-      action: () => {},
       icon: <HelpIcon />,
     },
     {
       label: "About",
-      value: "",
+      value: "About content goes here...",
       type: "dialog",
-      action: () => {},
       icon: <InfoIcon />,
     },
     {
       label: "Release Date",
-      value: "",
+      value: "Release date: May 2025",
       type: "dialog",
-      action: () => {},
       icon: <DescriptionIcon />,
     },
     {
       label: "Support",
-      value: "",
+      value: "Support info goes here...",
       type: "dialog",
-      action: () => {},
       icon: <HeadsetMicIcon />,
     },
   ];
+
   return (
     <>
-      {items.map((val) => (
-        <MenuItem key={val.label} sx={menuItemStyles}>
-          <ListItemIcon sx={iconStyles}>
-            {val.icon}
-          </ListItemIcon>
-          <ListItemText primary={val.label} />
-        </MenuItem>
-      ))}
+      {items.map((val) =>
+        val.type === "link" ? (
+          <MenuItem
+            key={val.label}
+            component="a"
+            href={val.value}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={menuItemStyles}
+          >
+            <ListItemIcon sx={iconStyles}>{val.icon}</ListItemIcon>
+            <ListItemText primary={val.label} />
+          </MenuItem>
+        ) : (
+          <DialogHoc
+            key={val.label}
+            trigger={(onClick) => (
+              <MenuItem onClick={onClick} sx={menuItemStyles}>
+                <ListItemIcon sx={iconStyles}>{val.icon}</ListItemIcon>
+                <ListItemText primary={val.label} />
+              </MenuItem>
+            )}
+            content={val.value}
+          />
+        )
+      )}
       <Divider sx={{ borderColor: theme.palette.divider }} />
       <MenuItem sx={menuItemStyles}>
         <ListItemIcon sx={iconStyles}>

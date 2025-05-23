@@ -1,21 +1,23 @@
-import { CssBaseline, ThemeProvider, Typography } from "@mui/material";
-import theme from "./lib/themes"; 
+import { Box, Container, CssBaseline, ThemeProvider } from "@mui/material";
+import theme from "./lib/themes";
 import Header from "./components/shared/header/Header";
+import BottomBar from "./components/shared/BottomBar";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header /> 
-      <h1>Vite + React</h1>
-      <div className="card">
-        <Typography color="primary">
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </Typography>
-      </div>
-      <Typography variant="h3">
-        Click on the Vite and React logos to learn more
-      </Typography>
+      <Box display="flex" flexDirection="column" minHeight="100vh">
+        <Header />
+        
+        <Container maxWidth="lg" sx={{ flex: 1, display: "flex" }}> 
+          <Box sx={{ flex: 1 }}>
+            Main Content
+          </Box>
+        </Container>
+
+        <BottomBar />
+      </Box>
     </ThemeProvider>
   );
 }
