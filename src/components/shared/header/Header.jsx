@@ -9,7 +9,7 @@ export default function Header() {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: theme.palette.dark.default,
+        backgroundColor: theme.palette.dark,
         zIndex: 1006,
         height: "64px",
         justifyContent: { md: "center" },

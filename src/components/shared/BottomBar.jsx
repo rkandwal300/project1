@@ -44,9 +44,9 @@ export default function BottomBar() {
             startIcon={<SaveIcon />}
             sx={{
               backgroundColor: theme.palette.secondary.default,
-              color: theme.palette.text.primary,
+              color: theme.palette.error.contrastText,
               "&:hover": {
-                backgroundColor: theme.palette.custom.grayDark,
+                backgroundColor: theme.palette.secondary.default,
               },
             }}
           >
@@ -60,9 +60,9 @@ export default function BottomBar() {
             startIcon={<BuildIcon />}
             sx={{
               backgroundColor: theme.palette.secondary.default,
-              color: theme.palette.text.primary,
+              color: theme.palette.error.contrastText,
               "&:hover": {
-                backgroundColor: theme.palette.custom.grayDark,
+                backgroundColor: theme.palette.secondary.default,
               },
             }}
           >
