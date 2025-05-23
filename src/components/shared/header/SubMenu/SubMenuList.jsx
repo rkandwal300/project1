@@ -31,7 +31,7 @@ function SubMenuList() {
       tooltip: {
         sx: {
           backgroundColor: theme.palette.dark.secondary,
-          color: theme.palette.text.primary,
+          color: theme.palette.error.contrastText,
           fontSize: 12,
           padding: "6px 12px",
           borderRadius: 1,
@@ -42,14 +42,14 @@ function SubMenuList() {
   };
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }}>
-      {/* Stat Collector Button */}
+       
       <Button
         variant="outlined"
         startIcon={<DownloadIcon />}
         id="btn-manageportfolio-upload"
         sx={{
-          borderColor: theme.palette.text.primary,
-          color: theme.palette.text.primary,
+          borderColor: theme.palette.error.contrastText,
+          color: theme.palette.error.contrastText,
           textTransform: "none",
           whiteSpace: "nowrap",
           paddingX: 1.5,
@@ -65,7 +65,7 @@ function SubMenuList() {
             <IconButton onClick={onClick}>
               <DescriptionIcon
                 id="btn-header-release-notes"
-                sx={{ fontSize: 24, color: theme.palette.text.primary }}
+                sx={{ fontSize: 24, color: theme.palette.error.contrastText }}
               />
             </IconButton>
           </Tooltip>
@@ -81,9 +81,9 @@ function SubMenuList() {
               sx={{
                 ...iconButtonStyle,
                 borderRadius: "50%",
-                backgroundColor: theme.palette.text.primary,
+                backgroundColor: theme.palette.error.contrastText,
                 "&:hover": {
-                  backgroundColor: theme.palette.text.primary,
+                  backgroundColor: theme.palette.error.contrastText,
                 },
               }}
             >
@@ -103,7 +103,7 @@ function SubMenuList() {
             >
               <AccountCircleIcon
                 id="btn-header-user-profile"
-                sx={{ color: theme.palette.text.primary, fontSize: 24 }}
+                sx={{ color: theme.palette.error.contrastText, fontSize: 24 }}
               />
             </IconButton>
           </Tooltip>
@@ -124,7 +124,7 @@ function SubMenuList() {
             variant="body2"
             className="username-container"
             sx={{
-              color: theme.palette.text.primary,
+              color: theme.palette.error.contrastText,
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",

@@ -29,11 +29,11 @@ const theme = createTheme({
       secondary: "#6B6B6B",
       disabled: "#9E9E9E",
     },
-    divider: "#E0E0E0",
     sidebar:{
       background: "#F0F0F0",
       border: "#CCCCCC"
     },
+    divider: "#E0E0E0",
     grey: {
       100: "#F5F5F5",
       200: "#EEEEEE",
