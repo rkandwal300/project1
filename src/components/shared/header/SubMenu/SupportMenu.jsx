@@ -15,14 +15,14 @@ function SupportMenu() {
   const email = "dl.epycservices@amd.com";
 
   const commonTextStyles = {
-    primaryTypographyProps: { fontWeight: "bold", color: theme.palette.text.primary },
-    secondaryTypographyProps: { color: theme.palette.text.primary },
+    primaryTypographyProps: { fontWeight: "bold", color: theme.palette.primary.contrastText },
+    secondaryTypographyProps: { color: theme.palette.primary.contrastText },
   };
 
   return (
     <>
       <MenuItem component="a" href={`tel:${number}`}>
-        <ListItemIcon sx={{ color: theme.palette.text.primary }}>
+        <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
           <PhoneIcon />
         </ListItemIcon>
         <ListItemText
@@ -33,7 +33,7 @@ function SupportMenu() {
       </MenuItem>
       <Divider sx={{ borderColor: theme.palette.divider }} />
       <MenuItem component="a" href={`mailto:${email}`}>
-        <ListItemIcon sx={{ color: theme.palette.text.primary }}>
+        <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
           <EmailIcon />
         </ListItemIcon>
         <ListItemText

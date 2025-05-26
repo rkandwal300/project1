@@ -12,13 +12,13 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HelpIcon from "@mui/icons-material/Help";
-import HeadsetMicIcon from "@mui/icons-material/HeadsetMic"; // ✅ Missing import
+import HeadsetMicIcon from "@mui/icons-material/HeadsetMic"; 
 import DialogHoc from "@/components/ui/Dialog";
 
 function UserMenu() {
   const theme = useTheme();
 
-  const textColor = theme.palette.text.primary;
+  const textColor = theme.palette.error.contrastText;
 
   const menuItemStyles = {
     color: textColor,
@@ -92,7 +92,7 @@ function UserMenu() {
                 <ListItemText primary={val.label} />
               </MenuItem>
             )}
-            content={val.value}
+            content={()=>val.value}
           />
         )
       )}

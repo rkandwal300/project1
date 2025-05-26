@@ -4,6 +4,7 @@ import Header from "./components/shared/header/Header";
 import BottomBar from "./components/shared/BottomBar";
 import Sidebar from "./components/shared/Sidebar/Sidebar";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
+import PortfolioForm from "./components/shared/PortfolioForm/PortfolioForm";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function MainLayout() {
   const themeColor = useTheme();
   const bgcolor = themeColor.palette.grey[100]; 
 
+  
   return (
     <Box
       sx={{
@@ -44,21 +46,7 @@ function MainLayout() {
           }}
         >
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mt: 7  }}>
-            {Array.from({ length: 11 }).map((_, i) => (
-              <Box
-                key={i}
-                sx={{
-                  flex: "1 1 200px",
-                  minHeight: 100,
-                  backgroundColor: "#fff",
-                  borderRadius: 1,
-                  boxShadow: 1,
-                  p: 2,
-                }}
-              >
-                Main Content {i + 1}
-              </Box>
-            ))}
+           <PortfolioForm />
           </Box>
         </Box>
       </Box>

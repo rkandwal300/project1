@@ -24,6 +24,7 @@ function ReleaseNotesTable() {
     BorderLeft: "1px solid  #d7d7d7",
     verticalAlign: "top",
     padding: 2,
+     color: "#fff", fontWeight: "bold"
   };
 
   return (

@@ -6,6 +6,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
 import { Divider, Typography } from "@mui/material";
 import ReleaseNotesTable from "./ReleaseNotesTable";
+import { CustomTable } from "@/components/ui/table/CustomTable";
+import { releaseNotesTableData } from "./ReleaseNotes.data";
+import { releaseNotesTableColumns } from "./releaseNotesTableColumns";
 
 
 function ReleaseNotes({ handleClose }) {
@@ -48,7 +51,11 @@ function ReleaseNotes({ handleClose }) {
           functionalities and improvements. It's a quick and easy way to make
           sure you're always working with the latest tools available.
         </Typography>
-        <ReleaseNotesTable />
+        {/* <ReleaseNotesTable /> */}
+        <CustomTable 
+        data={releaseNotesTableData}
+        columns={releaseNotesTableColumns}
+        />
       </DialogContent>
       <Divider />
       <DialogActions>

@@ -1,6 +1,7 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@mui/material/styles";
+import ErrorBoundary from "../shared/ErrorBoundary";
 
 export default function MenuHoc({ trigger, content, ...props }) {
   const theme = useTheme();
@@ -13,13 +14,14 @@ export default function MenuHoc({ trigger, content, ...props }) {
     setAnchorEl(null);
   };
   return (
-    <div>
+   <ErrorBoundary fallback={<div>Error in menu hoc</div>}>
+     <div>
       {trigger({ onClick })}
       <Menu
         slotProps={{
           paper: {
             sx: {
-              backgroundColor: theme.palette.primary.main,
+              bgcolor: theme.palette.primary.main,
               color: theme.palette.primary.contrastText,
               minWidth: 250,
             },
@@ -30,8 +32,8 @@ export default function MenuHoc({ trigger, content, ...props }) {
         onClose={onClose}
         {...props}
       >
-      {content({ onClose })}
+        {content({ onClose })}
       </Menu>
-    </div>
+    </div></ErrorBoundary>
   );
 }

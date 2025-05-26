@@ -4,11 +4,11 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#1A1A1A", // Neutral dark for text/buttons
+      main: "#1A1A1A",  
       contrastText: "#FFFFFF",
     },
     secondary: {
-      main: "#F5F5F5", // Light neutral
+      main: "#F5F5F5",  
       contrastText: "#1A1A1A",
       default:"#767676"
     },
