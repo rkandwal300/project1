@@ -3,12 +3,17 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ErrorBoundary
-      fallback={"Sorry, due to technical reason an error occurred "}
-      children={<App />}
-    />
+    <Provider store={store}>
+      <ErrorBoundary
+        fallback={"Sorry, due to technical reason an error occurred "}
+      >
+        <App />
+      </ErrorBoundary>
+    </Provider>
   </StrictMode>
 );
