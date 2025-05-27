@@ -8,6 +8,7 @@ import PortfolioForm from "./components/shared/PortfolioForm/PortfolioForm";
 import './index.css'
 import 'shepherd.js/dist/css/shepherd.css';
 import PortfolioTable from "./components/shared/PortfolioTable/PortfolioTable";
+import Footer from "./components/shared/Footer/Footer/Footer";
 
 function App() {
   return (
@@ -60,6 +61,11 @@ function MainLayout() {
 
       <ErrorBoundary fallback={"Bottom bar component has some Errors"}>
         <BottomBar />
+        
+      </ErrorBoundary>
+      <ErrorBoundary fallback={"Bottom bar component has some Errors"}>
+        <Footer />
+
       </ErrorBoundary>
     </Box>
   );
