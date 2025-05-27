@@ -10,7 +10,7 @@ const theme = createTheme({
     secondary: {
       main: "#F5F5F5",  
       contrastText: "#1A1A1A",
-      default:"#767676"
+      default:"#f5f5f5"
     },
     error: {
       main: "#E53935",
@@ -37,9 +37,9 @@ const theme = createTheme({
     grey: {
       100: "#F5F5F5",
       200: "#EEEEEE",
-      300: "#E0E0E0",
+      300: "#595959",
       500: "#9E9E9E",
-      700: "#616161",
+      700: "#212121",
       900: "#212121",
     },
     dark: "#000000",

@@ -6,7 +6,7 @@ import BuildIcon from "@mui/icons-material/Build";
 
 export default function BottomBar() {
   const theme = useTheme();
-  console.log(theme.palette.secondary.main);
+  
   return (
     <Box
       id="manage-portfolio-footer-action-container"

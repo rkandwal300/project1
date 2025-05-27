@@ -5,6 +5,9 @@ import BottomBar from "./components/shared/BottomBar";
 import Sidebar from "./components/shared/Sidebar/Sidebar";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
 import PortfolioForm from "./components/shared/PortfolioForm/PortfolioForm";
+import './index.css'
+import 'shepherd.js/dist/css/shepherd.css';
+import PortfolioTable from "./components/shared/PortfolioTable/PortfolioTable";
 
 function App() {
   return (
@@ -17,9 +20,8 @@ function App() {
 
 function MainLayout() {
   const themeColor = useTheme();
-  const bgcolor = themeColor.palette.grey[100]; 
+  const bgcolor = themeColor.palette.grey[100];
 
-  
   return (
     <Box
       sx={{
@@ -33,7 +35,7 @@ function MainLayout() {
         <Header />
       </ErrorBoundary>
 
-      <Box paddingLeft={'15px'} sx={{ display: "flex", flex: 1, }}>
+      <Box paddingLeft={"15px"} sx={{ display: "flex", flex: 1 }}>
         <ErrorBoundary fallback={"Sidebar component has some Errors"}>
           <Sidebar />
         </ErrorBoundary>
@@ -45,8 +47,13 @@ function MainLayout() {
             overflowY: "auto",
           }}
         >
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mt: 7  }}>
-           <PortfolioForm />
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mt: 7 }}>
+            <ErrorBoundary
+              fallback={"Portfolio form component has some Errors"}
+            >
+              <PortfolioForm />
+              <PortfolioTable />
+            </ErrorBoundary>
           </Box>
         </Box>
       </Box>
