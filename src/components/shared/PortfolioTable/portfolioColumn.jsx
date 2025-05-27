@@ -120,9 +120,10 @@ export const portfolioColumn = [
     accessorKey: "region",
   },
   {
-    id: "instanceType",
+    id: "type",
     header: () => "Instance Type",
     accessorKey: "instanceType",
+    
   },
   {
     header: "Maximum Bandwidth Used", // Grouped Header

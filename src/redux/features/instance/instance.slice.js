@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   response: {
     portfolioName: "Test00Demo16",
+    type: "m7a.12xLarge",
     region: "af-south-1",
     instanceType: "a9caea33-6afd-461d-a1df-7c095a247454",
     uuid: "UUID/Instance Name",
@@ -28,6 +29,7 @@ const initialState = {
   instanceStats: [
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247451",
       uuid: "UUID/Instance Name",
@@ -40,6 +42,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247452",
       uuid: "UUID/Instance Name",
@@ -52,6 +55,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247452",
       uuid: "UUID/Instance Name",
@@ -64,6 +68,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247454",
       uuid: "UUID/Instance Name",
@@ -76,6 +81,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a24745",
       uuid: "UUID/Instance Name",
@@ -88,6 +94,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247456",
       uuid: "UUID/Instance Name",
@@ -100,6 +107,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247457",
       uuid: "UUID/Instance Name",
@@ -112,6 +120,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247458",
       uuid: "UUID/Instance Name",
@@ -124,6 +133,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247451",
       uuid: "UUID/Instance Name",
@@ -136,6 +146,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247452",
       uuid: "UUID/Instance Name",
@@ -148,6 +159,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247452",
       uuid: "UUID/Instance Name",
@@ -160,6 +172,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247454",
       uuid: "UUID/Instance Name",
@@ -172,6 +185,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a24745",
       uuid: "UUID/Instance Name",
@@ -184,6 +198,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247456",
       uuid: "UUID/Instance Name",
@@ -196,6 +211,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247457",
       uuid: "UUID/Instance Name",
@@ -208,6 +224,7 @@ const initialState = {
     },
     {
       portfolioName: "Test00Demo16",
+      type: "m7a.12xLarge",
       region: "af-south-1",
       instanceType: "a9caea33-6afd-461d-a1df-7c095a247458",
       uuid: "UUID/Instance Name",

@@ -95,9 +95,11 @@ export function CustomTable({
   }
 
   return (
-    <TableContainer component={Paper} sx={{ boxShadow: 3, overflowX: "auto" ,overflowY: "hidden" }}>
-      <Box sx={{ minWidth: "max-content" }}>
-        
+    <TableContainer
+      component={Paper}
+      sx={{ boxShadow: 3, overflowX: "auto", overflowY: "hidden" }}
+    >
+      <Box sx={{ minWidth: "max-content", }}>
         <Table size="small" sx={{ position: "relative" }}>
           <TableHead sx={{ stickyHeader: true }}>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -151,7 +153,7 @@ export function CustomTable({
           </TableBody>
         </Table>
       </Box>
-        {isPagination && <TablePagination table={table} />}
+      {isPagination && <TablePagination table={table} />}
     </TableContainer>
   );
 }

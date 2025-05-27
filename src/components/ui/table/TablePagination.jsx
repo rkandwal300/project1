@@ -51,6 +51,22 @@ export default function TablePagination({ table }) {
         value={pageSize}
         onChange={(e) => setPageSize(Number(e.target.value))}
         size="small"
+        MenuProps={{
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "left",
+          },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: "left",
+          },
+          PaperProps: {
+            sx: {
+              bgcolor: theme.palette.grey[700],
+              color: theme.palette.success.contrastText,
+            },
+          }, 
+        }}
         sx={{
           minWidth: 80,
           color: theme.palette.success.contrastText,
@@ -58,7 +74,7 @@ export default function TablePagination({ table }) {
             borderColor: theme.palette.success.contrastText,
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.success.contrastText,
+            borderColor: theme.palette.success.contrastText, 
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: theme.palette.success.contrastText,
@@ -69,7 +85,20 @@ export default function TablePagination({ table }) {
         }}
       >
         {[10, 20, 30, 40, 50].map((size) => (
-          <MenuItem key={size} value={size}>
+          <MenuItem
+            key={size}
+            value={size}
+            sx={{
+              color: theme.palette.success.contrastText,
+              bgcolor: theme.palette.grey[700],
+              '&:hover': {
+                backgroundColor: theme.palette.grey[600],
+              },
+              '&.Mui-selected': {
+                backgroundColor: theme.palette.grey[600],
+              },
+            }}
+          >
             {size}
           </MenuItem>
         ))}
@@ -83,7 +112,7 @@ export default function TablePagination({ table }) {
         onClick={() => setPageIndex(0)}
         disabled={!getCanPreviousPage()}
         size="small"
-       sx={{
+        sx={{
           color: theme.palette.grey[500],
           '&:disabled': {
             color: theme.palette.grey[500],
@@ -109,7 +138,7 @@ export default function TablePagination({ table }) {
         onClick={nextPage}
         disabled={!getCanNextPage()}
         size="small"
-       sx={{
+        sx={{
           color: theme.palette.grey[500],
           '&:disabled': {
             color: theme.palette.grey[500],
@@ -122,7 +151,7 @@ export default function TablePagination({ table }) {
         onClick={() => setPageIndex(getPageCount() - 1)}
         disabled={!getCanNextPage()}
         size="small"
-       sx={{
+        sx={{
           color: theme.palette.grey[500],
           '&:disabled': {
             color: theme.palette.grey[500],
