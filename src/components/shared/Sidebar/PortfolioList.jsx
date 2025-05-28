@@ -7,17 +7,37 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-
-const portfolios = [
-  "apiauto7", "test", "Aditya", "cello", "Test", "Test0", "Demo16",
-  "Test388", "Test387", "Test1", "Test2", "Test3", "Test4",
-  "Test5", "Test6", "Test7", "Test8", "Test9", "Test10",
-];
+import { useDispatch, useSelector } from "react-redux";
+import { selectInstanceList } from "@/redux/features/instanceList/insatanceList.selector";
+import {
+  setInstanceStats,
+  updateFormData,
+  updateSelfPrefAssessment,
+} from "@/redux/features/instance/instance.slice";
 
 export default function PortfolioList() {
   const [activePortfolio, setActivePortfolio] = useState("test");
   const theme = useTheme();
-
+  const dispatch = useDispatch();
+  const portfolios = useSelector(selectInstanceList);
+  const handleClickListItem = (id) => {
+    const portfolio = portfolios.find((portfolio) => portfolio.id === id);
+    if (!portfolio) return;
+    const { portfolioName, instances, selfPrefAssessment } = portfolio;
+    setActivePortfolio(portfolioName);
+    dispatch(
+      setInstanceStats({
+        instanceStats: instances,
+      })
+    );
+    dispatch(
+      updateFormData({
+        id,
+        portfolioName,
+      })
+    );
+    dispatch(updateSelfPrefAssessment(selfPrefAssessment));
+  };
   return (
     <Box sx={{ height: "70vh", overflowY: "auto" }}>
       <List id="dashboard-portfolio-list">
@@ -26,9 +46,9 @@ export default function PortfolioList() {
 
           return (
             <ListItem
-              key={portfolio}
+              key={portfolio.portfolioName}
               button
-              onClick={() => setActivePortfolio(portfolio)}
+              onClick={() => handleClickListItem(portfolio.id)}
               selected={isActive}
               sx={{
                 cursor: "pointer",
@@ -54,7 +74,7 @@ export default function PortfolioList() {
                     fontWeight={isActive ? 500 : "normal"}
                     fontSize={12}
                   >
-                    {portfolio}
+                    {portfolio.portfolioName}
                   </Typography>
                 }
               />

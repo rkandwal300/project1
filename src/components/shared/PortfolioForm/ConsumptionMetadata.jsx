@@ -16,7 +16,7 @@ import {
   selectInstanceResponse,
 } from "@/redux/features/instance/instance.selector";
 import {
-  addInstance,
+  createInstance,
   updateFormData,
 } from "@/redux/features/instance/instance.slice";
 import tour from "@/tour/tour";
@@ -195,6 +195,7 @@ function ConsumptionMetadata() {
         },
       ],
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Box p={2} width="100%">
@@ -205,39 +206,47 @@ function ConsumptionMetadata() {
       </Grid>
 
       <Grid container spacing={2}>
-        {fields.map((field, index) => (
-          <Grid item xs={12} sm={6} md={2.4} key={index}>
+        {fields.map((field) => (
+          <Grid item xs={12} sm={6} md={2.4} key={field.name}>
             <TextField
               id="sixthStepTarget"
               label={field.label}
               fullWidth
               value={state[field.name]}
               onClick={() => handleFieldClick(field.name)}
-              onChange={(e) => handleChange(field.name, e.target.value)}
+              onChange={() => handleChange(field.name)}
             />
           </Grid>
         ))}
 
         <Grid item xs={12} sm={6} md={1.2}>
           <Button
-          id="seventhStepTarget"
+            id="seventhStepTarget"
             variant="contained"
             color="primary"
             size="small"
-            onClick={() => dispatch(addInstance(response))}
+            onClick={() => dispatch(createInstance(state))}
           >
             <Add />
           </Button>
         </Grid>
 
         <Grid item xs={12} sm={6} md={1.2}>
-          <Button id="eightStepTarget" variant="contained" color="primary" size="small">
+          <Button
+            id="eightStepTarget"
+            variant="contained"
+            color="primary"
+            size="small"
+          >
             <FileCopy />
           </Button>
         </Grid>
 
         <Grid item xs={12} sm={6} md={1.2}>
-          <AnimatedIconButton id="nineStepTarget" className={animate ? "animate" : ""}>
+          <AnimatedIconButton
+            id="nineStepTarget"
+            className={animate ? "animate" : ""}
+          >
             <HelpOutlineIcon />
           </AnimatedIconButton>
         </Grid>

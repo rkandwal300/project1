@@ -1,8 +1,11 @@
 import React from "react";
 import { Box, Typography, IconButton, Tooltip } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { useDispatch } from "react-redux";
+import { resetFormData } from "@/redux/features/instance/instance.slice";
 
 function PortfolioHeader() {
+  const dispatch = useDispatch();
   return (
     <Box
       display="flex"
@@ -17,6 +20,7 @@ function PortfolioHeader() {
         slotProps={{ tooltip: { sx: { fontSize: "0.8rem" } } }}
       >
         <IconButton
+        onClick={dispatch(resetFormData())}
           size="small"
           sx={{
             backgroundColor: "transparent",

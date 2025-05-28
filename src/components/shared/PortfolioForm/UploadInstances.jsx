@@ -15,12 +15,19 @@ const FileUploadField = ({ label = "Upload File", ...props }) => {
 
   const handleFileChange = () => {
     setIsFileUploaded(true);
-    dispatch(updateFormData(response));
+    
+    if (label == "Upload Self Perf assessment")
+      dispatch(
+        updateFormData({
+          selfPrefAssessmentResponse: response.selfPrefAssessmentResponse,
+        })
+      );
+    else dispatch(updateFormData(response));
     setFileName("Test Instance File");
   };
 
   const handleClick = () => {
-    fileInputRef.current?.click();
+    // fileInputRef.current?.click();
   };
 
   useEffect(() => {
@@ -43,7 +50,6 @@ const FileUploadField = ({ label = "Upload File", ...props }) => {
           text: "Next",
           disabled: !isFileUploaded,
           action: () => {
-           
             tour.show("step-seventh");
           },
         },
@@ -68,7 +74,7 @@ const FileUploadField = ({ label = "Upload File", ...props }) => {
         id="uploadInstances"
         label={label}
         value={fileName}
-        // onClick={handleFileChange}
+        onClick={handleFileChange}
         fullWidth
         required
         slotProps={{

@@ -1,14 +1,14 @@
-import { Box, CssBaseline, ThemeProvider, useTheme } from "@mui/material";
+import "./index.css";
 import theme from "./lib/themes";
-import Header from "./components/shared/header/Header";
+import "shepherd.js/dist/css/shepherd.css";
 import BottomBar from "./components/shared/BottomBar";
+import Header from "./components/shared/header/Header";
 import Sidebar from "./components/shared/Sidebar/Sidebar";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
-import PortfolioForm from "./components/shared/PortfolioForm/PortfolioForm";
-import './index.css'
-import 'shepherd.js/dist/css/shepherd.css';
-import PortfolioTable from "./components/shared/PortfolioTable/PortfolioTable";
+import PortfolioBody from "./components/shared/PortfolioBody";
 import Footer from "./components/shared/Footer/Footer/Footer";
+import { Box, CssBaseline, ThemeProvider, useTheme } from "@mui/material";
+import PortfolioForm from "./components/shared/PortfolioForm/PortfolioForm";
 
 function App() {
   return (
@@ -53,7 +53,7 @@ function MainLayout() {
               fallback={"Portfolio form component has some Errors"}
             >
               <PortfolioForm />
-              <PortfolioTable />
+              <PortfolioBody />
             </ErrorBoundary>
           </Box>
         </Box>
@@ -61,11 +61,9 @@ function MainLayout() {
 
       <ErrorBoundary fallback={"Bottom bar component has some Errors"}>
         <BottomBar />
-        
       </ErrorBoundary>
       <ErrorBoundary fallback={"Bottom bar component has some Errors"}>
         <Footer />
-
       </ErrorBoundary>
     </Box>
   );
