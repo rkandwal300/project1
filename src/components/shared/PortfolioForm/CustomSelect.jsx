@@ -54,8 +54,7 @@ const CustomSelect = ({ selectedValue, handleChange }) => {
         onChange={handleChange}
         label="Downloads"
       >
-        <MenuItem value={"download_template"}>
-          {" "}
+        <MenuItem value={"download_template"}> 
           <Button
             component="a"
             href="/Sample_template.xlsx"

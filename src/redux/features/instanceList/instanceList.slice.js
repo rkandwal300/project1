@@ -10,8 +10,8 @@ const instanceListSlice = createSlice({
   reducers: {
     addInstance(state, action) {
       const newInstance = {
-        id: nanoid(),
         ...action.payload,
+        id: nanoid(),
       };
       console.log({ newInstance });
       state.data = [...state.data, newInstance];

@@ -12,9 +12,9 @@ import ValidatedTextField from "@/components/ui/ValidatedTextField";
 import { updateFormData } from "@/redux/features/instance/instance.slice";
 
 function PortfolioFormHeader() {
+  const dispatch = useDispatch();
   const formData = useSelector(selectInstanceFormData);
   const portfolioName = useSelector(selectInstanceResponseName);
-  const dispatch = useDispatch();
   const [showSelfPerf, setShowSelfPerf] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
   const inputRef = useRef(null); 

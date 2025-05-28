@@ -23,16 +23,17 @@ export default function PortfolioList() {
   const handleClickListItem = (id) => {
     const portfolio = portfolios.find((portfolio) => portfolio.id === id);
     if (!portfolio) return;
-    const { portfolioName, instances, selfPrefAssessment } = portfolio;
+    const {id:pfId, portfolioName, instances, selfPrefAssessment } = portfolio;
     setActivePortfolio(portfolioName);
     dispatch(
       setInstanceStats({
         instanceStats: instances,
       })
     );
+    console.log({pfId,id})
     dispatch(
       updateFormData({
-        id,
+        id:pfId,
         portfolioName,
       })
     );
@@ -46,7 +47,7 @@ export default function PortfolioList() {
 
           return (
             <ListItem
-              key={portfolio.portfolioName}
+              key={portfolio.id}
               button
               onClick={() => handleClickListItem(portfolio.id)}
               selected={isActive}

@@ -14,7 +14,7 @@ import {
   addInstance,
   deletePortfolioFromList,
 } from "@/redux/features/instanceList/instanceList.slice";
-import { resetInstanceState } from "@/redux/features/instance/instance.slice";
+import { resetInstanceState, updateInstance } from "@/redux/features/instance/instance.slice";
 
 export default function BottomBar() {
   const theme = useTheme();
@@ -22,19 +22,33 @@ export default function BottomBar() {
   const formData = useSelector(selectInstanceFormData);
   const instances = useSelector(selectInstanceStats);
   const selfPrefAssessmentData = useSelector(selectSelfPrefAssessment);
-
+console.log({
+  id:formData.id
+})
   const handleSavePortFolio = () => {
-    dispatch(
-      addInstance({
-        instances,
-        portfolioName: formData.portfolioName,
-        selfPrefAssessment: selfPrefAssessmentData,
-      })
-    );
+    if (formData.id)
+      dispatch(
+        updateInstance({
+          id: formData.id,
+          instances,
+          portfolioName: formData.portfolioName,
+          selfPrefAssessment: selfPrefAssessmentData,
+        })
+      );
+    else
+      dispatch(
+        addInstance({
+          id: formData.id,
+          instances,
+          portfolioName: formData.portfolioName,
+          selfPrefAssessment: selfPrefAssessmentData,
+        })
+      );
     dispatch(resetInstanceState());
   };
   const handleDeletePortfolio = () => {
-    if (formData.id) dispatch(deletePortfolioFromList({ id: formData.id }));
+    dispatch(deletePortfolioFromList({ id: formData.id }));
+    dispatch(resetInstanceState());
   };
 
   const handleResetFormData = () => {
@@ -49,7 +63,7 @@ export default function BottomBar() {
     if (typeof val === "number") return val === 0;
     return val === null;
   });
-  console.log({ isCancelDisabled, formData });
+
   return (
     <Box
       id="manage-portfolio-footer-action-container"

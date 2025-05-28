@@ -49,6 +49,7 @@ const instanceSlice = createSlice({
       reducer(state, action) {
         const {
           selfPrefAssessment = [],
+          id,
           portfolioName,
           ...instance
         } = action.payload;
@@ -60,17 +61,17 @@ const instanceSlice = createSlice({
             }))
           );
         }
-        state.instanceStats.push(instance);
-        state.formData = getDefaultInstance({ portfolioName });
+        state.instanceStats.push({...instance,id});
+        state.formData = getDefaultInstance({ portfolioName,id });
       },
-      prepare(instance) {
-        return {
-          payload: {
-            ...instance,
-            id: nanoid(),
-          },
-        };
-      },
+      // prepare(instance) {
+      //   return {
+      //     payload: {
+      //       ...instance,
+           
+      //     },
+      //   };
+      // },
     },
     updateFormData(state, action) {
       if (action.payload && Object.keys(action.payload).length) {
