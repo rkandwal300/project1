@@ -22,7 +22,9 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import TablePagination from "./TablePagination";
+import ActionBlock from "./table_components/ActionBlock";
 export function CustomTable({
+  onDelete,
   data,
   columns,
   variant = "default",
@@ -99,7 +101,7 @@ export function CustomTable({
       component={Paper}
       sx={{ boxShadow: 3, overflowX: "auto", overflowY: "hidden" }}
     >
-      <Box sx={{ minWidth: "max-content", }}>
+      <Box sx={{ minWidth: "max-content" }}>
         <Table size="small" sx={{ position: "relative" }}>
           <TableHead sx={{ stickyHeader: true }}>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -122,38 +124,42 @@ export function CustomTable({
               </TableRow>
             ))}
           </TableHead>
-
-          <TableBody>
-            {table.getRowModel().rows.length > 0 ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} sx={cellStyle}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length}>
-                  <Typography
-                    align="center"
-                    variant="body2"
-                    color="textSecondary"
-                  >
-                    No Data Available
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
         </Table>
+        <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 200px)" }}>
+          <Table size="small" sx={{ position: "relative" }}>
+            <TableBody>
+              {table.getRowModel().rows.length > 0 ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} sx={cellStyle}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell sx={cellStyle} colSpan={columns.length}>
+                    <Typography
+                      align="center"
+                      variant="body2"
+                      color="textSecondary"
+                    >
+                      No Data Available
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </Box>
       </Box>
       {isPagination && <TablePagination table={table} />}
+      {onDelete && <ActionBlock table={table} onDelete={onDelete} />}
     </TableContainer>
   );
 }
@@ -163,4 +169,5 @@ CustomTable.propTypes = {
   columns: PropTypes.array.isRequired,
   variant: PropTypes.string,
   isPagination: PropTypes.bool,
+  onDelete: PropTypes.func.isRequired,
 };
