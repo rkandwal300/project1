@@ -35,18 +35,61 @@ const CustomSelect = ({ selectedValue, handleChange }) => {
           fontSize: "14px",
           top: "0px",
         },
+
+        "& button": {
+          all: "unset",
+          color: "inherit",
+          font: "inherit",
+          width: "100%",
+          textAlign: "left",
+          cursor: "pointer",
+        },
       }}
     >
       <InputLabel id="download-select-label">Downloads</InputLabel>
       <Select
-        labelId="download-select-label"
-        id="download-select"
+        labelId="Download-Template-label"
+        id="download-template"
         value={selectedValue}
         onChange={handleChange}
-        label="Downloads">
-        <MenuItem value={"download_template"}>Download Template</MenuItem>
+        label="Downloads"
+      >
+        <MenuItem value={"download_template"}>
+          {" "}
+          <Button
+            component="a"
+            href="/Sample_template.xlsx"
+            download
+            variant="text"
+            sx={{
+              all: "unset",
+              color: "inherit",
+              font: "inherit",
+              width: "100%",
+              textAlign: "left",
+              cursor: "pointer",
+            }}
+          >
+            Download Template
+          </Button>{" "}
+        </MenuItem>
         <MenuItem value={"download_self_pref_template"}>
-          Download Self Pref Template
+          <Button
+            component="a"
+            href="/self_perf_assessment.xlsx"
+            download
+            variant="text"
+            sx={{
+              all: "unset",
+              color: "inherit",
+              font: "inherit",
+              width: "100%",
+              textAlign: "left",
+              cursor: "pointer",
+            }}
+          >
+            Download Self Perf Assessment
+          </Button>
         </MenuItem>
       </Select>
     </FormControl>
