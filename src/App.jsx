@@ -20,23 +20,21 @@ function App() {
 }
 
 function MainLayout() {
-  const themeColor = useTheme();
-  const bgcolor = themeColor.palette.grey[100];
-
+  const themeColor = useTheme();  
   return (
     <Box
       sx={{
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: bgcolor,
+        backgroundColor: themeColor.palette.background.default,
       }}
     >
       <ErrorBoundary fallback={"Header component has some Errors"}>
         <Header />
       </ErrorBoundary>
 
-      <Box paddingLeft={"15px"} sx={{ display: "flex", flex: 1 }}>
+      <Box sx={{ display: "flex", flex: 1 , justifyContent: "flex-start",mt: 7}}>
         <ErrorBoundary fallback={"Sidebar component has some Errors"}>
           <Sidebar />
         </ErrorBoundary>
@@ -44,11 +42,11 @@ function MainLayout() {
         <Box
           sx={{
             flex: 1,
-            p: 2,
+            p: 0,
             overflowY: "auto",
           }}
         >
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mt: 7 }}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2,overflowY: "auto" }}>
             <ErrorBoundary
               fallback={"Portfolio form component has some Errors"}
             >

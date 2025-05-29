@@ -70,7 +70,7 @@ console.log({
       sx={{
         p: 2,
         borderTop: `1px solid ${theme.palette.divider}`,
-        bgcolor: theme.palette.secondary.main,
+        bgcolor: theme.palette.grey[100],
         color: theme.palette.text.default,
       }}
     >

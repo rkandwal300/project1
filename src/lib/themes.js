@@ -10,7 +10,7 @@ const theme = createTheme({
     secondary: {
       main: "#F5F5F5",  
       contrastText: "#1A1A1A",
-      default:"#f5f5f5"
+      default:"#f5f5f5",
     },
     error: {
       main: "#E53935",
@@ -21,7 +21,7 @@ const theme = createTheme({
       contrastText: "#FFFFFF",
     },
     background: {
-      default: "#FAFAFA",
+      default: "#f5f5f5",
       paper: "#FFFFFF",
     },
     text: {
@@ -29,13 +29,14 @@ const theme = createTheme({
       secondary: "#6B6B6B",
       disabled: "#9E9E9E",
     },
+     
     sidebar:{
       background: "#F0F0F0",
       border: "#CCCCCC"
     },
     divider: "#E0E0E0",
     grey: {
-      100: "#F5F5F5",
+      100: "#e8e8e8",
       200: "#EEEEEE",
       300: "#595959",
       500: "#9E9E9E",

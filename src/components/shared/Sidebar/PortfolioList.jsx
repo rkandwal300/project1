@@ -29,8 +29,7 @@ export default function PortfolioList() {
       setInstanceStats({
         instanceStats: instances,
       })
-    );
-    console.log({pfId,id})
+    ); 
     dispatch(
       updateFormData({
         id:pfId,
@@ -58,7 +57,7 @@ export default function PortfolioList() {
                 p: 1,
                 backgroundColor: isActive
                   ? theme.palette.primary.main
-                  : "transparent",
+                  : theme.palette.primary.contrastText,
                 color: isActive
                   ? theme.palette.primary.contrastText
                   : "inherit",

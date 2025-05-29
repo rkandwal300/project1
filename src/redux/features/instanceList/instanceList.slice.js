@@ -1,7 +1,33 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: [],
+  data: [
+    {
+      id: "1",
+      portfolioName: "Test00Demo16",
+    },
+    {
+      id: "2",
+      portfolioName: "Test00Demo17",
+    },
+    {
+      id: "3",
+      portfolioName: "Test00Demo18",
+    },
+    {
+      id: "4",
+      portfolioName: "Test00Demo19",
+    },
+    {
+      id: "5",
+      portfolioName: "Test00Demo20",
+    },
+    {
+      id: "6",
+      portfolioName: "Test00Demo21",
+    },
+    
+  ],
 };
 
 const instanceListSlice = createSlice({

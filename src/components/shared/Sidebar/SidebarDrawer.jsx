@@ -1,16 +1,9 @@
 import React from "react";
-import {
-  Box, 
-  Divider, 
-  useTheme,
-  IconButton,
-} from "@mui/material";
+import { Box, Divider, useTheme, IconButton } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import SidebarSelect from "@/components/shared/Sidebar/SidebarSelect";
 import PortfolioHeader from "./PortfolioHeader";
 import PortfolioList from "./PortfolioList";
-
-const drawerWidth = 235;
 
 const selectOptions = [
   {
@@ -33,15 +26,15 @@ export default function SidebarDrawer({ toggleDrawer }) {
 
   return (
     <Box
-      bgcolor="inherit"
-      mt={theme.spacing(8.375)} // 67px ≈ 8.375 * 8
+      bgcolor="inherit" 
       sx={{
-        width: drawerWidth,
+        mt:1,
+        width: { xs: 201, md: 262 },
         flexShrink: 0,
         borderRight: `1px solid ${borderColor}`,
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", pt: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center", pt: 2, pl: "4px" }}>
         <SidebarSelect
           label="Service Provider"
           options={selectOptions}
