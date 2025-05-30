@@ -22,9 +22,8 @@ export default function BottomBar() {
   const formData = useSelector(selectInstanceFormData);
   const instances = useSelector(selectInstanceStats);
   const selfPrefAssessmentData = useSelector(selectSelfPrefAssessment);
-console.log({
-  id:formData.id
-})
+
+  
   const handleSavePortFolio = () => {
     if (formData.id)
       dispatch(
