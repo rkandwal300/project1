@@ -71,7 +71,10 @@ function MainLayout() {
                 display: "flex",
                 flexWrap: "wrap",
                 gap: 2,
-                overflowY: "auto",
+                overflowY: "auto", 
+                bgcolor: "primary.contrastText",
+                boxShadow: 3,
+                borderRadius: "0 0 14px  14px ",
               }}
             >
               <ErrorBoundary

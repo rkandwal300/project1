@@ -88,7 +88,7 @@ export default function InstanceForm() {
       component="form"
       width="100%"
       sx={{
-        bgcolor: "primary.contrastText",
+        
         p: 0,
         display: "flex",
         flexDirection: "column",
