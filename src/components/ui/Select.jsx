@@ -39,8 +39,7 @@ const SelectHoc = ({
       value={value}
       onChange={onChange}
       label={label}
-      MenuProps={mergedMenuProps}
-      // displayEmpty={renderNone}
+      MenuProps={mergedMenuProps} 
       {...props}
     > 
       {options.map((option) => (

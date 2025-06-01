@@ -74,15 +74,15 @@ export default function InstanceForm() {
 
   useEffect(() => {
     if (portfolioName === formData.portfolioName) return;
-    dispatch(updateFormData({ field: "portfolioName", value: portfolioName }));
+    dispatch(updateFormData({ portfolioName: portfolioName }));
   }, [formData, portfolioName, dispatch]);
 
   useEffect(() => {
     if (formReset) {
       dispatch(updateResetState(false));
-      form.reset();
+      form.reset(formData);
     }
-  }, [formReset, form, dispatch]);
+  }, [formReset, formData, form, dispatch]);
   return (
     <Box
       component="form"

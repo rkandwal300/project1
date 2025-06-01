@@ -29,7 +29,8 @@ const initialState = {
   formData: getDefaultInstance(),
   instanceStats: [],
   selfPrefAssessment: [],
-  reset: false, // Flag to track if the form has been reset
+  reset: false,
+  hideInstances: false,
 };
 
 const formDataSlice = createSlice({
@@ -37,26 +38,30 @@ const formDataSlice = createSlice({
   initialState,
   reducers: {
     addSelfAssessment(state, action) {
-      state.selfPrefAssessment = [
-        ...state.selfPrefAssessment,
-        ...action.payload,
-      ];
+      state.selfPrefAssessment = [...state.selfPrefAssessment,...action.payload];
     },
+
     addInstance(state, action) {
       state.portfolioName = action.payload.portfolioName;
       state.instanceStats = [
         ...state.instanceStats,
         { ...state.formData, ...action.payload },
       ];
+      state.hideInstances = false;
       state.formData = getDefaultInstance({
         portfolioName: action.payload.portfolioName,
       });
     },
-    updateInstance(state, action) {
+
+    updateSingleInstance(state, action) {
       const { index, field, value } = action.payload;
       if (state.instanceStats[index]) {
         state.instanceStats[index][field] = value;
       }
+    },
+    uploadInstance(state, action) {
+      state.instanceStats = [...state.instanceStats, ...action.payload];
+      state.hideInstances = false;
     },
     deleteInstances(state, action) {
       state.instanceStats = state.instanceStats.filter(
@@ -71,23 +76,25 @@ const formDataSlice = createSlice({
       state.instanceStats = [];
       state.selfPrefAssessment = [];
       state.portfolioName = "";
-      state.reset= true; // Reset the form state
+      state.reset = true; // Reset the form state
     },
-    uploadInstance(state, action) {
-      state.instanceStats = [...state.instanceStats, ...action.payload];
-    },
+
     updateFormData(state, action) {
-      const { field, value } = action.payload;
-   
-      state.formData[field] = value;
-     
-      if (field === "portfolioName") {
-        state.portfolioName = value;
+      state.formData = {
+        ...state.formData,
+        ...action.payload,
+      };
+
+      if (Object.keys(action.payload).includes("portfolioName")) {
+        state.portfolioName = action.payload["portfolioName"];
       }
     },
     updateResetState(state, action) {
       state.reset = action.payload;
-    }
+    },
+    toggleHideInstances(state, action) {
+      state.hideInstances = action.payload;
+    },
   },
 });
 
@@ -96,10 +103,11 @@ export const {
   resetForm,
   updateResetState,
   resetFormData,
-  updateInstance,
+  updateSingleInstance,
   deleteInstances,
   uploadInstance,
   addSelfAssessment,
   updateFormData,
+  toggleHideInstances,
 } = formDataSlice.actions;
 export default formDataSlice.reducer;

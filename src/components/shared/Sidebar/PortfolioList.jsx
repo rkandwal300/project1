@@ -8,41 +8,45 @@ import {
   useTheme,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { selectInstanceList } from "@/redux/features/instanceList/insatanceList.selector";
+import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
 import {
-  setInstanceStats,
+  addSelfAssessment,
+  resetForm,
   updateFormData,
-  updateSelfPrefAssessment,
-} from "@/redux/features/instance/instance.slice";
+  updateResetState,
+  uploadInstance,
+} from "@/redux/features/form/formData.slice";
 
 export default function PortfolioList() {
-  const [activePortfolio, setActivePortfolio] = useState("test");
+  const [activePortfolio, setActivePortfolio] = useState(null);
   const theme = useTheme();
   const dispatch = useDispatch();
   const portfolios = useSelector(selectInstanceList);
-  const handleClickListItem = (id) => {
-    const portfolio = portfolios.find((portfolio) => portfolio.id === id);
+
+  const handleClickListItem = (instanceId) => {
+    const portfolio = portfolios.find(
+      (portfolio) => portfolio.id === instanceId
+    );
     if (!portfolio) return;
-    const {id:pfId, portfolioName, instances, selfPrefAssessment } = portfolio;
-    setActivePortfolio(portfolioName);
-    dispatch(
-      setInstanceStats({
-        instanceStats: instances,
-      })
-    ); 
+    console.log({ portfolio });
+    const { id, portfolioName, instances, selfPrefAssessment } = portfolio;
+    setActivePortfolio(id);
+dispatch(resetForm(false));
+    dispatch(uploadInstance(instances));
+    dispatch(addSelfAssessment(selfPrefAssessment));
     dispatch(
       updateFormData({
-        id:pfId,
+        id,
         portfolioName,
       })
     );
-    dispatch(updateSelfPrefAssessment(selfPrefAssessment));
+    dispatch(updateResetState(true))
   };
   return (
     <Box sx={{ height: "70vh", overflowY: "auto" }}>
       <List id="dashboard-portfolio-list">
         {portfolios.map((portfolio) => {
-          const isActive = portfolio === activePortfolio;
+          const isActive = portfolio.id === activePortfolio;
 
           return (
             <ListItem

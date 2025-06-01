@@ -27,7 +27,7 @@ const TOOLTIP_MESSAGES = {
 const getTooltipMessage = (label) =>
   TOOLTIP_MESSAGES[label] || TOOLTIP_MESSAGES.default;
 
-const FileUploadField = ({ label = "Upload File", ...props }) => {
+const FileUploadField = ({ label, ...props }) => {
   const fileInputRef = useRef(null);
   const dispatch = useDispatch();
   const [fileName, setFileName] = useState("");
@@ -37,6 +37,7 @@ const FileUploadField = ({ label = "Upload File", ...props }) => {
     setIsFileUploaded(true);
 
     if (label === "Upload Self Perf assessment") {
+      console.log("Uploading self assessment data");
       dispatch(
         addSelfAssessment([
           {

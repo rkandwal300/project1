@@ -11,6 +11,8 @@ import { Box, CssBaseline, ThemeProvider, useTheme } from "@mui/material";
 import InstanceForm from "./components/shared/Form/InstanceForm";
 import { Suspense } from "react";
 import FormSkeleton from "./components/shared/Form/FormSkeleton";
+import { useSelector } from "react-redux";
+import { selectHideInstances } from "./redux/features/form/formData.selector";
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
 
 function MainLayout() {
   const themeColor = useTheme();
+  const showTable = useSelector(selectHideInstances)
   return (
     <Box
       sx={{
@@ -81,7 +84,7 @@ function MainLayout() {
               <ErrorBoundary
                 fallback={"Portfolio form component has some Errors"}
               > 
-                <PortfolioBody />
+               {showTable== false && <PortfolioBody />}
               </ErrorBoundary>
             </Box>
           </Box>

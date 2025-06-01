@@ -7,7 +7,7 @@ import {
   pricingModelOptions,
   regionOptions,
 } from "@/lib/constant";
-import { updateInstance } from "@/redux/features/form/formData.slice.js";
+import { updateSingleInstance } from "@/redux/features/form/formData.slice.js";
 import { useTheme } from "@emotion/react";
 import ClearIcon from "@mui/icons-material/Clear";
 
@@ -60,7 +60,7 @@ export default function GetInstanceColumn() {
 
   const handleValueChange = useCallback(
     (index, field, value) => {
-      dispatch(updateInstance({ index, field, value }));
+      dispatch(updateSingleInstance({ index, field, value }));
     },
     [dispatch]
   );

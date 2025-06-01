@@ -1,20 +1,16 @@
 import React, { useEffect, useCallback, lazy, Suspense } from "react";
 import { Box, Typography } from "@mui/material";
-import tour from "@/tour/tour";
-import { updateFormData } from "@/redux/features/instance/instance.slice";
+import tour from "@/tour/tour"; 
 import { GENERIC_FIELDS, GENERIC_TOUR_STEPS } from "@/lib/constant";
 import { Controller } from "react-hook-form";
-import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import PropTypes from "prop-types"; 
 
 const HoverInput = lazy(() => import("@/components/ui/form/Input"));
 const HoverSelect = lazy(() => import("@/components/ui/form/Select"));
 
 const GenericMetadata = ({ form }) => {
   const handleFieldClick = useCallback(() => {
-    // if (!state[field] && response[field] !== undefined) {
-    //   dispatch(updateFormData({ [field]: response[field] }));
-    // }
+    
   }, []);
 
   useEffect(() => {
