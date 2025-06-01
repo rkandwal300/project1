@@ -51,6 +51,18 @@ const formDataSlice = createSlice({
         portfolioName: action.payload.portfolioName,
       });
     },
+    updateInstance(state, action) {
+      const { index, field, value } = action.payload;
+      if (state.instanceStats[index]) {
+        state.instanceStats[index][field] = value;
+      }
+    },
+    deleteInstances(state, action) {
+       
+      state.instanceStats = state.instanceStats.filter(
+        (_, index) => !action.payload.includes(index)
+      );
+    },
     resetFormData(state) {
       state.formData = getDefaultInstance();
     },
@@ -69,6 +81,8 @@ export const {
   addInstance,
   resetForm,
   resetFormData,
+  updateInstance,
+  deleteInstances,
   uploadInstance,
   addSelfAssessment,
 } = formDataSlice.actions;

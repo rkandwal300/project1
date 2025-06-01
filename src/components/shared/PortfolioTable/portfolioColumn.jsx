@@ -1,182 +1,223 @@
-import SelectHoc from "@/components/ui/Select";
+import { useMemo, useCallback, lazy, Suspense } from "react";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { Checkbox, IconButton } from "@mui/material";
 import {
   instanceOptions,
   pricingModelOptions,
   regionOptions,
 } from "@/lib/constant";
-import { Checkbox, } from "@mui/material";
+import { updateInstance } from "@/redux/features/form/formData.slice.js";
+import { useTheme } from "@emotion/react";
+import ClearIcon from "@mui/icons-material/Clear";
 
-import { EditableSelectCell, EditableTextCell } from "./EditableCells.jsx";
-export const portfolioColumn = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllRowsSelected()}
-        indeterminate={table.getIsSomeRowsSelected()}
-        onChange={table.getToggleAllRowsSelectedHandler()}
-        sx={{
-          color: "#299bff",
-          "&.Mui-checked, &.MuiCheckbox-indeterminate": { color: "#299bff" },
-        }}
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        indeterminate={row.getIsSomeSelected()}
-        onChange={row.getToggleSelectedHandler()}
-        sx={{
-          color: "#545454",
-          "&.Mui-checked": { color: "#545454" },
-        }}
-      />
-    ),
-    enableSorting: false,
-    enableColumnFilter: false,
-    size: 50,
-  },
-  {
-    id: "uuid",
-    header: () => "UUID/Instance Name",
-    accessorKey: "uuid",
-    cell: (info) => info.row.original.instanceType,
-  },
-  {
-    id: "region",
-    header: () => "Region",
-    accessorKey: "region",
-    cell: ({ getValue, row, isEditing, table }) =>
-      isEditing ? (
-        <EditableSelectCell
-          value={getValue()}
-          options={regionOptions}
-          onChange={(val) => (row.original.region = val)}
-          table={table}
-          row={row}
-          columnKey="region"
-        />
-      ) : (
-        getValue()
-      ),
-  },
-  {
-    id: "type",
-    header: () => "Type",
-    accessorKey: "instanceType",
-    cell: ({ row, isEditing, table }) =>
-      isEditing ? (
-        <EditableSelectCell
-          value={row.original.type}
-          options={instanceOptions}
-          onChange={(val) => (row.original.type = val)}
-          table={table}
-          row={row}
-          columnKey="type"
-        />
-      ) : (
-        row.original.type
-      ),
-  },
-  {
-    header: "Maximum Bandwidth Used",
-    columns: [
+// Lazy load editable cells for performance
+const EditableSelectCell = lazy(() =>
+  import("./EditableCells.jsx").then((mod) => ({
+    default: mod.EditableSelectCell,
+  }))
+);
+const EditableTextCell = lazy(() =>
+  import("./EditableCells.jsx").then((mod) => ({
+    default: mod.EditableTextCell,
+  }))
+);
+
+const EditableCell = ({ type, ...props }) => (
+  <Suspense fallback={props.value ?? ""}>
+    {type === "select" ? (
+      <EditableSelectCell {...props} />
+    ) : (
+      <EditableTextCell {...props} />
+    )}
+  </Suspense>
+);
+
+EditableCell.propTypes = {
+  type: PropTypes.string.isRequired,
+  value: PropTypes.any,
+  options: PropTypes.array,
+  onChange: PropTypes.func,
+  table: PropTypes.object,
+};
+
+const getOptionsByField = (field) => {
+  switch (field) {
+    case "region":
+      return regionOptions;
+    case "instanceType":
+      return instanceOptions;
+    case "pricingModel":
+      return pricingModelOptions;
+    default:
+      return undefined;
+  }
+};
+
+export default function GetInstanceColumn() {
+  const dispatch = useDispatch();
+  const theme = useTheme();
+
+  const handleValueChange = useCallback(
+    (index, field, value) => {
+      dispatch(updateInstance({ index, field, value }));
+    },
+    [dispatch]
+  );
+
+  // Memoized renderers for editable cells
+  const renderEditableCell = useCallback(
+    (type, field) =>
+      ({ getValue, row, isEditing, table }) =>
+        isEditing ? (
+          <EditableCell
+            type={type}
+            table={table}
+            value={getValue()}
+            options={getOptionsByField(field)}
+            onChange={(val) => handleValueChange(row.index, field, val)}
+          />
+        ) : (
+          getValue()
+        ),
+    [handleValueChange]
+  );
+
+  const renderEditableTextCell = useCallback(
+    (field) =>
+      ({ getValue, row, isEditing }) =>
+        isEditing ? (
+          <EditableCell
+            type="text"
+            value={getValue()}
+            onChange={(val) => handleValueChange(row.index, field, val)}
+          />
+        ) : (
+          getValue()
+        ),
+    [handleValueChange]
+  );
+
+  return useMemo(
+    () => [
       {
-        accessorKey: "maxCpuUtilization",
-        header: "CPU(%)",
-        cell: ({ getValue, row, isEditing }) =>
-          isEditing ? (
-            <EditableTextCell
-              value={getValue()}
-              onChange={(val) => (row.original.maxCpuUtilization = val)}
-            />
-          ) : (
-            getValue()
-          ),
+        id: "select",
+        header: ({ table }) => (
+          <Checkbox
+            checked={table.getIsAllRowsSelected()}
+            indeterminate={table.getIsSomeRowsSelected()}
+            onChange={table.getToggleAllRowsSelectedHandler()}
+            sx={{
+              color: "#299bff",
+              "&.Mui-checked, &.MuiCheckbox-indeterminate": {
+                color: "#299bff",
+              },
+            }}
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            indeterminate={row.getIsSomeSelected()}
+            onChange={row.getToggleSelectedHandler()}
+            sx={{
+              color: "#545454",
+              "&.Mui-checked": { color: "#545454" },
+            }}
+          />
+        ),
+        enableSorting: false,
+        enableColumnFilter: false,
+        size: 50,
       },
       {
-        accessorKey: "maxMemoryUsed",
-        header: "Memory(GB)",
-        cell: ({ getValue, row, isEditing }) =>
-          isEditing ? (
-            <EditableTextCell
-              value={getValue()}
-              onChange={(val) => (row.original.maxMemoryUsed = val)}
-            />
-          ) : (
-            getValue()
-          ),
+        id: "uuid",
+        header: () => "UUID/Instance Name",
+        accessorKey: "uuid",
       },
       {
-        accessorKey: "maxDiskBandwidth",
-        header: "Disk(MBps)",
-        cell: ({ getValue, row, isEditing }) =>
-          isEditing ? (
-            <EditableTextCell
-              value={getValue()}
-              onChange={(val) => (row.original.maxDiskBandwidth = val)}
-            />
-          ) : (
-            getValue()
-          ),
+        id: "region",
+        header: () => "Region",
+        accessorKey: "region",
+        cell: renderEditableCell("select", "region"),
       },
       {
-        accessorKey: "maxNetworkBandwidth",
-        header: "Network (Mbps)",
-        cell: ({ getValue, row, isEditing }) =>
-          isEditing ? (
-            <EditableTextCell
-              value={getValue()}
-              onChange={(val) => (row.original.maxNetworkBandwidth = val)}
-            />
-          ) : (
-            getValue()
-          ),
+        id: "instanceType",
+        header: () => "Type",
+        accessorKey: "instanceType",
+        cell: renderEditableCell("select", "instanceType"),
       },
       {
-        accessorKey: "maxIOPS",
-        header: "IOPS",
-        cell: ({ getValue, row, isEditing }) =>
-          isEditing ? (
-            <EditableTextCell
-              value={getValue()}
-              onChange={(val) => (row.original.maxIOPS = val)}
-            />
-          ) : (
-            getValue()
-          ),
+        header: "Maximum Bandwidth Used",
+        columns: [
+          {
+            accessorKey: "maxCpuUtilization",
+            header: "CPU(%)",
+            cell: renderEditableTextCell("maxCpuUtilization"),
+          },
+          {
+            accessorKey: "maxMemoryUsed",
+            header: "Memory(GB)",
+            cell: renderEditableTextCell("maxMemoryUsed"),
+          },
+          {
+            accessorKey: "maxDiskBandwidth",
+            header: "Disk(MBps)",
+            cell: renderEditableTextCell("maxDiskBandwidth"),
+          },
+          {
+            accessorKey: "maxNetworkBandwidth",
+            header: "Network (Mbps)",
+            cell: renderEditableTextCell("maxNetworkBandwidth"),
+          },
+          {
+            accessorKey: "maxIOPS",
+            header: "IOPS",
+            cell: renderEditableTextCell("maxIOPS"),
+          },
+        ],
+      },
+      {
+        id: "pricingModel",
+        header: () => "Pricing Model",
+        accessorKey: "pricingModel",
+        cell: renderEditableCell("select", "pricingModel"),
+      },
+      {
+        id: "action",
+        cell: ({ table, row }) => (
+          <IconButton
+            aria-label="clear Editable field"
+            onClick={() =>
+              table.options.meta.setEditingCell({
+                rowIndex: null,
+                columnId: null,
+              })
+            }
+            edge="end"
+            size="small"
+            sx={{
+              visibility:
+                table.options.meta?.editingCell?.rowIndex === row.index
+                  ? "visible"
+                  : "hidden",
+              scale: "0.8",
+              bgcolor: theme.palette.grey[600],
+              color: theme.palette.primary.contrastText,
+              borderRadius: "50%",
+              p: 0.5,
+              ml: 0.5,
+              "&:hover": {
+                bgcolor: theme.palette.grey[600],
+              },
+            }}
+          >
+            <ClearIcon fontSize="small" />
+          </IconButton>
+        ),
+        size: 50,
       },
     ],
-  },
-  {
-    id: "pricingModel",
-    header: () => "Pricing Model",
-    accessorKey: "pricingModel",
-    cell: ({ getValue, row, isEditing, table }) =>
-      isEditing ? (
-        <EditableSelectCell
-          value={getValue()}
-          options={pricingModelOptions}
-          onChange={(val) => (row.original.pricingModel = val)}
-          table={table}
-          row={row}
-          columnKey="pricingModel"
-        />
-      ) : (
-        getValue()
-      ),
-  },
-];
-
-export const selfPrefAssessmentColumn = [
-  {
-    id: "instanceType",
-    header: () => "Instance Type",
-    accessorKey: "instanceType",
-  },
-  {
-    id: "saps",
-    header: () => "saps",
-    accessorKey: "saps",
-  },
-];
+    [renderEditableCell, renderEditableTextCell, theme]
+  );
+}

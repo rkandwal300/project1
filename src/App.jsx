@@ -10,6 +10,7 @@ import Footer from "./components/shared/Footer/Footer/Footer";
 import { Box, CssBaseline, Skeleton, ThemeProvider, useTheme } from "@mui/material";
 import InstanceForm from "./components/shared/Form/InstanceForm";
 import { Suspense } from "react";
+import FormSkeleton from "./components/shared/Form/FormSkeleton";
 
 function App() {
   return (
@@ -73,7 +74,7 @@ function MainLayout() {
               <ErrorBoundary
                 fallback={"Instance form component has some Errors"}
               >
-             <Suspense fallback={<Skeleton variant="rectangular" width="100%" height={400} />}>
+             <Suspense fallback={<FormSkeleton />}>
                 <InstanceForm />
               </Suspense>
               </ErrorBoundary>

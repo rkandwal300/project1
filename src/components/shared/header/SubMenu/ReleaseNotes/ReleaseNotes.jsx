@@ -5,11 +5,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
 import { Divider, Typography } from "@mui/material";
-import ReleaseNotesTable from "./ReleaseNotesTable";
-import { CustomTable } from "@/components/ui/table/CustomTable";
+import CustomTable from "@/components/ui/table/CustomTable";
 import { releaseNotesTableData } from "./ReleaseNotes.data";
 import { releaseNotesTableColumns } from "./releaseNotesTableColumns";
+import PropTypes from "prop-types";
 
+ReleaseNotes.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+};
 
 function ReleaseNotes({ handleClose }) {
   return (
@@ -52,9 +55,9 @@ function ReleaseNotes({ handleClose }) {
           sure you're always working with the latest tools available.
         </Typography>
         {/* <ReleaseNotesTable /> */}
-        <CustomTable 
-        data={releaseNotesTableData}
-        columns={releaseNotesTableColumns}
+        <CustomTable
+          data={releaseNotesTableData}
+          columns={releaseNotesTableColumns}
         />
       </DialogContent>
       <Divider />

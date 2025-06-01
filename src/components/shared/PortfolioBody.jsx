@@ -1,85 +1,110 @@
-import * as React from "react";
+import React, { useState, Suspense, lazy, useCallback } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import {
-  portfolioColumn,
-  selfPrefAssessmentColumn,
-} from "./PortfolioTable/portfolioColumn";
+import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
 import {
   selectInstanceStats,
   selectSelfPrefAssessment,
-} from "@/redux/features/instance/instance.selector";
-import { useDispatch, useSelector } from "react-redux";
-import { CustomTable } from "../ui/table/CustomTable";
-import { setInstanceStats } from "@/redux/features/instance/instance.slice";
-import PropTypes from "prop-types";
+} from "@/redux/features/form/formData.selector";
+import GetInstanceColumn from "./PortfolioTable/portfolioColumn";
+import { Skeleton } from "@mui/material";
+import { selfPrefAssessmentColumn } from "./PortfolioTable/selfPrefAssessmentColumn";
+import { deleteInstances } from "@/redux/features/form/formData.slice";
+import TableSkeleton from "../ui/table/table_components/TableSkeleton ";
+ 
+const CustomTable = lazy(() => import("../ui/table/CustomTable"));
 
-function TabPanel({ children, value, index }) {
+const TabPanel = React.memo(function TabPanel({ children, value, index }) {
   return (
     <div role="tabpanel" hidden={value !== index}>
-      {value === index && <Box p={2}>{children}</Box>}
+      {value === index && <Box p={0}>{children}</Box>}
     </div>
   );
-}
+});
 TabPanel.propTypes = {
   children: PropTypes.node,
   value: PropTypes.string.isRequired,
   index: PropTypes.string.isRequired,
 };
 
+const TABS = [
+  {
+    label: "Instance Stats",
+    value: "instance_stats",
+    getColumns: GetInstanceColumn,
+    selector: selectInstanceStats,
+    showNote: true,
+    isAction: true,
+  },
+  {
+    label: "Self Perf Assessment",
+    value: "self_perf_assessment",
+    getColumns: selfPrefAssessmentColumn,
+    selector: selectSelfPrefAssessment,
+    showNote: false,
+    isAction: false,
+  },
+];
+
 export default function PortfolioBody() {
   const dispatch = useDispatch();
-  const [value, setValue] = React.useState("instance_stats");
-  const instances = useSelector(selectInstanceStats);
+  const [value, setValue] = useState(TABS[0].value);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  const onDelete = ({ selectedRows }) => {
-    if (!selectedRows || selectedRows.length === 0) return;
-
-    const selectedIndexes = selectedRows.map((row) => row.index);
-
-    const updatedInstances = instances.filter(
-      (_, idx) => !selectedIndexes.includes(idx)
-    );
-
-    dispatch(setInstanceStats({ instanceStats: updatedInstances }));
+  const dataMap = {
+    instance_stats: useSelector(selectInstanceStats),
+    self_perf_assessment: useSelector(selectSelfPrefAssessment),
   };
 
-  const instanceData = useSelector(selectInstanceStats);
-  const selfPrefAssessmentData = useSelector(selectSelfPrefAssessment);
+  const columnsMap = {
+    instance_stats: GetInstanceColumn(),
+    self_perf_assessment: selfPrefAssessmentColumn,
+  };
+
+  const handleChange = useCallback((_, newValue) => setValue(newValue), []);
+
+  const onDelete = useCallback(
+    ({ selectedRows }) => {
+      if (!selectedRows?.length) return;
+      const selectedIndexes = selectedRows.map((row) => row.index);
+      dispatch(deleteInstances(selectedIndexes));
+    },
+    [dispatch]
+  );
+
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", p: 0 }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="Instance Stats" value="instance_stats" />
-          <Tab label="Self Perf Assessment" value="self_perf_assessment" />
+        <Tabs value={value} onChange={handleChange} aria-label="portfolio tabs">
+          {TABS.map((tab) => (
+            <Tab key={tab.value} label={tab.label} value={tab.value} />
+          ))}
         </Tabs>
       </Box>
-      <TabPanel value={value} index={"instance_stats"}>
-        <CustomTable
-          variant="primary"
-          data={instanceData}
-          columns={portfolioColumn}
-          isPagination={true}
-          isAction={true}
-          onDelete={onDelete}
-        />
-      </TabPanel>
-      <TabPanel value={value} index={"self_perf_assessment"}>
-        <CustomTable
-          variant="primary"
-          data={selfPrefAssessmentData}
-          columns={selfPrefAssessmentColumn}
-          isPagination={true}
-        />
-      </TabPanel>
+      <Suspense
+        fallback={<TableSkeleton   />}
+      >
+        {TABS.map((tab) => (
+          <TabPanel key={tab.value} value={value} index={tab.value}>
+            {tab.showNote && (
+              <p
+                style={{ fontSize: 16, fontWeight: 500, color: "rgb(0,0,225)" }}
+              >
+                Note: Double-click to update input values.
+              </p>
+            )}
+            <CustomTable
+              variant="primary"
+              data={dataMap[tab.value]}
+              columns={columnsMap[tab.value]}
+              isPagination
+              isAction={tab.isAction}
+              onDelete={tab.isAction ? onDelete : undefined}
+            />
+          </TabPanel>
+        ))}
+      </Suspense>
     </Box>
   );
 }

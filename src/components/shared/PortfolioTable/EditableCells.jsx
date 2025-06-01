@@ -49,22 +49,14 @@ export const selectMenuProps = {
   },
 };
 
-export const EditableSelectCell = ({
-  value,
-  options,
-  onChange,
-  table,
-  row,
-  columnKey,
-}) => (
+export const EditableSelectCell = ({ value, options, onChange, table }) => (
   <SelectHoc
     variant="filled"
     value={value}
     options={options}
     onChange={(val) => {
       table.options.meta.setEditingCell({ rowIndex: null, columnId: null });
-      row.original[columnKey] = val;
-      onChange(val);
+      onChange(val.target.value);
     }}
     sx={selectStyles}
     MenuProps={selectMenuProps}
