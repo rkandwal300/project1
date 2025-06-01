@@ -6,73 +6,71 @@ import BuildIcon from "@mui/icons-material/Build";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectInstanceFormData,
-  selectInstanceStats,
-  selectSelfPrefAssessment,
-} from "@/redux/features/instance/instance.selector";
-import {
   addInstance,
   deletePortfolioFromList,
-} from "@/redux/features/instanceList/instanceList.slice";
-import {
-  resetInstanceState,
   updateInstance,
-} from "@/redux/features/instance/instance.slice";
+} from "@/redux/features/instanceList/instanceList.slice"; 
+import {
+  selectFormData,
+  selectInstanceStats,
+  selectSelfPrefAssessment,
+} from "@/redux/features/form/formData.selector";
+import { nanoid } from "@reduxjs/toolkit"; 
+import { resetForm } from "@/redux/features/form/formData.slice";
 
 export default function BottomBar() {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const formData = useSelector(selectInstanceFormData);
+  const formData = useSelector(selectFormData);
   const instances = useSelector(selectInstanceStats);
   const selfPrefAssessmentData = useSelector(selectSelfPrefAssessment);
 
   const handleSavePortFolio = () => {
-    if (formData.id)
-      dispatch(
-        updateInstance({
-          id: formData.id,
-          instances,
-          portfolioName: formData.portfolioName,
-          selfPrefAssessment: selfPrefAssessmentData,
-        })
-      );
-    else
-      dispatch(
-        addInstance({
-          id: formData.id,
-          instances,
-          portfolioName: formData.portfolioName,
-          selfPrefAssessment: selfPrefAssessmentData,
-        })
-      );
-    dispatch(resetInstanceState());
+    const payload = {
+      id: formData.id || nanoid(),
+      instances,
+      portfolioName: formData.portfolioName,
+      selfPrefAssessment: selfPrefAssessmentData,
+    };
+    dispatch(formData.id ? updateInstance(payload) : addInstance(payload));
+    dispatch(resetForm());
   };
+
   const handleDeletePortfolio = () => {
     dispatch(deletePortfolioFromList({ id: formData.id }));
-    dispatch(resetInstanceState());
+    dispatch(resetForm());
   };
 
   const handleResetFormData = () => {
-    dispatch(resetInstanceState());
+    dispatch(resetForm());
   };
 
-  const isSaveDisabled = instances.length == 0;
+  const isSaveDisabled = !instances.length || !formData.portfolioName.trim();
+
   const isInstanceAdviceDisabled = true;
-  const isCancelDisabled = Object.values(formData).every((val) => {
-    if (Array.isArray(val)) return val.length === 0;
-    if (typeof val === "string") return val.trim() === "";
-    if (typeof val === "number") return val === 0;
-    return val === null;
-  });
+  const isValueEmpty = (val) => {
+    if (Array.isArray(val)) {
+      return !val.length;
+    }
+    if (typeof val === "string") {
+      return !val.trim();
+    }
+    if (typeof val === "number") {
+      return !val;
+    }
+    return val == null;
+  };
+
+  const isCancelDisabled = Object.values(formData).every(isValueEmpty);
 
   return (
     <Box
       id="manage-portfolio-footer-action-container"
-      display={"grid"}
+      display="grid"
       gap={"16px"}
       sx={{
         p: 2,
-        gridTemplateColumns:{xs:"repeat(1,1fr)",sm:"repeat(2, 1fr)"},
+        gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)" },
         borderTop: `1px solid ${theme.palette.divider}`,
         bgcolor: theme.palette.grey[100],
         color: theme.palette.text.default,
@@ -85,13 +83,12 @@ export default function BottomBar() {
           fontSize: "0.8rem",
           display: "flex",
           alignItems: "start",
-          gap: "4px",
+          gap: 0.5,
         }}
       >
-        <span style={{ fontWeight: 700 }}> Note:</span>
+        <span style={{ fontWeight: 700 }}>Note:</span>
         <span> Please upload file with maximum of 20,000 records</span>
       </Typography>
-      {/* Action buttons */}
       <Grid container spacing={1} justifyContent="flex-end" alignItems="center">
         <Grid item>
           <Button
@@ -116,7 +113,6 @@ export default function BottomBar() {
             </Button>
           </Grid>
         )}
-
         <Grid item>
           <Button
             onClick={handleSavePortFolio}
@@ -127,7 +123,6 @@ export default function BottomBar() {
             Save
           </Button>
         </Grid>
-
         <Grid item>
           <Button
             variant="contained"

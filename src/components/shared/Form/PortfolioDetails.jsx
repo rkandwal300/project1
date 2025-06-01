@@ -1,8 +1,7 @@
-import React, { useState, useCallback, lazy, Suspense } from "react";
+import React, { useState, useCallback, lazy } from "react";
 import PropTypes from "prop-types";
 import { Checkbox, FormControlLabel, Box } from "@mui/material";
-import { Controller } from "react-hook-form";
-import SelectHoc from "@/components/ui/Select";
+import { Controller } from "react-hook-form"; 
 
 // Lazy load components
 const FileUploadField = lazy(() => import("./UploadInstances"));
@@ -13,11 +12,11 @@ const TOOLTIP_MESSAGE =
   "No special characters are allowed, except for underscores (_) and hyphens (-). Additionally, keywords like 'advice' and the name of the selected CSP, (e.g., aws, azure, gcp) are not accepted when entered in lowercase.";
 
 const PortfolioDetails = ({ form }) => {
-  const [showSelfPref, setShowSelfPref] = useState(false);
-
+  const [showSelfPref, setShowSelfPref] = useState(false); 
   const handleSelfPrefChange = useCallback(() => {
     setShowSelfPref((prev) => !prev);
   }, []);
+
 
   return (
     <Box

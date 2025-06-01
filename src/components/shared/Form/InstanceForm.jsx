@@ -1,16 +1,23 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, lazy, Suspense } from "react";
+import { useCallback, lazy, Suspense, useEffect } from "react";
 import { Box, Divider } from "@mui/material";
 import { instanceSchema } from "@/lib/validation/instance.schema";
-import { addInstance } from "@/redux/features/form/formData.slice";
+import {
+  addInstance,
+  updateFormData,
+  updateResetState,
+} from "@/redux/features/form/formData.slice";
 import { nanoid } from "@reduxjs/toolkit";
 
 import PropTypes from "prop-types";
-import { selectFormData } from "@/redux/features/form/formData.selector";  
+import {
+  selectFormData,
+  selectFormReset,
+} from "@/redux/features/form/formData.selector";
 import useTimedMessage from "@/hooks/useTimedMessage";
- 
+
 const FormAlert = lazy(() => import("@/components/ui/FormAlert"));
 const PortfolioDetails = lazy(() => import("./PortfolioDetails"));
 const GenericMetadata = lazy(() => import("./GenericMetadata"));
@@ -30,6 +37,8 @@ InstanceForm.propTypes = {
 
 export default function InstanceForm() {
   const dispatch = useDispatch();
+  const formData = useSelector(selectFormData);
+  const formReset = useSelector(selectFormReset);
   const defaultFormValues = useSelector(selectFormData);
   const [formError, setFormError] = useTimedMessage();
   const [formSuccess, setFormSuccess] = useTimedMessage();
@@ -61,6 +70,19 @@ export default function InstanceForm() {
     [setFormError]
   );
 
+  const portfolioName = form.watch("portfolioName");
+
+  useEffect(() => {
+    if (portfolioName === formData.portfolioName) return;
+    dispatch(updateFormData({ field: "portfolioName", value: portfolioName }));
+  }, [formData, portfolioName, dispatch]);
+
+  useEffect(() => {
+    if (formReset) {
+      dispatch(updateResetState(false));
+      form.reset();
+    }
+  }, [formReset, form, dispatch]);
   return (
     <Box
       component="form"

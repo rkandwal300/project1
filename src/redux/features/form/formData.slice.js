@@ -29,6 +29,7 @@ const initialState = {
   formData: getDefaultInstance(),
   instanceStats: [],
   selfPrefAssessment: [],
+  reset: false, // Flag to track if the form has been reset
 };
 
 const formDataSlice = createSlice({
@@ -58,7 +59,6 @@ const formDataSlice = createSlice({
       }
     },
     deleteInstances(state, action) {
-       
       state.instanceStats = state.instanceStats.filter(
         (_, index) => !action.payload.includes(index)
       );
@@ -70,20 +70,36 @@ const formDataSlice = createSlice({
       state.formData = getDefaultInstance();
       state.instanceStats = [];
       state.selfPrefAssessment = [];
+      state.portfolioName = "";
+      state.reset= true; // Reset the form state
     },
     uploadInstance(state, action) {
       state.instanceStats = [...state.instanceStats, ...action.payload];
     },
+    updateFormData(state, action) {
+      const { field, value } = action.payload;
+   
+      state.formData[field] = value;
+     
+      if (field === "portfolioName") {
+        state.portfolioName = value;
+      }
+    },
+    updateResetState(state, action) {
+      state.reset = action.payload;
+    }
   },
 });
 
 export const {
   addInstance,
   resetForm,
+  updateResetState,
   resetFormData,
   updateInstance,
   deleteInstances,
   uploadInstance,
   addSelfAssessment,
+  updateFormData,
 } = formDataSlice.actions;
 export default formDataSlice.reducer;
