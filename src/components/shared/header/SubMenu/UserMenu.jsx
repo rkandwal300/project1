@@ -1,107 +1,133 @@
-import React from "react";
+import React, { Suspense, lazy, useMemo } from "react";
 import {
   MenuItem,
-  ListItemIcon,
-  ListItemText,
   Divider,
   useTheme,
+  ListItemIcon,
+  ListItemText,
+  CircularProgress,
 } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import DescriptionIcon from "@mui/icons-material/Description";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HelpIcon from "@mui/icons-material/Help";
-import HeadsetMicIcon from "@mui/icons-material/HeadsetMic"; 
 import DialogHoc from "@/components/ui/Dialog";
 
-function UserMenu() {
+// Lazy load dialog content components
+const AboutDialogContent = lazy(() => import("./AboutDialogContent"));
+const HelpDialogContent = lazy(() => import("./HelpDialogContent"));
+
+const menuConfig = [
+  {
+    label: "Profile",
+    value: "https://epycadvisory.amd.com/profile/request-role?appName=EIA",
+    type: "link",
+    icon: <AccountCircleIcon />,
+  },
+  {
+    label: "User Guide",
+    value: "https://eia-prod.amd.com/assets/EIA%20User%20Guide-ywdnNCnh.pdf",
+    type: "link",
+    icon: <MenuBookIcon />,
+  },
+  
+  {
+    label: "About",
+    icon: <InfoIcon />,
+    type: "dialog",
+    component: AboutDialogContent,
+  },
+  {
+    label: "Online Documentation",
+    icon: <HelpIcon />,
+    type: "dialog",
+    component: HelpDialogContent,
+  },
+];
+
+function UserMenu({ onClose }) {
   const theme = useTheme();
 
-  const textColor = theme.palette.error.contrastText;
+  // Memoize menu items for performance
+  const items = useMemo(() => menuConfig, []);
 
-  const menuItemStyles = {
-    color: textColor,
-  };
-
-  const iconStyles = {
-    color: textColor,
-    minWidth: '36px', // consistent icon alignment
-  };
-
-  const items = [
-    {
-      label: "User Profile",
-      value: "#",
-      type: "link",
-      icon: <AccountCircleIcon />,
-    },
-    {
-      label: "User Guide",
-      value: "https://eia-prod.amd.com/assets/EIA%20User%20Guide-ywdnNCnh.pdf",
-      type: "link",
-      icon: <MenuBookIcon />,
-    },
-    {
-      label: "Help",
-      value: "Help content goes here...",
-      type: "dialog",
-      icon: <HelpIcon />,
-    },
-    {
-      label: "About",
-      value: "About content goes here...",
-      type: "dialog",
-      icon: <InfoIcon />,
-    },
-    {
-      label: "Release Date",
-      value: "Release date: May 2025",
-      type: "dialog",
-      icon: <DescriptionIcon />,
-    },
-    {
-      label: "Support",
-      value: "Support info goes here...",
-      type: "dialog",
-      icon: <HeadsetMicIcon />,
-    },
-  ];
+  // Reusable menu item node
+  const Node = ({ icon, label, onClick }) => (
+    <MenuItem
+      onClick={onClick}
+      sx={{
+        borderBottom: "1px solid transparent",
+        borderRadius: 0,
+        cursor: "pointer",
+      }}
+    >
+      <ListItemIcon sx={{ color: "inherit" }}>{icon}</ListItemIcon>
+      <ListItemText primary={label} />
+    </MenuItem>
+  );
 
   return (
     <>
-      {items.map((val) =>
-        val.type === "link" ? (
-          <MenuItem
-            key={val.label}
-            component="a"
-            href={val.value}
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={menuItemStyles}
-          >
-            <ListItemIcon sx={iconStyles}>{val.icon}</ListItemIcon>
-            <ListItemText primary={val.label} />
-          </MenuItem>
-        ) : (
-          <DialogHoc
-            key={val.label}
-            trigger={(onClick) => (
-              <MenuItem onClick={onClick} sx={menuItemStyles}>
-                <ListItemIcon sx={iconStyles}>{val.icon}</ListItemIcon>
-                <ListItemText primary={val.label} />
-              </MenuItem>
-            )}
-            content={()=>val.value}
-          />
-        )
-      )}
+      {items.map(({ label, icon, type, value, component }) => {
+        if (type === "dialog") {
+          const DialogComponent = component;
+          return (
+            <DialogHoc
+              key={label}
+              trigger={({ onClick: openDialog }) => (
+                <Node
+                  icon={icon}
+                  label={label}
+                  onClick={() => setTimeout(openDialog, 0)}
+                />
+              )}
+              content={({ handleClose }) => (
+                <Suspense fallback={<Box p={2}><CircularProgress size={24} /></Box>}>
+                  <DialogComponent onClose={handleClose} />
+                </Suspense>
+              )}
+            />
+          );
+        }
+        if (type === "link") {
+          return (
+            <MenuItem
+              sx={{
+                borderBottom: "1px solid transparent",
+                borderRadius: 0,
+                cursor: "pointer",
+              }}
+              key={label}
+              component="a"
+              href={value}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ListItemIcon sx={{ color: "inherit" }}>{icon}</ListItemIcon>
+              <ListItemText primary={label} />
+            </MenuItem>
+          );
+        }
+        return (
+          <Node key={label} icon={icon} label={label} onClick={onClose} />
+        );
+      })}
       <Divider sx={{ borderColor: theme.palette.divider }} />
-      <MenuItem sx={menuItemStyles}>
-        <ListItemIcon sx={iconStyles}>
+      <MenuItem
+        component="a"
+        href="https://eia-prod.amd.com/"
+        target="_blank"
+        sx={{
+          borderBottom: "1px solid transparent",
+          borderRadius: 0,
+          cursor: "pointer",
+        }}
+      >
+        <ListItemIcon sx={{ color: "inherit" }}>
           <LogoutIcon />
         </ListItemIcon>
-        <ListItemText primary="Logout" />
+        <ListItemText primary={"Log Out"} />
       </MenuItem>
     </>
   );

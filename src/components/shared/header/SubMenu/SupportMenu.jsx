@@ -26,7 +26,7 @@ function SupportMenu() {
         </ListItemIcon>
         <ListItemText
           primary="Hotline Number"
-          secondary={supportMailtoLink}
+          secondary={supportMailtoLink.split(":")[1].split("?")[0]}
           {...commonTextStyles}
         />
       </MenuItem>
@@ -37,7 +37,7 @@ function SupportMenu() {
         </ListItemIcon>
         <ListItemText
           primary="Email"
-          secondary={supportMobileNumber}
+          secondary={supportMobileNumber.split(":")[1]}
           {...commonTextStyles}
         />
       </MenuItem>

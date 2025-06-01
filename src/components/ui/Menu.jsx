@@ -23,7 +23,7 @@ export default function MenuHoc({ trigger, content, ...props }) {
             sx: {
               bgcolor: theme.palette.primary.main,
               color: theme.palette.primary.contrastText,
-              minWidth: 250,
+              minWidth: 150,
             },
           },
         }}

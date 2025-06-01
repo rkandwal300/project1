@@ -108,7 +108,7 @@ function SubMenuList() {
             </IconButton>
           </Tooltip>
         )}
-        content={() => <UserMenu />}
+        content={({onClose}) => <UserMenu onClose={onClose} />}
       />
 
       <Tooltip title={userEmail} {...tooltipProps}>

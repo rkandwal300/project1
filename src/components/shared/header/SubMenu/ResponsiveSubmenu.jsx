@@ -1,4 +1,4 @@
-import { IconButton, MenuItem, Box } from "@mui/material";
+import { IconButton, MenuItem, Box, Divider } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import HelpIcon from "@mui/icons-material/Help";
@@ -8,27 +8,106 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ArticleIcon from "@mui/icons-material/Article";
 import BookIcon from "@mui/icons-material/Book";
 import MenuHoc from "@/components/ui/Menu";
-import DialogHoc from "@/components/ui/Dialog";
-import SupportDialog from "./SupportDialog";
+import { lazy, Suspense, useMemo } from "react";
+
+// Lazy load dialogs
+const DialogHoc = lazy(() => import("@/components/ui/Dialog"));
+const SupportDialog = lazy(() => import("./SupportDialog"));
+const HelpDialogContent = lazy(() => import("./HelpDialogContent"));
+const AboutDialogContent = lazy(() => import("./AboutDialogContent"));
+const ReleaseNotes = lazy(() => import("./ReleaseNotes/ReleaseNotes"));
+
+const DIALOG_COMPONENTS = {
+  Help: HelpDialogContent,
+  About: AboutDialogContent,
+  "Release Note": ReleaseNotes,
+  Support: SupportDialog,
+};
+
+import PropTypes from "prop-types";
+
+function DialogMenuItem(props) {
+  const { label, icon, DialogComponent } = props;
+  return (
+    <DialogHoc
+      trigger={({ onClick: openDialog }) => (
+        <MenuItem
+          onClick={() => {
+            setTimeout(openDialog, 0);
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            {icon}
+            {label}
+          </Box>
+        </MenuItem>
+      )}
+      content={({ handleClose }) => (
+        <Suspense fallback={null}>
+          <DialogComponent onClose={handleClose} handleClose={handleClose} />
+        </Suspense>
+      )}
+    />
+  );
+}
+
+DialogMenuItem.propTypes = {
+  label: PropTypes.string.isRequired,
+  icon: PropTypes.node,
+  DialogComponent: PropTypes.elementType.isRequired,
+  onClose: PropTypes.func,
+};
+
+function LinkMenuItem({ label, icon, href }) {
+  return (
+    <MenuItem
+      component="a"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        {icon}
+        {label}
+      </Box>
+    </MenuItem>
+  );
+}
 
 function ResponsiveSubMenu() {
-  const menuItems = [
-    { label: "Stat collector", icon: <CloudDownloadIcon /> },
-    { label: "User Guide", icon: <BookIcon /> },
-    { label: "Help", icon: <HelpIcon /> },
-    { label: "About", icon: <InfoIcon /> },
-    {
-      label: "Release Note",
-      icon: <ArticleIcon />,
-    },
-    {
-      label: "Support",
-      icon: <SupportIcon />,
-      type: "dialog",
-      value: ({ handleClose }) => <SupportDialog onClose={handleClose} />,
-    },
-    { label: "Logout", icon: <LogoutIcon /> },
-  ];
+  const menuItems = useMemo(
+    () => [
+      { label: "Stat collector", icon: <CloudDownloadIcon /> },
+      {
+        label: "User Guide",
+        icon: <BookIcon />,
+        type: "link",
+        value:
+          "https://eia-prod.amd.com/assets/EIA%20User%20Guide-UyjIb5PG.pdf",
+      },
+      {
+        label: "Help",
+        icon: <HelpIcon />,
+        type: "dialog",
+      },
+      {
+        label: "About",
+        icon: <InfoIcon />,
+        type: "dialog",
+      },
+      {
+        label: "Release Note",
+        icon: <ArticleIcon />,
+        type: "dialog",
+      },
+      {
+        label: "Support",
+        icon: <SupportIcon />,
+        type: "dialog",
+      },
+    ],
+    []
+  );
 
   return (
     <MenuHoc
@@ -37,35 +116,55 @@ function ResponsiveSubMenu() {
           <MenuIcon />
         </IconButton>
       )}
-      content={({ onClose }) =>
-        menuItems.map(({ label, icon, type, value }) => {
-          const Node = ({ onClick }) => (
-            <MenuItem onClick={onClick}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                {icon}
-                {label}
-              </Box>
-            </MenuItem>
-          );
-          if (type === "dialog"  ) {
+      content={({ onClose }) => (
+        <>
+          {menuItems.map(({ label, icon, type, value }) => {
+            if (type === "dialog" && DIALOG_COMPONENTS[label]) {
+              const DialogComponent = DIALOG_COMPONENTS[label];
+              return (
+                <DialogMenuItem
+                  key={label}
+                  label={label}
+                  icon={icon}
+                  DialogComponent={DialogComponent}
+                  onClose={onClose}
+                />
+              );
+            }
+            if (type === "link") {
+              return (
+                <LinkMenuItem
+                  key={label}
+                  label={label}
+                  icon={icon}
+                  href={value}
+                />
+              );
+            }
+            // Default: just close menu
             return (
-              <DialogHoc
-                key={label}
-                trigger={({ onClick: openDialog }) => (
-                  <Node
-                    onClick={() => {
-                      // onClose();
-                      setTimeout(openDialog, 0);
-                    }}
-                  />
-                )}
-                content={({ handleClose }) => value({ handleClose })}
-              />
+              <MenuItem key={label} onClick={onClose}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  {icon}
+                  {label}
+                </Box>
+              </MenuItem>
             );
-          }
-          return <Node key={label} onClick={onClose} />;
-        })
-      }
+          })}
+          <Divider sx={{ my: 1 }} />
+          <MenuItem
+            component="a"
+            href={"https://eia-prod.amd.com/"}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <LogoutIcon />
+              {"Log Out"}
+            </Box>
+          </MenuItem>
+        </>
+      )}
     />
   );
 }
