@@ -4,13 +4,13 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#1A1A1A",  
+      main: "#1A1A1A",
       contrastText: "#FFFFFF",
     },
     secondary: {
-      main: "#F5F5F5",  
+      main: "#F5F5F5",
       contrastText: "#1A1A1A",
-      default:"#f5f5f5",
+      default: "#8a8a8a",
     },
     error: {
       main: "#E53935",
@@ -29,10 +29,10 @@ const theme = createTheme({
       secondary: "#6B6B6B",
       disabled: "#9E9E9E",
     },
-     
-    sidebar:{
+
+    sidebar: {
       background: "#F0F0F0",
-      border: "#CCCCCC"
+      border: "#CCCCCC",
     },
     divider: "#E0E0E0",
     grey: {
@@ -68,9 +68,9 @@ const theme = createTheme({
           "&:hover": {
             backgroundColor: "#333333",
           },
-          '&.Mui-disabled': {
-            backgroundColor: "#757575",  
-            color: "#FFFFFF", 
+          "&.Mui-disabled": {
+            backgroundColor: "#757575",
+            color: "#FFFFFF",
           },
         },
         containedSecondary: {
@@ -82,27 +82,22 @@ const theme = createTheme({
         },
 
         containedError: {
-      backgroundColor: "#E53935",
-      color: "#FFFFFF",
-      "&:hover": {
-        backgroundColor: "#C62828",
-      },
-      "&.Mui-disabled": {
-        backgroundColor: "#d67687", 
-        color: "#FFFFFF",           
-      },
-    },
+          backgroundColor: "#E53935",
+          color: "#FFFFFF",
+          "&:hover": {
+            backgroundColor: "#C62828",
+          },
+          "&.Mui-disabled": {
+            backgroundColor: "#d67687",
+            color: "#FFFFFF",
+          },
+        },
       },
     },
     MuiTextField: {
       defaultProps: {
         size: "small",
         variant: "outlined",
-      },
-      styleOverrides: {
-        root: {
-          backgroundColor: "#FFFFFF",
-        },
       },
     },
     MuiTooltip: {
@@ -133,9 +128,64 @@ const theme = createTheme({
         },
       },
     },
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#b00020",
+          color: "#FFFFFF",
+          borderRadius: 6,
+        },
+        icon: {
+          color: "#FFFFFF", // Fallback if needed
+        },
+        standardError: {
+          backgroundColor: "#b00020",
+          color: "#FFFFFF",
+          "& .MuiAlert-icon": {
+            color: "#FFFFFF",
+          },
+        },
+        filledError: {
+          backgroundColor: "#b00020",
+          color: "#FFFFFF",
+          "& .MuiAlert-icon": {
+            color: "#FFFFFF",
+          },
+        },
+        outlinedError: {
+          backgroundColor: "#b00020",
+          color: "#FFFFFF",
+          border: "1px solid #b00020",
+          "& .MuiAlert-icon": {
+            color: "#FFFFFF",
+          },
+        },
+        // Success overrides
+        standardSuccess: {
+          backgroundColor: "#43A047",
+          color: "#FFFFFF",
+          "& .MuiAlert-icon": {
+            color: "#FFFFFF",
+          },
+        },
+        filledSuccess: {
+          backgroundColor: "#43A047",
+          color: "#FFFFFF",
+          "& .MuiAlert-icon": {
+            color: "#FFFFFF",
+          },
+        },
+        outlinedSuccess: {
+          backgroundColor: "#43A047",
+          color: "#FFFFFF",
+          border: "1px solid #43A047",
+          "& .MuiAlert-icon": {
+            color: "#FFFFFF",
+          },
+        },
+      },
+    },
   },
 });
 
 export default theme;
-
- 

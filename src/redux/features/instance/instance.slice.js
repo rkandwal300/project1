@@ -61,17 +61,9 @@ const instanceSlice = createSlice({
             }))
           );
         }
-        state.instanceStats.push({...instance,id});
-        state.formData = getDefaultInstance({ portfolioName,id });
+        state.instanceStats.push({ ...instance, id });
+        state.formData = getDefaultInstance({ portfolioName, id });
       },
-      // prepare(instance) {
-      //   return {
-      //     payload: {
-      //       ...instance,
-           
-      //     },
-      //   };
-      // },
     },
     updateFormData(state, action) {
       if (action.payload && Object.keys(action.payload).length) {

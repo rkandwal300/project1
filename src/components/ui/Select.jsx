@@ -2,17 +2,20 @@ import React from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import PropTypes from "prop-types";
-import { Paper } from "@mui/material";
 
 const SelectHoc = ({
   options = [],
   label,
   value = "",
   onChange,
-  menuPosition = "bottom", // "bottom" or "top"
+  menuPosition = "bottom",
+  getOptionLabel = (option) => option,
+  getOptionValue = (option) => option,
+  renderNone = true, 
+  MenuProps = {},
   ...props
 }) => {
-  const menuProps = {
+  const mergedMenuProps = {
     anchorOrigin: {
       vertical: menuPosition === "top" ? "top" : "bottom",
       horizontal: "left",
@@ -21,49 +24,47 @@ const SelectHoc = ({
       vertical: menuPosition === "top" ? "bottom" : "top",
       horizontal: "left",
     },
-    getContentAnchorEl: null, // For MUI v4; remove if using MUI v5+
+    PaperProps: {
+      style: {
+        maxHeight: 300,
+        overflowY: "auto",
+        ...MenuProps?.PaperProps?.style,
+      },
+      ...MenuProps?.PaperProps,
+    },
+    ...MenuProps,
   };
 
   return (
-    <Select
+    <Select 
       value={value}
       onChange={onChange}
       label={label}
+      MenuProps={mergedMenuProps}
+      displayEmpty={renderNone}
       {...props}
-      MenuProps={{
-        ...menuProps,
-        PaperProps: {
-          style: {
-
-            maxHeight: 300,  
-            overflowY: "auto",  
-            ...props.MenuProps?.PaperProps?.style,
-          },
-          ...props?.MenuProps?.PaperProps
-        },
-      }}
-      >
-      {options.length === 0 ? (
-        <MenuItem value="">
-          <em>None</em>
+    > 
+      {options.map((option) => (
+        <MenuItem value={getOptionValue(option)} key={getOptionValue(option)}>
+          {getOptionLabel(option)}
         </MenuItem>
-      ) : (
-        options.map((val) => (
-          <MenuItem value={val} key={val}>
-            {val}
-          </MenuItem>
-        ))
-      )}
+      ))}
     </Select>
   );
 };
 
-export default SelectHoc;
+SelectHoc.displayName = "SelectHoc";
 
 SelectHoc.propTypes = {
   options: PropTypes.array.isRequired,
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onChange: PropTypes.func.isRequired,
   menuPosition: PropTypes.oneOf(["top", "bottom"]),
+  getOptionLabel: PropTypes.func,
+  getOptionValue: PropTypes.func,
+  renderNone: PropTypes.bool, 
+  MenuProps: PropTypes.object,
 };
+
+export default SelectHoc;

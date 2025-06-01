@@ -7,8 +7,9 @@ import Sidebar from "./components/shared/Sidebar/Sidebar";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
 import PortfolioBody from "./components/shared/PortfolioBody";
 import Footer from "./components/shared/Footer/Footer/Footer";
-import { Box, CssBaseline, ThemeProvider, useTheme } from "@mui/material";
-import PortfolioForm from "./components/shared/PortfolioForm/PortfolioForm";
+import { Box, CssBaseline, Skeleton, ThemeProvider, useTheme } from "@mui/material";
+import InstanceForm from "./components/shared/Form/InstanceForm";
+import { Suspense } from "react";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
 }
 
 function MainLayout() {
-  const themeColor = useTheme();  
+  const themeColor = useTheme();
   return (
     <Box
       sx={{
@@ -30,36 +31,64 @@ function MainLayout() {
         backgroundColor: themeColor.palette.background.default,
       }}
     >
-      <ErrorBoundary fallback={"Header component has some Errors"}>
-        <Header />
-      </ErrorBoundary>
-
-      <Box sx={{ display: "flex", flex: 1 , justifyContent: "flex-start",mt: 7}}>
-        <ErrorBoundary fallback={"Sidebar component has some Errors"}>
-          <Sidebar />
+      {/* #0000ff */}
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column"
+        }}
+      >
+        <ErrorBoundary fallback={"Header component has some Errors"}>
+          <Header />
         </ErrorBoundary>
-
         <Box
           sx={{
+            display: "flex",
             flex: 1,
+            justifyContent: "flex-start",
+            mt: 8,
             p: 0,
-            overflowY: "auto",
           }}
         >
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2,overflowY: "auto" }}>
-            <ErrorBoundary
-              fallback={"Portfolio form component has some Errors"}
+          <ErrorBoundary fallback={"Sidebar component has some Errors"}>
+            <Sidebar />
+          </ErrorBoundary>
+
+          <Box
+            sx={{
+              flex: 1,
+              p: 0,
+              overflowY: "auto",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 2,
+                overflowY: "auto",
+              }}
             >
-              <PortfolioForm />
-              <PortfolioBody />
-            </ErrorBoundary>
+              <ErrorBoundary
+                fallback={"Instance form component has some Errors"}
+              >
+             <Suspense fallback={<Skeleton variant="rectangular" width="100%" height={400} />}>
+                <InstanceForm />
+              </Suspense>
+              </ErrorBoundary>
+              <ErrorBoundary
+                fallback={"Portfolio form component has some Errors"}
+              > 
+                <PortfolioBody />
+              </ErrorBoundary>
+            </Box>
           </Box>
         </Box>
+        <ErrorBoundary fallback={"Bottom bar component has some Errors"}>
+          <BottomBar />
+        </ErrorBoundary>
       </Box>
-
-      <ErrorBoundary fallback={"Bottom bar component has some Errors"}>
-        <BottomBar />
-      </ErrorBoundary>
       <ErrorBoundary fallback={"Bottom bar component has some Errors"}>
         <Footer />
       </ErrorBoundary>

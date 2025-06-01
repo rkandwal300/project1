@@ -1,0 +1,100 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch, useSelector } from "react-redux";
+import { useCallback, lazy, Suspense } from "react";
+import { Box, Divider } from "@mui/material";
+import { instanceSchema } from "@/lib/validation/instance.schema";
+import { addInstance } from "@/redux/features/form/formData.slice";
+import { nanoid } from "@reduxjs/toolkit";
+
+import PropTypes from "prop-types";
+import { selectFormData } from "@/redux/features/form/formData.selector";  
+import useTimedMessage from "@/hooks/useTimedMessage";
+ 
+const FormAlert = lazy(() => import("@/components/ui/FormAlert"));
+const PortfolioDetails = lazy(() => import("./PortfolioDetails"));
+const GenericMetadata = lazy(() => import("./GenericMetadata"));
+const ConsumptionMetadata = lazy(() =>
+  import("./Consumption Metadata/ConsumptionMetadata")
+);
+
+InstanceForm.propTypes = {
+  initialValues: PropTypes.shape({
+    portfolioName: PropTypes.string,
+    region: PropTypes.string,
+    instanceType: PropTypes.string,
+    uuid: PropTypes.string,
+    pricingModel: PropTypes.string,
+  }),
+};
+
+export default function InstanceForm() {
+  const dispatch = useDispatch();
+  const defaultFormValues = useSelector(selectFormData);
+  const [formError, setFormError] = useTimedMessage();
+  const [formSuccess, setFormSuccess] = useTimedMessage();
+
+  const form = useForm({
+    resolver: zodResolver(instanceSchema),
+    defaultValues: defaultFormValues,
+    mode: "onTouched",
+  });
+
+  const handleSubmit = useCallback(
+    (data) => {
+      dispatch(addInstance({ id: nanoid(), ...data }));
+      setFormSuccess("Instance added successfully");
+      setFormError("");
+      form.reset({ portfolioName: data.portfolioName });
+    },
+    [dispatch, setFormSuccess, setFormError, form]
+  );
+
+  const handleError = useCallback(
+    (errors) => {
+      const errorMessages = Object.values(errors)
+        .map((err) => err?.message)
+        .filter(Boolean)
+        .join(", ");
+      setFormError(errorMessages || "Form validation failed");
+    },
+    [setFormError]
+  );
+
+  return (
+    <Box
+      component="form"
+      width="100%"
+      sx={{
+        bgcolor: "primary.contrastText",
+        p: 0,
+        display: "flex",
+        flexDirection: "column",
+      }}
+      onSubmit={form.handleSubmit(handleSubmit, handleError)}
+      noValidate
+    >
+      <Suspense fallback={null}>
+        <PortfolioDetails form={form} />
+        <Divider />
+        <GenericMetadata form={form} />
+        <ConsumptionMetadata form={form} />
+      </Suspense>
+
+      <FormAlert
+        open={!!formError}
+        severity="error"
+        onClose={() => setFormError("")}
+      >
+        {formError}
+      </FormAlert>
+      <FormAlert
+        open={!!formSuccess}
+        severity="success"
+        onClose={() => setFormSuccess("")}
+      >
+        {formSuccess}
+      </FormAlert>
+    </Box>
+  );
+}

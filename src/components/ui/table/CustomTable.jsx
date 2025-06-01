@@ -102,7 +102,7 @@ const CustomTable = ({
   });
 
   return (
-    <TableContainer component={Paper} sx={{ boxShadow: 3, overflowX: "auto" }}>
+    <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius:0, overflowX: "auto" }}>
       <Box sx={{ minWidth: "max-content" }}>
         {/* Table Head */}
         <Table size="small">
