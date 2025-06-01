@@ -9,16 +9,17 @@ import {
   addInstance,
   deletePortfolioFromList,
   updateInstance,
-} from "@/redux/features/instanceList/instanceList.slice"; 
+} from "@/redux/features/instanceList/instanceList.slice";
 import {
   selectFormData,
   selectInstanceStats,
   selectSelfPrefAssessment,
 } from "@/redux/features/form/formData.selector";
-import { nanoid } from "@reduxjs/toolkit"; 
+import { nanoid } from "@reduxjs/toolkit";
 import { resetForm } from "@/redux/features/form/formData.slice";
+import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 
-export default function BottomBar() {
+function BottomBar() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const formData = useSelector(selectFormData);
@@ -136,3 +137,9 @@ export default function BottomBar() {
     </Box>
   );
 }
+
+const BottomBarWithBoundary = withErrorBoundary(
+  BottomBar,
+  "Bottom bar component has some Errors"
+);
+export default BottomBarWithBoundary;

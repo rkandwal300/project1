@@ -2,9 +2,10 @@ import { AppBar, Toolbar, useTheme } from "@mui/material";
 import SubMenu from "./SubMenu/SubMenu";
 import Logo from "./Logo";
 import Title from "./Title";
+import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 
-export default function Header() {
-  const theme = useTheme()
+function Header() {
+  const theme = useTheme();
   return (
     <AppBar
       position="fixed"
@@ -21,7 +22,7 @@ export default function Header() {
     >
       <Toolbar
         sx={{
-          height: "64px", 
+          height: "64px",
           paddingLeft: 2,
           gap: { md: 2, xs: 2 },
         }}
@@ -34,3 +35,6 @@ export default function Header() {
     </AppBar>
   );
 }
+
+const HeaderWithErrorBoundary = withErrorBoundary(Header, "Header component has some Errors");
+export default HeaderWithErrorBoundary;

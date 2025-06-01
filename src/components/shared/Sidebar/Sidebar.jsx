@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import {  IconButton } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import SidebarDrawer from "./SidebarDrawer";
+import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 
-export default function Sidebar() {
+  function Sidebar() {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (state) => () => setOpen(state);
@@ -28,3 +29,7 @@ export default function Sidebar() {
     </IconButton>
   );
 }
+
+const SidebarWithBoundary = withErrorBoundary(Sidebar, "Sidebar component has some Errors");
+
+export default SidebarWithBoundary;

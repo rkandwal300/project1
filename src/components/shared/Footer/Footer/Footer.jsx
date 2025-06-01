@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Container, Grid, Link, Typography, Divider, IconButton, Stack } from '@mui/material';
 import { bottomLinks, footerLinks, socialIcons } from './FooterData';
 import FooterLinkItem from './FooterLinkItem';
+import { withErrorBoundary } from '@/hooks/withErrorBoundary';
 
 const Footer = () => (
   <Box component="footer" sx={{ bgcolor: '#121212', color: 'white', py: 6, width: '100%', flexShrink: 0 }}>
@@ -51,4 +52,8 @@ const Footer = () => (
   </Box>
 );
 
-export default Footer;
+
+const FooterWithBoundary = withErrorBoundary(Footer, "Footer component has some Errors");
+
+
+export default FooterWithBoundary;

@@ -17,6 +17,8 @@ import {
   selectFormReset,
 } from "@/redux/features/form/formData.selector";
 import useTimedMessage from "@/hooks/useTimedMessage";
+import ErrorBoundary from "../ErrorBoundary";
+import FormSkeleton from "./FormSkeleton";
 
 const FormAlert = lazy(() => import("@/components/ui/FormAlert"));
 const PortfolioDetails = lazy(() => import("./PortfolioDetails"));
@@ -35,7 +37,7 @@ InstanceForm.propTypes = {
   }),
 };
 
-export default function InstanceForm() {
+ function InstanceForm() {
   const dispatch = useDispatch();
   const formData = useSelector(selectFormData);
   const formReset = useSelector(selectFormReset);
@@ -120,3 +122,13 @@ export default function InstanceForm() {
     </Box>
   );
 }
+
+
+const InstanceFormWithBoundary = () => (
+  <ErrorBoundary fallback="Instance form component has some Errors">
+    <Suspense fallback={<FormSkeleton />}>
+      <InstanceForm />
+    </Suspense>
+  </ErrorBoundary>
+);
+export default InstanceFormWithBoundary;

@@ -13,6 +13,7 @@ import { Skeleton } from "@mui/material";
 import { selfPrefAssessmentColumn } from "./PortfolioTable/selfPrefAssessmentColumn";
 import { deleteInstances } from "@/redux/features/form/formData.slice";
 import TableSkeleton from "../ui/table/table_components/TableSkeleton ";
+import ErrorBoundary from "./ErrorBoundary";
  
 const CustomTable = lazy(() => import("../ui/table/CustomTable"));
 
@@ -48,7 +49,7 @@ const TABS = [
   },
 ];
 
-export default function PortfolioBody() {
+function PortfolioBody() {
   const dispatch = useDispatch();
   const [value, setValue] = useState(TABS[0].value);
 
@@ -108,3 +109,12 @@ export default function PortfolioBody() {
     </Box>
   );
 }
+
+
+const PortfolioBodyWithBoundary = () => (
+  <ErrorBoundary fallback="Portfolio form component has some Errors">
+    <PortfolioBody />
+  </ErrorBoundary>
+);
+
+export default PortfolioBodyWithBoundary;
