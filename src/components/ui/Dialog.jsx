@@ -14,8 +14,7 @@ export default function DialogHoc({ trigger, content, ...props }) {
     setOpen(false);
   };
 
-  return (
-    // <ErrorBoundary fallback={<div>Error in dialog</div>}>
+  return ( 
       <React.Fragment>
         {trigger({ onClick })}
         <Dialog
@@ -27,7 +26,6 @@ export default function DialogHoc({ trigger, content, ...props }) {
         >
           {content({ handleClose })}
         </Dialog>
-      </React.Fragment>
-    // </ErrorBoundary>
+      </React.Fragment> 
   );
 }

@@ -158,3 +158,50 @@ export const GENERIC_TOUR_STEPS = [
     prev: "step-four",
   },
 ];
+
+
+
+const subject = "EIA - Support Ticket Request - Regarding manageAccounts Page";
+
+const body = `
+Hi [Support Team/Specific Name],
+
+I am writing to request support regarding EIA manageAccounts Page.
+
+Description of the Issue:
+
+[Provide a detailed explanation of the problem.]
+
+Steps to Reproduce:
+
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+Expected Outcome:
+
+[Describe what you expected to happen.]
+
+Attachments:
+
+[Include any relevant files or screenshots.]
+
+Contact Information:
+
+Name: [Your Name]
+Email: [Your Email]
+Phone: [Your Phone Number]
+
+Urgency Level:
+
+Indicate urgency, e.g. [High, Medium, Low]
+
+Thank you for your assistance!
+
+Best regards,
+
+[Your Name]
+`;
+
+export const supportMailtoLink = `mailto:support@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+export const supportMobileNumber = `tel:+1 (502) 388-6228` 
