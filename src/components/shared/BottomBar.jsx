@@ -14,7 +14,10 @@ import {
   addInstance,
   deletePortfolioFromList,
 } from "@/redux/features/instanceList/instanceList.slice";
-import { resetInstanceState, updateInstance } from "@/redux/features/instance/instance.slice";
+import {
+  resetInstanceState,
+  updateInstance,
+} from "@/redux/features/instance/instance.slice";
 
 export default function BottomBar() {
   const theme = useTheme();
@@ -23,7 +26,6 @@ export default function BottomBar() {
   const instances = useSelector(selectInstanceStats);
   const selfPrefAssessmentData = useSelector(selectSelfPrefAssessment);
 
-  
   const handleSavePortFolio = () => {
     if (formData.id)
       dispatch(
@@ -66,8 +68,11 @@ export default function BottomBar() {
   return (
     <Box
       id="manage-portfolio-footer-action-container"
+      display={"grid"}
+      gap={"16px"}
       sx={{
         p: 2,
+        gridTemplateColumns:{xs:"repeat(1,1fr)",sm:"repeat(2, 1fr)"},
         borderTop: `1px solid ${theme.palette.divider}`,
         bgcolor: theme.palette.grey[100],
         color: theme.palette.text.default,
@@ -75,17 +80,17 @@ export default function BottomBar() {
     >
       <Typography
         variant="body2"
-        sx={{ fontWeight: 700, fontSize: "0.8rem", display: "inline" }}
+        sx={{
+          fontWeight: 400,
+          fontSize: "0.8rem",
+          display: "flex",
+          alignItems: "start",
+          gap: "4px",
+        }}
       >
-        Note:
+        <span style={{ fontWeight: 700 }}> Note:</span>
+        <span> Please upload file with maximum of 20,000 records</span>
       </Typography>
-      <Typography
-        variant="body2"
-        sx={{ fontSize: "0.8rem", display: "inline", ml: 0.5 }}
-      >
-        Please upload file with maximum of 20,000 records
-      </Typography>
-
       {/* Action buttons */}
       <Grid container spacing={1} justifyContent="flex-end" alignItems="center">
         <Grid item>
