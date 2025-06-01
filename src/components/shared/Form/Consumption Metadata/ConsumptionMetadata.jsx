@@ -1,13 +1,7 @@
-import React, { useEffect, useState, lazy, Suspense } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { Typography, Button, Box } from "@mui/material";
 import { Add, FileCopy } from "@mui/icons-material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectInstanceFormData,
-  selectInstanceResponse,
-} from "@/redux/features/instance/instance.selector";
-import { updateFormData } from "@/redux/features/instance/instance.slice";
 import tour from "@/tour/tour";
 import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
@@ -16,13 +10,9 @@ import { AnimatedIconButton } from "./AnimatedIconButton";
 
 // Lazy load components
 const HoverInput = lazy(() => import("@/components/ui/form/Input"));
-// const AnimatedIconButton = lazy(() => import("./AnimatedIconButton"));
 
 function ConsumptionMetadata({ form }) {
   const [animate, setAnimate] = useState(false);
-  const dispatch = useDispatch();
-  const state = useSelector(selectInstanceFormData);
-  const response = useSelector(selectInstanceResponse);
 
   useEffect(() => {
     CONSUMPTION_TOUR_STEPS.forEach((step) => {
@@ -38,11 +28,6 @@ function ConsumptionMetadata({ form }) {
           {
             text: "Next",
             action: () => {
-              if (step.field && !state[step.field]) {
-                dispatch(
-                  updateFormData({ [step.field]: response[step.field] })
-                );
-              }
               tour.show(step.next);
             },
           },
@@ -65,19 +50,19 @@ function ConsumptionMetadata({ form }) {
       control={form.control}
       render={({ field, fieldState }) => (
         <HoverInput
-        label={label}
-        fullWidth
-        hideClearIcon={true}
-        value={field.value ?? ""}
-        error={!!fieldState.error}
-        tooltipMessage={tooltipMessage}
+          label={label}
+          fullWidth
+          hideClearIcon={true}
+          value={field.value ?? ""}
+          error={!!fieldState.error}
+          tooltipMessage={tooltipMessage}
           onChange={(e) => {
             const value = e.target.value;
             // Only update if value is a number (allow empty string for clearing)
             if (value === "" || !isNaN(Number(value))) {
               field.onChange(Number(value));
             }
-          }} 
+          }}
         />
       )}
     />

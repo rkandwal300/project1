@@ -1,35 +1,22 @@
 import React, { useEffect, useCallback, lazy, Suspense } from "react";
 import { Box, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectInstanceFormData,
-  selectInstanceResponse,
-} from "@/redux/features/instance/instance.selector";
 import tour from "@/tour/tour";
 import { updateFormData } from "@/redux/features/instance/instance.slice";
 import { GENERIC_FIELDS, GENERIC_TOUR_STEPS } from "@/lib/constant";
 import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 
 const HoverInput = lazy(() => import("@/components/ui/form/Input"));
 const HoverSelect = lazy(() => import("@/components/ui/form/Select"));
 
 const GenericMetadata = ({ form }) => {
-  const dispatch = useDispatch();
-  const state = useSelector(selectInstanceFormData);
-  const response = useSelector(selectInstanceResponse);
+  const handleFieldClick = useCallback(() => {
+    // if (!state[field] && response[field] !== undefined) {
+    //   dispatch(updateFormData({ [field]: response[field] }));
+    // }
+  }, []);
 
-   
-  const handleFieldClick = useCallback(
-    (field) => {
-      if (!state[field] && response[field] !== undefined) {
-        dispatch(updateFormData({ [field]: response[field] }));
-      }
-    },
-    [dispatch, state, response]
-  );
-
-  
   useEffect(() => {
     GENERIC_TOUR_STEPS.forEach(({ id, text, attachTo, field, next, prev }) => {
       tour.addStep({
@@ -53,7 +40,7 @@ const GenericMetadata = ({ form }) => {
     });
     // eslint-disable-next-line
   }, [handleFieldClick]);
- 
+
   const renderField = ({ name, label, options, tooltipMessage }) => (
     <Controller
       key={name}

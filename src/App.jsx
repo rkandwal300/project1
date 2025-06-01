@@ -7,7 +7,7 @@ import Sidebar from "./components/shared/Sidebar/Sidebar";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
 import PortfolioBody from "./components/shared/PortfolioBody";
 import Footer from "./components/shared/Footer/Footer/Footer";
-import { Box, CssBaseline, Skeleton, ThemeProvider, useTheme } from "@mui/material";
+import { Box, CssBaseline, ThemeProvider, useTheme } from "@mui/material";
 import InstanceForm from "./components/shared/Form/InstanceForm";
 import { Suspense } from "react";
 import FormSkeleton from "./components/shared/Form/FormSkeleton";
