@@ -42,19 +42,19 @@ export const useTableStyles = (variant, theme) =>
 
 export const getCommonPinningStyles = (column) => {
   const isPinned = column.getIsPinned();
-  const isLastLeftPinnedColumn =
-    isPinned === "left" && column.getIsLastColumn("left");
-  const isFirstRightPinnedColumn =
-    isPinned === "right" && column.getIsFirstColumn("right");
+  // const isLastLeftPinnedColumn =
+  //   isPinned === "left" && column.getIsLastColumn("left");
+  // const isFirstRightPinnedColumn =
+  //   isPinned === "right" && column.getIsFirstColumn("right");
 
-  let boxShadow;
-  if (isLastLeftPinnedColumn) {
-    boxShadow = "-1px 0 0 0 #aba7a7 inset";
-  } else if (isFirstRightPinnedColumn) {
-    boxShadow = "1px 0 0 0 #aba7a7 inset";
-  } else {
-    boxShadow = undefined;
-  }
+  // let boxShadow;
+  // if (isLastLeftPinnedColumn) {
+  //   boxShadow = "-1px 0 0 0 #aba7a7 inset";
+  // } else if (isFirstRightPinnedColumn) {
+  //   boxShadow = "1px 0 0 0 #aba7a7 inset";
+  // } else {
+  //   boxShadow = undefined;
+  // }
 
   return {
     left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
@@ -65,6 +65,6 @@ export const getCommonPinningStyles = (column) => {
     width: column.columnDef?.size,
     minWidth: column.columnDef?.minSize,
     maxWidth: column.columnDef?.maxSize,
-    boxShadow,
+    // boxShadow,
   };
 };

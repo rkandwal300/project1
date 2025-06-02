@@ -55,6 +55,8 @@ const CustomTable = ({
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnPinningChange: setColumnPinning,
+    getHeaderGroups: getCoreRowModel(),
+    
     enableColumnPinning: true,
     debugTable: false,
     manualGrouping: true,
@@ -69,7 +71,7 @@ const CustomTable = ({
   return (
     <TableContainer
       component={Paper}
-      sx={{ boxShadow: 3, borderRadius: "0  0 10px  10px" }}
+      sx={{ boxShadow: 3, }}
     >
       <Box sx={{ overflowX: "auto" }}>
         <Table

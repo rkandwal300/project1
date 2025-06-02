@@ -1,23 +1,21 @@
 import BottomBar from "@/components/shared/BottomBar";
 import Header from "@/components/shared/header/Header";
 import Footer from "@/components/shared/Footer/Footer/Footer";
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import MainContent from "./MainContent";
 
-function MainLayout() {
-  const themeColor = useTheme();
+function MainLayout() { 
 
   return (
     <Box
       sx={{
         minHeight: "100vh",
         display: "flex",
-        flexDirection: "column",
-        backgroundColor: themeColor.palette.background.default,
+        flexDirection: "column", 
       }}
     >
       <Header />
-      <Box display={"flex"} height={'100vh'} flexDirection={"column"}>
+      <Box display={"flex"} minHeight={'100vh'} flexDirection={"column"}>
         <MainContent />
         <BottomBar />
       </Box>
