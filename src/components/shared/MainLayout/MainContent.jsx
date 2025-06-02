@@ -1,8 +1,5 @@
-import BottomBar from "@/components/shared/BottomBar";
-import Header from "@/components/shared/header/Header";
-import Sidebar from "@/components/shared/Sidebar/Sidebar";
-import Footer from "@/components/shared/Footer/Footer/Footer";
-import { Box, useTheme } from "@mui/material";
+import Sidebar from "@/components/shared/Sidebar/Sidebar"; 
+import { Box, } from "@mui/material";
 import InstanceForm from "@/components/shared/Form/InstanceForm";
 import { useSelector } from "react-redux";
 import { selectHideInstances } from "@/redux/features/form/formData.selector";
@@ -32,7 +29,7 @@ function MainContent() {
             overflowY: "auto",
             bgcolor: "primary.contrastText",
             boxShadow: 3,
-            borderRadius: "0 0 14px 14px",
+            borderRadius: "0 0 10px 10px",
           }}
         >
           <InstanceForm />

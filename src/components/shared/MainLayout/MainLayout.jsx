@@ -17,8 +17,10 @@ function MainLayout() {
       }}
     >
       <Header />
-      <MainContent />
-      <BottomBar />
+      <Box display={"flex"} height={'100vh'} flexDirection={"column"}>
+        <MainContent />
+        <BottomBar />
+      </Box>
       <Footer />
     </Box>
   );
