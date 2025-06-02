@@ -23,8 +23,11 @@ import {
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import FormAlert from "../ui/FormAlert";
+import { useNavigate } from "react-router-dom";
 
 function BottomBar() {
+    const navigate = useNavigate();
+
   const theme = useTheme();
   const dispatch = useDispatch();
   const formData = useSelector(selectFormData);
@@ -54,13 +57,12 @@ function BottomBar() {
   };
 
   const handleResetFormData = () => {
-    dispatch(resetForm());
-    // setFormError("");
+    dispatch(resetForm()); 
   };
 
   const isSaveDisabled = !instances.length || !formData.portfolioName.trim();
 
-  const isInstanceAdviceDisabled = true;
+  const isInstanceAdviceDisabled = !(formData.id);
   const isValueEmpty = (val) => {
     if (Array.isArray(val)) {
       return !val.length;
@@ -146,6 +148,7 @@ function BottomBar() {
           variant="contained"
           startIcon={<BuildIcon />}
           disabled={isInstanceAdviceDisabled}
+          onClick={()=> navigate("/instanceAdvice")}
         >
           Instance advice
         </Button>

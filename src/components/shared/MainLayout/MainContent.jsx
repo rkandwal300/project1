@@ -1,10 +1,11 @@
-import Sidebar from "@/components/shared/Sidebar/Sidebar"; 
-import { Box, } from "@mui/material";
+import Sidebar from "@/components/shared/Sidebar/Sidebar";
+import { Box } from "@mui/material";
 import InstanceForm from "@/components/shared/Form/InstanceForm";
 import { useSelector } from "react-redux";
 import { selectHideInstances } from "@/redux/features/form/formData.selector";
 import PortfolioBody from "../PortfolioBody";
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
+import { Route } from "react-router-dom";
 
 function MainContent() {
   const showTable = useSelector(selectHideInstances);
@@ -23,10 +24,10 @@ function MainContent() {
       <Box sx={{ flex: 1, p: 0, overflowY: "auto" }}>
         <Box
           sx={{
-            display: "flex", 
+            display: "flex",
             flexDirection: "column",
             overflowY: "auto",
-            boxShadow: 3, 
+            boxShadow: 3,
           }}
         >
           <InstanceForm />
@@ -37,6 +38,8 @@ function MainContent() {
   );
 }
 
-
-const MainContentWithErrorBoundary = withErrorBoundary(MainContent, "MainContent component has some Errors");
-export default MainContentWithErrorBoundary
+const MainContentWithErrorBoundary = withErrorBoundary(
+  MainContent,
+  "MainContent component has some Errors"
+);
+export default MainContentWithErrorBoundary;
