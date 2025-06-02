@@ -1,3 +1,4 @@
+import { getCommonPinningStyles } from "@/hooks/useTableStyles";
 import { TableCell } from "@mui/material";
 import { flexRender } from "@tanstack/react-table"; 
 
@@ -6,7 +7,7 @@ const CustomTableCell =
   ({ cell, styles, variant, isEditing, onDoubleClick }) => (
     <TableCell
       sx={{
-        ...styles.cell,
+        ...styles.cell,...getCommonPinningStyles(cell.column),
         py: isEditing ? 0 : "3px",
         minHeight: "69px",
         alignItems: "center",
@@ -14,6 +15,7 @@ const CustomTableCell =
         width: cell.column.getSize(),
         minWidth: cell.column.getSize(),
         maxWidth: cell.column.getSize(),
+
       }}
       onDoubleClick={onDoubleClick}
     >

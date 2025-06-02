@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { flexRender } from "@tanstack/react-table";
 import { TableCell, TableHead, TableRow } from "@mui/material";
+import { getCommonPinningStyles } from "@/hooks/useTableStyles";
 
 const CustomTableHeader = ({ headerGroups, styles }) => (
   <TableHead>
@@ -14,6 +15,7 @@ const CustomTableHeader = ({ headerGroups, styles }) => (
             align="left"
             colSpan={header.colSpan}
             style={{
+                ...getCommonPinningStyles(header.column),
               width: header.getSize(),
               minWidth: header.getSize(),
               maxWidth: header.getSize(),

@@ -18,9 +18,10 @@ export const useTableStyles = (variant, theme) =>
           color: "#299bff",
           borderBottom: "none",
           fontWeight: "bold",
+          backgroundColor: theme.palette.dark,
         },
       };
-    } 
+    }
     return {
       row: { backgroundColor: theme.palette.dark },
       cell: {
@@ -38,5 +39,32 @@ export const useTableStyles = (variant, theme) =>
       },
     };
   }, [variant, theme]);
- 
 
+export const getCommonPinningStyles = (column) => {
+  const isPinned = column.getIsPinned();
+  const isLastLeftPinnedColumn =
+    isPinned === "left" && column.getIsLastColumn("left");
+  const isFirstRightPinnedColumn =
+    isPinned === "right" && column.getIsFirstColumn("right");
+
+  let boxShadow;
+  if (isLastLeftPinnedColumn) {
+    boxShadow = "-1px 0 0 0 #aba7a7 inset";
+  } else if (isFirstRightPinnedColumn) {
+    boxShadow = "1px 0 0 0 #aba7a7 inset";
+  } else {
+    boxShadow = undefined;
+  }
+
+  return {
+    left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
+    right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
+    opacity: isPinned ? 1 : 1,
+    position: isPinned ? "sticky" : "relative",
+    zIndex: isPinned ? 1 : 0,
+    width: column.columnDef?.size,
+    minWidth: column.columnDef?.minSize,
+    maxWidth: column.columnDef?.maxSize,
+    boxShadow,
+  };
+};

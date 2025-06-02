@@ -9,7 +9,6 @@ import {
   selectSelfPrefAssessment,
 } from "@/redux/features/form/formData.selector";
 import GetInstanceColumn from "./PortfolioTable/portfolioColumn";
-import { Skeleton } from "@mui/material";
 import { selfPrefAssessmentColumn } from "./PortfolioTable/selfPrefAssessmentColumn";
 import { deleteInstances } from "@/redux/features/form/formData.slice";
 import TableSkeleton from "../ui/table/table_components/TableSkeleton ";
@@ -85,12 +84,7 @@ function PortfolioBody() {
       </Box>
       <Suspense fallback={<TableSkeleton />}>
         {TABS.map((tab) => (
-          <TabPanel
-            key={tab.value}
-            value={value}
-            index={tab.value}
-           
-          >
+          <TabPanel key={tab.value} value={value} index={tab.value}>
             {tab.showNote && (
               <p
                 style={{ fontSize: 16, fontWeight: 500, color: "rgb(0,0,225)" }}
@@ -105,6 +99,14 @@ function PortfolioBody() {
               isPagination
               isAction={tab.isAction}
               onDelete={tab.isAction ? onDelete : undefined}
+              defaultColumnPinningState={
+                value === "instance_stats"
+                  ? {
+                      left: ["select", "uuid"],
+                      right: [],
+                    }
+                  : {}
+              }
             />
           </TabPanel>
         ))}

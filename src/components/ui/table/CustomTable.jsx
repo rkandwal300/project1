@@ -21,6 +21,7 @@ const CustomTable = ({
   variant = "default",
   isPagination = false,
   onDelete,
+  defaultColumnPinningState,
 }) => {
   const theme = useTheme();
   const styles = useTableStyles(variant, theme);
@@ -31,11 +32,17 @@ const CustomTable = ({
     columnId: null,
   });
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+  const [columnPinning, setColumnPinning] = useState(
+    defaultColumnPinningState ?? {
+      left: [],
+      right: [],
+    }
+  );
 
   const table = useReactTable({
     data,
     columns,
-    state: { grouping, pagination },
+    state: { grouping, pagination, columnPinning },
     meta: {
       editingCell,
       setEditingCell,
@@ -47,6 +54,8 @@ const CustomTable = ({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnPinningChange: setColumnPinning,
+    enableColumnPinning: true,
     debugTable: false,
     manualGrouping: true,
     enableRowSelection: true,
@@ -94,6 +103,10 @@ CustomTable.propTypes = {
   variant: PropTypes.string,
   isPagination: PropTypes.bool,
   onDelete: PropTypes.func,
+  defaultColumnPinningState: PropTypes.shape({
+    left: PropTypes.arrayOf(PropTypes.string),
+    right: PropTypes.arrayOf(PropTypes.string),
+  }),
 };
 
 export default CustomTable;
