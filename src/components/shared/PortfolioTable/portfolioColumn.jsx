@@ -115,7 +115,7 @@ export default function GetInstanceColumn() {
             }}
           />
         ),
-        cell: ({ row }) => (
+        cell: ({ row }) =>  (
           <Checkbox
             checked={row.getIsSelected()}
             indeterminate={row.getIsSomeSelected()}
@@ -128,24 +128,35 @@ export default function GetInstanceColumn() {
         ),
         enableSorting: false,
         enableColumnFilter: false,
-        size: 50,
+        size: 70,
+        maxSize: 70,
+        minSize: 70,
       },
       {
         id: "uuid",
         header: () => "UUID/Instance Name",
         accessorKey: "uuid",
+        minSize: 200,
+        size: 200,
+        maxSize: 400,
       },
       {
         id: "region",
         header: () => "Region",
         accessorKey: "region",
         cell: renderEditableCell("select", "region"),
+        minSize: 150,
+        size: 150,
+        maxSize: 200,
       },
       {
         id: "instanceType",
         header: () => "Type",
         accessorKey: "instanceType",
         cell: renderEditableCell("select", "instanceType"),
+        minSize: 150,
+        size: 150,
+        maxSize: 200,
       },
       {
         header: "Maximum Bandwidth Used",
@@ -154,26 +165,41 @@ export default function GetInstanceColumn() {
             accessorKey: "maxCpuUtilization",
             header: "CPU(%)",
             cell: renderEditableTextCell("maxCpuUtilization"),
+            minSize: 150,
+            size: 150,
+            maxSize: 200,
           },
           {
             accessorKey: "maxMemoryUsed",
             header: "Memory(GB)",
             cell: renderEditableTextCell("maxMemoryUsed"),
+            minSize: 150,
+            size: 150,
+            maxSize: 200,
           },
           {
             accessorKey: "maxDiskBandwidth",
             header: "Disk(MBps)",
             cell: renderEditableTextCell("maxDiskBandwidth"),
+            minSize: 150,
+            size: 150,
+            maxSize: 200,
           },
           {
             accessorKey: "maxNetworkBandwidth",
             header: "Network (Mbps)",
             cell: renderEditableTextCell("maxNetworkBandwidth"),
+            minSize: 150,
+            size: 150,
+            maxSize: 200,
           },
           {
             accessorKey: "maxIOPS",
             header: "IOPS",
             cell: renderEditableTextCell("maxIOPS"),
+            minSize: 150,
+            size: 150,
+            maxSize: 200,
           },
         ],
       },
@@ -182,6 +208,9 @@ export default function GetInstanceColumn() {
         header: () => "Pricing Model",
         accessorKey: "pricingModel",
         cell: renderEditableCell("select", "pricingModel"),
+         minSize: 150,
+        size: 150,
+        maxSize: 200,
       },
       {
         id: "action",
@@ -216,6 +245,8 @@ export default function GetInstanceColumn() {
           </IconButton>
         ),
         size: 50,
+        maxSize: 50,
+        minSize: 50,
       },
     ],
     [renderEditableCell, renderEditableTextCell, theme]

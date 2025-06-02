@@ -21,14 +21,16 @@ const selectOptions = [
 ];
 
 export default function SidebarDrawer({ toggleDrawer }) {
+  const [selectValue, setSelectValue] = React.useState(
+    selectOptions[0].options[0].value
+  );
   const theme = useTheme();
   const borderColor = theme.palette.sidebar?.border || theme.palette.divider;
-
   return (
     <Box
-      bgcolor="inherit" 
+      bgcolor="inherit"
       sx={{
-        mt:1,
+        mt: 1,
         width: { xs: 201, md: 262 },
         flexShrink: 0,
         borderRight: `1px solid ${borderColor}`,
@@ -38,7 +40,8 @@ export default function SidebarDrawer({ toggleDrawer }) {
         <SidebarSelect
           label="Service Provider"
           options={selectOptions}
-          value={selectOptions[0].options[0].value}
+          value={selectValue}
+          onValueChange={({ target }) => setSelectValue(target.value)}
         />
         <IconButton
           id="btn-dashboard-togglePortfolios"

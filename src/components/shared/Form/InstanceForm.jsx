@@ -37,7 +37,7 @@ InstanceForm.propTypes = {
   }),
 };
 
- function InstanceForm() {
+function InstanceForm() {
   const dispatch = useDispatch();
   const formData = useSelector(selectFormData);
   const formReset = useSelector(selectFormReset);
@@ -90,8 +90,9 @@ InstanceForm.propTypes = {
       component="form"
       width="100%"
       sx={{
-        
         p: 0,
+        py: 2,
+        bgcolor: "primary.contrastText",
         display: "flex",
         flexDirection: "column",
       }}
@@ -122,7 +123,6 @@ InstanceForm.propTypes = {
     </Box>
   );
 }
-
 
 const InstanceFormWithBoundary = () => (
   <ErrorBoundary fallback="Instance form component has some Errors">

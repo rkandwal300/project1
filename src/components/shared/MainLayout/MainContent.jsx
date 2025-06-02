@@ -23,13 +23,10 @@ function MainContent() {
       <Box sx={{ flex: 1, p: 0, overflowY: "auto" }}>
         <Box
           sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 2,
+            display: "flex", 
+            flexDirection: "column",
             overflowY: "auto",
-            bgcolor: "primary.contrastText",
-            boxShadow: 3,
-            borderRadius: "0 0 10px 10px",
+            boxShadow: 3, 
           }}
         >
           <InstanceForm />

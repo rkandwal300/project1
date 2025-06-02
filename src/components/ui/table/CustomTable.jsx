@@ -1,7 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  flexRender,
   getCoreRowModel,
   getExpandedRowModel,
   getFilteredRowModel,
@@ -9,60 +8,12 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  useTheme,
-  Box,
-} from "@mui/material";
+import { Table, TableContainer, Paper, useTheme, Box } from "@mui/material";
 import TablePagination from "./TablePagination";
 import ActionBlock from "./table_components/ActionBlock";
-
-const useTableStyles = (variant, theme) =>
-  useMemo(() => {
-    if (variant === "primary") {
-      return {
-        row: { backgroundColor: theme.palette.dark },
-        cell: {
-          color: theme.palette.success.contrastText,
-          backgroundColor: theme.palette.grey[700],
-          verticalAlign: "top",
-          borderBottom: `1px solid ${theme.palette.secondary.default}`,
-          padding: 2,
-        },
-        head: {
-          verticalAlign: "top",
-          padding: 2,
-          color: "#299bff",
-          borderBottom: "none",
-          fontWeight: "bold",
-        },
-      };
-    }
-    // Default variant
-    return {
-      row: { backgroundColor: theme.palette.dark },
-      cell: {
-        border: `1px solid ${theme.palette.dark}`,
-        verticalAlign: "top",
-        padding: 2,
-      },
-      head: {
-        borderLeft: `1px solid ${theme.palette.secondary.default}`,
-        borderTop: `1px solid ${theme.palette.secondary.default}`,
-        color: theme.palette.success.contrastText,
-        verticalAlign: "top",
-        padding: 2,
-        fontWeight: "bold",
-      },
-    };
-  }, [variant, theme]);
+import { useTableStyles } from "@/hooks/useTableStyles";
+import CustomTableHeader from "./table_components/CustomTableHeader";
+import CustomTableBody from "./table_components/CustomTableBody";
 
 const CustomTable = ({
   data,
@@ -99,92 +50,38 @@ const CustomTable = ({
     debugTable: false,
     manualGrouping: true,
     enableRowSelection: true,
+    defaultColumn: {
+      minSize: 0,
+      size: Number.MAX_SAFE_INTEGER,
+      maxSize: Number.MAX_SAFE_INTEGER,
+    },
   });
 
   return (
-    <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius:0, overflowX: "auto" }}>
-      <Box sx={{ minWidth: "max-content" }}>
-        {/* Table Head */}
-        <Table size="small">
-          <TableHead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} sx={styles.row}>
-                {headerGroup.headers.map((header) => (
-                  <TableCell
-                    key={header.id}
-                    sx={{ ...styles.head, py: "3px" }}
-                    align="left"
-                    colSpan={header.colSpan}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableHead>
+    <TableContainer
+      component={Paper}
+      sx={{ boxShadow: 3, borderRadius: "0  0 10px  10px" }}
+    >
+      <Box sx={{ overflowX: "auto" }}>
+        <Table
+          size="small"
+          sx={{ tableLayout: "fixed", minWidth: "max-content" }}
+        >
+          <CustomTableHeader
+            headerGroups={table.getHeaderGroups()}
+            styles={styles}
+          />
+          <CustomTableBody
+            rows={table.getRowModel().rows}
+            styles={styles}
+            variant={variant}
+            editingCell={editingCell}
+            setEditingCell={setEditingCell}
+            getAllColumns={table.getAllColumns}
+            getTotalSize={table.getTotalSize}
+          />
         </Table>
-        {/* Table Body */}
-        <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 200px)" }}>
-          <Table size="small">
-            <TableBody>
-              {table.getRowModel().rows.length > 0 ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => {
-                      const isEditing =
-                        table.options.meta.editingCell?.rowIndex ===
-                          row.index &&
-                        table.options.meta.editingCell?.columnId ===
-                          cell.column.id;
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          sx={{
-                            ...styles.cell,
-                            py:          isEditing ? 0 : "3px",
-                            minHeight: "69px",
-                            alignItems: "center",
-                            verticalAlign: "middle",
-                          }}
-                          onDoubleClick={() =>
-                            table.options.meta.setEditingCell({
-                              rowIndex: row.index,
-                              columnId: cell.column.id,
-                            })
-                          }
-                        >
-                          {flexRender(cell.column.columnDef.cell, {
-                            ...cell.getContext(),
-                            isEditing,
-                          })}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell sx={styles.cell} colSpan={columns.length}>
-                    <Typography
-                      align="center"
-                      variant="body2"
-                      color="textSecondary"
-                    >
-                      No Data Available
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </Box>
       </Box>
-      {/* Optional Pagination and Actions */}
       {isPagination && <TablePagination table={table} />}
       {onDelete && <ActionBlock table={table} onDelete={onDelete} />}
     </TableContainer>

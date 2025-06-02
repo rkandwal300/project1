@@ -56,6 +56,7 @@ function ReleaseNotes({ handleClose }) {
         </Typography>
         {/* <ReleaseNotesTable /> */}
         <CustomTable
+          variant="default"
           data={releaseNotesTableData}
           columns={releaseNotesTableColumns}
         />

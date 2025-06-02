@@ -14,7 +14,7 @@ import { selfPrefAssessmentColumn } from "./PortfolioTable/selfPrefAssessmentCol
 import { deleteInstances } from "@/redux/features/form/formData.slice";
 import TableSkeleton from "../ui/table/table_components/TableSkeleton ";
 import ErrorBoundary from "./ErrorBoundary";
- 
+
 const CustomTable = lazy(() => import("../ui/table/CustomTable"));
 
 const TabPanel = React.memo(function TabPanel({ children, value, index }) {
@@ -75,7 +75,7 @@ function PortfolioBody() {
   );
 
   return (
-    <Box sx={{ width: "100%", p: 0 }}>
+    <Box sx={{ width: "100%", p: 0, bgcolor: "primary.contrastText" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange} aria-label="portfolio tabs">
           {TABS.map((tab) => (
@@ -83,11 +83,14 @@ function PortfolioBody() {
           ))}
         </Tabs>
       </Box>
-      <Suspense
-        fallback={<TableSkeleton   />}
-      >
+      <Suspense fallback={<TableSkeleton />}>
         {TABS.map((tab) => (
-          <TabPanel key={tab.value} value={value} index={tab.value}>
+          <TabPanel
+            key={tab.value}
+            value={value}
+            index={tab.value}
+           
+          >
             {tab.showNote && (
               <p
                 style={{ fontSize: 16, fontWeight: 500, color: "rgb(0,0,225)" }}
@@ -109,7 +112,6 @@ function PortfolioBody() {
     </Box>
   );
 }
-
 
 const PortfolioBodyWithBoundary = () => (
   <ErrorBoundary fallback="Portfolio form component has some Errors">

@@ -2,15 +2,15 @@ import React from "react";
 import { Box, Button, Link } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"; 
 
 export default function ActionBlock({ table, onDelete }) {
   const selectedRows = table.getSelectedRowModel().rows;
+   
   const handleDelete = () => {
     if (!selectedRows || selectedRows.length === 0) return;
 
-    onDelete({ selectedRows });
-
+    onDelete({ selectedRows }); 
     table.resetRowSelection();
   };
   return (
@@ -38,7 +38,7 @@ export default function ActionBlock({ table, onDelete }) {
           textTransform: "none",
         }}
       >
-        Delete
+        {`Delete ${selectedRows.length === 0 ? "" : `(${selectedRows.length})`}`}
       </Button>
 
       <Link
