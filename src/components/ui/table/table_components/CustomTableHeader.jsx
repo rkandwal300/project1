@@ -1,85 +1,118 @@
-import React from "react";
+import React, { memo, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import { flexRender } from "@tanstack/react-table";
 import { TableCell, TableHead, TableRow } from "@mui/material";
 import { getCommonPinningStyles } from "@/hooks/useTableStyles";
 import { useTheme } from "@emotion/react";
 
+// Extract cell style logic for reuse and clarity
+const useCellStyle = ({
+  header,
+  lastColumnIds,
+  variant,
+  borderColor,
+  isMultiHeader,
+  isTopParentHeader,
+}) => {
+  const size =
+    header.getSize() === Number.MAX_SAFE_INTEGER ? "auto" : header.getSize();
+
+  let columnStyles = getCommonPinningStyles(header.column);
+
+  if (header.column.getIsPinned()) {
+    columnStyles = {
+      ...columnStyles,
+      left: header.getStart(),
+    };
+  }
+
+  const shouldAddRightBorder =
+    isTopParentHeader &&
+    isMultiHeader &&
+    variant === "primaryBorder" &&
+    !header.column.getIsPinned();
+
+  let cellStyle = {
+    ...columnStyles,
+    width: size,
+    minWidth: size,
+    maxWidth: size,
+    borderRight:
+      lastColumnIds.has(header.column.id) &&
+      variant === "primaryBorder" &&
+      !header.column.getIsPinned()
+        ? `1px solid ${borderColor}`
+        : undefined,
+  };
+
+  if (shouldAddRightBorder) {
+    cellStyle = {
+      ...cellStyle,
+      borderRight: `1px solid ${borderColor}`,
+    };
+  }
+
+  return cellStyle;
+};
+
 const CustomTableHeader = ({
   headerGroups,
-  styles,
+  styles = {},
   variant,
   lastColumnIds,
 }) => {
   const theme = useTheme();
 
+  // Memoize border color
+  const borderColor = useMemo(
+    () => theme.palette?.secondary?.default,
+    [theme.palette?.secondary?.default]
+  );
+
+  // Memoize cell style calculation for performance
+  const getCellStyle = useCallback(
+    (header, isMultiHeader, isTopParentHeader) =>
+      useCellStyle({
+        header,
+        lastColumnIds,
+        variant,
+        borderColor,
+        isMultiHeader,
+        isTopParentHeader,
+      }),
+    [lastColumnIds, variant, borderColor]
+  );
+
   return (
     <TableHead>
-      {headerGroups.map((headerGroup) => (
-        <TableRow key={headerGroup.id} sx={styles.row}>
-          {headerGroup.headers.map((header) => {
-            if (header.isPlaceholder) return null;
+      {headerGroups.map((headerGroup) => {
+        const isMultiHeader = headerGroups.length > 1;
+        return (
+          <TableRow key={headerGroup.id} sx={styles.row}>
+            {headerGroup.headers.map((header) => {
+              if (header.isPlaceholder) return null;
 
-            let size;
-            if (header.getSize() === Number.MAX_SAFE_INTEGER) {
-              size = "auto";
-            } else {
-              size = header.getSize();
-            }
-            // NEW: compute width of pinned header groups
-            // if (header.subHeaders?.length && header.column?.getIsPinned?.()) {
-            //   const pinnedSubHeaders = header.subHeaders.filter((sub) =>
-            //     sub.column.getIsPinned()
-            //   );
-            //   size = pinnedSubHeaders.reduce(
-            //     (acc, sub) => acc + sub.getSize(),
-            //     0
-            //   );
-            // }
-            // if (header.subHeaders?.length && header.column?.getIsPinned?.()) {
-            //   const pinnedSubHeaders = header.subHeaders.filter((sub) =>
-            //     sub.column.getIsPinned()
-            //   );
+              const align = header.column.columnDef.meta?.align || "left";
+              const isTopParentHeader = header.depth === 1;
 
-            //   size = pinnedSubHeaders.reduce(
-            //     (acc, sub) => acc + sub.getSize(),
-            //     0
-            //   );
-            // } else {
-              size =
-                header.getSize() === Number.MAX_SAFE_INTEGER
-                  ? "auto"
-                  : header.getSize();
-            // }
-            console.log({ left: header.getStart(), size, header: header.column.columnDef.header });
-            return (
-              <TableCell
-                key={header.id}
-                sx={{ ...styles.head, py: "3px" }}
-                align="left"
-                colSpan={header.colSpan}
-                style={{
-                  ...getCommonPinningStyles(header.column),
-                  // left: header.getStart()
-                  width: size,
-                  minWidth: size,
-                  maxWidth: size,
-                  borderRight:
-                    lastColumnIds.has(header.column.id) &&
-                    variant === "primaryBorder"
-                      ? `1px solid ${theme.palette.secondary.default}`
-                      : undefined,
-                }}
-              >
-                {flexRender(
-                  header.column.columnDef.header,
-                  header.getContext()
-                )}
-              </TableCell>
-            );
-          })}
-        </TableRow>
-      ))}
+              return (
+                <TableCell
+                  key={header.id}
+                  sx={{ ...styles.head, py: "3px" }}
+                  align={align}
+                  colSpan={header.colSpan}
+                  style={getCellStyle(header, isMultiHeader, isTopParentHeader)}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </TableCell>
+              );
+            })}
+          </TableRow>
+        );
+      })}
     </TableHead>
   );
 };
@@ -91,4 +124,4 @@ CustomTableHeader.propTypes = {
   variant: PropTypes.string.isRequired,
 };
 
-export default CustomTableHeader;
+export default memo(CustomTableHeader);

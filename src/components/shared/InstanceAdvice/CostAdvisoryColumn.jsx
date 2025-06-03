@@ -12,7 +12,9 @@ const numericColumn = ({
   header,
   cell: ({ getValue }) => {
     const value = getValue();
-    return value !== undefined && value !== null ? Number(value).toFixed(2) : "";
+    return value !== undefined && value !== null
+      ? Number(value).toFixed(2)
+      : "";
   },
   minSize,
   size,
@@ -38,7 +40,7 @@ const plainColumn = ({
   ...(pin ? { pin } : {}),
 });
 
-const currentColumns = [
+const currentColumns1 = [
   plainColumn({
     id: "instanceType",
     accessorKey: "data.currentPlatform.type",
@@ -64,39 +66,41 @@ const currentColumns = [
     size: 200,
     pin: "left",
   }),
-  plainColumn({
-    id: "uuid",
-    accessorKey: "data.currentPlatform.type",
-    header: "UUID/Instance Name",
-    size: 200,
-  }),
-  plainColumn({
-    id: "csp",
-    accessorKey: "csp",
-    header: "Cloud",
-    size: 150,
-  }),
-  plainColumn({
-    id: "pricingModel",
-    accessorKey: "data.currentPlatform.pricingModel",
-    header: "Pricing Model",
-    size: 150,
-  }),
-  plainColumn({
-    id: "vCPU",
-    accessorKey: "data.currentPlatform.vCPU",
-    header: "vCPU(s)",
-    size: 120,
-  }),
-  plainColumn({
-    id: "status",
-    accessorKey: "data.currentPlatform.status",
-    header: "Remark",
-    minSize: 300,
-    size: 300,
-    maxSize: 300,
-  }),
 ];
+const currentColumns2 = [
+      plainColumn({
+        id: "uuid",
+        accessorKey: "data.currentPlatform.type",
+        header: "UUID/Instance Name",
+        size: 200,
+      }),
+      plainColumn({
+        id: "csp",
+        accessorKey: "csp",
+        header: "Cloud",
+        size: 150,
+      }),
+      plainColumn({
+        id: "pricingModel",
+        accessorKey: "data.currentPlatform.pricingModel",
+        header: "Pricing Model",
+        size: 150,
+      }),
+      plainColumn({
+        id: "vCPU",
+        accessorKey: "data.currentPlatform.vCPU",
+        header: "vCPU(s)",
+        size: 120,
+      }),
+      plainColumn({
+        id: "status",
+        accessorKey: "data.currentPlatform.status",
+        header: "Remark",
+        minSize: 300,
+        size: 300,
+        maxSize: 300,
+      }),
+    ]
 
 const recommendationColumns = (idx, val) => [
   plainColumn({
@@ -142,13 +146,31 @@ const recommendationColumns = (idx, val) => [
 
 export const CostAdvisoryColumn = [
   {
-    id: "current",
+    id: "current1",
     header: "Current",
-    columns: currentColumns,
+    columns: currentColumns1,
+    meta: {
+      align: "center",
+      colSpan: 4,
+    },
   },
+
+  {
+    id: "current2",
+    header: "",
+    columns: currentColumns2,
+    meta: {
+      align: "center",
+      colSpan: 4,
+    },
+  },
+
   ...["Optimal", "Best", "Good"].map((val, idx) => ({
     id: val.toLowerCase(),
     header: val,
     columns: recommendationColumns(idx, val),
+    meta: {
+      align: "center",
+    },
   })),
 ];
