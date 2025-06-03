@@ -37,6 +37,7 @@ const plainColumn = ({
   minSize,
   size,
   maxSize,
+  
   ...(pin ? { pin } : {}),
 });
 
@@ -70,7 +71,7 @@ const currentColumns1 = [
 const currentColumns2 = [
       plainColumn({
         id: "uuid",
-        accessorKey: "data.currentPlatform.type",
+        accessorKey: "id",
         header: "UUID/Instance Name",
         size: 200,
       }),
@@ -140,7 +141,9 @@ const recommendationColumns = (idx, val) => [
     id: `${val}_perf`,
     accessorKey: `data.recommendations.${idx}.perf`,
     header: "Performance Improvement*",
-    size: 200,
+    size: 210,
+    minSize: 210,
+    maxSize: 210,
   }),
 ];
 

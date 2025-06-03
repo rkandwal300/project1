@@ -5,8 +5,7 @@ import { TableCell, TableHead, TableRow } from "@mui/material";
 import { getCommonPinningStyles } from "@/hooks/useTableStyles";
 import { useTheme } from "@emotion/react";
 
-// Extract cell style logic for reuse and clarity
-const useCellStyle = ({
+const getCellStyleUtil = ({
   header,
   lastColumnIds,
   variant,
@@ -34,9 +33,9 @@ const useCellStyle = ({
 
   let cellStyle = {
     ...columnStyles,
-    width: size,
-    minWidth: size,
-    maxWidth: size,
+    width: `${size}px`,
+    minWidth: `${size}px`,
+    maxWidth: `${size}px`,
     borderRight:
       lastColumnIds.has(header.column.id) &&
       variant === "primaryBorder" &&
@@ -63,16 +62,14 @@ const CustomTableHeader = ({
 }) => {
   const theme = useTheme();
 
-  // Memoize border color
   const borderColor = useMemo(
     () => theme.palette?.secondary?.default,
     [theme.palette?.secondary?.default]
   );
 
-  // Memoize cell style calculation for performance
   const getCellStyle = useCallback(
     (header, isMultiHeader, isTopParentHeader) =>
-      useCellStyle({
+      getCellStyleUtil({
         header,
         lastColumnIds,
         variant,
@@ -94,14 +91,17 @@ const CustomTableHeader = ({
 
               const align = header.column.columnDef.meta?.align || "left";
               const isTopParentHeader = header.depth === 1;
-
+              const headerStyle = getCellStyle(
+                header,
+                isMultiHeader,
+                isTopParentHeader
+              );
               return (
                 <TableCell
                   key={header.id}
-                  sx={{ ...styles.head, py: "3px" }}
+                  sx={{ ...styles.head,...headerStyle, py: "3px" }}
                   align={align}
-                  colSpan={header.colSpan}
-                  style={getCellStyle(header, isMultiHeader, isTopParentHeader)}
+                  colSpan={header.colSpan} 
                 >
                   {flexRender(
                     header.column.columnDef.header,

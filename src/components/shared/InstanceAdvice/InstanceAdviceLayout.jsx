@@ -9,8 +9,81 @@ import costAdvisor from "@/lib/instanceAdvice.json";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { CostAdvisoryColumn } from "./CostAdvisoryColumn";
 
-function InstanceAdviceLayout() { 
-  const data = costAdvisor.Data; 
+function InstanceAdviceLayout() {
+  const data = costAdvisor.Data;
+  const grandTotal = data.reduce(
+    (acc, item) => {
+      return   {
+     ...acc,
+      data: {
+        currentPlatform: {
+          ...acc.data.currentPlatform,
+         
+          cost: Number(acc.data.currentPlatform.cost) + Number(item.data.currentPlatform.cost),
+          power: Number(acc.data.currentPlatform.power) + Number(item.data.currentPlatform.power),
+          carbon: Number(acc.data.currentPlatform.carbon) + Number(item.data.currentPlatform.carbon),
+          status: "",
+          vCPU: Number(acc.data.currentPlatform.vCPU) + Number(item.data.currentPlatform.vCPU),
+          pricingModel: "-",
+        },
+        recommendations: acc.data.recommendations.map((rec, index) => ({
+          ...rec,
+          cost: Number(rec.cost) + Number(item.data.recommendations[index].cost),
+          power: Number(rec.power) + Number(item.data.recommendations[index].power),
+          carbon: Number(rec.carbon) + Number(item.data.recommendations[index].carbon),
+          perf: Number(rec.perf) + Number(item.data.recommendations[index].perf),
+          monthlySavings: Number(rec.monthlySavings) + Number(item.data.recommendations[index].monthlySavings),
+          vCPU: Number(rec.vCPU) + Number(item.data.recommendations[index].vCPU),
+        })),
+          
+      },
+    };
+    },
+    {
+      id: "",
+      csp: "",
+      data: {
+        currentPlatform: {
+          type: "GRAND TOTAL",
+          cost: "0",
+          power: "0",
+          carbon: "0",
+          status: "",
+          vCPU: "0",
+          pricingModel: "-",
+        },
+        recommendations: [
+          {
+            cost: "0",
+            type: "0",
+            power: "0",
+            carbon: "0",
+            perf: "0",
+            monthlySavings: "0",
+            vCPU: "0",
+          },
+          {
+            cost: "0",
+            type: "0",
+            power: "0",
+            carbon: "0",
+            perf: "0",
+            monthlySavings: "0",
+            vCPU: "0",
+          },
+          {
+            cost: "0",
+            type: "0",
+            power: "0",
+            carbon: "0",
+            perf: "0",
+            monthlySavings: "0",
+            vCPU: "0",
+          },
+        ],
+      },
+    }
+  );
   return (
     <Box
       sx={{
@@ -50,11 +123,11 @@ function InstanceAdviceLayout() {
               <InstanceAdviceHeader />
               <CustomTable
                 variant="primaryBorder"
-                data={data}
+                data={[...data, grandTotal]}
                 columns={CostAdvisoryColumn}
                 isPagination
                 defaultColumnPinningState={{
-                  left: ["current","instanceType", "cost", "power", "carbon"],
+                  left: ["current", "instanceType", "cost", "power", "carbon"],
                   right: [],
                 }}
               />
