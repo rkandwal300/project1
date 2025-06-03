@@ -15,6 +15,50 @@
                 },
                 "recommendations": [
                     {
+                        "cost": "1997.670000",
+                        "type": "c5a.16xlarge",
+                        "power": "347.242941",
+                        "carbon": "40.714370",
+                        "perf": "1.190000",
+                        "monthlySavings": "-366.750000",
+                        "vCPU": "54"
+                    },
+                    {
+                        "cost": "2207.890000",
+                        "type": "m7b.16xlarge",
+                        "power": "481.072941",
+                        "carbon": "56.443697",
+                        "perf": "1.190000",
+                        "monthlySavings": "-676.970000",
+                        "vCPU": "54"
+                    },
+                    {
+                        "cost": "2654.220000",
+                        "type": "r4a.16xlarge",
+                        "power": "648.942941",
+                        "carbon": "88.766050",
+                        "perf": "1.180000",
+                        "monthlySavings": "-1223.300000",
+                        "vCPU": "54"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "cbf79843-2a58-46b4-bac4-0bbab36491d9",
+            "csp": "AWS",
+            "data": {
+                "currentPlatform": {
+                    "type": "m7a.12xlarge",
+                    "cost": "2030.920000",
+                    "power": "727.570000",
+                    "carbon": "85.340000",
+                    "status": "",
+                    "vCPU": "48",
+                    "pricingModel": "ondemand"
+                },
+                "recommendations": [
+                    {
                         "cost": "2397.670000",
                         "type": "c7a.16xlarge",
                         "power": "347.242941",

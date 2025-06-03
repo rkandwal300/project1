@@ -99,14 +99,7 @@ function PortfolioBody() {
               isPagination
               isAction={tab.isAction}
               onDelete={tab.isAction ? onDelete : undefined}
-              defaultColumnPinningState={
-                value === "instance_stats"
-                  ? {
-                      left: ["select", "uuid"],
-                      right: [],
-                    }
-                  : {}
-              }
+               
             />
           </TabPanel>
         ))}

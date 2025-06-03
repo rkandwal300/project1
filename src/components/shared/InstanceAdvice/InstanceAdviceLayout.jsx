@@ -5,8 +5,12 @@ import InstanceAdviceBottomBar from "./InstanceAdviceBottomBar";
 import Header from "../header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import InstanceAdviceHeader from "./InstanceAdviceHeader";
+import costAdvisor from "@/lib/instanceAdvice.json";
+import CustomTable from "@/components/ui/table/CustomTable";
+import { CostAdvisoryColumn } from "./CostAdvisoryColumn";
 
-function InstanceAdviceLayout() {
+function InstanceAdviceLayout() { 
+  const data = costAdvisor.Data; 
   return (
     <Box
       sx={{
@@ -44,6 +48,16 @@ function InstanceAdviceLayout() {
               }}
             >
               <InstanceAdviceHeader />
+              <CustomTable
+                variant="primaryBorder"
+                data={data}
+                columns={CostAdvisoryColumn}
+                isPagination
+                defaultColumnPinningState={{
+                  left: ["current","instanceType", "cost", "power", "carbon"],
+                  right: [],
+                }}
+              />
             </Box>
           </Box>
         </Box>

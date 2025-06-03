@@ -6,6 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   CircularProgress,
+  Box,
 } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -27,7 +28,7 @@ const menuConfig = [
   },
   {
     label: "User Guide",
-    value: "https://eia-prod.amd.com/assets/EIA%20User%20Guide-ywdnNCnh.pdf",
+    value: "https://eia-prod.amd.com/assets/EIA%20User%20Guide-UyjIb5PG.pdf",
     type: "link",
     icon: <MenuBookIcon />,
   },
@@ -116,7 +117,7 @@ function UserMenu({ onClose }) {
       <Divider sx={{ borderColor: theme.palette.divider }} />
       <MenuItem
         component="a"
-        href="https://eia-prod.amd.com/"
+        href="https://eia-prod.amd.com"
         target="_blank"
         sx={{
           borderBottom: "1px solid transparent",

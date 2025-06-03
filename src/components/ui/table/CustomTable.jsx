@@ -67,7 +67,20 @@ const CustomTable = ({
       maxSize: Number.MAX_SAFE_INTEGER,
     },
   });
-
+ const lastColumnIds = new Set();
+  table.getHeaderGroups().forEach((headerGroup) => {
+    headerGroup.headers.forEach((header) => {
+      if (header.subHeaders?.length > 0) {
+        const leafs = header.subHeaders.flatMap((sub) =>
+          sub.column.getLeafColumns()
+        );
+        const lastLeaf = leafs[leafs.length - 1];
+        if (lastLeaf) {
+          lastColumnIds.add(lastLeaf.id);
+        }
+      }
+    });
+  });
   return (
     <TableContainer
       component={Paper}
@@ -81,6 +94,8 @@ const CustomTable = ({
           <CustomTableHeader
             headerGroups={table.getHeaderGroups()}
             styles={styles}
+            variant={variant}
+            lastColumnIds={lastColumnIds}
           />
           <CustomTableBody
             rows={table.getRowModel().rows}
@@ -90,6 +105,7 @@ const CustomTable = ({
             setEditingCell={setEditingCell}
             getAllColumns={table.getAllColumns}
             getTotalSize={table.getTotalSize}
+            lastColumnIds={lastColumnIds}
           />
         </Table>
       </Box>

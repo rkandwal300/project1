@@ -42,7 +42,7 @@ export default function ActionBlock({ table, onDelete }) {
       </Button>
 
       <Link
-        href="#"
+        href="https://eia-prod.amd.com/regionLists?providerName=AWS"
         underline="none"
         color="text.primary"
         target="_blank"

@@ -16,3 +16,6 @@ export default defineConfig({
     },
   },
 });
+
+// add manual chunks
+// convert img to avif

@@ -11,6 +11,7 @@ const CustomTableBody = ({
   setEditingCell,
   getAllColumns,
   getTotalSize,
+  lastColumnIds,
 }) => {
   if (rows.length === 0) {
     return (
@@ -45,6 +46,7 @@ const CustomTableBody = ({
           variant={variant}
           editingCell={editingCell}
           setEditingCell={setEditingCell}
+          lastColumnIds={lastColumnIds}
         />
       ))}
     </TableBody>
@@ -59,6 +61,7 @@ CustomTableBody.propTypes = {
   setEditingCell: PropTypes.func,
   getAllColumns: PropTypes.func.isRequired,
   getTotalSize: PropTypes.func.isRequired,
+  lastColumnIds: PropTypes.instanceOf(Set).isRequired,
 };
 
 export default CustomTableBody;
