@@ -78,7 +78,6 @@ const formDataSlice = createSlice({
       state.portfolioName = "";
       state.reset = true; // Reset the form state
     },
-
     updateFormData(state, action) {
       state.formData = {
         ...state.formData,
@@ -95,11 +94,17 @@ const formDataSlice = createSlice({
     toggleHideInstances(state, action) {
       state.hideInstances = action.payload;
     },
+
+    findAndReplace (state, action) {
+       
+      state.instanceStats =  action.payload;
+    }
   },
 });
 
 export const {
   addInstance,
+  findAndReplace,
   resetForm,
   updateResetState,
   resetFormData,

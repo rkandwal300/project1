@@ -7,6 +7,8 @@ import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
 import { CONSUMPTION_FIELDS, CONSUMPTION_TOUR_STEPS } from "@/lib/constant";
 import { AnimatedIconButton } from "./AnimatedIconButton";
+import DialogHoc from "@/components/ui/Dialog";
+import FindAndReplace from "./FindAndReplace";
 
 // Lazy load components
 const HoverInput = lazy(() => import("@/components/ui/form/Input"));
@@ -105,14 +107,22 @@ function ConsumptionMetadata({ form }) {
         >
           <Add />
         </Button>
-        <Button
-          id="eightStepTarget"
-          variant="contained"
-          color="primary"
-          size="small"
-        >
-          <FileCopy />
-        </Button>
+        <DialogHoc
+          trigger={({ onClick }) => (
+            <Button
+              id="eightStepTarget"
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={onClick}
+            >
+              <FileCopy />
+            </Button>
+          )}
+          content={({handleClose})=>(<FindAndReplace onClose={handleClose} />)}
+        sx={{width: "400px", m:'auto'}}
+        
+        />
         <AnimatedIconButton
           id="nineStepTarget"
           className={animate ? "animate" : ""}

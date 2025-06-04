@@ -18,8 +18,8 @@ export const regionOptions = [
 ];
 
 export const instanceOptions = [
-    "t2.nano",
-    "m7a.12xLarge",
+  "t2.nano",
+  "m7a.12xLarge",
   "m7a.16xLarge",
   "c5.large",
   "c5.xlarge",
@@ -44,42 +44,56 @@ export const instanceOptions = [
 
 export const pricingModelOptions = ["ondemand", "reserved"];
 
-
 export const CONSUMPTION_FIELDS = [
-  { label: "Max CPU %", name: "maxCpuUtilization",tooltipMessage: "Maximum CPU Utilization (%)." },
-  { label: "Max Mem", name: "maxMemoryUsed" ,tooltipMessage: "Maximum Memory Used (Gigabyte/sec)." },
-  { label: "Max Network BW", name: "maxNetworkBandwidth" ,tooltipMessage: "Maximum Network Bandwidth (Megabyte/sec)." },
+  {
+    label: "Max CPU %",
+    name: "maxCpuUtilization",
+    tooltipMessage: "Maximum CPU Utilization (%).",
+  },
+  {
+    label: "Max Mem",
+    name: "maxMemoryUsed",
+    tooltipMessage: "Maximum Memory Used (Gigabyte/sec).",
+  },
+  {
+    label: "Max Network BW",
+    name: "maxNetworkBandwidth",
+    tooltipMessage: "Maximum Network Bandwidth (Megabyte/sec).",
+  },
   // { label: "Max Network IOPS", name: "maxNetworkIOPS" ,tooltipMessage: "Max Network Bandwidth (Megabyte/sec)." },
-  { label: "Max Disk BW", name: "maxDiskBandwidth",tooltipMessage: "Maximum Disk Bandwidth (Megabyte/sec)." },
-  { label: "Max IOPS", name: "maxIOPS" , tooltipMessage:"Maximum Disk IOPS." },
+  {
+    label: "Max Disk BW",
+    name: "maxDiskBandwidth",
+    tooltipMessage: "Maximum Disk Bandwidth (Megabyte/sec).",
+  },
+  { label: "Max IOPS", name: "maxIOPS", tooltipMessage: "Maximum Disk IOPS." },
 ];
 
-
 export const GENERIC_FIELDS = [
-    {
-      name: "region",
-      label: "Region",
-      options: regionOptions,
-      tooltipMessage: "Select Region associated with CSP",
-    },
-    {
-      name: "instanceType",
-      label: "Instance Type",
-      options: instanceOptions,
-      tooltipMessage: "Select Instance associated with Region",
-    },
-    {
-      name: "uuid",
-      label: "UUID/Instance Name",
-      tooltipMessage: "Enter UUID/Instance Name, For Ex: VM for AI/ML server",
-    },
-    {
-      name: "pricingModel",
-      label: "Pricing Model",
-      options: pricingModelOptions,
-      tooltipMessage: "Pricing Model",
-    },
-  ];
+  {
+    name: "region",
+    label: "Region",
+    options: regionOptions,
+    tooltipMessage: "Select Region associated with CSP",
+  },
+  {
+    name: "instanceType",
+    label: "Instance Type",
+    options: instanceOptions,
+    tooltipMessage: "Select Instance associated with Region",
+  },
+  {
+    name: "uuid",
+    label: "UUID/Instance Name",
+    tooltipMessage: "Enter UUID/Instance Name, For Ex: VM for AI/ML server",
+  },
+  {
+    name: "pricingModel",
+    label: "Pricing Model",
+    options: pricingModelOptions,
+    tooltipMessage: "Pricing Model",
+  },
+];
 
 export const CONSUMPTION_TOUR_STEPS = [
   {
@@ -159,7 +173,23 @@ export const GENERIC_TOUR_STEPS = [
   },
 ];
 
-
+export const FIND_AND_REPLACE_FIELD_TYPES = [
+  {
+    key: "instanceType",
+    label: "Instance Type",
+    options: instanceOptions,
+  },
+  {
+    key: "region",
+    label: "Region",
+    options: regionOptions,
+  },
+  {
+    key: "pricingModel",
+    label: "Pricing Model",
+    options: pricingModelOptions,
+  },
+];
 
 const subject = "EIA - Support Ticket Request - Regarding manageAccounts Page";
 
@@ -203,5 +233,7 @@ Best regards,
 [Your Name]
 `;
 
-export const supportMailtoLink = `mailto:support@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-export const supportMobileNumber = `tel:+1 (502) 388-6228` 
+export const supportMailtoLink = `mailto:support@example.com?subject=${encodeURIComponent(
+  subject
+)}&body=${encodeURIComponent(body)}`;
+export const supportMobileNumber = `tel:+1 (502) 388-6228`;

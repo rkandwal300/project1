@@ -8,9 +8,9 @@ export const useTableStyles = (variant, theme) =>
         cell: {
           color: theme.palette.success.contrastText,
           backgroundColor: theme.palette.grey[700],
-          verticalAlign: "top",
+          verticalAlign: "middle",
+          
           borderBottom: `1px solid ${theme.palette.secondary.default}`,
-          padding: 2,
         },
         head: {
           verticalAlign: "top",
@@ -25,13 +25,13 @@ export const useTableStyles = (variant, theme) =>
     if (variant === "primaryBorder") {
       return {
         row: { backgroundColor: theme.palette.dark },
-        bodyRow: { backgroundColor: theme.palette.grey[700],},
+        bodyRow: { backgroundColor: theme.palette.grey[700] },
         cell: {
           color: theme.palette.success.contrastText,
           backgroundColor: theme.palette.grey[700],
           verticalAlign: "top",
           alignItems: "center",
-          border:'0px',
+          border: "0px",
           borderBottom: `1px solid ${theme.palette.secondary.default}`,
           padding: " 10px",
           height: "60px",
@@ -67,7 +67,7 @@ export const useTableStyles = (variant, theme) =>
 
 export const getCommonPinningStyles = (column) => {
   const isPinned = column.getIsPinned();
-     return {
+  return {
     left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
     right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
     opacity: isPinned ? 1 : 1,
@@ -75,6 +75,6 @@ export const getCommonPinningStyles = (column) => {
     zIndex: isPinned ? 1 : 0,
     width: column.columnDef?.size,
     minWidth: column.columnDef?.minSize,
-    maxWidth: column.columnDef?.maxSize, 
+    maxWidth: column.columnDef?.maxSize,
   };
 };

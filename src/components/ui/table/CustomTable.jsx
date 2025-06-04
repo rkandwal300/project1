@@ -98,7 +98,7 @@ const CustomTable = ({
             lastColumnIds={lastColumnIds}
           />
           <CustomTableBody
-            rows={table.getRowModel().rows}
+           table={table}
             styles={styles}
             variant={variant}
             editingCell={editingCell}

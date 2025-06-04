@@ -11,10 +11,13 @@ import EmailIcon from "@mui/icons-material/Email";
 import { supportMailtoLink, supportMobileNumber } from "@/lib/constant";
 
 function SupportMenu() {
-  const theme = useTheme(); 
+  const theme = useTheme();
 
   const commonTextStyles = {
-    primaryTypographyProps: { fontWeight: "bold", color: theme.palette.primary.contrastText },
+    primaryTypographyProps: {
+      fontWeight: "bold",
+      color: theme.palette.primary.contrastText,
+    },
     secondaryTypographyProps: { color: theme.palette.primary.contrastText },
   };
 
@@ -26,7 +29,7 @@ function SupportMenu() {
         </ListItemIcon>
         <ListItemText
           primary="Hotline Number"
-          secondary={supportMailtoLink.split(":")[1].split("?")[0]}
+          secondary={supportMobileNumber.split(":")[1]}
           {...commonTextStyles}
         />
       </MenuItem>
@@ -37,7 +40,7 @@ function SupportMenu() {
         </ListItemIcon>
         <ListItemText
           primary="Email"
-          secondary={supportMobileNumber.split(":")[1]}
+          secondary={supportMailtoLink.split(":")[1].split("?")[0]}
           {...commonTextStyles}
         />
       </MenuItem>

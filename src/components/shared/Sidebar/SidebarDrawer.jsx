@@ -4,7 +4,6 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import SidebarSelect from "@/components/shared/Sidebar/SidebarSelect";
 import PortfolioHeader from "./PortfolioHeader";
 import PortfolioList from "./PortfolioList";
-
 const selectOptions = [
   {
     label: "Service Provider",

@@ -4,7 +4,7 @@ import { TableBody, TableCell, TableRow, Typography } from "@mui/material";
 import CustomTableRow from "./CustomTableRow";
 
 const CustomTableBody = ({
-  rows,
+  table,
   styles,
   variant,
   editingCell,
@@ -13,6 +13,8 @@ const CustomTableBody = ({
   getTotalSize,
   lastColumnIds,
 }) => {
+  const rows = table.getRowModel().rows;
+  const length = table.getHeaderGroups().length - 1;
   if (rows.length === 0) {
     return (
       <TableBody>
@@ -25,7 +27,7 @@ const CustomTableBody = ({
               width: `${getTotalSize()}px`,
               p: 2,
             }}
-            colSpan={getAllColumns().length}
+            colSpan={table.getHeaderGroups()[length].headers.length}
           >
             <Typography align="center" variant="body2" color="textSecondary">
               No Data Available
@@ -47,6 +49,7 @@ const CustomTableBody = ({
           editingCell={editingCell}
           setEditingCell={setEditingCell}
           lastColumnIds={lastColumnIds}
+          colSpan={getAllColumns().length}
         />
       ))}
     </TableBody>
@@ -54,7 +57,7 @@ const CustomTableBody = ({
 };
 
 CustomTableBody.propTypes = {
-  rows: PropTypes.array.isRequired,
+  table: PropTypes.object.isRequired,
   styles: PropTypes.object,
   variant: PropTypes.string,
   editingCell: PropTypes.any,

@@ -22,7 +22,7 @@ const PortfolioDetails = ({ form }) => {
     <Box
       component="div"
       display={"flex"}
-      sx={{ flexDirection: { sx: "column", md: "row" }, width: "100%" }}
+      sx={{ flexDirection: { sx: "column", md: "row" },}}
       container
       spacing={2}
       justifyContent="space-between"
@@ -81,7 +81,7 @@ const PortfolioDetails = ({ form }) => {
         />
       </Box>
 
-      <Box display={"flex"} gap={2} alignItems={"center"} maxWidth={"600px"}>
+      <Box display={"grid"} gap={2} gridTemplateColumns={`repeat(${showSelfPref?"2":"1"},1fr)`} alignItems={"center"} maxWidth={"400px"}  minWidth={'192px'}>
         {showSelfPref && (
           <FileUploadField
             label="Upload Self Perf assessment"
@@ -90,7 +90,7 @@ const PortfolioDetails = ({ form }) => {
           />
         )}
 
-        <DownloadSelect fullWidth />
+        <DownloadSelect  />
       </Box>
     </Box>
   );

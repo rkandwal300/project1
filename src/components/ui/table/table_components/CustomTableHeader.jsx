@@ -18,7 +18,7 @@ const getCellStyleUtil = ({
 
   let columnStyles = getCommonPinningStyles(header.column);
 
-  if (header.column.getIsPinned()) {
+  if (header.column.getIsPinned() && variant === "primaryBorder") {
     columnStyles = {
       ...columnStyles,
       left: header.getStart(),
@@ -68,7 +68,7 @@ const CustomTableHeader = ({
   );
 
   const getCellStyle = useCallback(
-    (header, isMultiHeader, isTopParentHeader) =>
+    (header, isMultiHeader, isTopParentHeader,variant) =>
       getCellStyleUtil({
         header,
         lastColumnIds,
@@ -77,7 +77,7 @@ const CustomTableHeader = ({
         isMultiHeader,
         isTopParentHeader,
       }),
-    [lastColumnIds, variant, borderColor]
+    [lastColumnIds, borderColor]
   );
 
   return (
@@ -87,26 +87,36 @@ const CustomTableHeader = ({
         return (
           <TableRow key={headerGroup.id} sx={styles.row}>
             {headerGroup.headers.map((header) => {
-              if (header.isPlaceholder) return null;
+              if (header.isPlaceholder && variant == "primaryBorder") return null;
 
               const align = header.column.columnDef.meta?.align || "left";
               const isTopParentHeader = header.depth === 1;
               const headerStyle = getCellStyle(
                 header,
                 isMultiHeader,
-                isTopParentHeader
+                isTopParentHeader,
+                variant
               );
+              let cellContent;
+              if (variant === "primaryBorder") {
+                cellContent = flexRender(
+                  header.column.columnDef.header,
+                  header.getContext()
+                );
+              } else if (header.isPlaceholder) {
+                cellContent = null;
+              } else {
+                cellContent = flexRender(header.column.columnDef.header, header.getContext());
+              }
+
               return (
                 <TableCell
                   key={header.id}
-                  sx={{ ...styles.head,...headerStyle, py: "3px" }}
+                  sx={{ ...styles.head, ...headerStyle, py: "3px" }}
                   align={align}
-                  colSpan={header.colSpan} 
+                  colSpan={header.colSpan}
                 >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
+                  {cellContent}
                 </TableCell>
               );
             })}

@@ -3,8 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomTableCell from "./CustomTableCell";
 import { useTheme } from "@emotion/react";
-import ConsumptionMetadata from "@/components/shared/Form/Consumption Metadata/ConsumptionMetadata";
-
+ 
 const CustomTableRow = ({
   row,
   styles,
@@ -13,26 +12,33 @@ const CustomTableRow = ({
   setEditingCell,
   lastColumnIds,
 }) => {
-  const theme = useTheme();  
+  const theme = useTheme();
   return (
-    <TableRow key={row.id}  sx={styles.bodyRow}>
+    <TableRow key={row.id} sx={styles.bodyRow}>
       {row.getVisibleCells().map((cell) => {
         const isEditing =
           editingCell?.rowIndex === row.index &&
-        editingCell?.columnId === cell.column.id;
-         return (
+          editingCell?.columnId === cell.column.id;
+        return (
           <CustomTableCell
             key={cell.id}
             cell={cell}
             styles={{
               ...styles,
-             cell:{
-              ...styles.cell,
-               borderRight:
-                lastColumnIds.has(cell.column.id) && variant === "primaryBorder"
-                  ? `1px solid ${theme.palette.secondary.default}`
-                  : "0px",
-             }
+              cell: {
+                ...styles.cell,
+                borderRight:
+                  lastColumnIds.has(cell.column.id) &&
+                  variant === "primaryBorder"
+                    ? `1px solid ${theme.palette.secondary.default}`
+                    : "0px",
+
+                backgroundColor:
+                  lastColumnIds.has(cell.column.id) &&
+                  variant === "primaryBorder"
+                    ? "#1e1e1e"
+                    : styles.cell.backgroundColor,
+              },
             }}
             variant={variant}
             isEditing={isEditing}

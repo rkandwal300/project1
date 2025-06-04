@@ -8,6 +8,7 @@ import InstanceAdviceHeader from "./InstanceAdviceHeader";
 import costAdvisor from "@/lib/instanceAdvice.json";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { CostAdvisoryColumn } from "./CostAdvisoryColumn";
+import Dashboard from "./Dashboard";
 
 function InstanceAdviceLayout() {
   const data = costAdvisor.Data;
@@ -83,7 +84,7 @@ function InstanceAdviceLayout() {
         ],
       },
     }
-  );
+  ); 
   return (
     <Box
       sx={{
@@ -121,6 +122,7 @@ function InstanceAdviceLayout() {
               }}
             >
               <InstanceAdviceHeader />
+              <Dashboard />
               <CustomTable
                 variant="primaryBorder"
                 data={[...data, grandTotal]}

@@ -19,6 +19,7 @@ const formControlSx = {
   backgroundColor: "black",
   borderRadius: 1,
   minWidth: 120,
+  width: "100%",
   "& .MuiInputBase-root": {
     color: "white",
     borderRadius: 1,

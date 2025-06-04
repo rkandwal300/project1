@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   List,
   ListItem,
@@ -8,7 +8,10 @@ import {
   useTheme,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
+import {
+  selectCurrentInstance,
+  selectInstanceList,
+} from "@/redux/features/instanceList/instanceList.selector";
 import {
   addSelfAssessment,
   resetForm,
@@ -16,22 +19,27 @@ import {
   updateResetState,
   uploadInstance,
 } from "@/redux/features/form/formData.slice";
+import { useNavigate } from "react-router-dom";
+import { selectHideInstances } from "@/redux/features/form/formData.selector";
+import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.slice";
 
 export default function PortfolioList() {
-  const [activePortfolio, setActivePortfolio] = useState(null);
+  const navigate = useNavigate();
+  const activePortfolio = useSelector(selectCurrentInstance); 
   const theme = useTheme();
   const dispatch = useDispatch();
   const portfolios = useSelector(selectInstanceList);
+
+  const showTable = useSelector(selectHideInstances);
 
   const handleClickListItem = (instanceId) => {
     const portfolio = portfolios.find(
       (portfolio) => portfolio.id === instanceId
     );
     if (!portfolio) return;
-    console.log({ portfolio });
     const { id, portfolioName, instances, selfPrefAssessment } = portfolio;
-    setActivePortfolio(id);
-dispatch(resetForm(false));
+    dispatch(addCurrentInstance(id));
+    dispatch(resetForm(false));
     dispatch(uploadInstance(instances));
     dispatch(addSelfAssessment(selfPrefAssessment));
     dispatch(
@@ -40,14 +48,20 @@ dispatch(resetForm(false));
         portfolioName,
       })
     );
-    dispatch(updateResetState(true))
+    dispatch(updateResetState(true));
+    navigate("/");
   };
+  useEffect(() => {
+    if (showTable) {
+      dispatch(addCurrentInstance(null));
+    }
+  }, [dispatch, showTable]);
   return (
     <Box sx={{ height: "70vh", overflowY: "auto" }}>
       <List id="dashboard-portfolio-list">
         {portfolios.map((portfolio) => {
           const isActive = portfolio.id === activePortfolio;
-
+console.log({isActive, activePortfolio, portfolioId: portfolio.id});
           return (
             <ListItem
               key={portfolio.id}

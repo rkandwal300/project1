@@ -17,8 +17,12 @@ import {
 } from "@/redux/features/form/formData.selector";
 import { nanoid } from "@reduxjs/toolkit";
 import {
+  addSelfAssessment,
   resetForm,
   toggleHideInstances,
+  updateFormData,
+  updateResetState,
+  uploadInstance,
 } from "@/redux/features/form/formData.slice";
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 import useTimedMessage from "@/hooks/useTimedMessage";
@@ -26,7 +30,7 @@ import FormAlert from "../ui/FormAlert";
 import { useNavigate } from "react-router-dom";
 
 function BottomBar() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -36,10 +40,10 @@ function BottomBar() {
 
   const [formError, setFormError] = useTimedMessage();
   const [formSuccess, setFormSuccess] = useTimedMessage();
-
+  const formId = formData.id || nanoid();
   const handleSavePortFolio = () => {
     const payload = {
-      id: formData.id || nanoid(),
+      id: formId,
       instances,
       portfolioName: formData.portfolioName,
       selfPrefAssessment: selfPrefAssessmentData,
@@ -47,22 +51,35 @@ function BottomBar() {
     dispatch(formData.id ? updateInstance(payload) : addInstance(payload));
     dispatch(resetForm());
     setFormSuccess(`${formData.portfolioName} saved successfully`);
+
+    dispatch(resetForm(false));
+    dispatch(uploadInstance(instances));
+    if (selfPrefAssessmentData.length > 0)
+      dispatch(addSelfAssessment(selfPrefAssessmentData));
+    dispatch(
+      updateFormData({
+        id: formId,
+        portfolioName: formData.portfolioName,
+      })
+    );
+    dispatch(updateResetState(true));
   };
 
   const handleDeletePortfolio = () => {
     dispatch(deletePortfolioFromList({ id: formData.id }));
     dispatch(resetForm());
     dispatch(toggleHideInstances(true));
+
     setFormSuccess(`${formData.portfolioName} Deleted successfully`);
   };
 
   const handleResetFormData = () => {
-    dispatch(resetForm()); 
+    dispatch(resetForm());
   };
 
   const isSaveDisabled = !instances.length || !formData.portfolioName.trim();
 
-  const isInstanceAdviceDisabled = !(formData.id);
+  const isInstanceAdviceDisabled = !formData.id;
   const isValueEmpty = (val) => {
     if (Array.isArray(val)) {
       return !val.length;
@@ -80,7 +97,6 @@ function BottomBar() {
 
   return (
     <Box
-      // id="manage-portfolio-footer-action-container"
       display="grid"
       gap={"16px"}
       sx={{
@@ -90,8 +106,8 @@ function BottomBar() {
         borderTop: `1px solid ${theme.palette.divider}`,
         bgcolor: theme.palette.grey[100],
         color: theme.palette.text.default,
-        height: "auto", // Let height grow with content
-        minHeight: "unset", // Remove any minHeight if set elsewhere
+        height: "auto",
+        minHeight: "unset",
       }}
     >
       <Typography
@@ -148,7 +164,7 @@ function BottomBar() {
           variant="contained"
           startIcon={<BuildIcon />}
           disabled={isInstanceAdviceDisabled}
-          onClick={()=> navigate("/instanceAdvice")}
+          onClick={() => navigate("/instanceAdvice")}
         >
           Instance advice
         </Button>

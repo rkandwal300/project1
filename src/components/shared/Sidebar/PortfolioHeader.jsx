@@ -4,11 +4,15 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useDispatch } from "react-redux";
 import { resetForm, toggleHideInstances } from "@/redux/features/form/formData.slice";
 
+import { useNavigate } from "react-router-dom";
+
 function PortfolioHeader() { 
+  const  navigate = useNavigate();
   const dispatch = useDispatch();
   const handleResetForm = () => {
     dispatch(resetForm());
     dispatch(toggleHideInstances(true));
+     navigate("/");
   };
 
   return (

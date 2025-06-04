@@ -80,6 +80,7 @@ const InstanceAdviceHeader = () => {
           fontFamily: '"Open Sans", Arial, sans-serif',
           fontSize: "13px",
           ml: "auto",
+          mb: "30px",
         }}
       >
         CI-Current Instance Data,{" "}
