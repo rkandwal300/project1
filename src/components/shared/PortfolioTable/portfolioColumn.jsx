@@ -14,7 +14,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 // Lazy load editable cells for performance
 const EditableSelectCell = lazy(() =>
   import("./EditableCells.jsx").then((mod) => ({
-    default: mod.EditableSelectCell,
+  default: mod.EditableSelectCell,
   }))
 );
 const EditableTextCell = lazy(() =>

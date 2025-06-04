@@ -27,7 +27,7 @@ function Title() {
           width: "100%",
         }}
       >
-        {isSm ? "Cloud Instance Advisor" : "  AMD EPYC Cloud Instance Advisor"}
+        {isSm ? "Cloud Instance Advisor" : "EPYC Cloud Instance Advisor"}
       </Typography>
     </Box>
   );

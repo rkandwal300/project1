@@ -42,7 +42,7 @@ export const instanceOptions = [
   "c5ad.xlarge",
 ];
 
-export const pricingModelOptions = ["ondemand", "reserved"];
+export const pricingModelOptions = ["ondemand", "reserved","spot"];
 
 export const CONSUMPTION_FIELDS = [
   {

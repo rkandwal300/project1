@@ -11,6 +11,7 @@ import { CostAdvisoryColumn } from "./CostAdvisoryColumn";
 import Dashboard from "./Dashboard";
 
 function InstanceAdviceLayout() {
+  const [ isAnnually, setIsAnnually ] = React.useState(false);
   const data = costAdvisor.Data;
   const grandTotal = data.reduce(
     (acc, item) => {
@@ -85,6 +86,25 @@ function InstanceAdviceLayout() {
       },
     }
   ); 
+
+ const dashboardData = React.useMemo(() => {
+  const multiplier = isAnnually ? 12 : 1;
+
+  return {
+    currentPlatform: {
+      cost: Number(grandTotal.data.currentPlatform.cost) * multiplier,
+      power: Number(grandTotal.data.currentPlatform.power) * multiplier,
+      carbon: Number(grandTotal.data.currentPlatform.carbon) * multiplier,
+    },
+    recommendations: grandTotal.data.recommendations.map((rec) => ({
+      cost: Number(rec.cost) * multiplier,
+      power: Number(rec.power) * multiplier,
+      carbon: Number(rec.carbon) * multiplier,
+    })),
+  };
+}, [isAnnually, grandTotal]);
+
+ 
   return (
     <Box
       sx={{
@@ -121,8 +141,8 @@ function InstanceAdviceLayout() {
                 padding: 2,
               }}
             >
-              <InstanceAdviceHeader />
-              <Dashboard />
+              <InstanceAdviceHeader isAnnually={isAnnually} setIsAnnually={setIsAnnually}  />
+              <Dashboard data = {dashboardData} />
               <CustomTable
                 variant="primaryBorder"
                 data={[...data, grandTotal]}

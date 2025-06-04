@@ -25,7 +25,7 @@ import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.s
 
 export default function PortfolioList() {
   const navigate = useNavigate();
-  const activePortfolio = useSelector(selectCurrentInstance); 
+  const activePortfolio = useSelector(selectCurrentInstance);
   const theme = useTheme();
   const dispatch = useDispatch();
   const portfolios = useSelector(selectInstanceList);
@@ -61,7 +61,6 @@ export default function PortfolioList() {
       <List id="dashboard-portfolio-list">
         {portfolios.map((portfolio) => {
           const isActive = portfolio.id === activePortfolio;
-console.log({isActive, activePortfolio, portfolioId: portfolio.id});
           return (
             <ListItem
               key={portfolio.id}

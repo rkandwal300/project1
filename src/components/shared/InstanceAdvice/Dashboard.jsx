@@ -1,71 +1,96 @@
-import React from "react";
-import { useTheme, useMediaQuery } from "@mui/material"; 
+import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
+import { useTheme, useMediaQuery } from "@mui/material";
 import BarChart from "./BarChart";
+import SummaryChartAccordion from "./SummaryChartAccordion";
 
-const data = {
-    currentPlatform: {
-        cost: 4061.84,
-        power: 1455.14,
-        carbon: 170.68,
+const Dashboard = ({ data }) => {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+
+  const containerRef = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.getBoundingClientRect().width;
+        setContainerWidth(width);
+      }
+    };
+
+    updateWidth();
+
+    const resizeObserver = new ResizeObserver(updateWidth);
+    resizeObserver.observe(containerRef.current);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [containerRef.current, isMd]);
+
+  const gridStyle = {
+    display: "grid",
+    gridTemplateColumns: isMd ? "repeat(4, 1fr)" : "repeat(1, 1fr)",
+    gap: "px",
+    padding: 16,
+  };
+
+  const chartItems = [
+    {
+      title: "Cost",
+      value: data.currentPlatform.cost,
+      yLabel: "cost",
+      unit: "$",
     },
-    recommendations: [
-        { cost: 4395.34, power: 694.485882, carbon: 81.42874 },
-        { cost: 4915.78, power: 962.145882, carbon: 112.887394 },
-        { cost: 6208.44, power: 1397.885882, carbon: 176.5321 },
-    ],
+    {
+      title: "Power",
+      value: data.currentPlatform.power,
+      yLabel: "power",
+      unit: "kW",
+    },
+    {
+      title: "Carbon",
+      value: data.currentPlatform.carbon,
+      yLabel: "carbon",
+      unit: "kgCO₂eq",
+    },
+  ];
+
+  const chartWidth = isMd ? containerWidth / 4 - 24 : containerWidth;
+  const height = 300;
+  return (
+    <div ref={containerRef} style={gridStyle}>
+      {chartItems.map((item, index) => (
+        <div key={index} style={{ width: chartWidth }}>
+          <BarChart
+            width={chartWidth}
+            title={item.title}
+            currentValue={item.value}
+            recommendations={data.recommendations}
+            yLabel={item.yLabel}
+            unit={item.unit}
+            height={height}
+          />
+        </div>
+      ))}
+      <div style={{ width: chartWidth }}>
+        <SummaryChartAccordion data={data} height={height} width={chartWidth} />
+      </div>
+    </div>
+  );
 };
 
-const Dashboard = () => {
-    const theme = useTheme();
-    const isMd = useMediaQuery(theme.breakpoints.up("md"));
-
-    const gridStyle = {
-        display: "grid",
-        gridTemplateColumns: "repeat(1, 1fr)",
-        gap: "24px",
-        padding: "16px",
-    };
-
-    const gridMdStyle = {
-        gridTemplateColumns: "repeat(3, 1fr)",
-    };
-
-    return (
-        <div
-            style={{
-                ...gridStyle,
-                ...(isMd ? gridMdStyle : {}),
-            }}
-        >
-            <div style={{ width: "100%" }}>
-                <BarChart
-                    title="Cost"
-                    currentValue={data.currentPlatform.cost}
-                    recommendations={data.recommendations}
-                    yLabel="cost"
-                    unit="$"
-                />
-            </div>
-            <div style={{ width: "100%" }}>
-                <BarChart
-                    title="Power"
-                    currentValue={data.currentPlatform.power}
-                    recommendations={data.recommendations}
-                    yLabel="power"
-                    unit="kW"
-                />
-            </div>
-            <div style={{ width: "100%" }}>
-                <BarChart
-                    title="Carbon"
-                    currentValue={data.currentPlatform.carbon}
-                    recommendations={data.recommendations}
-                    yLabel="carbon"
-                    unit="kgCO₂eq"
-                />
-            </div>
-        </div>
-    );
+Dashboard.propTypes = {
+  data: PropTypes.shape({
+    currentPlatform: PropTypes.shape({
+      cost: PropTypes.number.isRequired,
+      power: PropTypes.number.isRequired,
+      carbon: PropTypes.number.isRequired,
+    }).isRequired,
+    recommendations: PropTypes.array.isRequired,
+  }).isRequired,
 };
 
 export default Dashboard;

@@ -29,6 +29,7 @@ const initialState = {
   formData: getDefaultInstance(),
   instanceStats: [],
   selfPrefAssessment: [],
+  portfolioNameList: [],
   reset: false,
   hideInstances: false,
 };
@@ -38,7 +39,10 @@ const formDataSlice = createSlice({
   initialState,
   reducers: {
     addSelfAssessment(state, action) {
-      state.selfPrefAssessment = [...state.selfPrefAssessment,...action.payload];
+      state.selfPrefAssessment = [
+        ...state.selfPrefAssessment,
+        ...action.payload,
+      ];
     },
 
     addInstance(state, action) {
@@ -95,15 +99,19 @@ const formDataSlice = createSlice({
       state.hideInstances = action.payload;
     },
 
-    findAndReplace (state, action) {
-       
-      state.instanceStats =  action.payload;
-    }
+    findAndReplace(state, action) {
+      state.instanceStats = action.payload;
+    },
+
+    addPortfolioNameList(state, action) {
+      state.portfolioNameList.push(action.payload);
+    },
   },
 });
 
 export const {
   addInstance,
+  addPortfolioNameList,
   findAndReplace,
   resetForm,
   updateResetState,

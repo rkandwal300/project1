@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Grid,
   Typography,
   Button,
   Box,
@@ -16,8 +15,9 @@ import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import TooltipHoc from "@/components/ui/Tooltip";
 import DialogHoc from "@/components/ui/Dialog";
 import CloseIcon from "@mui/icons-material/Close";
+import PropTypes from "prop-types";
 
-const InstanceAdviceHeader = () => {
+const InstanceAdviceHeader = ({isAnnually,setIsAnnually}) => {
   return (
     <>
       <Box
@@ -61,14 +61,16 @@ const InstanceAdviceHeader = () => {
         }}
         control={
           <Checkbox
-            id="checkbox-128"
-            value="true"
+            id="checkbox-128" 
             slotProps={{
               input: {
                 "aria-label": "Annually",
                 "aria-describedby": "checkbox-128-messages",
               },
             }}
+
+            value ={isAnnually}
+            onChange={(e) => setIsAnnually(e.target.checked)}
           />
         }
         label="Annually"
@@ -176,5 +178,9 @@ const InstanceAdviceHeader = () => {
     </>
   );
 };
-
+InstanceAdviceHeader.propTypes = {
+  isAnnually: PropTypes.bool.isRequired,
+  setIsAnnually: PropTypes.func.isRequired,
+};
+ 
 export default InstanceAdviceHeader;

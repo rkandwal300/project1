@@ -6,6 +6,7 @@ import { Box, Divider } from "@mui/material";
 import { instanceSchema } from "@/lib/validation/instance.schema";
 import {
   addInstance,
+  addPortfolioNameList,
   updateFormData,
   updateResetState,
 } from "@/redux/features/form/formData.slice";
@@ -14,7 +15,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import PropTypes from "prop-types";
 import {
   selectFormData,
-  selectFormReset,
+  selectFormReset, 
 } from "@/redux/features/form/formData.selector";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import ErrorBoundary from "../ErrorBoundary";
@@ -42,6 +43,7 @@ function InstanceForm() {
   const formData = useSelector(selectFormData);
   const formReset = useSelector(selectFormReset);
   const defaultFormValues = useSelector(selectFormData);
+
   const [formError, setFormError] = useTimedMessage();
   const [formSuccess, setFormSuccess] = useTimedMessage();
 
@@ -53,6 +55,7 @@ function InstanceForm() {
 
   const handleSubmit = useCallback(
     (data) => {
+      dispatch(addPortfolioNameList(data.portfolioName));
       dispatch(addInstance({ id: nanoid(), ...data }));
       setFormSuccess("Instance added successfully");
       setFormError("");
