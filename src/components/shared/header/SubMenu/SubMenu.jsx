@@ -1,12 +1,16 @@
-import ResponsiveSubMenu from "./ResponsiveSubmenu";
-import SubMenuList from "./SubMenuList";
+import React, { Suspense, lazy } from "react";
 import { useMediaQuery, useTheme } from "@mui/material";
+ 
+const SubMenuList = lazy(() => import("./SubMenuList"));
+const ResponsiveSubMenu = lazy(() => import("./ResponsiveSubmenu"));
 
 export default function SubMenu() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  
 
-  if (isMobile) return <ResponsiveSubMenu />;
-  return <SubMenuList />;
+  return (
+    <Suspense fallback={null}>
+      {isMobile ? <ResponsiveSubMenu /> : <SubMenuList />}
+    </Suspense>
+  );
 }

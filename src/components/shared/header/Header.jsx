@@ -1,18 +1,23 @@
-import { AppBar, Box, Toolbar, useTheme } from "@mui/material";
-import SubMenu from "./SubMenu/SubMenu";
-import Logo from "./Logo";
-import Title from "./Title";
+import React, { Suspense, lazy } from "react";
+import { AppBar, Toolbar, useTheme } from "@mui/material";
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
+import { Link } from "react-router-dom";
+
+// Lazy load components
+const SubMenu = lazy(() => import("./SubMenu/SubMenu"));
+const Logo = lazy(() => import("./Logo"));
+const Title = lazy(() => import("./Title"));
 
 function Header() {
   const theme = useTheme();
+
   return (
     <AppBar
       position="fixed"
       sx={{
         backgroundColor: theme.palette.dark,
         zIndex: 1006,
-        height: "64px",
+        height: 64,
         justifyContent: { md: "center" },
         boxShadow: 4,
         borderRadius: 0,
@@ -21,27 +26,32 @@ function Header() {
       id="header-bar-container"
     >
       <Toolbar
-      bgColor={'red'}
-          display={"flex"} gap="10px" justifyContent={"space-between"} alignItems={"center"}
-
         sx={{
-          height: "64px",
+          height: 64,
           paddingLeft: 2,
           gap: { md: 2, xs: 2 },
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-         
-          <Logo />
-          <Title /> 
-
-        <SubMenu />
+        <Suspense fallback={null}>
+          <Link to="/">
+            <Logo />
+          </Link>
+        </Suspense>
+        <Suspense fallback={null}>
+          <Title />
+        </Suspense>
+        <Suspense fallback={null}>
+          <SubMenu />
+        </Suspense>
       </Toolbar>
     </AppBar>
   );
 }
 
-const HeaderWithErrorBoundary = withErrorBoundary(
-  Header,
+export default withErrorBoundary(
+  React.memo(Header),
   "Header component has some Errors"
 );
-export default HeaderWithErrorBoundary;

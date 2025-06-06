@@ -2,10 +2,12 @@ import "./index.css";
 import theme from "./lib/themes";
 import "shepherd.js/dist/css/shepherd.css";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import MainLayout from "./components/shared/MainLayout/MainLayout";
 import { Route, Routes } from "react-router-dom";
-import InstanceAdviceLayout from "./components/shared/InstanceAdvice/InstanceAdviceLayout";
-import { useEffect } from "react";
+import { useEffect, Suspense, lazy } from "react";
+
+
+const MainLayout = lazy(() => import("./components/shared/MainLayout/MainLayout"));
+const InstanceAdviceLayout = lazy(() => import("./components/shared/InstanceAdvice/InstanceAdviceLayout"));
 
 function App() {
   useEffect(() => {
@@ -16,13 +18,16 @@ function App() {
     }, 1000);
     return () => clearTimeout(timeoutId);
   }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Routes>
-        <Route path="/" element={<MainLayout />} />
-        <Route path="/instanceAdvice" element={<InstanceAdviceLayout />} />
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<MainLayout />} />
+          <Route path="/instanceAdvice" element={<InstanceAdviceLayout />} />
+        </Routes>
+      </Suspense>
     </ThemeProvider>
   );
 }
