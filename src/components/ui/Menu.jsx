@@ -1,26 +1,24 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import { useTheme } from "@mui/material/styles";
-import ErrorBoundary from "../shared/ErrorBoundary";
-import { useDispatch, useSelector } from "react-redux";
-import { selectMenuAnchorEl } from "@/redux/features/menu/menu.selector";
-import { closeMenu, openMenu } from "@/redux/features/menu/menu.slice";
+import ErrorBoundary from "../shared/ErrorBoundary"; 
 
 export default function MenuHoc({ trigger, content, ...props }) {
-  const theme = useTheme();
-  const dispatch = useDispatch();
-  const anchorEl= useSelector(selectMenuAnchorEl)
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  
+  const theme = useTheme(); 
 
+  
   const handleClick = (event) => {
     if (anchorEl === event.currentTarget) {
-      dispatch(closeMenu());  
+      setAnchorEl(null);  
     } else {
-      dispatch(openMenu(event.currentTarget)); 
+     setAnchorEl(event.currentTarget); 
     }
   };
   const handleClose = () => {
-    dispatch(closeMenu());
+      setAnchorEl(null);  
   };
  
   return (

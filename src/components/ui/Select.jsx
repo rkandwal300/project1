@@ -43,7 +43,7 @@ const SelectHoc = ({
       {...props}
     > 
       {options.map((option) => (
-        <MenuItem value={getOptionValue(option)} key={getOptionValue(option)} id = {option.id}>
+        <MenuItem component={props?.menuComponent} value={getOptionValue(option)} key={getOptionValue(option)} id = {option.id}>
           {getOptionLabel(option)}
         </MenuItem>
       ))}
@@ -63,6 +63,7 @@ SelectHoc.propTypes = {
   getOptionValue: PropTypes.func,
   renderNone: PropTypes.bool, 
   MenuProps: PropTypes.object,
+  menuComponent: PropTypes.string,  
 };
 
 export default SelectHoc;

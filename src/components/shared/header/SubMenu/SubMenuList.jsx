@@ -5,18 +5,21 @@ import {
   Box,
   Tooltip,
   useTheme,
-  Dialog,
+  CircularProgress,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DescriptionIcon from "@mui/icons-material/Description";
 import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Suspense, lazy } from "react";
 import DialogHoc from "../../../ui/Dialog";
-import ReleaseNotes from "./ReleaseNotes/ReleaseNotes";
-import SupportMenu from "./SupportMenu";
 import MenuHoc from "../../../ui/Menu";
-import UserMenu from "./UserMenu";
-import StatCollectorDescription from "./StatCollectorDescription";
+
+// Lazy loaded components
+const ReleaseNotes = lazy(() => import("./ReleaseNotes/ReleaseNotes"));
+const SupportMenu = lazy(() => import("./SupportMenu"));
+const UserMenu = lazy(() => import("./UserMenu"));
+const StatCollectorDescription = lazy(() => import("./StatCollectorDescription"));
 
 function SubMenuList() {
   const theme = useTheme();
@@ -42,28 +45,41 @@ function SubMenuList() {
       },
     },
   };
+
+  // Fallback loader for Suspense
+  const Loader = (
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 80 }}>
+      <CircularProgress size={24} />
+    </Box>
+  );
+
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }}>
-      <DialogHoc trigger={({ onClick }) => (
-
-      <Button
-        variant="outlined"
-        startIcon={<DownloadIcon />}
-        id="btn-stat-collector"
-        onClick={onClick}
-        sx={{
-          borderColor: theme.palette.error.contrastText,
-          color: theme.palette.error.contrastText,
-          textTransform: "none",
-          whiteSpace: "nowrap",
-          paddingX: 1.5,
-          minWidth: "unset",
-        }}
-      >
-        Stat Collector
-      </Button>
-      )}
-      content ={({handleClose}) => (<StatCollectorDescription onClose={handleClose}  />)}/>
+      <DialogHoc
+        trigger={({ onClick }) => (
+          <Button
+            variant="outlined"
+            startIcon={<DownloadIcon />}
+            id="btn-stat-collector"
+            onClick={onClick}
+            sx={{
+              borderColor: theme.palette.error.contrastText,
+              color: theme.palette.error.contrastText,
+              textTransform: "none",
+              whiteSpace: "nowrap",
+              paddingX: 1.5,
+              minWidth: "unset",
+            }}
+          >
+            Stat Collector
+          </Button>
+        )}
+        content={({ handleClose }) => (
+          <Suspense fallback={Loader}>
+            <StatCollectorDescription onClose={handleClose} />
+          </Suspense>
+        )}
+      />
       <DialogHoc
         trigger={({ onClick }) => (
           <Tooltip title="Release Notes" {...tooltipProps}>
@@ -74,14 +90,18 @@ function SubMenuList() {
             </IconButton>
           </Tooltip>
         )}
-        content={(props) => <ReleaseNotes {...props} />}
+        content={(props) => (
+          <Suspense fallback={Loader}>
+            <ReleaseNotes {...props} />
+          </Suspense>
+        )}
       />
       <MenuHoc
         trigger={({ onClick }) => (
           <Tooltip title="Support" {...tooltipProps}>
             <IconButton
               onClick={onClick}
-            id="step-three-target"
+              id="step-three-target"
               sx={{
                 ...iconButtonStyle,
                 borderRadius: "50%",
@@ -95,7 +115,11 @@ function SubMenuList() {
             </IconButton>
           </Tooltip>
         )}
-        content={() => <SupportMenu />}
+        content={() => (
+          <Suspense fallback={Loader}>
+            <SupportMenu />
+          </Suspense>
+        )}
       />
 
       <MenuHoc
@@ -113,7 +137,11 @@ function SubMenuList() {
             </IconButton>
           </Tooltip>
         )}
-        content={({ onClose }) => <UserMenu onClose={onClose} />}
+        content={({ onClose }) => (
+          <Suspense fallback={Loader}>
+            <UserMenu onClose={onClose} />
+          </Suspense>
+        )}
       />
 
       <Tooltip title={userEmail} {...tooltipProps}>

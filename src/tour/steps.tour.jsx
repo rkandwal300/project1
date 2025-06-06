@@ -1,5 +1,3 @@
-// steps.tour.js
-
 import { openSidebar } from "@/redux/features/sidebar/sidebar.slice";
 import { store } from "@/redux/store";
 
@@ -21,7 +19,7 @@ const steps = () => [
       on: "top",
       offset: "0 20",
     },
-  type: "wait",
+    type: "wait",
   },
   {
     id: "step-3",
@@ -58,33 +56,33 @@ const steps = () => [
       on: "right",
     },
   },
-  // {
-  //   id: "step-7",
-  //   text: "Click here to open download menu",
-  //   attachTo: {
-  //     element: "#step-five-target",
-  //     on: "bottom",
-  //   },
-  //   type: "wait",
-  // },
-  // {
-  //   id: "step-8",
-  //   text: "Download the template in Excel (.xlsx) format to ensure your data is formatted correctly. All required fields must be  filled in as per the template structure.",
-  //   attachTo: {
-  //     element: "#downloadSelectTemplate",
-  //     on: "right",
-  //   },
-  //   type: "wait",
-  //   action: {
-  //     next: () => {
-  //       const state = store.getState();
-  //       const {sidebar} = state;
-  //       if (!sidebar.isOpen) {
-  //         store.dispatch(openSidebar());
-  //       }
-  //     },
-  //   },
-  // },
+  {
+    id: "step-7",
+    text: "Click here to open download menu",
+    attachTo: {
+      element: "#step-five-target",
+      on: "bottom",
+    },
+    type: "wait",
+  },
+  {
+    id: "step-8",
+    text: "Download the template in Excel (.xlsx) format to ensure your data is formatted correctly. All required fields must be  filled in as per the template structure.",
+    attachTo: {
+      element: "#downloadSelectTemplate",
+      on: "right",
+    },
+    type: "wait",
+    action: {
+      next: () => {
+        const state = store.getState();
+        const { sidebar } = state;
+        if (!sidebar.isOpen) {
+          store.dispatch(openSidebar());
+        }
+      },
+    },
+  },
   {
     id: "step-9",
     text: "Click here to open service Provider",
@@ -135,7 +133,7 @@ const steps = () => [
       element: "#deletePortfolio",
       on: "top",
     },
-  type: "wait",
+    type: "wait",
   },
   {
     id: "step-14",
@@ -144,7 +142,7 @@ const steps = () => [
       element: "#cancelDeletePortfolio",
       on: "bottom",
     },
-  type: "wait",
+    type: "wait",
   },
   {
     id: "step-15",
@@ -153,7 +151,7 @@ const steps = () => [
       element: "#instanceAdvice",
       on: "top",
     },
-  type: "wait",
+    type: "wait",
   },
   {
     id: "step-16",
@@ -162,7 +160,7 @@ const steps = () => [
       element: "#btn-cost-advice-export",
       on: "bottom",
     },
-  type: "wait",
+    type: "wait",
   },
   {
     id: "step-17",
@@ -171,7 +169,7 @@ const steps = () => [
       element: "#summary-accordion-header",
       on: "bottom",
     },
-  type: "wait",
+    type: "wait",
   },
   {
     id: "step-17",
@@ -180,7 +178,7 @@ const steps = () => [
       element: "#summary-accordion-header",
       on: "top",
     },
-  type: "wait",
+    type: "wait",
   },
   {
     id: "step-18",
@@ -189,7 +187,7 @@ const steps = () => [
       element: "#annuallyPrice",
       on: "top",
     },
-  type: "wait",
+    type: "wait",
   },
   {
     id: "step-19",
@@ -198,7 +196,7 @@ const steps = () => [
       element: "#annuallyPrice",
       on: "top",
     },
-  type: "wait",
+    type: "wait",
   },
   {
     id: "step-20",
@@ -374,18 +372,18 @@ const steps = () => [
       on: "top",
     },
   },
-    {
+  {
     id: "step-34",
     text: "Get AMD instance recommendations with cost comparison and potential savings.",
     attachTo: {
       element: "#instanceAdvice",
       on: "top",
     },
-  type: "wait",
+    type: "wait",
   },
-   {
+  {
     id: "step-35",
-    text: "Click here to scroll cost advisory table.",
+    text: "Click here to close cost advisory details.",
     attachTo: {
       element: "#close-instance-advice",
       on: "bottom",
@@ -393,7 +391,7 @@ const steps = () => [
 
     type: "wait",
   },
-   {
+  {
     id: "step-36",
     text: "Click here for stat collector details.",
     attachTo: {
@@ -403,7 +401,7 @@ const steps = () => [
 
     type: "wait",
   },
-   {
+  {
     id: "step-37",
     text: "Click here to download stat collector file.",
     attachTo: {
@@ -413,7 +411,7 @@ const steps = () => [
 
     type: "wait",
   },
-   {
+  {
     id: "step-38",
     text: "Click here to open the user profile menu",
     attachTo: {
@@ -422,7 +420,7 @@ const steps = () => [
       offset: "0 20",
     },
   },
-   {
+  {
     id: "step-39",
     text: "Click here to log out of application",
     attachTo: {
@@ -431,7 +429,7 @@ const steps = () => [
       offset: "0 20",
     },
     type: "wait",
-    isEnd:true
+    isEnd: true,
   },
 ];
 

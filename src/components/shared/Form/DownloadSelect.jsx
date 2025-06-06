@@ -13,6 +13,7 @@ const menuItems = [
     value: "download_self_pref_template",
     label: "Download Self Perf Assessment",
     href: "/self_perf_assessment.xlsx",
+    id: "downloadSelectSelfPerfTemplate",
   },
 ];
 
@@ -42,31 +43,15 @@ const formControlSx = {
 const DownloadSelect = () => {
   return (
     <FormControl fullWidth variant="filled" size="small" sx={formControlSx}>
-      <InputLabel id="download-select-label">Downloads</InputLabel>
+      <InputLabel id="download-select-label" >Downloads</InputLabel>
       <SelectHoc
+      menuComponent='a'
         labelId="download-select-label"
         id="step-five-target"
         label="Downloads"
-        options={menuItems.map((item) => (
-          <Button
-            component="a"
-            key={item.value}
-            href={item.href}
-            download
-            id="step-six-target"
-            variant="text"
-            sx={{
-              all: "unset",
-              color: "inherit",
-              font: "inherit",
-              width: "100%",
-              textAlign: "left",
-              cursor: "pointer",
-            }}
-          >
-            {item.label}
-          </Button>
-        ))}
+        options={menuItems }
+        getOptionLabel={(option) => option.label}
+        getOptionValue={(option) => option.value}
       />
     </FormControl>
   );

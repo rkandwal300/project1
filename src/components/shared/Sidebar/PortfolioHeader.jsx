@@ -1,18 +1,21 @@
 import React from "react";
 import { Box, Typography, IconButton, Tooltip } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle"; 
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useDispatch } from "react-redux";
-import { resetForm, toggleHideInstances } from "@/redux/features/form/formData.slice";
+import {
+  resetForm,
+  toggleHideInstances,
+} from "@/redux/features/form/formData.slice";
 
 import { useNavigate } from "react-router-dom";
 
-function PortfolioHeader() { 
-  const  navigate = useNavigate();
+function PortfolioHeader() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleResetForm = () => {
     dispatch(resetForm());
     dispatch(toggleHideInstances(true));
-     navigate("/");
+    navigate("/");
   };
 
   return (
@@ -29,8 +32,8 @@ function PortfolioHeader() {
         slotProps={{ tooltip: { sx: { fontSize: "0.8rem" } } }}
       >
         <IconButton
-        onClick={handleResetForm}
-        id="btn-dashboard-createPortfolio"
+          onClick={handleResetForm}
+          id="btn-dashboard-createPortfolio"
           aria-label="Create New Portfolio"
           size="small"
           sx={{
