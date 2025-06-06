@@ -1,9 +1,7 @@
 import { useCallback, useMemo, useRef } from "react";
 import Plot from "react-plotly.js";
 import { useResizeDetector } from "react-resize-detector";
-import Plotly from "plotly.js-dist-min";
-// If you use jsPDF, import it:
-import jsPDF from "jspdf";
+import Plotly from "plotly.js-dist-min"; 
 import PropTypes from "prop-types";
 
 const ICONS = {
@@ -24,8 +22,6 @@ const ICONS = {
   },
 };
 
-// Plotly.Icons may not exist in plotly.js-dist-min, so we define icons inline below
-
 const BarChart = ({
   title,
   currentValue,
@@ -33,6 +29,8 @@ const BarChart = ({
   recommendations = [],
   yLabel,
   unit,
+  csvUrl,
+  pdfUrl,
 }) => {
   const plotRef = useRef(null);
   const { width, ref } = useResizeDetector();
@@ -45,46 +43,27 @@ const BarChart = ({
     recommendations[2]?.[yLabel],
   ];
 
-  // Prepare CSV data
-  const data = labels.map((label, idx) => ({
-    label,
-    value: values[idx],
-  }));
+ 
 
   const handleExportCSV = useCallback(() => {
-    const filename = title + ".csv";
-    const headers = ["Label", "Value"];
-    const rows = data.map((row) => [row.label, row.value]);
-    const csvContent = [headers, ...rows]
-      .map((row) => row.join(","))
-      .join("\n");
-    const blob = new Blob([csvContent], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }, [title, data]);
+    if (csvUrl) {
+      const link = document.createElement("a");
+      link.href = csvUrl;
+      link.download = title ? `${title}.csv` : "data.csv";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }, [csvUrl, title]);
 
   const handleExportPDF = useCallback(async () => {
-    if (!plotRef.current) return;
-    try {
-      const plotlyDiv = plotRef.current.el || plotRef.current; // .el for react-plotly.js >=2.5.0
-      const imageData = await Plotly.toImage(plotlyDiv, {
-        format: "png",
-        width: 800,
-        height: 600,
-      });
-      const pdf = new jsPDF("l", "pt", [800, 600]);
-      pdf.addImage(imageData, "PNG", 0, 0, 800, 600);
-      pdf.save(title + ".pdf");
-    } catch (error) {
-      console.error("PDF Export Error:", error);
-    }
-  }, []);
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.download = title ? `${title}.pdf` : "data.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  }, [pdfUrl, title]);
 
   const annotations = values.map((val, idx) => {
     if (idx === 0 || !val || !currentValue) return null;

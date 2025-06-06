@@ -8,6 +8,7 @@ import { CONSUMPTION_FIELDS } from "@/lib/constant";
 import { AnimatedIconButton } from "./AnimatedIconButton";
 import DialogHoc from "@/components/ui/Dialog";
 import FindAndReplace from "./FindAndReplace";
+import TooltipHoc from "@/components/ui/Tooltip";
 // import Icon from "@mdi/react";
 // import { mdiFileReplace } from "@mdi/js";
 //  npm i material-design-icons
@@ -78,6 +79,7 @@ function ConsumptionMetadata({ form }) {
         {CONSUMPTION_FIELDS.map(renderFields)}
       </Box>
       <Box display="flex" alignItems="center" gap="16px">
+        <TooltipHoc message={"Find & Replace"}>
         <Button
           id="addInstanceFormTarget"
           variant="contained"
@@ -87,29 +89,34 @@ function ConsumptionMetadata({ form }) {
         >
           <Add />
         </Button>
+        </TooltipHoc>
         <DialogHoc
           trigger={({ onClick }) => (
-            <Button
-              id="findAndReplace"
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={onClick}
-            >
-                 <FileCopy />
-              {/* <Icon path={mdiFileReplace} size={1} /> */}
-            </Button>
+              
+            <TooltipHoc message={"Add Instance"}>
+              <Button
+                id="findAndReplace"
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={onClick}
+              >
+                <FileCopy />
+                {/* <Icon path={mdiFileReplace} size={1} /> */}
+              </Button>
+            </TooltipHoc>
           )}
           content={({ handleClose }) => (
             <FindAndReplace onClose={handleClose} />
           )}
           sx={{ width: "400px", m: "auto" }}
         />
-        <AnimatedIconButton 
-          className={animate ? "animate" : ""}
-        >
-          <HelpOutlineIcon />
-        </AnimatedIconButton>
+        <TooltipHoc message={"Data correction & adjustment guidelines"}>
+         
+          <AnimatedIconButton className={animate ? "animate" : ""}>
+            <HelpOutlineIcon />
+          </AnimatedIconButton>
+        </TooltipHoc>
       </Box>
     </Box>
   );

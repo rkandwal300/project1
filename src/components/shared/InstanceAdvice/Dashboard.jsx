@@ -43,18 +43,24 @@ const Dashboard = ({ data }) => {
       value: data.currentPlatform.cost,
       yLabel: "cost",
       unit: "$",
+      pdfUrl: "/Cost.pdf",
+      csvUrl: "/Cost.csv",
     },
     {
       title: "Power",
       value: data.currentPlatform.power,
       yLabel: "power",
       unit: "kW",
+      pdfUrl: "/Power.pdf",
+      csvUrl: "/Power.csv",
     },
     {
       title: "Carbon",
       value: data.currentPlatform.carbon,
       yLabel: "carbon",
       unit: "kgCO₂eq",
+      pdfUrl: "/Carbon.pdf",
+      csvUrl: "/Carbon.csv",
     },
   ];
 
@@ -72,11 +78,19 @@ const Dashboard = ({ data }) => {
             yLabel={item.yLabel}
             unit={item.unit}
             height={height}
+            csvUrl={item.csvUrl}
+            pdfUrl={item.pdfUrl}
           />
         </div>
       ))}
       <div style={{ width: chartWidth }}>
-        <SummaryChartAccordion data={data} height={height} width={chartWidth} />
+        <SummaryChartAccordion
+          data={data}
+          height={height}
+          width={chartWidth}
+          pdfUrl="/Advice_aws_test_Summary.pdf"
+          csvUrl="/Advice_aws_test_Summary.csv"
+        />
       </div>
     </div>
   );

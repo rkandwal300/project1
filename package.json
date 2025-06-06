@@ -17,7 +17,6 @@
     "@mui/material": "^7.1.0",
     "@reduxjs/toolkit": "^2.8.2",
     "@tanstack/react-table": "^8.21.3",
-    "jspdf": "^3.0.1",
     "plotly.js": "^3.0.1",
     "plotly.js-dist-min": "^3.0.1",
     "react": "^19.1.0",

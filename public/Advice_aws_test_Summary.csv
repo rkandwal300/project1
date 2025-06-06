@@ -1,3 +1,4 @@
-Type,Cost($),Power(kw),Carbon(kgco2eq)
-CI,270.17,477.7232,105.6056
-Optimal,190.82,44.851322,9.900793
+Metric,Current,Optimal
+Cost,4061.84,4395.34
+Power,1455.14,694.485882
+Carbon,170.68,81.42874

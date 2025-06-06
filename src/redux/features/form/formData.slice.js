@@ -4,7 +4,7 @@ export const mockFormDataResponse = {
   portfolioName: "Test00Demo16",
   region: "ap-east-1",
   instanceType: "m7a.12xLarge",
-  uuid: "ghgfhfg",
+  uuid: "840fa2dd-952a-4a84-b848-c40077c6bfff",
   pricingModel: "ondemand",
   id: "yhG_7_KsqZNeKgPJn6b09",
   maxCpuUtilization: 123,

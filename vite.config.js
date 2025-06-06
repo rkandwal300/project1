@@ -15,6 +15,24 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+
+  build: {
+   chunkSizeWarningLimit: 500,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Customize chunk splitting
+          if (id.includes("node_modules")) {
+            if (id.includes("react")) return "react";
+            if (id.includes("@mui")) return "mui";
+            if (id.includes("zod")) return "zod";
+            if (id.includes("shepherd.js")) return "tour";
+            if (id.includes("react-hook-form")) return "forms";
+          }
+        },
+      },
+    },
+  },
 });
 
 // add manual chunks

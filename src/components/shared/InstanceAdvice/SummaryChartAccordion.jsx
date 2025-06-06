@@ -33,6 +33,7 @@ const ICONS = {
     path: "M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2M15 16L13 20H10L12 16H9V11H15V16M13 9V3.5L18.5 9H13Z",
   },
 };
+
 Object.entries(ICONS).forEach(([key, icon]) => {
   Plotly.Icons[`mdiFile${key.charAt(0).toUpperCase() + key.slice(1)}Box`] =
     icon;
@@ -83,31 +84,11 @@ const getAnnotations = (labels, currentValues, optimalValues) =>
       font: { color: "white", size: 12 },
     };
   });
+ 
 
-export const exportCSV = (data, filename = "Advice_aws_test_Summary.csv") => {
-  const headers = ["Metric", "Current", "Optimal"];
-  const rows = [
-    ["Cost", data.currentPlatform.cost, data.recommendations[0]?.cost ?? ""],
-    ["Power", data.currentPlatform.power, data.recommendations[0]?.power ?? ""],
-    [
-      "Carbon",
-      data.currentPlatform.carbon,
-      data.recommendations[0]?.carbon ?? "",
-    ],
-  ];
-  const csvContent = [headers, ...rows].map((row) => row.join(",")).join("\n");
-  const blob = new Blob([csvContent], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-};
+const SummaryChartAccordion = ({ data, height = 300,pdfUrl,csvUrl }) => {
 
-const SummaryChartAccordion = ({ data, height = 300 }) => {
+
   const plotRef = useRef(null);
   const plotlyDivRef = useRef(null);
   const accordionRef = useRef(null);
@@ -115,30 +96,31 @@ const SummaryChartAccordion = ({ data, height = 300 }) => {
   const plotHeight = usePlotHeight(height, accordionRef);
   const { labels, currentValues, optimalValues } = useChartData(data);
 
+
+  const handleExportCSV = useCallback(() => {
+    if (csvUrl) {
+      const link = document.createElement("a");
+      link.href = csvUrl;
+      link.download =  `Summary.csv` ;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }, [csvUrl,]);
+
+  const handleExportPDF = useCallback(async () => {
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.download = `Summary.pdf` ;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  }, [pdfUrl, ]); 
   const annotations = useMemo(
     () => getAnnotations(labels, currentValues, optimalValues),
     [labels, currentValues, optimalValues]
   );
-
-  const handleExportCSV = useCallback(() => exportCSV(data), [data]);
-
-  const handleExportPDF = useCallback(async () => {
-    if (!plotlyDivRef.current) return;
-    try {
-      const imageData = await Plotly.toImage(plotlyDivRef.current, {
-        format: "png",
-        width: 800,
-        height: 600,
-      });
-      const pdf = new window.jsPDF("l", "pt", [800, 600]);
-      pdf.addImage(imageData, "PNG", 0, 0, 800, 600);
-      pdf.save("Advice_aws_test_Summary.pdf");
-    } catch (error) {
-      console.error("PDF Export Error:", error);
-    }
-  }, []);
-
-  // Modebar buttons config
+  
   const modeBarButtons = useMemo(
     () => [
       [
