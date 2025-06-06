@@ -1,8 +1,18 @@
 import Shepherd from "shepherd.js";
 import "shepherd.js/dist/css/shepherd.css";
 import steps from "./steps.tour";
-import { mockFormDataResponse } from "@/redux/features/form/formData.slice";
 import { CONSUMPTION_FIELDS, GENERIC_FIELDS } from "@/lib/constant";
+import { mockFormDataResponse } from "@/redux/features/form/formData.slice";
+
+// 🔊 Speak the tutorial text using Web Speech API
+const speakText = (text) => {
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel(); // Cancel previous speech
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    window.speechSynthesis.speak(utterance);
+  }
+};
 
 const highlightElement = (selector) => {
   const el = document.querySelector(selector);
@@ -13,7 +23,6 @@ const removeHighlight = (selector) => {
   const el = document.querySelector(selector);
   if (el) el.style.border = "";
 };
-
 
 const selectDropdownValue = (inputEl, fieldName) => {
   return new Promise((resolve, reject) => {
@@ -39,8 +48,7 @@ const selectDropdownValue = (inputEl, fieldName) => {
       const options = Array.from(listbox.querySelectorAll('[role="option"]'));
       if (options.length === 0) return reject(`No options for ${fieldName}`);
 
-      const firstOption = options[0];
-      firstOption.click();
+      options[0].click();
 
       const waitUntilClosed = () => {
         if (document.querySelector('[role="listbox"]')) {
@@ -89,7 +97,12 @@ const handleElementAction = async (el, id) => {
   const tag = el.tagName.toLowerCase();
   const role = el.getAttribute("role");
   const ariaHasPopup = el.getAttribute("aria-haspopup");
-
+  console.log({
+    id,
+    tag,
+    role,
+    ariaHasPopup,
+  });
   if (["instanceTypeTargetFrom", "instanceTypeTargetTo"].includes(id)) {
     await selectDropdownValue(el, "instanceType");
   } else if (id === "tableCell_0_maxCpuUtilization_cell") {
@@ -118,7 +131,12 @@ const handleElementAction = async (el, id) => {
   } else if (tag === "button" || el?.click) {
     el.click();
   } else if (role === "combobox" && ariaHasPopup === "listbox") {
-    el.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+    const mouseDownEvent = new MouseEvent("mousedown", {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+    el.dispatchEvent(mouseDownEvent);
   } else if (tag === "div") {
     if (role === "table-container") {
       const maxScrollLeft = el.scrollWidth - el.clientWidth;
@@ -142,6 +160,7 @@ const tour = new Shepherd.Tour({
   },
 });
 
+// 🔁 Add all steps
 steps().forEach((step) => {
   const buttons = [
     {
@@ -167,24 +186,25 @@ steps().forEach((step) => {
     text: step.text,
     attachTo: step.attachTo,
     buttons,
+    beforeShowPromise: () =>
+      new Promise((resolve) => {
+        const checkExist = setInterval(() => {
+          const el = document.querySelector(step.attachTo.element);
+          if (el) {
+            clearInterval(checkExist);
+            highlightElement(step.attachTo.element);
+            speakText(step.text); // 🔊 Speak when showing the popup
+            resolve();
+          }
+        }, 100);
+      }),
+    when: {
+      hide: () => {
+        removeHighlight(step.attachTo.element);
+        window.speechSynthesis.cancel(); // stop any ongoing speech when step is hidden
+      },
+    },
   };
-
-  stepConfig.beforeShowPromise = () =>
-  new Promise((resolve) => {
-    const checkExist = setInterval(() => {
-      const el = document.querySelector(step.attachTo.element);
-      if (el) {
-        clearInterval(checkExist);
-        highlightElement(step.attachTo.element); 
-        resolve();
-      }
-    }, 100);
-  });
-
-stepConfig.when = {
-  hide: () => removeHighlight(step.attachTo.element), 
-};
- 
 
   tour.addStep(stepConfig);
 });

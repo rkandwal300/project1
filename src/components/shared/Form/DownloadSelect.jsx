@@ -7,6 +7,7 @@ const menuItems = [
     value: "download_template",
     label: "Download Template",
     href: "/Sample_template.xlsx",
+    id: "downloadSelectTemplate",
   },
   {
     value: "download_self_pref_template",

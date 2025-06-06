@@ -43,7 +43,7 @@ const SelectHoc = ({
       {...props}
     > 
       {options.map((option) => (
-        <MenuItem value={getOptionValue(option)} key={getOptionValue(option)}>
+        <MenuItem value={getOptionValue(option)} key={getOptionValue(option)} id = {option.id}>
           {getOptionLabel(option)}
         </MenuItem>
       ))}

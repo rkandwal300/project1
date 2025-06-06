@@ -58,36 +58,45 @@ const steps = () => [
       on: "right",
     },
   },
-  {
-    id: "step-7",
-    text: "Click here to open download menu",
-    attachTo: {
-      element: "#step-five-target",
-      on: "bottom",
-    },
-    type: "wait",
-  },
-  {
-    id: "step-8",
-    text: "Download the template in Excel (.xlsx) format to ensure your data is formatted correctly. All required fields must be  filled in as per the template structure.",
-    attachTo: {
-      element: "#step-six-target",
-      on: "right",
-    },
-    type: "wait",
-    action: {
-      next: () => {
-        const state = store.getState();
-        const {sidebar} = state;
-        if (!sidebar.isOpen) {
-          store.dispatch(openSidebar());
-        }
-      },
-    },
-  },
+  // {
+  //   id: "step-7",
+  //   text: "Click here to open download menu",
+  //   attachTo: {
+  //     element: "#step-five-target",
+  //     on: "bottom",
+  //   },
+  //   type: "wait",
+  // },
+  // {
+  //   id: "step-8",
+  //   text: "Download the template in Excel (.xlsx) format to ensure your data is formatted correctly. All required fields must be  filled in as per the template structure.",
+  //   attachTo: {
+  //     element: "#downloadSelectTemplate",
+  //     on: "right",
+  //   },
+  //   type: "wait",
+  //   action: {
+  //     next: () => {
+  //       const state = store.getState();
+  //       const {sidebar} = state;
+  //       if (!sidebar.isOpen) {
+  //         store.dispatch(openSidebar());
+  //       }
+  //     },
+  //   },
+  // },
   {
     id: "step-9",
     text: "Click here to open service Provider",
+    attachTo: {
+      element: "#step-six-target",
+      on: "left",
+    },
+    type: "wait",
+  },
+  {
+    id: "step-9.1",
+    text: "Click here to select service Provider",
     attachTo: {
       element: "#MenuItem-azure",
       on: "left",
