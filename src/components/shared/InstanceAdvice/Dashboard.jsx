@@ -27,7 +27,7 @@ const Dashboard = ({ data }) => {
     return () => {
       resizeObserver.disconnect();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerRef.current, isMd]);
 
   const gridStyle = {
@@ -62,8 +62,8 @@ const Dashboard = ({ data }) => {
   const height = 300;
   return (
     <div ref={containerRef} style={gridStyle}>
-      {chartItems.map((item, index) => (
-        <div key={index} style={{ width: chartWidth }}>
+      {chartItems.map((item) => (
+        <div key={item.value} style={{ width: chartWidth }}>
           <BarChart
             width={chartWidth}
             title={item.title}

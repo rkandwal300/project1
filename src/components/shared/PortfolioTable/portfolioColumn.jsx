@@ -88,6 +88,7 @@ export default function GetInstanceColumn() {
       ({ getValue, row, isEditing }) =>
         isEditing ? (
           <EditableCell
+          id ={`tableCell_${row.index}_${field}_cell`}
             type="text"
             value={getValue()}
             onChange={(val) => handleValueChange(row.index, field, val)}
@@ -162,6 +163,7 @@ export default function GetInstanceColumn() {
         header: "Maximum Bandwidth Used",
         columns: [
           {
+            id:"maxCpuUtilization",
             accessorKey: "maxCpuUtilization",
             header: "CPU(%)",
             cell: renderEditableTextCell("maxCpuUtilization"),
@@ -170,6 +172,7 @@ export default function GetInstanceColumn() {
             maxSize: 200,
           },
           {
+            id: "maxMemoryUsed",
             accessorKey: "maxMemoryUsed",
             header: "Memory(GB)",
             cell: renderEditableTextCell("maxMemoryUsed"),
@@ -178,6 +181,7 @@ export default function GetInstanceColumn() {
             maxSize: 200,
           },
           {
+            id: "maxDiskBandwidth",
             accessorKey: "maxDiskBandwidth",
             header: "Disk(MBps)",
             cell: renderEditableTextCell("maxDiskBandwidth"),
@@ -186,6 +190,7 @@ export default function GetInstanceColumn() {
             maxSize: 200,
           },
           {
+            id: "maxNetworkBandwidth",
             accessorKey: "maxNetworkBandwidth",
             header: "Network (Mbps)",
             cell: renderEditableTextCell("maxNetworkBandwidth"),

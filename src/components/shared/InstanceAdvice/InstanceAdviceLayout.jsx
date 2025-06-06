@@ -151,7 +151,7 @@ function InstanceAdviceLayout() {
                 defaultColumnPinningState={{
                   left: ["current", "instanceType", "cost", "power", "carbon"],
                   right: [],
-                }}
+                }}id="instance-advice-table"
               />
             </Box>
           </Box>

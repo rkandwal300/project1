@@ -3,31 +3,22 @@ import {
   Box,
   Divider,
   Typography,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
   Button,
 } from "@mui/material";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import CloseIcon from "@mui/icons-material/Close";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { selectInstanceStats } from "@/redux/features/form/formData.selector";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import FormAlert from "@/components/ui/FormAlert";
-import {
-  FIND_AND_REPLACE_FIELD_TYPES, 
-} from "@/lib/constant";
+import { FIND_AND_REPLACE_FIELD_TYPES } from "@/lib/constant";
 import { findAndReplace } from "@/redux/features/form/formData.slice";
 import PropTypes from "prop-types";
 import FindReplaceRow from "./FindReplaceRow";
 
-
-
-// --- Validation Schema ---
+// Zod Schema
 const schema = z
   .object({
     values: z.record(
@@ -47,21 +38,24 @@ const schema = z
   })
   .strict();
 
- 
- 
-
-// --- Main Component ---
 export default function FindAndReplace({ onClose }) {
   const dispatch = useDispatch();
   const instances = useSelector(selectInstanceStats);
 
+  const defaultValues = {
+    values: FIND_AND_REPLACE_FIELD_TYPES.reduce((acc, { key }) => {
+      acc[key] = { from: "", to: "" };
+      return acc;
+    }, {}),
+  };
+
   const {
     control,
     handleSubmit,
-    formState: { isValid, isDirty },
+    formState: { isValid, isDirty, errors },
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { values: {} },
+    defaultValues,
     mode: "onChange",
   });
 
@@ -95,6 +89,12 @@ export default function FindAndReplace({ onClose }) {
     onClose();
   };
 
+  // Helper to get unique values for each field type from instances
+  const getUniqueOptions = (key) => {
+    const values = instances.map((instance) => instance[key]);
+    return Array.from(new Set(values)).filter((v) => v !== undefined && v !== null && v !== "");
+  };
+
   return (
     <Box
       sx={{
@@ -117,10 +117,13 @@ export default function FindAndReplace({ onClose }) {
         {FIND_AND_REPLACE_FIELD_TYPES.map(({ key, label, options }) => (
           <FindReplaceRow
             key={key}
+            id={`${key}Target`}
             name={key}
             label={label}
             options={options}
             control={control}
+            error={errors.values?.[key]}
+            selectedOptions={getUniqueOptions(key)}
           />
         ))}
       </Box>
@@ -144,6 +147,7 @@ export default function FindAndReplace({ onClose }) {
           variant="contained"
           onClick={handleSubmit(onSubmit)}
           disabled={!isValid || !isDirty}
+          id="ReplaceAllButton"
         >
           Replace All
         </Button>
@@ -154,13 +158,12 @@ export default function FindAndReplace({ onClose }) {
         onClose={() => setFormError("")}
       >
         {formError}
-        disabled={!isValid}
       </FormAlert>
       <FormAlert
         open={!!formSuccess}
         severity="success"
         onClose={() => setFormSuccess("")}
-      > 
+      >
         Replace All
         {formSuccess}
       </FormAlert>

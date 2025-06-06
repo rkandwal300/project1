@@ -44,7 +44,7 @@ const DownloadSelect = () => {
       <InputLabel id="download-select-label">Downloads</InputLabel>
       <SelectHoc
         labelId="download-select-label"
-        id="download-template"
+        id="step-five-target"
         label="Downloads"
         options={menuItems.map((item) => (
           <Button
@@ -52,6 +52,7 @@ const DownloadSelect = () => {
             key={item.value}
             href={item.href}
             download
+            id="step-six-target"
             variant="text"
             sx={{
               all: "unset",

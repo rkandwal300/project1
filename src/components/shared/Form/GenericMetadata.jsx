@@ -1,42 +1,13 @@
-import React, { useEffect, useCallback, lazy, Suspense } from "react";
+import React, { lazy } from "react";
 import { Box, Typography } from "@mui/material";
-import tour from "@/tour/tour"; 
-import { GENERIC_FIELDS, GENERIC_TOUR_STEPS } from "@/lib/constant";
+import { GENERIC_FIELDS } from "@/lib/constant";
 import { Controller } from "react-hook-form";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
+import HoverSelect from "@/components/ui/form/Select";
 
-const HoverInput = lazy(() => import("@/components/ui/form/Input"));
-const HoverSelect = lazy(() => import("@/components/ui/form/Select"));
+const HoverInput = lazy(() => import("@/components/ui/form/Input")); 
 
 const GenericMetadata = ({ form }) => {
-  const handleFieldClick = useCallback(() => {
-    
-  }, []);
-
-  useEffect(() => {
-    GENERIC_TOUR_STEPS.forEach(({ id, text, attachTo, field, next, prev }) => {
-      tour.addStep({
-        id,
-        text,
-        attachTo,
-        buttons: [
-          prev && {
-            text: "Back",
-            action: () => tour.show(prev),
-          },
-          {
-            text: "Next",
-            action: () => {
-              handleFieldClick(field);
-              tour.show(next);
-            },
-          },
-        ].filter(Boolean),
-      });
-    });
-    // eslint-disable-next-line
-  }, [handleFieldClick]);
-
   const renderField = ({ name, label, options, tooltipMessage }) => (
     <Controller
       key={name}
@@ -46,6 +17,7 @@ const GenericMetadata = ({ form }) => {
         options ? (
           <HoverSelect
             id={`${name}Target`}
+            name={name}
             tooltipMessage={tooltipMessage}
             label={label}
             options={options}
@@ -74,6 +46,8 @@ const GenericMetadata = ({ form }) => {
       p={2}
       width="100%"
       display="grid"
+      id="generic-metadata-form"
+      role="GenericMetadataForm"
       sx={{
         gridTemplateColumns: { xs: "repeat(1,1fr)", sm: "repeat(5, 1fr)" },
       }}

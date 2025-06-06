@@ -30,6 +30,8 @@ function PortfolioHeader() {
       >
         <IconButton
         onClick={handleResetForm}
+        id="btn-dashboard-createPortfolio"
+          aria-label="Create New Portfolio"
           size="small"
           sx={{
             backgroundColor: "transparent",

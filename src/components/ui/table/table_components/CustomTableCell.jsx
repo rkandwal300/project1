@@ -11,6 +11,7 @@ const CustomTableCell = ({
   onDoubleClick,
 }) => (
   <TableCell
+  id={`tableCell${cell.id}`}
     sx={{
       py: isEditing ? 0 : "3px",
       minHeight: "69px",

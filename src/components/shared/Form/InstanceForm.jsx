@@ -56,7 +56,7 @@ function InstanceForm() {
   const handleSubmit = useCallback(
     (data) => {
       dispatch(addPortfolioNameList(data.portfolioName));
-      dispatch(addInstance({ id: nanoid(), ...data }));
+      dispatch(addInstance({ id: nanoid(), ...data, uuid: data.uuid || nanoid() }));
       setFormSuccess("Instance added successfully");
       setFormError("");
       form.reset({ portfolioName: data.portfolioName });

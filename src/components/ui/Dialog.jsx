@@ -1,7 +1,6 @@
 import * as React from "react";
 import Dialog from "@mui/material/Dialog";
-import ErrorBoundary from "../shared/ErrorBoundary";
-
+import PropTypes from "prop-types";
 export default function DialogHoc({ trigger, content, ...props }) {
   const { maxWidth = "md" } = props;
   const [open, setOpen] = React.useState(false);
@@ -29,3 +28,8 @@ export default function DialogHoc({ trigger, content, ...props }) {
       </React.Fragment> 
   );
 }
+
+DialogHoc.propTypes = {
+  trigger: PropTypes.func.isRequired,
+  content: PropTypes.func.isRequired,
+};

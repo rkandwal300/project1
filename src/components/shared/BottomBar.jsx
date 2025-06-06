@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Button, Typography, Grid, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  Grid,
+  useTheme,
+  Divider,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import BuildIcon from "@mui/icons-material/Build";
@@ -28,7 +35,7 @@ import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import FormAlert from "../ui/FormAlert";
 import { useNavigate } from "react-router-dom";
- 
+import DialogHoc from "../ui/Dialog";
 
 function BottomBar() {
   const navigate = useNavigate();
@@ -38,11 +45,11 @@ function BottomBar() {
   const formData = useSelector(selectFormData);
   const instances = useSelector(selectInstanceStats);
   const selfPrefAssessmentData = useSelector(selectSelfPrefAssessment);
-  
 
   const [formError, setFormError] = useTimedMessage();
   const [formSuccess, setFormSuccess] = useTimedMessage();
   const formId = formData.id || nanoid();
+
   const handleSavePortFolio = () => {
     const payload = {
       id: formId,
@@ -141,19 +148,74 @@ function BottomBar() {
         >
           Cancel
         </Button>
-
         {formData.id && (
-          <Button
-            variant="contained"
-            color="error"
-            startIcon={<DeleteIcon />}
-            onClick={handleDeletePortfolio}
-          >
-            Delete portfolio
-          </Button>
-        )}
+        <DialogHoc
+          maxWidth="xs"
+          trigger={({ onClick }) => (
+            <Button
+              id="deletePortfolio"
+              variant="contained"
+              color="error"
+              startIcon={<DeleteIcon />}
+              onClick={onClick}
+              // 
+            >
+              Delete portfolio
+            </Button>
+          )}
+          content={({ handleClose }) => (
+            <Box display={"flex"} flexDirection={"column"} gap="0px">
+              <Typography variant="h5" sx={{ m: 2 }} gutterBottom>
+                Confirm Delete Portfolio?
+              </Typography>
+              <Divider />
+              <Typography
+                variant="body2"
+                sx={{
+                  my: 1,
+                  mx: 2,
+                  fontWeight: 600,
+                  color: "secondary.default",
+                }}
+                gutterBottom
+              >
+                Are you sure you want to delete this portfolio.
+              </Typography>
+              <Box
+              onClick={handleClose}
+                display={"flex"}
+                padding={"10px"}
+                gap="10px"
+                justifyContent="flex-end"
+              >
+                <Button
+                  id="cancelDeletePortfolio"
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </Button>
 
+                <Button
+                id={"confirmDeletePortfolio"}
+                  variant="contained"
+                  color="error"
+                  startIcon={<DeleteIcon />}
+                  onClick={() => {
+                    handleDeletePortfolio();
+                    handleClose();
+                  }}
+                >
+                  Delete
+                </Button>
+              </Box>
+            </Box>
+          )}
+        />
+        )}
         <Button
+          id="savePortfolio"
           onClick={handleSavePortFolio}
           variant="contained"
           startIcon={<SaveIcon />}
@@ -161,8 +223,8 @@ function BottomBar() {
         >
           Save
         </Button>
-
         <Button
+        id={"instanceAdvice"}
           variant="contained"
           startIcon={<BuildIcon />}
           disabled={isInstanceAdviceDisabled}

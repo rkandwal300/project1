@@ -44,7 +44,9 @@ const PortfolioDetails = ({ form }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <HoverInput
+            id="portfolio-name"
               label="Portfolio Name"
+              name = "portfolioName"
               value={field.value}
               fullWidth
               tooltipMessage={TOOLTIP_MESSAGE}
@@ -57,11 +59,12 @@ const PortfolioDetails = ({ form }) => {
           )}
         />
 
-        <FileUploadField label="Upload Instances" fullWidth sx={{ flex: 1 }} />
+        <FileUploadField label="Upload Instances" fullWidth sx={{ flex: 1 }} id="uploadInstances" />
 
         <FormControlLabel
           control={
             <Checkbox
+            id={"openSelfPrefCheckbox"}
               checked={showSelfPref}
               onChange={handleSelfPrefChange}
               color="primary"
@@ -85,6 +88,7 @@ const PortfolioDetails = ({ form }) => {
         {showSelfPref && (
           <FileUploadField
             label="Upload Self Perf assessment"
+            id="uploadSelfPerf"
             fullWidth
             sx={{ flex: 1, width: "50%" }}
           />

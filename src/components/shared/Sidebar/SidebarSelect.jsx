@@ -7,8 +7,9 @@ import {
   InputLabel,
   MenuItem,
 } from "@mui/material";
+import { serviceProviderOptions } from "@/lib/constant";
 
-const SidebarSelect = ({ label = "", value = "", options, onValueChange }) => {
+const SidebarSelect = ({ label = "", value = "", onValueChange }) => {
   const theme = useTheme();
   return (
     <FormControl fullWidth variant="outlined">
@@ -17,6 +18,7 @@ const SidebarSelect = ({ label = "", value = "", options, onValueChange }) => {
         value={value}
         onChange={onValueChange}
         label={label}
+        id="step-six-target"
         MenuProps={{
           PaperProps: {
             sx: {
@@ -27,7 +29,7 @@ const SidebarSelect = ({ label = "", value = "", options, onValueChange }) => {
           },
         }}
       >
-        {options.map((group) => [
+        {serviceProviderOptions.map((group) => [
           <ListSubheader
             key={group.label}
             sx={{
@@ -42,6 +44,7 @@ const SidebarSelect = ({ label = "", value = "", options, onValueChange }) => {
               key={option.value}
               value={option.value}
               sx={{ height: "40px" }}
+              id={`MenuItem-${option.value}`}
             >
               {option.label}
             </MenuItem>

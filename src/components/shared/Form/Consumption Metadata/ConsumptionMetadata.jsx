@@ -2,42 +2,20 @@ import React, { useEffect, useState, lazy } from "react";
 import { Typography, Button, Box } from "@mui/material";
 import { Add, FileCopy } from "@mui/icons-material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import tour from "@/tour/tour";
 import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
-import { CONSUMPTION_FIELDS, CONSUMPTION_TOUR_STEPS } from "@/lib/constant";
+import { CONSUMPTION_FIELDS } from "@/lib/constant";
 import { AnimatedIconButton } from "./AnimatedIconButton";
 import DialogHoc from "@/components/ui/Dialog";
 import FindAndReplace from "./FindAndReplace";
-
+// import Icon from "@mdi/react";
+// import { mdiFileReplace } from "@mdi/js";
+//  npm i material-design-icons
 // Lazy load components
 const HoverInput = lazy(() => import("@/components/ui/form/Input"));
 
 function ConsumptionMetadata({ form }) {
   const [animate, setAnimate] = useState(false);
-
-  useEffect(() => {
-    CONSUMPTION_TOUR_STEPS.forEach((step) => {
-      tour.addStep({
-        id: step.id,
-        text: step.text,
-        attachTo: step.attachTo,
-        buttons: [
-          {
-            text: "Back",
-            action: () => tour.show(step.prev),
-          },
-          {
-            text: "Next",
-            action: () => {
-              tour.show(step.next);
-            },
-          },
-        ],
-      });
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => setAnimate((prev) => !prev), 500);
@@ -47,11 +25,11 @@ function ConsumptionMetadata({ form }) {
   const renderFields = ({ name, tooltipMessage, label }) => (
     <Controller
       key={name}
-      id={`${name}Target`}
       name={name}
       control={form.control}
       render={({ field, fieldState }) => (
         <HoverInput
+          id={`${name}Target`}
           label={label}
           fullWidth
           hideClearIcon={true}
@@ -80,6 +58,8 @@ function ConsumptionMetadata({ form }) {
       }}
     >
       <Box
+        id="consumption-metadata-form"
+        role="ConsumptionMetadataForm"
         sx={{
           display: "grid",
           gap: "16px",
@@ -99,7 +79,7 @@ function ConsumptionMetadata({ form }) {
       </Box>
       <Box display="flex" alignItems="center" gap="16px">
         <Button
-          id="seventhStepTarget"
+          id="addInstanceFormTarget"
           variant="contained"
           color="primary"
           type="submit"
@@ -110,21 +90,22 @@ function ConsumptionMetadata({ form }) {
         <DialogHoc
           trigger={({ onClick }) => (
             <Button
-              id="eightStepTarget"
+              id="findAndReplace"
               variant="contained"
               color="primary"
               size="small"
               onClick={onClick}
             >
-              <FileCopy />
+                 <FileCopy />
+              {/* <Icon path={mdiFileReplace} size={1} /> */}
             </Button>
           )}
-          content={({handleClose})=>(<FindAndReplace onClose={handleClose} />)}
-        sx={{width: "400px", m:'auto'}}
-        
+          content={({ handleClose }) => (
+            <FindAndReplace onClose={handleClose} />
+          )}
+          sx={{ width: "400px", m: "auto" }}
         />
-        <AnimatedIconButton
-          id="nineStepTarget"
+        <AnimatedIconButton 
           className={animate ? "animate" : ""}
         >
           <HelpOutlineIcon />

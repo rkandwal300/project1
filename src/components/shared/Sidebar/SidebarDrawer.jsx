@@ -4,24 +4,14 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import SidebarSelect from "@/components/shared/Sidebar/SidebarSelect";
 import PortfolioHeader from "./PortfolioHeader";
 import PortfolioList from "./PortfolioList";
-const selectOptions = [
-  {
-    label: "Service Provider",
-    options: [
-      { label: "AWS", value: "AWS" },
-      { label: "Azure", value: "Azure" },
-      { label: "GCP", value: "GCP" },
-    ],
-  },
-  {
-    label: "Telemetry Collector",
-    options: [{ label: "Datalog", value: "datalog" }],
-  },
-];
+import { serviceProviderOptions } from "@/lib/constant";
+import { closeSidebar } from "@/redux/features/sidebar/sidebar.slice";
+import { useDispatch } from "react-redux";
 
-export default function SidebarDrawer({ toggleDrawer }) {
+export default function SidebarDrawer() {
+  const dispatch = useDispatch();
   const [selectValue, setSelectValue] = React.useState(
-    selectOptions[0].options[0].value
+    serviceProviderOptions[0].options[0].value
   );
   const theme = useTheme();
   const borderColor = theme.palette.sidebar?.border || theme.palette.divider;
@@ -38,13 +28,12 @@ export default function SidebarDrawer({ toggleDrawer }) {
       <Box sx={{ display: "flex", alignItems: "center", pt: 2, pl: "4px" }}>
         <SidebarSelect
           label="Service Provider"
-          options={selectOptions}
           value={selectValue}
           onValueChange={({ target }) => setSelectValue(target.value)}
         />
         <IconButton
           id="btn-dashboard-togglePortfolios"
-          onClick={toggleDrawer(false)}
+          onClick={()=>dispatch(closeSidebar())}
           sx={{
             ml: "auto",
             p: 0,

@@ -19,7 +19,7 @@ return (
             color: theme.palette.text.default,
         }}
     >
-        <Button variant="contained" color="error" startIcon={<CloseIcon />} onClick={() => navigate('/')}>
+        <Button id={'close-instance-advice'} variant="contained" color="error" startIcon={<CloseIcon />} onClick={() => navigate('/')}>
             Close
         </Button>
     </Box>

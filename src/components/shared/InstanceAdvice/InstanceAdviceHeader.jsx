@@ -61,11 +61,11 @@ const InstanceAdviceHeader = ({isAnnually,setIsAnnually}) => {
         }}
         control={
           <Checkbox
-            id="checkbox-128" 
+            id="annuallyPrice" 
             slotProps={{
               input: {
                 "aria-label": "Annually",
-                "aria-describedby": "checkbox-128-messages",
+                "aria-describedby": "annuallyPrice-messages",
               },
             }}
 

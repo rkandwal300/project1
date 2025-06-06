@@ -15,6 +15,7 @@ import {
   uploadInstance,
 } from "@/redux/features/form/formData.slice";
 import HoverInput from "@/components/ui/form/Input";
+import PropTypes from "prop-types";
 
 const Tour = lazy(() => import("@/tour/tour"));
 
@@ -61,7 +62,7 @@ const FileUploadField = ({ label, ...props }) => {
   useEffect(() => {
     if (!fileName && !isFileUploaded) return;
     const timeout = setTimeout(() => {
-      setFileName("");
+      // setFileName("");
       setIsFileUploaded(false);
     }, 2000);
     return () => clearTimeout(timeout);
@@ -92,6 +93,7 @@ const FileUploadField = ({ label, ...props }) => {
             ),
           },
         }}
+        name ={props?.name??props?.id}
         {...props}
       />
       {/* Uncomment below if you want to render Tour component */}
@@ -100,6 +102,11 @@ const FileUploadField = ({ label, ...props }) => {
       </Suspense> */}
     </Box>
   );
+};
+FileUploadField.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  id: PropTypes.string,
 };
 
 export default React.memo(FileUploadField);

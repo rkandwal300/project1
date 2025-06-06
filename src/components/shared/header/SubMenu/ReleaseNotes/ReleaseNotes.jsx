@@ -65,6 +65,7 @@ function ReleaseNotes({ handleClose }) {
       <DialogActions>
         <Button
           startIcon={<CloseIcon />}
+          id={'step-two-target'}
           variant="contained"
           color="error"
           onClick={handleClose}

@@ -5,7 +5,7 @@ export const mockFormDataResponse = {
   region: "ap-east-1",
   instanceType: "m7a.12xLarge",
   uuid: "ghgfhfg",
-  pricingModel: "reserved",
+  pricingModel: "ondemand",
   id: "yhG_7_KsqZNeKgPJn6b09",
   maxCpuUtilization: 123,
   maxMemoryUsed: 321,

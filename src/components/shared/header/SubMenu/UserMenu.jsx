@@ -14,6 +14,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HelpIcon from "@mui/icons-material/Help";
 import DialogHoc from "@/components/ui/Dialog";
+import PropTypes from "prop-types";
 
 // Lazy load dialog content components
 const AboutDialogContent = lazy(() => import("./AboutDialogContent"));
@@ -57,6 +58,7 @@ function UserMenu({ onClose }) {
   const Node = ({ icon, label, onClick }) => (
     <MenuItem
       onClick={onClick}
+    
       sx={{
         borderBottom: "1px solid transparent",
         borderRadius: 0,
@@ -119,6 +121,7 @@ function UserMenu({ onClose }) {
         component="a"
         href="https://eia-prod.amd.com"
         target="_blank"
+        id="logout-link"
         sx={{
           borderBottom: "1px solid transparent",
           borderRadius: 0,
@@ -133,5 +136,8 @@ function UserMenu({ onClose }) {
     </>
   );
 }
-
+UserMenu.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
+ 
 export default UserMenu;

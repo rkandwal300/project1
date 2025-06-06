@@ -221,6 +221,7 @@ const SummaryChartAccordion = ({ data, height = 300 }) => {
 
       <Accordion sx={{ bgcolor: "#1e1e1e", color: "white" }}>
         <AccordionSummary
+        id="summary-accordion-header"
           ref={accordionRef}
           expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
         >

@@ -22,6 +22,7 @@ const CustomTable = ({
   isPagination = false,
   onDelete,
   defaultColumnPinningState,
+  id="custom-table",
 }) => {
   const theme = useTheme();
   const styles = useTableStyles(variant, theme);
@@ -86,7 +87,7 @@ const CustomTable = ({
       component={Paper}
       sx={{ boxShadow: 3, }}
     >
-      <Box sx={{ overflowX: "auto" }}>
+      <Box sx={{ overflowX: "auto" }} id={id} role="table-container">
         <Table
           size="small"
           sx={{ tableLayout: "fixed", minWidth: "max-content" }}
@@ -121,6 +122,7 @@ CustomTable.propTypes = {
   variant: PropTypes.string,
   isPagination: PropTypes.bool,
   onDelete: PropTypes.func,
+  id: PropTypes.string,
   defaultColumnPinningState: PropTypes.shape({
     left: PropTypes.arrayOf(PropTypes.string),
     right: PropTypes.arrayOf(PropTypes.string),

@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, useTheme } from "@mui/material";
+import { AppBar, Box, Toolbar, useTheme } from "@mui/material";
 import SubMenu from "./SubMenu/SubMenu";
 import Logo from "./Logo";
 import Title from "./Title";
@@ -21,14 +21,18 @@ function Header() {
       id="header-bar-container"
     >
       <Toolbar
+      bgColor={'red'}
+          display={"flex"} gap="10px" justifyContent={"space-between"} alignItems={"center"}
+
         sx={{
           height: "64px",
           paddingLeft: 2,
           gap: { md: 2, xs: 2 },
         }}
       >
-        <Logo />
-        <Title />
+         
+          <Logo />
+          <Title /> 
 
         <SubMenu />
       </Toolbar>
@@ -36,5 +40,8 @@ function Header() {
   );
 }
 
-const HeaderWithErrorBoundary = withErrorBoundary(Header, "Header component has some Errors");
+const HeaderWithErrorBoundary = withErrorBoundary(
+  Header,
+  "Header component has some Errors"
+);
 export default HeaderWithErrorBoundary;

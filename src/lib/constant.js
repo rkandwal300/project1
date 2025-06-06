@@ -42,8 +42,22 @@ export const instanceOptions = [
   "c5ad.xlarge",
 ];
 
-export const pricingModelOptions = ["ondemand", "reserved","spot"];
+export const pricingModelOptions = ["ondemand", "reserved", "spot"];
 
+export const serviceProviderOptions = [
+  {
+    label: "Service Provider",
+    options: [
+      { label: "AWS", value: "AWS" },
+      { label: "Azure", value: "azure" },
+      { label: "GCP", value: "GCP" },
+    ],
+  },
+  {
+    label: "Telemetry Collector",
+    options: [{ label: "Datalog", value: "datalog" }],
+  },
+];
 export const CONSUMPTION_FIELDS = [
   {
     label: "Max CPU %",
@@ -92,84 +106,6 @@ export const GENERIC_FIELDS = [
     label: "Pricing Model",
     options: pricingModelOptions,
     tooltipMessage: "Pricing Model",
-  },
-];
-
-export const CONSUMPTION_TOUR_STEPS = [
-  {
-    id: "step-sixth",
-    text: "This is the Sixth step.",
-    attachTo: { element: "#sixthStepTarget", on: "top" },
-    next: "step-seventh",
-    prev: "step-eight",
-    field: "region",
-  },
-  {
-    id: "step-seventh",
-    text: "This is the seventh step - choose an Instance Type.",
-    attachTo: { element: "#seventhStepTarget", on: "top" },
-    next: "step-eight",
-    prev: "step-sixth",
-    field: "instanceType",
-  },
-  {
-    id: "step-eight",
-    text: "This is the eight step - give an Instance name.",
-    attachTo: { element: "#eightStepTarget", on: "top" },
-    next: "step-nine",
-    prev: "step-seventh",
-    field: "uuid",
-  },
-  {
-    id: "step-nine",
-    text: "This is the nine step - give an Instance name.",
-    attachTo: { element: "#nineStepTarget", on: "top" },
-    next: "step-tenth",
-    prev: "step-eight",
-    field: "pricingModel",
-  },
-  {
-    id: "step-tenth",
-    text: "This is the tenth step - review pricing model.",
-    attachTo: { element: "#tenthStepTarget", on: "top" },
-    next: "step-eleventh",
-    prev: "step-nine",
-    field: "pricingModel",
-  },
-];
-
-export const GENERIC_TOUR_STEPS = [
-  {
-    id: "step-three",
-    text: "This is the three step.",
-    attachTo: { element: "#thirdStepTarget", on: "top" },
-    field: "region",
-    next: "step-four",
-    prev: "step-two",
-  },
-  {
-    id: "step-four",
-    text: "This is the four step - choose an Instance Type.",
-    attachTo: { element: "#fourthStepTarget", on: "top" },
-    field: "instanceType",
-    next: "step-fifth",
-    prev: "step-three",
-  },
-  {
-    id: "step-fifth",
-    text: "This is the four step - give an Instance name.",
-    attachTo: { element: "#fifthStepTarget", on: "top" },
-    field: "uuid",
-    next: "step-sixth",
-    prev: "step-four",
-  },
-  {
-    id: "step-sixth",
-    text: "This is the four step - give an Instance name.",
-    attachTo: { element: "#sixthStepTarget", on: "top" },
-    field: "pricingModel",
-    next: "step-sixth", // Consider updating if this is not the last step
-    prev: "step-four",
   },
 ];
 

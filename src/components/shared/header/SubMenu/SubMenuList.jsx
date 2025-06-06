@@ -5,6 +5,7 @@ import {
   Box,
   Tooltip,
   useTheme,
+  Dialog,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -15,6 +16,7 @@ import ReleaseNotes from "./ReleaseNotes/ReleaseNotes";
 import SupportMenu from "./SupportMenu";
 import MenuHoc from "../../../ui/Menu";
 import UserMenu from "./UserMenu";
+import StatCollectorDescription from "./StatCollectorDescription";
 
 function SubMenuList() {
   const theme = useTheme();
@@ -42,11 +44,13 @@ function SubMenuList() {
   };
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }}>
-       
+      <DialogHoc trigger={({ onClick }) => (
+
       <Button
         variant="outlined"
         startIcon={<DownloadIcon />}
-        id="btn-manageportfolio-upload"
+        id="btn-stat-collector"
+        onClick={onClick}
         sx={{
           borderColor: theme.palette.error.contrastText,
           color: theme.palette.error.contrastText,
@@ -58,13 +62,13 @@ function SubMenuList() {
       >
         Stat Collector
       </Button>
-
+      )}
+      content ={({handleClose}) => (<StatCollectorDescription onClose={handleClose}  />)}/>
       <DialogHoc
         trigger={({ onClick }) => (
           <Tooltip title="Release Notes" {...tooltipProps}>
-            <IconButton onClick={onClick}>
+            <IconButton id="step-one-target" onClick={onClick}>
               <DescriptionIcon
-                id="btn-header-release-notes"
                 sx={{ fontSize: 24, color: theme.palette.error.contrastText }}
               />
             </IconButton>
@@ -77,7 +81,7 @@ function SubMenuList() {
           <Tooltip title="Support" {...tooltipProps}>
             <IconButton
               onClick={onClick}
-              id="btn-header-call-support"
+            id="step-three-target"
               sx={{
                 ...iconButtonStyle,
                 borderRadius: "50%",
@@ -98,6 +102,7 @@ function SubMenuList() {
         trigger={({ onClick }) => (
           <Tooltip title="Profile" {...tooltipProps}>
             <IconButton
+              id={"step-four-target"}
               sx={{ ...iconButtonStyle, pr: "5px" }}
               onClick={onClick}
             >
@@ -108,7 +113,7 @@ function SubMenuList() {
             </IconButton>
           </Tooltip>
         )}
-        content={({onClose}) => <UserMenu onClose={onClose} />}
+        content={({ onClose }) => <UserMenu onClose={onClose} />}
       />
 
       <Tooltip title={userEmail} {...tooltipProps}>

@@ -5,8 +5,17 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import MainLayout from "./components/shared/MainLayout/MainLayout";
 import { Route, Routes } from "react-router-dom";
 import InstanceAdviceLayout from "./components/shared/InstanceAdvice/InstanceAdviceLayout";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      import("@/tour/tour").then((tour) => {
+        tour.default.start();
+      });
+    }, 1000);
+    return () => clearTimeout(timeoutId);
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

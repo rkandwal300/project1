@@ -2,21 +2,31 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import { useTheme } from "@mui/material/styles";
 import ErrorBoundary from "../shared/ErrorBoundary";
+import { useDispatch, useSelector } from "react-redux";
+import { selectMenuAnchorEl } from "@/redux/features/menu/menu.selector";
+import { closeMenu, openMenu } from "@/redux/features/menu/menu.slice";
 
 export default function MenuHoc({ trigger, content, ...props }) {
   const theme = useTheme();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+  const anchorEl= useSelector(selectMenuAnchorEl)
   const open = Boolean(anchorEl);
-  const onClick = (event) => {
-    setAnchorEl(event.currentTarget);
+
+  const handleClick = (event) => {
+    if (anchorEl === event.currentTarget) {
+      dispatch(closeMenu());  
+    } else {
+      dispatch(openMenu(event.currentTarget)); 
+    }
   };
-  const onClose = () => {
-    setAnchorEl(null);
+  const handleClose = () => {
+    dispatch(closeMenu());
   };
+ 
   return (
    <ErrorBoundary fallback={<div>Error in menu hoc</div>}>
      <div>
-      {trigger({ onClick })}
+      {trigger({ onClick : handleClick, open })}
       <Menu
         slotProps={{
           paper: {
@@ -29,10 +39,10 @@ export default function MenuHoc({ trigger, content, ...props }) {
         }}
         anchorEl={anchorEl}
         open={open}
-        onClose={onClose}
+        onClose={handleClose}
         {...props}
       >
-        {content({ onClose })}
+        {content({ onClose:handleClose })}
       </Menu>
     </div></ErrorBoundary>
   );
