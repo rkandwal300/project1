@@ -1,18 +1,18 @@
 import React, { useEffect, useState, lazy } from "react";
-import { Typography, Button, Box } from "@mui/material";
+import { Typography, Button, Box, IconButton, Divider } from "@mui/material";
 import { Add, FileCopy } from "@mui/icons-material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
 import { CONSUMPTION_FIELDS } from "@/lib/constant";
 import { AnimatedIconButton } from "./AnimatedIconButton";
-import DialogHoc from "@/components/ui/Dialog";
-import FindAndReplace from "./FindAndReplace";
-// import Icon from "@mdi/react";
-// import { mdiFileReplace } from "@mdi/js";
-//  npm i material-design-icons
-// Lazy load components
-const HoverInput = lazy(() => import("@/components/ui/form/Input"));
+
+// Dynamic imports for optimization
+const DialogHoc = React.lazy(() => import("@/components/ui/Dialog"));
+const FindAndReplace = React.lazy(() => import("./FindAndReplace"));
+const TooltipHoc = React.lazy(() => import("@/components/ui/Tooltip"));
+const HoverInput = React.lazy(() => import("@/components/ui/form/Input"));
+const CloseIcon = React.lazy(() => import("@mui/icons-material/Close"));
 
 function ConsumptionMetadata({ form }) {
   const [animate, setAnimate] = useState(false);
@@ -38,7 +38,6 @@ function ConsumptionMetadata({ form }) {
           tooltipMessage={tooltipMessage}
           onChange={(e) => {
             const value = e.target.value;
-            // Only update if value is a number (allow empty string for clearing)
             if (value === "" || !isNaN(Number(value))) {
               field.onChange(Number(value));
             }
@@ -63,7 +62,7 @@ function ConsumptionMetadata({ form }) {
         gap="16px"
         sx={{ width: "100%", alignItems: "center" }}
       >
-        <Box sx={{ minWidth: "141px", width: "141px", }}>
+        <Box sx={{ minWidth: "141px", width: "141px" }}>
           <Typography
             fontSize="14px"
             color="secondary.default"
@@ -87,37 +86,96 @@ function ConsumptionMetadata({ form }) {
           {CONSUMPTION_FIELDS.map(renderFields)}
         </Box>
       </Box>
-      <Box display="flex" alignItems="center" gap="16px">
-        <Button
-          id="addInstanceFormTarget"
-          variant="contained"
-          color="primary"
-          type="submit"
-          size="small"
-        >
-          <Add />
-        </Button>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: "16px",
+          ml: { xs: "155px", md: "0px" },
+        }}
+      >
+        <TooltipHoc message={"Add Instance"}>
+          <Button
+            id="addInstanceFormTarget"
+            variant="contained"
+            color="primary"
+            type="submit"
+            size="small"
+          >
+            <Add />
+          </Button>
+        </TooltipHoc>
         <DialogHoc
           trigger={({ onClick }) => (
-            <Button
-              id="findAndReplace"
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={onClick}
-            >
-              <FileCopy />
-              {/* <Icon path={mdiFileReplace} size={1} /> */}
-            </Button>
+            <TooltipHoc message={"Find & Replace"}>
+              <Button
+                id="findAndReplace"
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={onClick}
+              >
+                <FileCopy />
+                {/* <Icon path={mdiFileReplace} size={1} /> */}
+              </Button>
+            </TooltipHoc>
           )}
           content={({ handleClose }) => (
             <FindAndReplace onClose={handleClose} />
           )}
           sx={{ width: "400px", m: "auto" }}
         />
-        <AnimatedIconButton className={animate ? "animate" : ""}>
-          <HelpOutlineIcon />
-        </AnimatedIconButton>
+        <DialogHoc
+          maxWidth="md"
+          fullWidth={true}
+          trigger={({ onClick }) => (
+            <TooltipHoc message={"Data correction & adjustment guidelines"}>
+              <AnimatedIconButton
+                onClick={onClick}
+                className={animate ? "animate" : ""}
+              >
+                <HelpOutlineIcon />
+              </AnimatedIconButton>
+            </TooltipHoc>
+          )}
+          content={({ handleClose }) => (
+            <Box sx={{ p: 0 }} gap={0} width={"full"} color={"primary.main"}>
+              <Box
+                display={"flex"}
+                justifyContent="space-between"
+                alignItems="center"
+                p={"10px 24px"}
+              >
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  fontSize={"18px"}
+                  gutterBottom
+                >
+                  How data corrections are applied:
+                </Typography>
+
+                <Box display="flex" justifyContent="flex-end">
+                  <IconButton onClick={handleClose}>
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
+              </Box>
+              <Divider />
+              <Box p={" 24px 24px"}>
+                <Typography fontSize={"16px"} fontWeight={600}>
+                  Cloud Selection:
+                </Typography>
+
+                <Typography fontSize={"16px"} margin={"4px 0 0 16px"}>
+                  If the cloud value is empty, invalid, or unsupported, it will
+                  be automatically set to the default Cloud Service Provider
+                  (CSP).
+                </Typography>
+              </Box>
+            </Box>
+          )}
+        />
       </Box>
     </Box>
   );

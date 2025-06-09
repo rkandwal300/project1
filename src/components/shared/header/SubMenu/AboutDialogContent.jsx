@@ -2,7 +2,7 @@
 import React from "react";
 import { Box, Typography, IconButton, Divider } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close"; 
-
+import PropTypes from "prop-types";
 export default function AboutDialogContent({ onClose }) {
   return (
     <Box sx={{ p: 0 }} gap={0} color={"primary.main"}>
@@ -60,3 +60,7 @@ export default function AboutDialogContent({ onClose }) {
     </Box>
   );
 }
+AboutDialogContent.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
+
