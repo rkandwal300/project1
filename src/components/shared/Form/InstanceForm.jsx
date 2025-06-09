@@ -15,7 +15,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import PropTypes from "prop-types";
 import {
   selectFormData,
-  selectFormReset, 
+  selectFormReset,
 } from "@/redux/features/form/formData.selector";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import ErrorBoundary from "../ErrorBoundary";
@@ -56,7 +56,9 @@ function InstanceForm() {
   const handleSubmit = useCallback(
     (data) => {
       dispatch(addPortfolioNameList(data.portfolioName));
-      dispatch(addInstance({ id: nanoid(), ...data, uuid: data.uuid || nanoid() }));
+      dispatch(
+        addInstance({ id: nanoid(), ...data, uuid: data.uuid || nanoid() })
+      );
       setFormSuccess("Instance added successfully");
       setFormError("");
       form.reset({ portfolioName: data.portfolioName });
@@ -89,8 +91,7 @@ function InstanceForm() {
     }
   }, [formReset, formData, form, dispatch]);
   return (
-    <Box
-      component="form"
+    <Box 
       width="100%"
       sx={{
         p: 0,
@@ -99,14 +100,27 @@ function InstanceForm() {
         display: "flex",
         flexDirection: "column",
       }}
-      onSubmit={form.handleSubmit(handleSubmit, handleError)}
-      noValidate
+      
     >
       <Suspense fallback={null}>
-        <PortfolioDetails form={form} />
+      
+        <Box
+          component="form"
+          width="100%"
+          sx={{
+            p: 0,
+            py: 0,
+            bgcolor: "primary.contrastText",
+            display: "flex",
+            flexDirection: "column",
+          }}
+          onSubmit={form.handleSubmit(handleSubmit, handleError)}
+          noValidate
+        >  <PortfolioDetails form={form} />
         <Divider />
-        <GenericMetadata form={form} />
-        <ConsumptionMetadata form={form} />
+          <GenericMetadata form={form} />
+          <ConsumptionMetadata form={form} />
+        </Box>
       </Suspense>
 
       <FormAlert

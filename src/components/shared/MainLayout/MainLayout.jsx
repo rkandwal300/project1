@@ -4,18 +4,17 @@ import Footer from "@/components/shared/Footer/Footer/Footer";
 import { Box } from "@mui/material";
 import MainContent from "./MainContent";
 
-function MainLayout() { 
-
+function MainLayout() {
   return (
     <Box
       sx={{
         minHeight: "100vh",
         display: "flex",
-        flexDirection: "column", 
+        flexDirection: "column",
       }}
     >
       <Header />
-      <Box display={"flex"} minHeight={'100vh'} flexDirection={"column"}>
+      <Box display={"flex"} minHeight={"100vh"} flexDirection={"column"}>
         <MainContent />
         <BottomBar />
       </Box>

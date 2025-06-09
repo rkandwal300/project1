@@ -95,6 +95,7 @@ function SubMenuList() {
             <ReleaseNotes {...props} />
           </Suspense>
         )}
+        maxWidth="lg"
       />
       <MenuHoc
         trigger={({ onClick }) => (

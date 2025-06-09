@@ -1,7 +1,7 @@
 import React, { useState, useCallback, lazy } from "react";
 import PropTypes from "prop-types";
 import { Checkbox, FormControlLabel, Box } from "@mui/material";
-import { Controller } from "react-hook-form"; 
+import { Controller } from "react-hook-form";
 
 // Lazy load components
 const FileUploadField = lazy(() => import("./UploadInstances"));
@@ -12,19 +12,18 @@ const TOOLTIP_MESSAGE =
   "No special characters are allowed, except for underscores (_) and hyphens (-). Additionally, keywords like 'advice' and the name of the selected CSP, (e.g., aws, azure, gcp) are not accepted when entered in lowercase.";
 
 const PortfolioDetails = ({ form }) => {
-  const [showSelfPref, setShowSelfPref] = useState(false); 
+  const [showSelfPref, setShowSelfPref] = useState(false);
   const handleSelfPrefChange = useCallback(() => {
     setShowSelfPref((prev) => !prev);
   }, []);
-
 
   return (
     <Box
       component="div"
       display={"flex"}
-      sx={{ flexDirection: { sx: "column", md: "row" },}}
-      container
-      spacing={2} 
+      sx={{ flexDirection: { sx: "column", md: "row" } }}
+      
+      spacing={2}
       alignItems="center"
       width="100%"
       noValidate
@@ -32,56 +31,69 @@ const PortfolioDetails = ({ form }) => {
       p={2}
       gap={2}
     >
-     
-        <Controller
-          name="portfolioName"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <HoverInput
+      <Controller
+        name="portfolioName"
+        control={form.control}
+        render={({ field, fieldState }) => (
+          <HoverInput
             id="portfolio-name"
-              label="Portfolio Name"
-              name = "portfolioName"
-              value={field.value}
-              fullWidth
-              tooltipMessage={TOOLTIP_MESSAGE}
-              hideClearIcon
-              onChange={field.onChange}
-              error={!!fieldState.error}
-              helperText={fieldState.error?.message}
-              {...field}
-            />
-          )}
-        />
+            label="Portfolio Name"
+            name="portfolioName"
+            value={field.value}
+            fullWidth
+            tooltipMessage={TOOLTIP_MESSAGE}
+            hideClearIcon
+            onChange={field.onChange}
+            error={!!fieldState.error}
+            helperText={fieldState.error?.message}
+            width={{ xs: "100%", sm: "300px",  }}
+            
+            {...field}
+          />
+        )}
+      />
 
-        <FileUploadField label="Upload Instances" fullWidth sx={{ flex: 1 }} id="uploadInstances" />
+      <FileUploadField
+        label="Upload Instances"
+        fullWidth
+        sx={{ flex: 1 }}
+        id="uploadInstances"
+      />
 
-        <FormControlLabel
-          control={
-            <Checkbox
+      <FormControlLabel
+        control={
+          <Checkbox
             id={"openSelfPrefCheckbox"}
-              checked={showSelfPref}
-              onChange={handleSelfPrefChange}
-              color="primary"
-            />
-          }
-          label="Self Perf Assessment"
-          sx={{
-            m: 0,
-            fontSize: "14px",
-            fontWeight: 600,
-            color: "secondary.default",
-            justifyContent: "flex-start",
-            whiteSpace: "nowrap",
-            display: "flex",
-            alignItems: "center",
-            minWidth: "200px",
-            maxWidth: "290px",
-            width: "100%",
+            checked={showSelfPref}
+            onChange={handleSelfPrefChange}
+            color="primary"
+          />
+        }
+        label="Self Perf Assessment"
+        sx={{
+          m: 0,
+          fontSize: "14px",
+          fontWeight: 600,
+          color: "secondary.default",
+          justifyContent: "flex-start",
+          whiteSpace: "nowrap",
+          display: "flex",
+          alignItems: "center",
+          minWidth: "200px",
+          maxWidth: "290px",
+          width: "100%",
+        }}
+      />
 
-          }}
-        /> 
-
-      <Box display={"grid"} gap={2} gridTemplateColumns={`repeat(${showSelfPref?"2":"1"},1fr)`} marginLeft={'auto'}  alignItems={"center"} maxWidth={"400px"}  minWidth={'192px'}>
+      <Box
+        display={"grid"}
+        gap={2}
+        gridTemplateColumns={{ xs: "1fr", sm:`repeat(${showSelfPref ? "2" : "1"},1fr)`}}
+        marginLeft={{xs:0, sm:"auto"}}
+        alignItems={"center"}
+        maxWidth={"500px"}
+        minWidth={"192px"}
+      >
         {showSelfPref && (
           <FileUploadField
             label="Upload Self Perf assessment"
@@ -91,9 +103,9 @@ const PortfolioDetails = ({ form }) => {
           />
         )}
 
-        <DownloadSelect  />
+        <DownloadSelect />
       </Box>
-   </Box>
+    </Box>
   );
 };
 

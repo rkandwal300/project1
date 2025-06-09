@@ -104,7 +104,7 @@ const actionHandlers = {
   },
   anchor(el) {
     const href = el.getAttribute("href");
-    href ? (window.location.href = href) : console.warn("No href on <a>.");
+    href && (window.location.href = href) ;
   },
   async combobox(el) {
     const buttonEl =

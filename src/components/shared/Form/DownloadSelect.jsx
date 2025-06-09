@@ -45,7 +45,7 @@ const DownloadSelect = () => {
     <FormControl fullWidth variant="filled" size="small" sx={formControlSx}>
       <InputLabel id="download-select-label" >Downloads</InputLabel>
       <SelectHoc
-      menuComponent='a'
+      menucomponent='a'
         labelId="download-select-label"
         id="step-five-target"
         label="Downloads"

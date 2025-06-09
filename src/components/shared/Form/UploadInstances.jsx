@@ -3,8 +3,7 @@ import React, {
   useRef,
   useState,
   useCallback,
-  lazy,
-  Suspense,
+  lazy, 
 } from "react";
 import { Box, InputAdornment, IconButton } from "@mui/material";
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
@@ -52,29 +51,29 @@ const FileUploadField = ({ label, ...props }) => {
     }
     setFileName("Test Instance File");
   }, [dispatch, label]);
-
-  // Open file dialog
+ 
   const handleClick = useCallback(() => { 
     handleFileChange();
-  }, []);
+  }, [handleFileChange]);
 
    
   useEffect(() => {
     if (!fileName && !isFileUploaded) return;
-    const timeout = setTimeout(() => {
-      // setFileName("");
+    const timeout = setTimeout(() => { 
       setIsFileUploaded(false);
     }, 2000);
     return () => clearTimeout(timeout);
   }, [fileName, isFileUploaded]);
 
   return (
-    <Box>
+    <Box 
+      maxWidth={"268px"} >
       <input
         type="file"
         ref={fileInputRef}
         style={{ display: "none" }}
         onChange={handleFileChange}
+
       />
       <HoverInput
         tooltipMessage={getTooltipMessage(label)}

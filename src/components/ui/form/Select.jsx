@@ -49,7 +49,6 @@ const HoverSelect = memo(function HoverSelect({
           options={options}
           {...rest}
           error={false} // TODO: change it to props.error if error handling is needed
-          helperText={""} // TODO: change it to props.helperText if helper text is needed
         />
       </FormControl>
     </HoverComponent>

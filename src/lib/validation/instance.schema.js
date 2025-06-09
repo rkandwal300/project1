@@ -2,7 +2,7 @@ import { z } from "zod";
 import { instanceOptions, regionOptions } from "../constant";
 
 export const instanceSchema = z.object({
-  portfolioName: z.string().min(3, "Portfolio Name is required"),
+  // portfolioName: z.string().min(3, "Portfolio Name is required"),
   region: z.string()    .nonempty("Region is required")
     .refine(val => regionOptions.includes(val), {
       message: "Invalid region selected",
