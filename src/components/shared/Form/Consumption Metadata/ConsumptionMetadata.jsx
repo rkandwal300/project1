@@ -58,24 +58,34 @@ function ConsumptionMetadata({ form }) {
       }}
     >
       <Box
-        id="consumption-metadata-form"
-        role="ConsumptionMetadataForm"
-        sx={{
-          display: "grid",
-          gap: "16px",
-          gridTemplateColumns: { xs: "1fr", sm: "repeat(6, 1fr)" },
-          width: "100%",
-        }}
+        display="flex"
+        flexDirection="row"
+        gap="16px"
+        sx={{ width: "100%", alignItems: "center" }}
       >
-        <Typography
-          fontSize="14px"
-          color="secondary.default"
-          variant="body1"
-          gutterBottom
+        <Box sx={{ minWidth: "141px", width: "141px", }}>
+          <Typography
+            fontSize="14px"
+            color="secondary.default"
+            variant="body1"
+            gutterBottom
+          >
+            Consumption Metadata
+          </Typography>
+        </Box>
+
+        <Box
+          id="consumption-metadata-form"
+          role="ConsumptionMetadataForm"
+          sx={{
+            display: "grid",
+            gap: "16px",
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(5, 1fr)" },
+            width: "100%",
+          }}
         >
-          Consumption Metadata
-        </Typography>
-        {CONSUMPTION_FIELDS.map(renderFields)}
+          {CONSUMPTION_FIELDS.map(renderFields)}
+        </Box>
       </Box>
       <Box display="flex" alignItems="center" gap="16px">
         <Button
@@ -96,7 +106,7 @@ function ConsumptionMetadata({ form }) {
               size="small"
               onClick={onClick}
             >
-                 <FileCopy />
+              <FileCopy />
               {/* <Icon path={mdiFileReplace} size={1} /> */}
             </Button>
           )}
@@ -105,9 +115,7 @@ function ConsumptionMetadata({ form }) {
           )}
           sx={{ width: "400px", m: "auto" }}
         />
-        <AnimatedIconButton 
-          className={animate ? "animate" : ""}
-        >
+        <AnimatedIconButton className={animate ? "animate" : ""}>
           <HelpOutlineIcon />
         </AnimatedIconButton>
       </Box>

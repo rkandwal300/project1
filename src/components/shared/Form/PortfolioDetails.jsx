@@ -24,8 +24,7 @@ const PortfolioDetails = ({ form }) => {
       display={"flex"}
       sx={{ flexDirection: { sx: "column", md: "row" },}}
       container
-      spacing={2}
-      justifyContent="space-between"
+      spacing={2} 
       alignItems="center"
       width="100%"
       noValidate
@@ -33,12 +32,7 @@ const PortfolioDetails = ({ form }) => {
       p={2}
       gap={2}
     >
-      <Box
-        display={"grid"}
-        gridTemplateColumns={"repeat(3,1fr)"}
-        gap={2}
-        alignItems={"center"}
-      >
+     
         <Controller
           name="portfolioName"
           control={form.control}
@@ -80,11 +74,14 @@ const PortfolioDetails = ({ form }) => {
             whiteSpace: "nowrap",
             display: "flex",
             alignItems: "center",
-          }}
-        />
-      </Box>
+            minWidth: "200px",
+            maxWidth: "290px",
+            width: "100%",
 
-      <Box display={"grid"} gap={2} gridTemplateColumns={`repeat(${showSelfPref?"2":"1"},1fr)`} alignItems={"center"} maxWidth={"400px"}  minWidth={'192px'}>
+          }}
+        /> 
+
+      <Box display={"grid"} gap={2} gridTemplateColumns={`repeat(${showSelfPref?"2":"1"},1fr)`} marginLeft={'auto'}  alignItems={"center"} maxWidth={"400px"}  minWidth={'192px'}>
         {showSelfPref && (
           <FileUploadField
             label="Upload Self Perf assessment"
@@ -96,7 +93,7 @@ const PortfolioDetails = ({ form }) => {
 
         <DownloadSelect  />
       </Box>
-    </Box>
+   </Box>
   );
 };
 
