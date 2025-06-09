@@ -1,20 +1,31 @@
-import React from "react";
-import { Box, Divider, useTheme, IconButton } from "@mui/material";
+import React, { useState, Suspense, lazy } from "react";
+import { Box, Divider, useTheme, IconButton, CircularProgress } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import SidebarSelect from "@/components/shared/Sidebar/SidebarSelect";
-import PortfolioHeader from "./PortfolioHeader";
-import PortfolioList from "./PortfolioList";
 import { serviceProviderOptions } from "@/lib/constant";
 import { closeSidebar } from "@/redux/features/sidebar/sidebar.slice";
 import { useDispatch } from "react-redux";
 
+// Lazy load components
+const SidebarSelect = lazy(() => import("@/components/shared/Sidebar/SidebarSelect"));
+const PortfolioHeader = lazy(() => import("./PortfolioHeader"));
+const PortfolioList = lazy(() => import("./PortfolioList"));
+
 export default function SidebarDrawer() {
   const dispatch = useDispatch();
-  const [selectValue, setSelectValue] = React.useState(
-    serviceProviderOptions[0].options[0].value
-  );
+  const [selectValue, setSelectValue] = useState(serviceProviderOptions[0].options[0].value);
   const theme = useTheme();
   const borderColor = theme.palette.sidebar?.border || theme.palette.divider;
+
+  const handleSelectChange = React.useCallback(
+    ({ target }) => setSelectValue(target.value),
+    []
+  );
+
+  const handleCloseSidebar = React.useCallback(
+    () => dispatch(closeSidebar()),
+    [dispatch]
+  );
+
   return (
     <Box
       bgcolor="inherit"
@@ -26,14 +37,16 @@ export default function SidebarDrawer() {
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", pt: 2, pl: "4px" }}>
-        <SidebarSelect
-          label="Service Provider"
-          value={selectValue}
-          onValueChange={({ target }) => setSelectValue(target.value)}
-        />
+        <Suspense fallback={<CircularProgress size={24} />}>
+          <SidebarSelect
+            label="Service Provider"
+            value={selectValue}
+            onValueChange={handleSelectChange}
+          />
+        </Suspense>
         <IconButton
           id="btn-dashboard-togglePortfolios"
-          onClick={()=>dispatch(closeSidebar())}
+          onClick={handleCloseSidebar}
           sx={{
             ml: "auto",
             p: 0,
@@ -49,8 +62,10 @@ export default function SidebarDrawer() {
 
       <Divider sx={{ my: 2 }} />
 
-      <PortfolioHeader />
-      <PortfolioList />
+      <Suspense fallback={<CircularProgress size={24} />}>
+        <PortfolioHeader />
+        <PortfolioList />
+      </Suspense>
     </Box>
   );
 }

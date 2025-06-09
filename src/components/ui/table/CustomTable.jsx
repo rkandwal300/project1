@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,lazy } from "react";
 import PropTypes from "prop-types";
 import {
   getCoreRowModel,
@@ -8,12 +8,14 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Table, TableContainer, Paper, useTheme, Box } from "@mui/material";
-import TablePagination from "./TablePagination";
-import ActionBlock from "./table_components/ActionBlock";
-import { useTableStyles } from "@/hooks/useTableStyles";
-import CustomTableHeader from "./table_components/CustomTableHeader";
-import CustomTableBody from "./table_components/CustomTableBody";
+import { Table, TableContainer, Paper, useTheme, Box } from "@mui/material";  
+import { useTableStyles } from "@/hooks/useTableStyles";  
+
+// Lazy load heavy components
+const TablePagination = lazy(() => import("./TablePagination"));
+const ActionBlock = lazy(() => import("./table_components/ActionBlock"));
+const CustomTableHeader = lazy(() => import("./table_components/CustomTableHeader"));
+const CustomTableBody = lazy(() => import("./table_components/CustomTableBody"));
 
 const CustomTable = ({
   data,

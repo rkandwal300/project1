@@ -23,6 +23,8 @@ import { useNavigate } from "react-router-dom";
 import { selectHideInstances } from "@/redux/features/form/formData.selector";
 import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.slice";
 
+ 
+
 export default function PortfolioList() {
   const navigate = useNavigate();
   const activePortfolio = useSelector(selectCurrentInstance);

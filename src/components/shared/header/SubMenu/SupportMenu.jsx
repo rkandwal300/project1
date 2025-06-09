@@ -1,35 +1,51 @@
-import React from "react";
-import {
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  useTheme,
-} from "@mui/material";
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
+import React, { Suspense, lazy, useMemo } from "react";
+import { MenuItem, Divider, useTheme } from "@mui/material";
 import { supportMailtoLink, supportMobileNumber } from "@/lib/constant";
+
+// Dynamic imports for icons
+const PhoneIcon = lazy(() => import("@mui/icons-material/Phone"));
+const EmailIcon = lazy(() => import("@mui/icons-material/Email"));
+const ListItemIcon = lazy(() =>
+  import("@mui/material/ListItemIcon").then((mod) => ({ default: mod.ListItemIcon }))
+);
+const ListItemText = lazy(() =>
+  import("@mui/material/ListItemText").then((mod) => ({ default: mod.ListItemText }))
+);
 
 function SupportMenu() {
   const theme = useTheme();
 
-  const commonTextStyles = {
-    primaryTypographyProps: {
-      fontWeight: "bold",
-      color: theme.palette.primary.contrastText,
-    },
-    secondaryTypographyProps: { color: theme.palette.primary.contrastText },
-  };
+  // Memoize styles to avoid recalculation on each render
+  const commonTextStyles = useMemo(
+    () => ({
+      primaryTypographyProps: {
+        fontWeight: "bold",
+        color: theme.palette.primary.contrastText,
+      },
+      secondaryTypographyProps: { color: theme.palette.primary.contrastText },
+    }),
+    [theme.palette.primary.contrastText]
+  );
+
+  // Extracted values for clarity and performance
+  const hotlineNumber = useMemo(
+    () => supportMobileNumber.split(":")[1],
+    [supportMobileNumber]
+  );
+  const emailAddress = useMemo(
+    () => supportMailtoLink.split(":")[1].split("?")[0],
+    [supportMailtoLink]
+  );
 
   return (
-    <>
+    <Suspense fallback={null}>
       <MenuItem component="a" href={supportMobileNumber}>
         <ListItemIcon sx={{ color: theme.palette.primary.contrastText }}>
           <PhoneIcon />
         </ListItemIcon>
         <ListItemText
           primary="Hotline Number"
-          secondary={supportMobileNumber.split(":")[1]}
+          secondary={hotlineNumber}
           {...commonTextStyles}
         />
       </MenuItem>
@@ -40,12 +56,12 @@ function SupportMenu() {
         </ListItemIcon>
         <ListItemText
           primary="Email"
-          secondary={supportMailtoLink.split(":")[1].split("?")[0]}
+          secondary={emailAddress}
           {...commonTextStyles}
         />
       </MenuItem>
-    </>
+    </Suspense>
   );
 }
 
-export default SupportMenu;
+export default React.memo(SupportMenu);

@@ -10,7 +10,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
+import PropTypes from "prop-types";
 export default function HelpDialogContent({ onClose }) {
   return (
     <Box sx={{ p: 0 }} gap={0}>
@@ -88,8 +88,8 @@ export default function HelpDialogContent({ onClose }) {
           application.
         </Typography>
         <Typography>
-          <strong>Log out:</strong> Click the (🔚) icon and select the "
-          <strong>Logout</strong>" option.
+          <strong>Log out:</strong> Click the (🔚) icon and select the {' "'}
+          <strong>Logout</strong>{'" '} option.
         </Typography>
 
         {/* Stat Collector Steps */}
@@ -124,3 +124,7 @@ export default function HelpDialogContent({ onClose }) {
     </Box>
   );
 }
+
+HelpDialogContent.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};

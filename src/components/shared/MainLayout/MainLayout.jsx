@@ -1,10 +1,29 @@
-import React, { Suspense, lazy } from "react";
-import { Box } from "@mui/material";
- 
+import React, { Suspense, lazy, memo } from "react";
+import { Box, Skeleton } from "@mui/material";
+
 const Header = lazy(() => import("@/components/shared/header/Header"));
 const Footer = lazy(() => import("@/components/shared/Footer/Footer/Footer"));
 const BottomBar = lazy(() => import("@/components/shared/BottomBar"));
 const MainContent = lazy(() => import("./MainContent"));
+
+const withSuspense = (Children) => {
+  return function SuspendedComponent(props) {
+    if (!Children) {
+      return <Skeleton variant="rectangular" width="100%" height="100%" />;
+    }
+ 
+    return (
+      <Suspense fallback={null}>
+        <Children {...props} />
+      </Suspense>
+    );
+  };
+};
+
+const SuspendedHeader = withSuspense(Header);
+const SuspendedFooter = withSuspense(Footer);
+const SuspendedBottomBar = withSuspense(BottomBar);
+const SuspendedMainContent = withSuspense(MainContent);
 
 function MainLayout() {
   return (
@@ -15,22 +34,14 @@ function MainLayout() {
         flexDirection: "column",
       }}
     >
-      <Suspense fallback={null}>
-        <Header />
-      </Suspense>
+      <SuspendedHeader />
       <Box display="flex" minHeight="100vh" flexDirection="column">
-        <Suspense fallback={null}>
-          <MainContent />
-        </Suspense>
-        <Suspense fallback={null}>
-          <BottomBar />
-        </Suspense>
+        <SuspendedMainContent />
+        <SuspendedBottomBar />
       </Box>
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+      <SuspendedFooter />
     </Box>
   );
 }
 
-export default React.memo(MainLayout);
+export default memo(MainLayout);

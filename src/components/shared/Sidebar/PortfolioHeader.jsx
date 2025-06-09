@@ -1,22 +1,30 @@
-import React from "react";
+import React, { lazy, Suspense, useCallback } from "react";
 import { Box, Typography, IconButton, Tooltip } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useDispatch } from "react-redux";
-import {
-  resetForm,
-  toggleHideInstances,
-} from "@/redux/features/form/formData.slice";
-
 import { useNavigate } from "react-router-dom";
+ 
+const AddCircleIcon = lazy(() => import("@mui/icons-material/AddCircle"));
+ 
+const resetFormImport = () =>
+  import("@/redux/features/form/formData.slice").then((mod) => mod.resetForm);
+const toggleHideInstancesImport = () =>
+  import("@/redux/features/form/formData.slice").then(
+    (mod) => mod.toggleHideInstances
+  );
 
 function PortfolioHeader() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleResetForm = () => {
+
+  const handleResetForm = useCallback(async () => {
+    const [resetForm, toggleHideInstances] = await Promise.all([
+      resetFormImport(),
+      toggleHideInstancesImport(),
+    ]);
     dispatch(resetForm());
     dispatch(toggleHideInstances(true));
     navigate("/");
-  };
+  }, [dispatch, navigate]);
 
   return (
     <Box
@@ -31,23 +39,25 @@ function PortfolioHeader() {
         title="Create New Portfolio"
         slotProps={{ tooltip: { sx: { fontSize: "0.8rem" } } }}
       >
-        <IconButton
-          onClick={handleResetForm}
-          id="btn-dashboard-createPortfolio"
-          aria-label="Create New Portfolio"
-          size="small"
-          sx={{
-            backgroundColor: "transparent",
-            "&:hover": {
+        <Suspense fallback={null}>
+          <IconButton
+            onClick={handleResetForm}
+            id="btn-dashboard-createPortfolio"
+            aria-label="Create New Portfolio"
+            size="small"
+            sx={{
               backgroundColor: "transparent",
-            },
-          }}
-        >
-          <AddCircleIcon fontSize="small" />
-        </IconButton>
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
+          >
+            <AddCircleIcon fontSize="small" />
+          </IconButton>
+        </Suspense>
       </Tooltip>
     </Box>
   );
 }
 
-export default PortfolioHeader;
+export default React.memo(PortfolioHeader);

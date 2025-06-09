@@ -1,42 +1,45 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useMemo } from "react";
 import { AppBar, Toolbar, useTheme } from "@mui/material";
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 import { Link } from "react-router-dom";
 
-// Lazy load components
 const SubMenu = lazy(() => import("./SubMenu/SubMenu"));
 const Logo = lazy(() => import("./Logo"));
 const Title = lazy(() => import("./Title"));
 
 function Header() {
   const theme = useTheme();
+ 
+  const appBarSx = useMemo(
+    () => ({
+      backgroundColor: theme.palette.dark,
+      zIndex: 1006,
+      height: 64,
+      justifyContent: { md: "center" },
+      boxShadow: 4,
+      borderRadius: 0,
+      paddingTop: { xs: 2, sm: 0 },
+    }),
+    [theme.palette.dark]
+  );
+
+  const toolbarSx = useMemo(
+    () => ({
+      height: 64,
+      paddingLeft: 2,
+      gap: { md: 2, xs: 2 },
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }),
+    []
+  );
 
   return (
-    <AppBar
-      position="fixed"
-      sx={{
-        backgroundColor: theme.palette.dark,
-        zIndex: 1006,
-        height: 64,
-        justifyContent: { md: "center" },
-        boxShadow: 4,
-        borderRadius: 0,
-        paddingTop: { xs: 2, sm: 0 },
-      }}
-      id="header-bar-container"
-    >
-      <Toolbar
-        sx={{
-          height: 64,
-          paddingLeft: 2,
-          gap: { md: 2, xs: 2 },
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+    <AppBar position="fixed" sx={appBarSx} id="header-bar-container">
+      <Toolbar sx={toolbarSx}>
         <Suspense fallback={null}>
-          <Link to="/">
+          <Link to="/" tabIndex={-1} aria-label="Home">
             <Logo />
           </Link>
         </Suspense>
@@ -51,6 +54,7 @@ function Header() {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export default withErrorBoundary(
   React.memo(Header),
   "Header component has some Errors"

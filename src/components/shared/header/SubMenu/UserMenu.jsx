@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useMemo } from "react";
+import React, { Suspense, lazy, useMemo, useCallback } from "react";
 import {
   MenuItem,
   Divider,
@@ -16,10 +16,13 @@ import HelpIcon from "@mui/icons-material/Help";
 import DialogHoc from "@/components/ui/Dialog";
 import PropTypes from "prop-types";
 
-// Lazy load dialog content components
-const AboutDialogContent = lazy(() => import("./AboutDialogContent"));
-const HelpDialogContent = lazy(() => import("./HelpDialogContent"));
+// Dynamic import map for dialog components
+const dialogComponentMap = {
+  AboutDialogContent: () => import("./AboutDialogContent"),
+  HelpDialogContent: () => import("./HelpDialogContent"),
+};
 
+// Menu configuration with dialog component keys
 const menuConfig = [
   {
     label: "Profile",
@@ -33,18 +36,17 @@ const menuConfig = [
     type: "link",
     icon: <MenuBookIcon />,
   },
-  
   {
     label: "About",
     icon: <InfoIcon />,
     type: "dialog",
-    component: AboutDialogContent,
+    componentKey: "AboutDialogContent",
   },
   {
     label: "Online Documentation",
     icon: <HelpIcon />,
     type: "dialog",
-    component: HelpDialogContent,
+    componentKey: "HelpDialogContent",
   },
 ];
 
@@ -54,11 +56,10 @@ function UserMenu({ onClose }) {
   // Memoize menu items for performance
   const items = useMemo(() => menuConfig, []);
 
-  // Reusable menu item node
-  const Node = ({ icon, label, onClick }) => (
+  // Memoized Node component
+  const Node = useCallback(({ icon, label, onClick }) => (
     <MenuItem
       onClick={onClick}
-    
       sx={{
         borderBottom: "1px solid transparent",
         borderRadius: 0,
@@ -68,13 +69,19 @@ function UserMenu({ onClose }) {
       <ListItemIcon sx={{ color: "inherit" }}>{icon}</ListItemIcon>
       <ListItemText primary={label} />
     </MenuItem>
-  );
+  ), []);
+
+  // Memoized dialog loader
+  const getDialogComponent = useCallback((componentKey) => {
+    const LazyComponent = lazy(dialogComponentMap[componentKey]);
+    return LazyComponent;
+  }, []);
 
   return (
     <>
-      {items.map(({ label, icon, type, value, component }) => {
-        if (type === "dialog") {
-          const DialogComponent = component;
+      {items.map(({ label, icon, type, value, componentKey }) => {
+        if (type === "dialog" && componentKey) {
+          const DialogComponent = getDialogComponent(componentKey);
           return (
             <DialogHoc
               key={label}
@@ -136,8 +143,9 @@ function UserMenu({ onClose }) {
     </>
   );
 }
+
 UserMenu.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
- 
-export default UserMenu;
+
+export default React.memo(UserMenu);
