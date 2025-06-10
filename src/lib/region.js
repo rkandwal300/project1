@@ -1,4 +1,4 @@
-const providerData = {
+export const providerData = {
 
     cloud: {
         name: "Cloud",
