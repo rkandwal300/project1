@@ -7,7 +7,7 @@ export const providerData = {
             aws: {
 
                 name: "AWS",
-                logo: "",
+                logo: "/logo/aws.webp",
 
                 regions: {
 
@@ -55,7 +55,7 @@ export const providerData = {
             },
 
             azure: {
-                logo: "",
+                logo: "/logo/azure.webp",
                 name: "AZURE",
 
                 regions: {
@@ -114,7 +114,7 @@ export const providerData = {
             },
 
             gcp: {
-                logo: "",
+                logo: "/logo/GCP.webp",
                 name: "GCP",
 
                 regions: {
@@ -174,6 +174,7 @@ export const providerData = {
         datadog: {
 
             name: "Datadog",
+            logo: "datadog.webp",
 
             regions: {
 
@@ -188,6 +189,7 @@ export const providerData = {
         cloudWatch: {
 
             name: "AWS CloudWatch",
+            logo:"/logo/cloudwatch.webp",
 
             regions: {
 
