@@ -11,7 +11,7 @@ function PortfolioHeader() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleResetForm = () => {
-    dispatch(addCurrentInstance(null));
+    // dispatch(addCurrentInstance(null));
     dispatch(resetInstanceState());
     navigate("/");
   };
