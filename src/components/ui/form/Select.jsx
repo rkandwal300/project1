@@ -38,6 +38,7 @@ const HoverSelect = memo(function HoverSelect({
     <HoverComponent
       tooltipMessage={tooltipMessage}
       value={value}
+      position={rest?.tooltipPosition}
       onClear={handleClear}
     >
       <FormControl fullWidth={fullWidth} required={required} size={size}>
@@ -49,7 +50,6 @@ const HoverSelect = memo(function HoverSelect({
           options={options}
           {...rest}
           error={false} // TODO: change it to props.error if error handling is needed
-          helperText={""} // TODO: change it to props.helperText if helper text is needed
         />
       </FormControl>
     </HoverComponent>
@@ -71,6 +71,7 @@ HoverSelect.propTypes = {
   size: PropTypes.oneOf(["small", "medium"]),
   required: PropTypes.bool,
   helperText: PropTypes.node,
+  tooltipPosition: PropTypes.oneOf(["top", "bottom", "left", "right"]),
 };
 
 export default HoverSelect;

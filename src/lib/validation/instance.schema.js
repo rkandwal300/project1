@@ -1,8 +1,7 @@
 import { z } from "zod";
 import { instanceOptions, regionOptions } from "../constant";
 
-export const instanceSchema = z.object({
-  portfolioName: z.string().min(3, "Portfolio Name is required"),
+export const instanceSchema = z.object({ 
   region: z.string()    .nonempty("Region is required")
     .refine(val => regionOptions.includes(val), {
       message: "Invalid region selected",
@@ -18,5 +17,5 @@ export const instanceSchema = z.object({
   maxMemoryUsed: z.number().min(0, "Required"),
   maxNetworkBandwidth: z.number().min(0, "Required"),
   maxDiskBandwidth: z.number().min(0, "Required"),
-  maxIOPS: z.number().min(0, "Required"),
+  maxIOPS: z.number().min(0, "Required")
 });

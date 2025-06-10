@@ -14,7 +14,7 @@ const numericColumn = ({
     const value = getValue();
     return value !== undefined && value !== null
       ? Number(value).toFixed(2)
-      : "";
+      : "-";
   },
   minSize,
   size,
@@ -37,6 +37,10 @@ const plainColumn = ({
   minSize,
   size,
   maxSize,
+  cell: ({ getValue }) => {
+    const value = getValue();
+    return value ?? "-";
+  },
   
   ...(pin ? { pin } : {}),
 });
@@ -122,9 +126,9 @@ const recommendationColumns = (idx, val) => [
     header: "Cost($)",
   }),
   numericColumn({
-    id: `${val}_carbon`,
-    accessorKey: `data.recommendations.${idx}.carbon`,
-    header: "Carbon(kgCO2eq)",
+    id: "power",
+    accessorKey: "data.currentPlatform.power",
+    header: "Power(kw)", 
   }),
   numericColumn({
     id: `${val}_carbon_detail`,

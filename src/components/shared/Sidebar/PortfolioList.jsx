@@ -8,51 +8,34 @@ import {
   useTheme,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCurrentInstance,
-  selectInstanceList,
-} from "@/redux/features/instanceList/instanceList.selector";
-import {
-  addSelfAssessment,
-  resetForm,
-  updateFormData,
-  updateResetState,
-  uploadInstance,
-} from "@/redux/features/form/formData.slice";
-import { useNavigate } from "react-router-dom";
-import { selectHideInstances } from "@/redux/features/form/formData.selector";
+import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
+import { useNavigate, useLocation } from "react-router-dom";
 import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.slice";
+import { updateInstanceState } from "@/redux/features/instance/instance.slice";
+import { selectInstances } from "@/redux/features/instance/instance.selector";
 
 export default function PortfolioList() {
   const navigate = useNavigate();
-  const activePortfolio = useSelector(selectCurrentInstance);
+  const activePortfolio = useLocation().pathname.split("/")[1];
   const theme = useTheme();
   const dispatch = useDispatch();
   const portfolios = useSelector(selectInstanceList);
 
-  const showTable = useSelector(selectHideInstances);
+  const instances = useSelector(selectInstances);
+  const showTable = instances.length > 0;
 
   const handleClickListItem = (instanceId) => {
     const portfolio = portfolios.find(
       (portfolio) => portfolio.id === instanceId
     );
     if (!portfolio) return;
-    const { id, portfolioName, instances, selfPrefAssessment } = portfolio;
-    dispatch(addCurrentInstance(id));
-    dispatch(resetForm(false));
-    dispatch(uploadInstance(instances));
-    dispatch(addSelfAssessment(selfPrefAssessment));
-    dispatch(
-      updateFormData({
-        id,
-        portfolioName,
-      })
-    );
-    dispatch(updateResetState(true));
-    navigate("/");
+    dispatch(addCurrentInstance(portfolio.id));
+    dispatch(updateInstanceState(portfolio));
+
+    navigate(`/${portfolio.id}`);
   };
   useEffect(() => {
-    if (showTable) {
+    if (!showTable) {
       dispatch(addCurrentInstance(null));
     }
   }, [dispatch, showTable]);
@@ -60,7 +43,7 @@ export default function PortfolioList() {
     <Box sx={{ height: "70vh", overflowY: "auto" }}>
       <List id="dashboard-portfolio-list">
         {portfolios.map((portfolio) => {
-          const isActive = portfolio.id === activePortfolio;
+          const isActive = portfolio.id == activePortfolio;
           return (
             <ListItem
               key={portfolio.id}
@@ -91,7 +74,7 @@ export default function PortfolioList() {
                     fontWeight={isActive ? 500 : "normal"}
                     fontSize={12}
                   >
-                    {portfolio.portfolioName}
+                    {portfolio.name}
                   </Typography>
                 }
               />

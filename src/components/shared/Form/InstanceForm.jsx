@@ -1,25 +1,17 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useCallback, lazy, Suspense, useEffect } from "react";
 import { Box, Divider } from "@mui/material";
 import { instanceSchema } from "@/lib/validation/instance.schema";
-import {
-  addInstance,
-  addPortfolioNameList,
-  updateFormData,
-  updateResetState,
-} from "@/redux/features/form/formData.slice";
 import { nanoid } from "@reduxjs/toolkit";
 
 import PropTypes from "prop-types";
-import {
-  selectFormData,
-  selectFormReset, 
-} from "@/redux/features/form/formData.selector";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import ErrorBoundary from "../ErrorBoundary";
 import FormSkeleton from "./FormSkeleton";
+import { addInstance } from "@/redux/features/instance/instance.slice";
+import { useLocation } from "react-router-dom";
 
 const FormAlert = lazy(() => import("@/components/ui/FormAlert"));
 const PortfolioDetails = lazy(() => import("./PortfolioDetails"));
@@ -40,23 +32,23 @@ InstanceForm.propTypes = {
 
 function InstanceForm() {
   const dispatch = useDispatch();
-  const formData = useSelector(selectFormData);
-  const formReset = useSelector(selectFormReset);
-  const defaultFormValues = useSelector(selectFormData);
+
+  const location = useLocation();
 
   const [formError, setFormError] = useTimedMessage();
   const [formSuccess, setFormSuccess] = useTimedMessage();
 
   const form = useForm({
     resolver: zodResolver(instanceSchema),
-    defaultValues: defaultFormValues,
+    defaultValues: {},
     mode: "onTouched",
   });
 
   const handleSubmit = useCallback(
     (data) => {
-      dispatch(addPortfolioNameList(data.portfolioName));
-      dispatch(addInstance({ id: nanoid(), ...data, uuid: data.uuid || nanoid() }));
+      dispatch(
+        addInstance({ id: nanoid(), ...data, uuid: data.uuid || nanoid() })
+      );
       setFormSuccess("Instance added successfully");
       setFormError("");
       form.reset({ portfolioName: data.portfolioName });
@@ -64,33 +56,18 @@ function InstanceForm() {
     [dispatch, setFormSuccess, setFormError, form]
   );
 
-  const handleError = useCallback(
-    (errors) => {
-      const errorMessages = Object.values(errors)
-        .map((err) => err?.message)
-        .filter(Boolean)
-        .join(", ");
-      setFormError(errorMessages || "Form validation failed");
-    },
-    [setFormError]
-  );
-
-  const portfolioName = form.watch("portfolioName");
+  const handleError = () => {
+    setFormError("Please enter the required fields.");
+  };
 
   useEffect(() => {
-    if (portfolioName === formData.portfolioName) return;
-    dispatch(updateFormData({ portfolioName: portfolioName }));
-  }, [formData, portfolioName, dispatch]);
-
-  useEffect(() => {
-    if (formReset) {
-      dispatch(updateResetState(false));
-      form.reset(formData);
-    }
-  }, [formReset, formData, form, dispatch]);
+    form.reset({});
+  }, [form, location.pathname]);
   return (
     <Box
       component="form"
+      onSubmit={form.handleSubmit(handleSubmit, handleError)}
+      noValidate
       width="100%"
       sx={{
         p: 0,
@@ -99,12 +76,11 @@ function InstanceForm() {
         display: "flex",
         flexDirection: "column",
       }}
-      onSubmit={form.handleSubmit(handleSubmit, handleError)}
-      noValidate
     >
       <Suspense fallback={null}>
         <PortfolioDetails form={form} />
         <Divider />
+
         <GenericMetadata form={form} />
         <ConsumptionMetadata form={form} />
       </Suspense>

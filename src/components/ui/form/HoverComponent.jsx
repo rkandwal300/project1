@@ -10,6 +10,7 @@ const HoverComponent = React.memo(function HoverInput({
   onClear,
   children,
   hideClearIcon = false,
+  position,
 }) {
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -20,6 +21,7 @@ const HoverComponent = React.memo(function HoverInput({
 
   return (
     <Tooltip
+    position={position }
       title={tooltipMessage} 
       slotProps={{
         tooltip: {
@@ -78,6 +80,7 @@ HoverComponent.propTypes = {
   hideClearIcon: PropTypes.bool,
   children: PropTypes.node,
   onClear: PropTypes.func.isRequired,
+  position: PropTypes.oneOf(["top", "bottom", "left", "right"]),
 };
 
 export default HoverComponent;

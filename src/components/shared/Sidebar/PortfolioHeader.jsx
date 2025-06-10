@@ -1,20 +1,18 @@
 import React from "react";
 import { Box, Typography, IconButton, Tooltip } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useDispatch } from "react-redux";
-import {
-  resetForm,
-  toggleHideInstances,
-} from "@/redux/features/form/formData.slice";
+import { useDispatch } from "react-redux"; 
 
 import { useNavigate } from "react-router-dom";
+import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.slice";
+import { resetInstanceState } from "@/redux/features/instance/instance.slice";
 
 function PortfolioHeader() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleResetForm = () => {
-    dispatch(resetForm());
-    dispatch(toggleHideInstances(true));
+    dispatch(addCurrentInstance(null));
+    dispatch(resetInstanceState());
     navigate("/");
   };
 

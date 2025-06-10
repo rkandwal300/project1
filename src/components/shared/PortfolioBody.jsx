@@ -3,16 +3,13 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
-import {
-  selectInstanceStats,
-  selectSelfPrefAssessment,
-} from "@/redux/features/form/formData.selector";
+import PropTypes from "prop-types"; 
 import GetInstanceColumn from "./PortfolioTable/portfolioColumn";
 import { selfPrefAssessmentColumn } from "./PortfolioTable/selfPrefAssessmentColumn";
-import { deleteInstances } from "@/redux/features/form/formData.slice";
 import TableSkeleton from "../ui/table/table_components/TableSkeleton ";
 import ErrorBoundary from "./ErrorBoundary";
+import { selectInstances, selectSelfAssessment } from "@/redux/features/instance/instance.selector";
+import { removeInstance } from "@/redux/features/instance/instance.slice";
 
 const CustomTable = lazy(() => import("../ui/table/CustomTable"));
 
@@ -33,16 +30,14 @@ const TABS = [
   {
     label: "Instance Stats",
     value: "instance_stats",
-    getColumns: GetInstanceColumn,
-    selector: selectInstanceStats,
+    getColumns: GetInstanceColumn, 
     showNote: true,
     isAction: true,
   },
   {
     label: "Self Perf Assessment",
     value: "self_perf_assessment",
-    getColumns: selfPrefAssessmentColumn,
-    selector: selectSelfPrefAssessment,
+    getColumns: selfPrefAssessmentColumn, 
     showNote: false,
     isAction: false,
   },
@@ -53,8 +48,8 @@ function PortfolioBody() {
   const [value, setValue] = useState(TABS[0].value);
 
   const dataMap = {
-    instance_stats: useSelector(selectInstanceStats),
-    self_perf_assessment: useSelector(selectSelfPrefAssessment),
+    instance_stats: useSelector(selectInstances),
+    self_perf_assessment: useSelector(selectSelfAssessment),
   };
 
   const columnsMap = {
@@ -68,7 +63,7 @@ function PortfolioBody() {
     ({ selectedRows }) => {
       if (!selectedRows?.length) return;
       const selectedIndexes = selectedRows.map((row) => row.index);
-      dispatch(deleteInstances(selectedIndexes));
+      dispatch(removeInstance(selectedIndexes));
     },
     [dispatch]
   );

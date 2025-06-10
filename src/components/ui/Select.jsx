@@ -10,7 +10,7 @@ const SelectHoc = ({
   onChange,
   menuPosition = "bottom",
   getOptionLabel = (option) => option,
-  getOptionValue = (option) => option, 
+  getOptionValue = (option) => option,
   MenuProps = {},
   ...props
 }) => {
@@ -35,15 +35,21 @@ const SelectHoc = ({
   };
 
   return (
-    <Select 
+    <Select
       value={value}
       onChange={onChange}
       label={label}
-      MenuProps={mergedMenuProps} 
+      MenuProps={mergedMenuProps}
       {...props}
-    > 
+    >
       {options.map((option) => (
-        <MenuItem component={props?.menuComponent} value={getOptionValue(option)} key={getOptionValue(option)} id = {option.id}>
+        <MenuItem
+          {...(props.menucomponent ? { component: props.menucomponent } : {})}
+          value={getOptionValue(option)}
+          key={getOptionValue(option)}
+          id={option.id}
+          {...(props?.menuProps ? props.menuProps(option) : {})}
+        >
           {getOptionLabel(option)}
         </MenuItem>
       ))}
@@ -61,9 +67,10 @@ SelectHoc.propTypes = {
   menuPosition: PropTypes.oneOf(["top", "bottom"]),
   getOptionLabel: PropTypes.func,
   getOptionValue: PropTypes.func,
-  renderNone: PropTypes.bool, 
+  renderNone: PropTypes.bool,
   MenuProps: PropTypes.object,
-  menuComponent: PropTypes.string,  
+  menucomponent: PropTypes.string,
+  menuProps: PropTypes.func,
 };
 
 export default SelectHoc;

@@ -24,6 +24,7 @@ function FindReplaceRow({ name, label,selectedOptions, options, control, id, err
           control={control}
           render={({ field }) => (
             <HoverSelect
+            tooltipPosition="top"
               id={`${id}From`}
               name={name}
               tooltipMessage={"Select an option..."}

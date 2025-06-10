@@ -20,11 +20,11 @@ function Header() {
       }}
       id="header-bar-container"
     >
-      <Toolbar
-      bgColor={'red'}
-          display={"flex"} gap="10px" justifyContent={"space-between"} alignItems={"center"}
-
-        sx={{
+      <Toolbar 
+          sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
           height: "64px",
           paddingLeft: 2,
           gap: { md: 2, xs: 2 },

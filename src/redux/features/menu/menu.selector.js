@@ -1,1 +1,0 @@
-export  const selectMenuAnchorEl = (state) => state.menu.anchorEl;

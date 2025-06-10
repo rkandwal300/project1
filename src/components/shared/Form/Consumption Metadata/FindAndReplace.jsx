@@ -9,14 +9,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch, useSelector } from "react-redux";
-import { selectInstanceStats } from "@/redux/features/form/formData.selector";
+import { useDispatch, useSelector } from "react-redux"; 
 import useTimedMessage from "@/hooks/useTimedMessage";
 import FormAlert from "@/components/ui/FormAlert";
-import { FIND_AND_REPLACE_FIELD_TYPES } from "@/lib/constant";
-import { findAndReplace } from "@/redux/features/form/formData.slice";
+import { FIND_AND_REPLACE_FIELD_TYPES } from "@/lib/constant"; 
 import PropTypes from "prop-types";
 import FindReplaceRow from "./FindReplaceRow";
+import { selectInstances } from "@/redux/features/instance/instance.selector";
+import { findAndReplace } from "@/redux/features/instance/instance.slice";
 
 // Zod Schema
 const schema = z
@@ -40,7 +40,7 @@ const schema = z
 
 export default function FindAndReplace({ onClose }) {
   const dispatch = useDispatch();
-  const instances = useSelector(selectInstanceStats);
+  const instances = useSelector(selectInstances);
 
   const defaultValues = {
     values: FIND_AND_REPLACE_FIELD_TYPES.reduce((acc, { key }) => {

@@ -9,6 +9,7 @@ const HoverInput = React.memo(function HoverInput({
   onChange,
   hideClearIcon = false,
   sx,
+  onClear,
   ...restProps
 }) {
   const [uncontrolledValue, setUncontrolledValue] = useState("");
@@ -43,7 +44,7 @@ const HoverInput = React.memo(function HoverInput({
     <HoverComponent
       tooltipMessage={tooltipMessage}
       value={value}
-      onClear={handleClear}
+      onClear={onClear??handleClear}
       hideClearIcon={hideClearIcon}
     >
       <TextField
@@ -68,6 +69,7 @@ HoverInput.propTypes = {
   error: PropTypes.bool,
   helperText: PropTypes.node,
   sx: PropTypes.object,
+  onClear: PropTypes.func,
 };
 
 export default HoverInput;

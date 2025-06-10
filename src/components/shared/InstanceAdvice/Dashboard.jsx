@@ -33,7 +33,7 @@ const Dashboard = ({ data }) => {
   const gridStyle = {
     display: "grid",
     gridTemplateColumns: isMd ? "repeat(4, 1fr)" : "repeat(1, 1fr)",
-    gap: "px",
+    gap: "16px",
     padding: 16,
   };
 
@@ -42,25 +42,19 @@ const Dashboard = ({ data }) => {
       title: "Cost",
       value: data.currentPlatform.cost,
       yLabel: "cost",
-      unit: "$",
-      pdfUrl: "/Cost.pdf",
-      csvUrl: "/Cost.csv",
+      unit: "$", 
     },
     {
       title: "Power",
       value: data.currentPlatform.power,
       yLabel: "power",
-      unit: "kW",
-      pdfUrl: "/Power.pdf",
-      csvUrl: "/Power.csv",
+      unit: "kW", 
     },
     {
       title: "Carbon",
       value: data.currentPlatform.carbon,
       yLabel: "carbon",
-      unit: "kgCO₂eq",
-      pdfUrl: "/Carbon.pdf",
-      csvUrl: "/Carbon.csv",
+      unit: "kgCO₂eq", 
     },
   ];
 
@@ -69,17 +63,13 @@ const Dashboard = ({ data }) => {
   return (
     <div ref={containerRef} style={gridStyle}>
       {chartItems.map((item) => (
-        <div key={item.value} style={{ width: chartWidth }}>
+        <div key={item.value} style={{ width: chartWidth , }}>
           <BarChart
-            width={chartWidth}
             title={item.title}
             currentValue={item.value}
             recommendations={data.recommendations}
-            yLabel={item.yLabel}
             unit={item.unit}
-            height={height}
-            csvUrl={item.csvUrl}
-            pdfUrl={item.pdfUrl}
+            yLabel={item.yLabel}
           />
         </div>
       ))}
