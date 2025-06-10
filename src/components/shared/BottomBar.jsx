@@ -13,97 +13,141 @@ import BuildIcon from "@mui/icons-material/Build";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addCurrentInstance,
   addInstance,
   deletePortfolioFromList,
   updateInstance,
 } from "@/redux/features/instanceList/instanceList.slice";
-import {
-  selectFormData,
-  selectInstanceStats,
-  selectSelfPrefAssessment,
-} from "@/redux/features/form/formData.selector";
 import { nanoid } from "@reduxjs/toolkit";
-import {
-  addSelfAssessment,
-  resetForm,
-  toggleHideInstances,
-  updateFormData,
-  updateResetState,
-  uploadInstance,
-} from "@/redux/features/form/formData.slice";
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
-import useTimedMessage from "@/hooks/useTimedMessage";
 import FormAlert from "../ui/FormAlert";
 import { useNavigate } from "react-router-dom";
+import {
+  selectInstances,
+  selectMessage,
+  selectMessageType,
+  selectPortfolioName,
+  selectSelfAssessment,
+} from "@/redux/features/instance/instance.selector";
+import {
+  errorMessageType,
+  resetInstanceState,
+  setMessage,
+  updateInstanceState,
+} from "@/redux/features/instance/instance.slice";
+
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import DialogHoc from "../ui/Dialog";
-
+import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
 function BottomBar() {
-  const navigate = useNavigate();
-
   const theme = useTheme();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const formData = useSelector(selectFormData);
-  const instances = useSelector(selectInstanceStats);
-  const selfPrefAssessmentData = useSelector(selectSelfPrefAssessment);
 
-  const [formError, setFormError] = useTimedMessage();
-  const [formSuccess, setFormSuccess] = useTimedMessage();
-  const formId = formData.id || nanoid();
+  const currentInstanceId = useLocation().pathname.split("/")[1];
+  const alertMessage = useSelector(selectMessage);
+  const alertMessageType = useSelector(selectMessageType);
+  const portfolioName = useSelector(selectPortfolioName);
+  const instances = useSelector(selectInstances);
+  const instanceList = useSelector(selectInstanceList);
+  const selfPrefAssessmentData = useSelector(selectSelfAssessment);
+ 
+  const formId = currentInstanceId || nanoid();
 
   const handleSavePortFolio = () => {
+    const trimmedName = portfolioName?.trim();
+    if (!trimmedName) {
+      dispatch(
+        setMessage({
+          type: errorMessageType.ERROR,
+          message: "Portfolio name is required",
+        })
+      );
+      return;
+    }
+
+    const isDuplicate = instanceList.some(
+      (instance) =>
+        instance.name === trimmedName && instance.id !== currentInstanceId
+    );
+
+     if (isDuplicate) {
+      dispatch(
+        setMessage({
+          type: errorMessageType.ERROR,
+          message: "Portfolio name already exists",
+        })
+      );
+      return;
+    }
+
     const payload = {
       id: formId,
       instances,
-      portfolioName: formData.portfolioName,
+      name: trimmedName,
       selfPrefAssessment: selfPrefAssessmentData,
     };
-    dispatch(formData.id ? updateInstance(payload) : addInstance(payload));
-    dispatch(resetForm());
-    setFormSuccess(`${formData.portfolioName} saved successfully`);
+    if (currentInstanceId) {
+      dispatch(updateInstance(payload));
+    } else {
+      dispatch(addInstance(payload));
+    }
 
-    dispatch(resetForm(false));
-    dispatch(uploadInstance(instances));
-    if (selfPrefAssessmentData.length > 0)
-      dispatch(addSelfAssessment(selfPrefAssessmentData));
+    dispatch(resetInstanceState());
+    dispatch(addCurrentInstance(formId));
     dispatch(
-      updateFormData({
-        id: formId,
-        portfolioName: formData.portfolioName,
+      setMessage({
+        type: errorMessageType.SUCCESS,
+        message: `${trimmedName} saved successfully`,
       })
-    );
-    dispatch(updateResetState(true));
+    ); 
+    navigate(`/${formId}`);
   };
 
   const handleDeletePortfolio = () => {
-    dispatch(deletePortfolioFromList({ id: formData.id }));
-    dispatch(resetForm());
-    dispatch(toggleHideInstances(true));
-
-    setFormSuccess(`${formData.portfolioName} Deleted successfully`);
+    dispatch(deletePortfolioFromList({ id: formId }));
+    dispatch(resetInstanceState());
+    dispatch(
+      setMessage({
+        type: errorMessageType.SUCCESS,
+        message: `${portfolioName} saved successfully`,
+      })
+    );
+    navigate("/");
   };
 
   const handleResetFormData = () => {
-    dispatch(resetForm());
+    dispatch(
+      updateInstanceState({
+        name: portfolioName,
+        selfAssessment: selfPrefAssessmentData,
+        instances,
+      })
+    );
+    dispatch(addCurrentInstance(null));
+    
+    navigate("/");
   };
 
-  const isSaveDisabled = !instances.length || !formData.portfolioName.trim();
+  const isSaveDisabled = !instances.length > 0;
 
-  const isInstanceAdviceDisabled = !formData.id;
-  const isValueEmpty = (val) => {
-    if (Array.isArray(val)) {
-      return !val.length;
-    }
-    if (typeof val === "string") {
-      return !val.trim();
-    }
-    if (typeof val === "number") {
-      return !val;
-    }
-    return val == null;
-  };
+  const isCancelDisabled = !instances.length > 0;
+  const isInstanceAdviceDisabled = !currentInstanceId;
 
-  const isCancelDisabled = Object.values(formData).every(isValueEmpty);
-
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (alertMessage) {
+        dispatch(
+          setMessage({
+            message: "",
+            type: null,
+          })
+        );
+      }
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }, [alertMessage, dispatch]);
   return (
     <Box
       display="grid"
@@ -148,71 +192,70 @@ function BottomBar() {
         >
           Cancel
         </Button>
-        {formData.id && (
-        <DialogHoc
-          maxWidth="xs"
-          trigger={({ onClick }) => (
-            <Button
-              id="deletePortfolio"
-              variant="contained"
-              color="error"
-              startIcon={<DeleteIcon />}
-              onClick={onClick}
-              // 
-            >
-              Delete portfolio
-            </Button>
-          )}
-          content={({ handleClose }) => (
-            <Box display={"flex"} flexDirection={"column"} gap="0px">
-              <Typography variant="h5" sx={{ m: 2 }} gutterBottom>
-                Confirm Delete Portfolio?
-              </Typography>
-              <Divider />
-              <Typography
-                variant="body2"
-                sx={{
-                  my: 1,
-                  mx: 2,
-                  fontWeight: 600,
-                  color: "secondary.default",
-                }}
-                gutterBottom
+        {currentInstanceId && (
+          <DialogHoc
+            maxWidth="xs"
+            trigger={({ onClick }) => (
+              <Button
+                id="deletePortfolio"
+                variant="contained"
+                color="error"
+                startIcon={<DeleteIcon />}
+                onClick={onClick}
               >
-                Are you sure you want to delete this portfolio.
-              </Typography>
-              <Box
-              onClick={handleClose}
-                display={"flex"}
-                padding={"10px"}
-                gap="10px"
-                justifyContent="flex-end"
-              >
-                <Button
-                  id="cancelDeletePortfolio"
-                  variant="outlined"
-                  color="primary"
-                  onClick={handleClose}
-                >
-                  Cancel
-                </Button>
-
-                <Button
-                id={"confirmDeletePortfolio"}
-                  variant="contained"
-                  color="error"
-                  startIcon={<DeleteIcon />}
-                  onClick={() => {
-                    handleDeletePortfolio();
-                    handleClose();
+                Delete portfolio
+              </Button>
+            )}
+            content={({ handleClose }) => (
+              <Box display={"flex"} flexDirection={"column"} gap="0px">
+                <Typography variant="h5" sx={{ m: 2 }} gutterBottom>
+                  Confirm Delete Portfolio?
+                </Typography>
+                <Divider />
+                <Typography
+                  variant="body2"
+                  sx={{
+                    my: 1,
+                    mx: 2,
+                    fontWeight: 600,
+                    color: "secondary.default",
                   }}
+                  gutterBottom
                 >
-                  Delete
-                </Button>
+                  Are you sure you want to delete this portfolio.
+                </Typography>
+                <Box
+                  onClick={handleClose}
+                  display={"flex"}
+                  padding={"10px"}
+                  gap="10px"
+                  justifyContent="flex-end"
+                >
+                  <Button
+                    id="cancelDeletePortfolio"
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button
+                    id={"confirmDeletePortfolio"}
+                    variant="contained"
+                    color="error"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => {
+                      handleDeletePortfolio();
+                      handleClose();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-          )}
-        />
+            )}
+          />
         )}
         <Button
           id="savePortfolio"
@@ -224,7 +267,7 @@ function BottomBar() {
           Save
         </Button>
         <Button
-        id={"instanceAdvice"}
+          id={"instanceAdvice"}
           variant="contained"
           startIcon={<BuildIcon />}
           disabled={isInstanceAdviceDisabled}
@@ -233,19 +276,20 @@ function BottomBar() {
           Instance advice
         </Button>
       </Box>
+
       <FormAlert
-        open={!!formError}
-        severity="error"
-        onClose={() => setFormError("")}
+        open={Boolean(alertMessageType)}
+        severity={alertMessageType}
+        onClose={() =>
+          dispatch(
+            setMessage({
+              message: "",
+              type: null,
+            })
+          )
+        }
       >
-        {formError}
-      </FormAlert>
-      <FormAlert
-        open={!!formSuccess}
-        severity="success"
-        onClose={() => setFormSuccess("")}
-      >
-        {formSuccess}
+        {alertMessage}
       </FormAlert>
     </Box>
   );

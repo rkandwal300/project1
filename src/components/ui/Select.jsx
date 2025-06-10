@@ -39,15 +39,16 @@ const SelectHoc = ({
       value={value}
       onChange={onChange}
       label={label}
-      MenuProps={mergedMenuProps} 
+      MenuProps={mergedMenuProps}
       {...props}
     >
       {options.map((option) => (
         <MenuItem
           {...(props.menucomponent ? { component: props.menucomponent } : {})}
           value={getOptionValue(option)}
-        key={getOptionValue(option)}
+          key={getOptionValue(option)}
           id={option.id}
+          {...(props?.menuProps ? props.menuProps(option) : {})}
         >
           {getOptionLabel(option)}
         </MenuItem>
@@ -69,6 +70,7 @@ SelectHoc.propTypes = {
   renderNone: PropTypes.bool,
   MenuProps: PropTypes.object,
   menucomponent: PropTypes.string,
+  menuProps: PropTypes.func,
 };
 
 export default SelectHoc;

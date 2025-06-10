@@ -43,16 +43,22 @@ const formControlSx = {
 const DownloadSelect = () => {
   return (
     <FormControl fullWidth variant="filled" size="small" sx={formControlSx}>
-      <InputLabel id="download-select-label" >Downloads</InputLabel>
+      <InputLabel id="download-select-label">Downloads</InputLabel>
       <SelectHoc
-      menucomponent='a'
+        menucomponent="a"
         labelId="download-select-label"
         id="step-five-target"
         label="Downloads"
-        options={menuItems }
+        options={menuItems}
+        // options={menuItems.map((item) =><Button key={item.id}></Button>)}
         getOptionLabel={(option) => option.label}
         getOptionValue={(option) => option.value}
-      />
+        menuProps={
+          option =>({
+            href: option.href,
+          })
+        }
+        />
     </FormControl>
   );
 };

@@ -1,20 +1,14 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  lazy, 
-} from "react";
-import { Box, InputAdornment, IconButton } from "@mui/material";
-import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
-import { useDispatch } from "react-redux";
-import {
-  addSelfAssessment,
-  mockFormDataResponse,
-  uploadInstance,
-} from "@/redux/features/form/formData.slice";
-import HoverInput from "@/components/ui/form/Input";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import HoverInput from "@/components/ui/form/Input";
+import { Box, InputAdornment, IconButton } from "@mui/material";
+import React, { useEffect, useRef, useState, useCallback, lazy } from "react";
+import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
+import { mockFormDataResponse } from "@/lib/data";
+import {
+  addInstanceList,
+  addSelfAssessmentList,
+} from "@/redux/features/instance/instance.slice";
 
 const Tour = lazy(() => import("@/tour/tour"));
 
@@ -31,55 +25,59 @@ const FileUploadField = ({ label, ...props }) => {
   const fileInputRef = useRef(null);
   const dispatch = useDispatch();
   const [fileName, setFileName] = useState("");
-  const [isFileUploaded, setIsFileUploaded] = useState(false); 
+  const [isFileUploaded, setIsFileUploaded] = useState(false);
 
   const handleFileChange = useCallback(() => {
     setIsFileUploaded(true);
 
-    if (label === "Upload Self Perf assessment") {
-      console.log("Uploading self assessment data");
+    if (label === "Upload Self Perf assessment") { 
       dispatch(
-        addSelfAssessment([
+        addSelfAssessmentList([
           {
             instanceType: "m5a.12xLarge",
             saps: 145230,
           },
         ])
       );
+      setFileName("Self Pref File");
     } else {
-      dispatch(uploadInstance([mockFormDataResponse]));
+      dispatch(addInstanceList([mockFormDataResponse]));
+      setFileName("Test Instance File");
     }
-    setFileName("Test Instance File");
   }, [dispatch, label]);
- 
-  const handleClick = useCallback(() => { 
+
+  const handleClick = useCallback(() => {
     handleFileChange();
   }, [handleFileChange]);
 
-   
   useEffect(() => {
     if (!fileName && !isFileUploaded) return;
-    const timeout = setTimeout(() => { 
+    const timeout = setTimeout(() => {
       setIsFileUploaded(false);
     }, 2000);
     return () => clearTimeout(timeout);
   }, [fileName, isFileUploaded]);
 
   return (
-    <Box 
-      maxWidth={"268px"} >
+    <Box maxWidth={"268px"}>
       <input
         type="file"
         ref={fileInputRef}
         style={{ display: "none" }}
         onChange={handleFileChange}
-
       />
       <HoverInput
         tooltipMessage={getTooltipMessage(label)}
         label={label}
         value={fileName}
-        onClick={handleClick} 
+        onClick={handleClick}
+        onClear={() => {
+          setFileName("");
+          setIsFileUploaded(false);
+          if (fileInputRef.current) {
+            fileInputRef.current.value = null; // Clear the file input
+          }
+        }}
         slotProps={{
           input: {
             readOnly: true,
@@ -92,13 +90,9 @@ const FileUploadField = ({ label, ...props }) => {
             ),
           },
         }}
-        name ={props?.name??props?.id}
+        name={props?.name ?? props?.id}
         {...props}
       />
-      {/* Uncomment below if you want to render Tour component */}
-      {/* <Suspense fallback={null}>
-        <Tour />
-      </Suspense> */}
     </Box>
   );
 };

@@ -2,7 +2,7 @@ import Shepherd from "shepherd.js";
 import "shepherd.js/dist/css/shepherd.css";
 import steps from "./steps.tour";
 import { CONSUMPTION_FIELDS, GENERIC_FIELDS } from "@/lib/constant";
-import { mockFormDataResponse } from "@/redux/features/form/formData.slice";
+import { mockFormDataResponse } from "@/lib/data";
 
 // --- Utilities ---
 

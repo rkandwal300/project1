@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   currentInstance: null,
@@ -9,15 +9,17 @@ const instanceListSlice = createSlice({
   name: "instanceList",
   initialState,
   reducers: {
-    
     addInstance(state, action) {
-      const newInstance = {
-        ...action.payload,
-        id: nanoid(),
-      };
-      state.currentInstance = newInstance.id;
-      state.data.push(newInstance);
-    } ,
+       console.log("addInstance reducer fired"); 
+ 
+     
+      state.data.push(action.payload);
+      
+        state.currentInstance = action.payload.id;
+        console.log("set currentInstance to", state.currentInstance);
+     
+      console.log("Instance added:", action.payload);
+    },
 
     updateInstance(state, action) {
       const { id, ...updatedData } = action.payload;
@@ -25,10 +27,8 @@ const instanceListSlice = createSlice({
 
       if (index !== -1) {
         state.data[index] = { ...state.data[index], ...updatedData };
-         state.currentInstance = state.data[index].id;
+        state.currentInstance = state.data[index].id;
       }
-
-
     },
     deletePortfolioFromList(state, action) {
       state.data = state.data.filter(
@@ -42,10 +42,8 @@ const instanceListSlice = createSlice({
 });
 
 export const {
-  addInstance,
-  resetInstanceState,
-  updateInstance,
-  getSingleInstance,
+  addInstance, 
+  updateInstance, 
   addCurrentInstance,
   deletePortfolioFromList,
 } = instanceListSlice.actions;

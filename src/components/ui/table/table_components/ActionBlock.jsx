@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Link } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import DeleteIcon from "@mui/icons-material/Delete"; 
+import ArrowRightIcon from '@mui/icons-material/East';
 import PropTypes from "prop-types"; 
 
 export default function ActionBlock({ table, onDelete }) {
@@ -38,7 +38,7 @@ export default function ActionBlock({ table, onDelete }) {
           textTransform: "none",
         }}
       >
-        {`Delete ${selectedRows.length === 0 ? "" : `(${selectedRows.length})`}`}
+        {"Delete" + (selectedRows.length > 0 ? " (" + selectedRows.length + ")" : "")}
       </Button>
 
       <Link
@@ -52,6 +52,10 @@ export default function ActionBlock({ table, onDelete }) {
           display: "inline-flex",
           alignItems: "center",
           fontSize: "0.875rem",
+
+          '&:hover': {
+            textDecoration: "underline",
+          },
         }}
         className="ListOfRegions"
       >

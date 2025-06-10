@@ -1,15 +1,13 @@
 import Sidebar from "@/components/shared/Sidebar/Sidebar";
 import { Box } from "@mui/material";
 import InstanceForm from "@/components/shared/Form/InstanceForm";
-import { useSelector } from "react-redux";
-import { selectHideInstances } from "@/redux/features/form/formData.selector";
+import { useSelector } from "react-redux"; 
 import PortfolioBody from "../PortfolioBody";
-import { withErrorBoundary } from "@/hooks/withErrorBoundary";
-import { Route } from "react-router-dom";
-
+import { withErrorBoundary } from "@/hooks/withErrorBoundary"; 
+import { selectInstances } from "@/redux/features/instance/instance.selector";
 function MainContent() {
-  const showTable = useSelector(selectHideInstances);
-
+  const instanceData = useSelector(selectInstances);
+const showTable =instanceData.length>0
   return (
     <Box
       sx={{
@@ -31,7 +29,7 @@ function MainContent() {
           }}
         >
           <InstanceForm />
-          {!showTable && <PortfolioBody />}
+          {showTable && <PortfolioBody />}
         </Box>
       </Box>
     </Box>

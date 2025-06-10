@@ -6,10 +6,10 @@ import {
   instanceOptions,
   pricingModelOptions,
   regionOptions,
-} from "@/lib/constant";
-import { updateSingleInstance } from "@/redux/features/form/formData.slice.js";
+} from "@/lib/constant"; 
 import { useTheme } from "@emotion/react";
 import ClearIcon from "@mui/icons-material/Clear";
+import { updateSingleInstance } from "@/redux/features/instance/instance.slice.js";
 
 // Lazy load editable cells for performance
 const EditableSelectCell = lazy(() =>
