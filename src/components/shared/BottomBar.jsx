@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{ useEffect } from "react";
 import {
   Box,
   Button,
@@ -21,7 +21,7 @@ import {
 import { nanoid } from "@reduxjs/toolkit";
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 import FormAlert from "../ui/FormAlert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import {
   selectInstances,
   selectMessage,
@@ -35,11 +35,9 @@ import {
   setMessage,
   updateInstanceState,
 } from "@/redux/features/instance/instance.slice";
-
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 import DialogHoc from "../ui/Dialog";
 import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
+
 function BottomBar() {
   const theme = useTheme();
   const navigate = useNavigate();
