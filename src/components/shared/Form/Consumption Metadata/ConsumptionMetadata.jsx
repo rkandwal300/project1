@@ -1,6 +1,6 @@
-import React, { useEffect, useState, lazy } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Button, Box, IconButton, Divider } from "@mui/material";
-import { Add, FileCopy } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
@@ -114,9 +114,14 @@ function ConsumptionMetadata({ form }) {
                 color="primary"
                 size="small"
                 onClick={onClick}
+                sx={{  padding: "6px" }}
               >
-                <FileCopy />
-                {/* <Icon path={mdiFileReplace} size={1} /> */}
+                <Box
+                  component="img"
+                  src="/file-replace.svg"
+                  alt="Find & Replace"
+                  sx={{ width: 24, height: 24 }}
+                />
               </Button>
             </TooltipHoc>
           )}

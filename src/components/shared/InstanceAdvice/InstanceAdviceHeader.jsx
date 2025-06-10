@@ -17,7 +17,7 @@ import DialogHoc from "@/components/ui/Dialog";
 import CloseIcon from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
 
-const InstanceAdviceHeader = ({isAnnually,setIsAnnually}) => {
+const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
   return (
     <>
       <Box
@@ -26,7 +26,7 @@ const InstanceAdviceHeader = ({isAnnually,setIsAnnually}) => {
         alignItems={"center"}
       >
         <Typography
-          variant="h6"
+        variant="h6"
           sx={{ fontSize: "1.3rem", fontWeight: "bold", color: "primary.main" }}
         >
           Instance advice
@@ -38,7 +38,14 @@ const InstanceAdviceHeader = ({isAnnually,setIsAnnually}) => {
             variant="outlined"
             size="small"
             href="/cost_advisor.xlsx"
-            startIcon={<FileDownloadOutlinedIcon />}
+            startIcon={
+              <Box
+                component="img"
+                src="/file-excel.svg"
+                alt="Excel Export"
+                sx={{ width: 18, height: 18 }}
+              />
+            }
           >
             Export
           </Button>
@@ -61,15 +68,14 @@ const InstanceAdviceHeader = ({isAnnually,setIsAnnually}) => {
         }}
         control={
           <Checkbox
-            id="annuallyPrice" 
+            id="annuallyPrice"
             slotProps={{
               input: {
                 "aria-label": "Annually",
                 "aria-describedby": "annuallyPrice-messages",
               },
             }}
-
-            value ={isAnnually}
+            value={isAnnually}
             onChange={(e) => setIsAnnually(e.target.checked)}
           />
         }
@@ -145,33 +151,30 @@ const InstanceAdviceHeader = ({isAnnually,setIsAnnually}) => {
                 </Box>
               </Box>
               <Divider />
-             
-                <List
-                  sx={{ listStyleType: "decimal", pl: 3 }}
-                  dense
-                >
-                  <ListItem sx={{ display: "list-item" }}>
-                    <ListItemText
-                      primary={
-                        "Instances for which performance data is unavailable."
-                      }
-                      primaryTypographyProps={{ fontSize: "16px" }}
-                    />
-                  </ListItem>
-                  <ListItem sx={{ display: "list-item" }}>
-                    <ListItemText
-                      primary="Older generation series (e.g., 3rd generations) with insufficient performance data."
-                      primaryTypographyProps={{ fontSize: "16px" }}
-                    />
-                  </ListItem>
-                  <ListItem sx={{ display: "list-item" }}>
-                    <ListItemText
-                      primary="Graviton instances, which are not currently supported by EIA."
-                      primaryTypographyProps={{ fontSize: "16px" }}
-                    />
-                  </ListItem>
-                </List>
-              </Box> 
+
+              <List sx={{ listStyleType: "decimal", pl: 3 }} dense>
+                <ListItem sx={{ display: "list-item" }}>
+                  <ListItemText
+                    primary={
+                      "Instances for which performance data is unavailable."
+                    }
+                    primaryTypographyProps={{ fontSize: "16px" }}
+                  />
+                </ListItem>
+                <ListItem sx={{ display: "list-item" }}>
+                  <ListItemText
+                    primary="Older generation series (e.g., 3rd generations) with insufficient performance data."
+                    primaryTypographyProps={{ fontSize: "16px" }}
+                  />
+                </ListItem>
+                <ListItem sx={{ display: "list-item" }}>
+                  <ListItemText
+                    primary="Graviton instances, which are not currently supported by EIA."
+                    primaryTypographyProps={{ fontSize: "16px" }}
+                  />
+                </ListItem>
+              </List>
+            </Box>
           )}
         />
       </Typography>
@@ -182,5 +185,5 @@ InstanceAdviceHeader.propTypes = {
   isAnnually: PropTypes.bool.isRequired,
   setIsAnnually: PropTypes.func.isRequired,
 };
- 
+
 export default InstanceAdviceHeader;

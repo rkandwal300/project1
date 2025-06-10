@@ -49,8 +49,7 @@ const DownloadSelect = () => {
         labelId="download-select-label"
         id="step-five-target"
         label="Downloads"
-        options={menuItems}
-        // options={menuItems.map((item) =><Button key={item.id}></Button>)}
+        options={menuItems} 
         getOptionLabel={(option) => option.label}
         getOptionValue={(option) => option.value}
         menuProps={

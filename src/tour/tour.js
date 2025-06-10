@@ -104,7 +104,7 @@ const actionHandlers = {
   },
   anchor(el) {
     const href = el.getAttribute("href");
-    href && (window.location.href = href) ;
+    href && (window.location.href = href);
   },
   async combobox(el) {
     const buttonEl =
@@ -155,7 +155,20 @@ const handleElementAction = async (el, id) => {
 
   if (["instanceTypeTargetFrom", "instanceTypeTargetTo"].includes(id)) {
     await actionHandlers.instanceType(el);
-  } else if (id === "tableCell_0_maxCpuUtilization_cell") {
+    } else if (id === "downloadSelectTemplate") {
+    actionHandlers.anchor(el); 
+    const listbox = document.querySelector('[role="listbox"]');
+    if (listbox) { 
+      listbox.dispatchEvent(
+      new KeyboardEvent("keydown", {
+        bubbles: true,
+        cancelable: true,
+        key: "Escape",
+        code: "Escape",
+      })
+      );
+    }
+    } else if (id === "tableCell_0_maxCpuUtilization_cell") {
     actionHandlers.tableCell(el);
   } else if (tag === "input") {
     actionHandlers.input(el);
