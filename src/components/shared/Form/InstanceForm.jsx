@@ -65,6 +65,9 @@ function InstanceForm() {
   }, [form, location.pathname]);
   return (
     <Box
+      component="form"
+      onSubmit={form.handleSubmit(handleSubmit, handleError)}
+      noValidate
       width="100%"
       sx={{
         p: 0,
@@ -77,22 +80,9 @@ function InstanceForm() {
       <Suspense fallback={null}>
         <PortfolioDetails form={form} />
         <Divider />
-        <Box
-          component="form"
-          width="100%"
-          sx={{
-            p: 0,
-            py: 0,
-            bgcolor: "primary.contrastText",
-            display: "flex",
-            flexDirection: "column",
-          }}
-          onSubmit={form.handleSubmit(handleSubmit, handleError)}
-          noValidate
-        >
-          <GenericMetadata form={form} />
-          <ConsumptionMetadata form={form} />
-        </Box>
+
+        <GenericMetadata form={form} />
+        <ConsumptionMetadata form={form} />
       </Suspense>
 
       <FormAlert

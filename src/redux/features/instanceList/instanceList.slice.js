@@ -10,15 +10,8 @@ const instanceListSlice = createSlice({
   initialState,
   reducers: {
     addInstance(state, action) {
-       console.log("addInstance reducer fired"); 
- 
-     
+      state.currentInstance = action.payload.id;
       state.data.push(action.payload);
-      
-        state.currentInstance = action.payload.id;
-        console.log("set currentInstance to", state.currentInstance);
-     
-      console.log("Instance added:", action.payload);
     },
 
     updateInstance(state, action) {
@@ -42,8 +35,8 @@ const instanceListSlice = createSlice({
 });
 
 export const {
-  addInstance, 
-  updateInstance, 
+  addInstance,
+  updateInstance,
   addCurrentInstance,
   deletePortfolioFromList,
 } = instanceListSlice.actions;

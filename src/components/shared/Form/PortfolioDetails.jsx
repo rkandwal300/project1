@@ -13,7 +13,7 @@ const HoverInput = lazy(() => import("@/components/ui/form/input"));
 const TOOLTIP_MESSAGE =
   "No special characters are allowed, except for underscores (_) and hyphens (-). Additionally, keywords like 'advice' and the name of the selected CSP, (e.g., aws, azure, gcp) are not accepted when entered in lowercase.";
 
-const PortfolioDetails = () => {
+const PortfolioDetails = ({ form }) => {
   const name = useSelector(selectPortfolioName);
   const dispatch = useDispatch();
   const [showSelfPref, setShowSelfPref] = useState(false);
@@ -52,6 +52,7 @@ const PortfolioDetails = () => {
       />
 
       <FileUploadField
+        form={form}
         label="Upload Instances"
         fullWidth
         sx={{ flex: 1 }}
@@ -96,6 +97,7 @@ const PortfolioDetails = () => {
       >
         {showSelfPref && (
           <FileUploadField
+            form={form}
             label="Upload Self Perf assessment"
             id="uploadSelfPerf"
             fullWidth

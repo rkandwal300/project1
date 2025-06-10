@@ -18,5 +18,5 @@ export const instanceSchema = z.object({
   maxMemoryUsed: z.number().min(0, "Required"),
   maxNetworkBandwidth: z.number().min(0, "Required"),
   maxDiskBandwidth: z.number().min(0, "Required"),
-  maxIOPS: z.number().min(0, "Required"),
+  maxIOPS: z.number().min(0, "Required")
 });
