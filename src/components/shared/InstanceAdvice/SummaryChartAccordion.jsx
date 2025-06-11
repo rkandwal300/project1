@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Accordion,
   AccordionSummary,
@@ -7,9 +7,42 @@ import {
   Box,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useMemo } from "react";
+
+
+const useChartData = (data) => {
+  const labels = useMemo(() => ["Cost", "Power", "Carbon"], []);
+  const currentValues = useMemo(
+    () => [
+      data.currentPlatform.cost,
+      data.currentPlatform.power,
+      data.currentPlatform.carbon,
+    ],
+    [data]
+  );
+  const optimalValues = useMemo(
+    () => [
+      data.recommendations[0]?.cost || 0,
+      data.recommendations[0]?.power || 0,
+      data.recommendations[0]?.carbon || 0,
+    ],
+    [data]
+  );
+  return { labels, currentValues, optimalValues };
+};
 
 const SummaryChartAccordion = ({ data, height = 300 }) => {
   const chartRef = useRef(null);
+  const summaryRef = useRef(null);
+  const [chartHeight, setChartHeight] = useState(0);
+    const { labels, currentValues, optimalValues } = useChartData(data);
+
+
+  useEffect(() => {
+    if (summaryRef.current) {
+      setChartHeight(Math.max(height - summaryRef.current.offsetHeight, 100));
+    }
+  }, []);
 
   useEffect(() => {
     if (!window.Highcharts || !chartRef.current) return;
@@ -71,7 +104,7 @@ const SummaryChartAccordion = ({ data, height = 300 }) => {
       chart: {
         type: "column",
         backgroundColor: "#111",
-        height: "100%",
+        height: chartHeight,
       },
       title: {
         text: "Summary",
@@ -107,13 +140,12 @@ const SummaryChartAccordion = ({ data, height = 300 }) => {
       },
       exporting: {
         enabled: true,
-        fallbackToExportServer: false, //TODO: Disable export server this will be enabled in production
-        url: null, // TODO: Disable export server this will be enabled in production
+        fallbackToExportServer: false,
+        url: null,
         buttons: {
           contextButton: {
             enabled: false,
           },
-
           exportCSV: {
             text: `<svg viewBox="0 0 24 24" class="icon" height="2em" width="2em" fill="#626262"><path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2M15 16L13 20H10L12 16H9V11H15V16M13 9V3.5L18.5 9H13Z"></path></svg>`,
             useHTML: true,
@@ -165,25 +197,30 @@ const SummaryChartAccordion = ({ data, height = 300 }) => {
         },
       },
     });
-  }, [data, height]);
+  }, [data, height, chartHeight]);
 
+
+ 
+
+
+  console.log({height, chartHeight});
   return (
     <Box sx={{ width: "100%", minHeight: height, bgcolor: "#1e1e1e" }}>
-      <Box sx={{ flexGrow: 1 }}>
-        <div ref={chartRef} />
-      </Box>
+      
+        <div ref={chartRef} style={{ height: "100%" }} />
+      
 
       <Accordion sx={{ bgcolor: "#1e1e1e", color: "white" }}>
         <AccordionSummary
           id="summary-accordion-header"
-          // ref={accordionRef}
+          ref={summaryRef}
           expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
         >
           <Typography variant="h6">Details</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <ul style={{ paddingLeft: "1.2rem" }}>
-            {/* {labels.map((label, i) => {
+            {labels.map((label, i) => {
               const base = currentValues[i];
               const value = optimalValues[i];
               const diff = ((base - value) / base) * 100;
@@ -195,7 +232,7 @@ const SummaryChartAccordion = ({ data, height = 300 }) => {
                   </Typography>
                 </li>
               );
-            })} */}
+            })}
           </ul>
         </AccordionDetails>
       </Accordion>

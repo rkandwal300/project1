@@ -11,176 +11,170 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined"; // or use Excel icon from third-party
-import TooltipHoc from "@/components/ui/Tooltip";
-import DialogHoc from "@/components/ui/Dialog";
 import CloseIcon from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
+import TooltipHoc from "@/components/ui/Tooltip";
+import DialogHoc from "@/components/ui/Dialog";
 
-const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
-  return (
-    <>
-      <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-      >
-        <Typography
-        variant="h6"
-          sx={{ fontSize: "1.3rem", fontWeight: "bold", color: "primary.main" }}
-        >
-          Instance advice
+const EXPLANATION_LIST = [
+  "Instances for which performance data is unavailable.",
+  "Older generation series (e.g., 3rd generations) with insufficient performance data.",
+  "Graviton instances, which are not currently supported by EIA.",
+];
+
+const ExplanationDialogContent = ({ handleClose }) => (
+  <Box sx={{ p: 0 }}>
+    <Box display="flex" justifyContent="space-between" alignItems="center" p={2}>
+      <Box>
+        <Typography variant="body2" fontSize={16} fontWeight="bold" gutterBottom>
+          Invalid or Unsupported Scenarios:
         </Typography>
-
-        <TooltipHoc message="Export detailed recommendation">
-          <Button
-            id="btn-cost-advice-export"
-            variant="outlined"
-            size="small"
-            href="/cost_advisor.xlsx"
-            startIcon={
-              <Box
-                component="img"
-                src="/file-excel.svg"
-                alt="Excel Export"
-                sx={{ width: 18, height: 18 }}
-              />
-            }
-          >
-            Export
-          </Button>
-        </TooltipHoc>
+        <Typography variant="subtitle1" fontSize={16} gutterBottom>
+          Region or Instance input data is invalid or specifies an unsupported instance type
+        </Typography>
       </Box>
-      <Typography
-        variant="body2"
-        sx={{ fontSize: "13px", color: "primary.main", px: "5px", pt: "20px" }}
-      >
-        *Note : All measurements are per month
-      </Typography>
-      <FormControlLabel
+      <IconButton onClick={handleClose}>
+        <CloseIcon />
+      </IconButton>
+    </Box>
+    <Divider />
+    <Box sx={{ p: 2, pl: 3 }}>
+      <List
         sx={{
-          px: "5px",
-          "& .MuiFormControlLabel-label": {
-            fontWeight: "600",
-            fontSize: "16px",
-            color: "#5f5f5f",
-          },
+          listStyleType: "decimal",
+          listStylePosition: "outside",
+          pl: 2,
         }}
-        control={
-          <Checkbox
-            id="annuallyPrice"
-            slotProps={{
-              input: {
-                "aria-label": "Annually",
-                "aria-describedby": "annuallyPrice-messages",
-              },
+        dense
+      >
+        {EXPLANATION_LIST.map((text, idx) => (
+          <ListItem
+            key={idx}
+            sx={{
+              display: "list-item",
+              p: "2px 0",
+              alignItems: "flex-start",
             }}
-            value={isAnnually}
-            onChange={(e) => setIsAnnually(e.target.checked)}
-          />
-        }
-        label="Annually"
-      />
+          >
+            <ListItemText primary={text} primaryTypographyProps={{ fontSize: 16 }} />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  </Box>
+);
 
-      <Typography
-        variant="body2"
-        sx={{
-          fontFamily: '"Open Sans", Arial, sans-serif',
-          fontSize: "13px",
-          ml: "auto",
-          mb: "30px",
-        }}
-      >
-        CI-Current Instance Data,{" "}
-        <span
-          style={{
-            marginLeft: "0.5rem",
-            fontFamily: '"Open Sans", Arial, sans-serif',
-          }}
-        >
-          Performance Improvement*
-        </span>{" "}
-        <DialogHoc
-          trigger={({ onClick }) => (
-            <span
-              onClick={onClick}
-              style={{
-                marginLeft: "0.5rem",
-                fontFamily: '"Open Sans", Arial, sans-serif',
-                cursor: "pointer",
-                textDecoration: "underline",
-                fontWeight: 700,
-              }}
-            >
-              Input Errors Explanation
-            </span>
-          )}
-          content={({ handleClose }) => (
-            <Box sx={{ p: 0 }} gap={0}>
-              <Box
-                display={"flex"}
-                justifyContent="space-between"
-                alignItems="center"
-                p={2}
-              >
-                {/* Title */}
-                <div>
-                  <Typography
-                    variant="body2"
-                    fontSize={"16px"}
-                    fontWeight="bold"
-                    gutterBottom
-                  >
-                    Invalid or Unsupported Scenarios:
-                  </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    fontSize={"16px"}
-                    gutterBottom
-                  >
-                    Region or Instance input data is invalid or specifies an
-                    unsupported instance type
-                  </Typography>
-                </div>
-
-                {/* Close Button */}
-                <Box display="flex" justifyContent="flex-end">
-                  <IconButton onClick={handleClose}>
-                    <CloseIcon />
-                  </IconButton>
-                </Box>
-              </Box>
-              <Divider />
-
-              <List sx={{ listStyleType: "decimal", pl: 3 }} dense>
-                <ListItem sx={{ display: "list-item" }}>
-                  <ListItemText
-                    primary={
-                      "Instances for which performance data is unavailable."
-                    }
-                    primaryTypographyProps={{ fontSize: "16px" }}
-                  />
-                </ListItem>
-                <ListItem sx={{ display: "list-item" }}>
-                  <ListItemText
-                    primary="Older generation series (e.g., 3rd generations) with insufficient performance data."
-                    primaryTypographyProps={{ fontSize: "16px" }}
-                  />
-                </ListItem>
-                <ListItem sx={{ display: "list-item" }}>
-                  <ListItemText
-                    primary="Graviton instances, which are not currently supported by EIA."
-                    primaryTypographyProps={{ fontSize: "16px" }}
-                  />
-                </ListItem>
-              </List>
-            </Box>
-          )}
-        />
-      </Typography>
-    </>
-  );
+ExplanationDialogContent.propTypes = {
+  handleClose: PropTypes.func.isRequired,
 };
+
+const ExportButton = () => (
+  <TooltipHoc message="Export detailed recommendation">
+    <Button
+      id="btn-cost-advice-export"
+      variant="outlined"
+      size="small"
+      href="/cost_advisor.xlsx"
+      startIcon={
+        <Box
+          component="img"
+          src="/file-excel.svg"
+          alt="Excel Export"
+          sx={{ width: 18, height: 18 }}
+        />
+      }
+    >
+      Export
+    </Button>
+  </TooltipHoc>
+);
+
+const AnnuallyCheckbox = ({ isAnnually, setIsAnnually }) => (
+  <FormControlLabel
+    sx={{
+      px: 1,
+      "& .MuiFormControlLabel-label": {
+        fontWeight: 600,
+        fontSize: 16,
+        color: "#5f5f5f",
+      },
+    }}
+    control={
+      <Checkbox
+        id="annuallyPrice"
+        value={isAnnually}
+        checked={isAnnually}
+        onChange={(e) => setIsAnnually(e.target.checked)}
+        inputProps={{
+          "aria-label": "Annually",
+          "aria-describedby": "annuallyPrice-messages",
+        }}
+      />
+    }
+    label="Annually"
+  />
+);
+
+AnnuallyCheckbox.propTypes = {
+  isAnnually: PropTypes.bool.isRequired,
+  setIsAnnually: PropTypes.func.isRequired,
+};
+
+const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => (
+  <>
+    <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Typography
+        variant="h6"
+        sx={{ fontSize: "1.3rem", fontWeight: "bold", color: "primary.main" }}
+      >
+        Instance advice
+      </Typography>
+      <ExportButton />
+    </Box>
+
+    <Typography
+      variant="body2"
+      sx={{ fontSize: 13, color: "primary.main", px: 1, pt: 2.5 }}
+    >
+      *Note : All measurements are per month
+    </Typography>
+
+    <AnnuallyCheckbox isAnnually={isAnnually} setIsAnnually={setIsAnnually} />
+
+    <Typography
+      variant="body2"
+      sx={{
+        fontFamily: '"Open Sans", Arial, sans-serif',
+        fontSize: 13,
+        ml: "auto",
+        mb: 3,
+      }}
+    >
+      CI-Current Instance Data,{" "}
+      <span style={{ marginLeft: 8, fontFamily: '"Open Sans", Arial, sans-serif' }}>
+        Performance Improvement*
+      </span>
+      <DialogHoc
+        trigger={({ onClick }) => (
+          <span
+            onClick={onClick}
+            style={{
+              marginLeft: 8,
+              fontFamily: '"Open Sans", Arial, sans-serif',
+              cursor: "pointer",
+              textDecoration: "underline",
+              fontWeight: 700,
+            }}
+          >
+            Input Errors Explanation
+          </span>
+        )}
+        content={ExplanationDialogContent}
+      />
+    </Typography>
+  </>
+);
+
 InstanceAdviceHeader.propTypes = {
   isAnnually: PropTypes.bool.isRequired,
   setIsAnnually: PropTypes.func.isRequired,
