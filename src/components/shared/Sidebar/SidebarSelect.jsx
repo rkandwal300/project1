@@ -8,6 +8,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { serviceProviderOptions } from "@/lib/constant";
+import ProviderDisplay from "./ProviderList";
 
 const SidebarSelect = ({ label = "", value = "", onValueChange }) => {
   const theme = useTheme();
@@ -24,32 +25,13 @@ const SidebarSelect = ({ label = "", value = "", onValueChange }) => {
             sx: {
               maxHeight: 300,
               overflowY: "auto",
-              color: theme.palette.grey[800],
+              bgcolor: "transparent",
             },
           },
+          
         }}
       >
-        {serviceProviderOptions.map((group) => [
-          <ListSubheader
-            key={group.label}
-            sx={{
-              color: theme.palette.dark,
-              fontSize: "16px",
-            }}
-          >
-            {group.label}
-          </ListSubheader>,
-          ...group.options.map((option) => (
-            <MenuItem
-              key={option.value}
-              value={option.value}
-              sx={{ height: "40px" }}
-              id={`MenuItem-${option.value}`}
-            >
-              {option.label}
-            </MenuItem>
-          )),
-        ])}
+         <ProviderDisplay />
       </Select>
     </FormControl>
   );

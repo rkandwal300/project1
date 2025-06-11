@@ -171,10 +171,12 @@ export const providerData = {
 
 
     telematry: {
+         name: "Telemetry Connector",
+       list:{  
         datadog: {
 
             name: "Datadog",
-            logo: "datadog.webp",
+            logo: "/logo/datadog.webp",
 
             regions: {
 
@@ -245,5 +247,6 @@ export const providerData = {
             },
         }
     }
+}
 };
 

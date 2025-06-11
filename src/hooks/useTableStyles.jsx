@@ -1,3 +1,4 @@
+import { BorderRight, WidthFull } from "@mui/icons-material";
 import { useMemo } from "react";
 
 export const useTableStyles = (variant, theme) =>
@@ -9,7 +10,7 @@ export const useTableStyles = (variant, theme) =>
           color: theme.palette.success.contrastText,
           backgroundColor: theme.palette.grey[700],
           verticalAlign: "middle",
-          
+
           borderBottom: `1px solid ${theme.palette.secondary.default}`,
         },
         head: {
@@ -19,6 +20,40 @@ export const useTableStyles = (variant, theme) =>
           borderBottom: "none",
           fontWeight: "bold",
           backgroundColor: theme.palette.dark,
+        },
+      };
+    }
+    if (variant === 'provider') {
+      const borderColor= theme.palette.grey[400]
+        return {
+        row: {  },
+        bodyRow: { backgroundColor: theme.palette.grey[700] },
+        cell: {
+          color: theme.palette.grey[700],
+          backgroundColor: theme.palette.primary.contrastText,
+          padding:0,
+          verticalAlign: "top",
+          alignItems: "center",
+          border: "0px",
+          borderBottom: "none", 
+          height: "40px",
+          fontSize:"13px",
+          borderLeft: `2px solid ${borderColor}`,
+
+
+        },
+        head: {
+          alignItems: "stretch",
+          verticalAlign: "center",
+          padding: 1,
+          height:"45px",
+          color:  theme.palette.dark,
+          fontWeight:600,
+          fontSize:"15px",
+          backgroundColor: theme.palette.primary.contrastText,
+          borderLeft:`2px solid ${borderColor}`,
+          borderBottom: `2px solid ${borderColor}`,
+
         },
       };
     }

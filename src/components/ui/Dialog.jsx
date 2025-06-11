@@ -1,6 +1,8 @@
 import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import PropTypes from "prop-types";
+
+
 export default function DialogHoc({ trigger, content, ...props }) {
   const { maxWidth = "md" } = props;
   const [open, setOpen] = React.useState(false);

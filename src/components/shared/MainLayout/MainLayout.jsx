@@ -2,8 +2,7 @@ import BottomBar from "@/components/shared/BottomBar";
 import Header from "@/components/shared/header/Header";
 import Footer from "@/components/shared/Footer/Footer/Footer";
 import { Box } from "@mui/material";
-import MainContent from "./MainContent";
-import ProviderDisplay from "../Sidebar/ProviderList";
+import MainContent from "./MainContent"; 
 import ErrorBoundary from "../ErrorBoundary";
 
 function MainLayout() {
@@ -17,10 +16,7 @@ function MainLayout() {
     >
       <Header />
       <Box display={"flex"} minHeight={"100vh"} flexDirection={"column"}>
-        <MainContent />
-       <ErrorBoundary fallback="Something went wrong">
-        <ProviderDisplay />
-        </ErrorBoundary> 
+        <MainContent /> 
         <BottomBar />
       </Box>
       <Footer />

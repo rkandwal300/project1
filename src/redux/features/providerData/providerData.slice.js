@@ -1,105 +1,106 @@
+import { providerData } from "@/lib/region";
 import { createSlice } from "@reduxjs/toolkit";
 
-const providerData = {
-  cloud: {
-    name: "Cloud",
-    list: {
-      aws: {
-        type: "cloud",
-        name: "AWS",
-        logo: "",
-        regions: {
-          "us-east-1": [
-            "us-east-2",
-            "us-west-1",
-            "us-west-2",
-            "ca-central-1",
-            "eu-west-1",
-          ],
-          "us-west-2": ["us-west-1", "us-east-1", "us-east-2", "sa-east-1"],
-          "eu-west-1": ["eu-west-2", "eu-west-3", "eu-central-1"],
-        },
-      },
-      azure: {
-        type: "cloud",
-        name: "Azure",
-        logo: "",
-        regions: {
-          eastus: [
-            "westus",
-            "centralus",
-            "northcentralus",
-            "southcentralus",
-            "eastus2",
-          ],
-          westus: [
-            "eastus",
-            "centralus",
-            "northcentralus",
-            "southcentralus",
-            "westus2",
-          ],
-          centralus: [
-            "eastus",
-            "westus",
-            "northcentralus",
-            "southcentralus",
-            "eastus2",
-          ],
-          northcentralus: [
-            "eastus",
-            "westus",
-            "centralus",
-            "southcentralus",
-            "eastus2",
-          ],
-          southcentralus: [
-            "eastus",
-            "westus",
-            "centralus",
-            "northcentralus",
-            "eastus2",
-          ],
-        },
-      },
-      gcp: {
-        type: "cloud",
-        name: "Google Cloud Platform",
-        logo: "",
-        regions: {
-          "us-central1": ["us-east1", "us-west1", "us-east4", "us-west2"],
-          "europe-west1": ["europe-west2", "europe-west3", "europe-west4"],
-          "asia-east1": ["asia-northeast1", "asia-southeast1", "asia-south1"],
-        },
-      },
-    },
-  },
-  telemetry: {
-    name: "Telemetry Connector",
-    list: {
-      datadog: {
-        name: "Datadog",
-        logo: "",
-        regions: {
-          us1: ["us2", "us3", "eu1", "ap1"],
-          us2: ["us1", "us3", "eu1", "ap1"],
-          eu1: ["us1", "us2", "ap1"],
-          ap1: ["us1", "us2", "eu1"],
-        },
-      },
-      cloudWatch: {
-        name: "AWS CloudWatch",
-        logo: "",
-        regions: {
-          us: ["eu", "ap", "ca"],
-          eu: ["us", "ap", "ca"],
-          ap: ["us", "eu", "ca"],
-          ca: ["us", "eu", "ap"],
-        },
-      },
-    },
-  },
-};
+// const providerData = {
+//   cloud: {
+//     name: "Cloud",
+//     list: {
+//       aws: {
+//         type: "cloud",
+//         name: "AWS",
+//         logo: "",
+//         regions: {
+//           "us-east-1": [
+//             "us-east-2",
+//             "us-west-1",
+//             "us-west-2",
+//             "ca-central-1",
+//             "eu-west-1",
+//           ],
+//           "us-west-2": ["us-west-1", "us-east-1", "us-east-2", "sa-east-1"],
+//           "eu-west-1": ["eu-west-2", "eu-west-3", "eu-central-1"],
+//         },
+//       },
+//       azure: {
+//         type: "cloud",
+//         name: "Azure",
+//         logo: "",
+//         regions: {
+//           eastus: [
+//             "westus",
+//             "centralus",
+//             "northcentralus",
+//             "southcentralus",
+//             "eastus2",
+//           ],
+//           westus: [
+//             "eastus",
+//             "centralus",
+//             "northcentralus",
+//             "southcentralus",
+//             "westus2",
+//           ],
+//           centralus: [
+//             "eastus",
+//             "westus",
+//             "northcentralus",
+//             "southcentralus",
+//             "eastus2",
+//           ],
+//           northcentralus: [
+//             "eastus",
+//             "westus",
+//             "centralus",
+//             "southcentralus",
+//             "eastus2",
+//           ],
+//           southcentralus: [
+//             "eastus",
+//             "westus",
+//             "centralus",
+//             "northcentralus",
+//             "eastus2",
+//           ],
+//         },
+//       },
+//       gcp: {
+//         type: "cloud",
+//         name: "GCP",
+//         logo: "",
+//         regions: {
+//           "us-central1": ["us-east1", "us-west1", "us-east4", "us-west2"],
+//           "europe-west1": ["europe-west2", "europe-west3", "europe-west4"],
+//           "asia-east1": ["asia-northeast1", "asia-southeast1", "asia-south1"],
+//         },
+//       },
+//     },
+//   },
+//   telemetry: {
+//     name: "Telemetry Connector",
+//     list: {
+//       datadog: {
+//         name: "Datadog",
+//         logo: "",
+//         regions: {
+//           us1: ["us2", "us3", "eu1", "ap1"],
+//           us2: ["us1", "us3", "eu1", "ap1"],
+//           eu1: ["us1", "us2", "ap1"],
+//           ap1: ["us1", "us2", "eu1"],
+//         },
+//       },
+//       cloudWatch: {
+//         name: "AWS CloudWatch",
+//         logo: "",
+//         regions: {
+//           us: ["eu", "ap", "ca"],
+//           eu: ["us", "ap", "ca"],
+//           ap: ["us", "eu", "ca"],
+//           ca: ["us", "eu", "ap"],
+//         },
+//       },
+//     },
+//   },
+// };
 
 const defaultType = Object.keys(providerData)[0];
 
