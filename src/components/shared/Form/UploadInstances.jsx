@@ -42,8 +42,7 @@ const FileUploadField = ({ label, form, ...props }) => {
   }); 
 
   const handleInputClick = () => {
-    console.log("File upload clicked for label:", label);
-    form.setValue("isFileUploaded", true);
+     form.setValue("isFileUploaded", true);
     if (label === "Upload Self Perf assessment") {
       dispatch(
         addSelfAssessmentList([

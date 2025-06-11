@@ -78,7 +78,7 @@ const processFields = async (fields) => {
       try {
         await selectDropdownValue(inputEl, field.name);
       } catch (err) {
-        console.warn(`Dropdown selection failed for ${field.name}:`, err);
+        alert(`Dropdown selection failed for ${field.name}:`, err);
       }
     }
   }
@@ -111,8 +111,9 @@ const actionHandlers = {
       el.querySelector('[role="button"]') ||
       el.querySelector('[aria-haspopup="listbox"]') ||
       el;
-    if (!buttonEl)
-      return console.warn("No clickable element found inside Select");
+    if (!buttonEl) {
+      return;
+    }
     buttonEl.focus();
     setTimeout(() => {
       buttonEl.dispatchEvent(
@@ -155,20 +156,20 @@ const handleElementAction = async (el, id) => {
 
   if (["instanceTypeTargetFrom", "instanceTypeTargetTo"].includes(id)) {
     await actionHandlers.instanceType(el);
-    } else if (id === "downloadSelectTemplate") {
-    actionHandlers.anchor(el); 
+  } else if (id === "downloadSelectTemplate") {
+    actionHandlers.anchor(el);
     const listbox = document.querySelector('[role="listbox"]');
-    if (listbox) { 
+    if (listbox) {
       listbox.dispatchEvent(
-      new KeyboardEvent("keydown", {
-        bubbles: true,
-        cancelable: true,
-        key: "Escape",
-        code: "Escape",
-      })
+        new KeyboardEvent("keydown", {
+          bubbles: true,
+          cancelable: true,
+          key: "Escape",
+          code: "Escape",
+        })
       );
     }
-    } else if (id === "tableCell_0_maxCpuUtilization_cell") {
+  } else if (id === "tableCell_0_maxCpuUtilization_cell") {
     actionHandlers.tableCell(el);
   } else if (tag === "input") {
     actionHandlers.input(el);
@@ -198,6 +199,10 @@ const tour = new Shepherd.Tour({
 });
 
 steps().forEach((step) => {
+  // Skip step if attachTo is missing, attachTo.element is missing, or element is not found in DOM
+  // if ( !step.attachTo?.element || !document.querySelector(step.attachTo.element)) {
+  //   return;
+  // }
   tour.addStep({
     id: step.id,
     text: step.text,
@@ -209,10 +214,10 @@ steps().forEach((step) => {
           const id = step.attachTo.element.replace("#", "");
           const el = document.getElementById(id);
           if (!el) {
-            console.warn(`Element #${id} not found.`);
-          } else {
-            await handleElementAction(el, id);
+            tour.next();
+            return;
           }
+          await handleElementAction(el, id);
           if (step?.action?.next) step.action.next();
           tour.next();
         },
@@ -239,4 +244,4 @@ steps().forEach((step) => {
   });
 });
 
-export default tour;
+tour.start();

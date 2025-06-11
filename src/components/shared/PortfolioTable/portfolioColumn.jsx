@@ -24,10 +24,7 @@ const EditableTextCell = lazy(() =>
 );
 
 const EditableCell = ({ type, ...props }) => {
-  console.log({
-    type,
-  props
-  })
+ 
   return(
   <Suspense fallback={props.value ?? ""}>
     {type === "select" ? (

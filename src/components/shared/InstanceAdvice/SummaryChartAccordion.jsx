@@ -197,13 +197,7 @@ const SummaryChartAccordion = ({ data, height = 300 }) => {
         },
       },
     });
-  }, [data, height, chartHeight]);
-
-
- 
-
-
-  console.log({height, chartHeight});
+  }, [data, height, chartHeight]); 
   return (
     <Box sx={{ width: "100%", minHeight: height, bgcolor: "#1e1e1e" }}>
       

@@ -1,4 +1,4 @@
-import SelectHoc from "@/components/ui/Select"; 
+import SelectHoc from "@/components/ui/Select";
 import { TextField } from "@mui/material";
 import PropTypes from "prop-types";
 
@@ -17,6 +17,9 @@ export const EditableSelectCell = ({
       table.options.meta.setEditingCell({ rowIndex: null, columnId: null });
       onChange(val.target.value);
     }}
+    onBlur={() =>
+      table.options.meta.setEditingCell({ rowIndex: null, columnId: null })
+    }
     sx={{
       height: 40,
       bgcolor: "#292929",
