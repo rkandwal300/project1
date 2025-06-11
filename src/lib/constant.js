@@ -55,7 +55,10 @@ export const serviceProviderOptions = [
   },
   {
     label: "Telemetry Collector",
-    options: [{ label: "Datalog", value: "datalog" }],
+    options: [
+      { label: "Datalog", value: "datalog" },
+      { label: "AWS CloudWatch", value: "aws_cloudWatch" },
+    ],
   },
 ];
 export const CONSUMPTION_FIELDS = [

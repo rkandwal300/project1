@@ -6,15 +6,21 @@ import PortfolioHeader from "./PortfolioHeader";
 import PortfolioList from "./PortfolioList";
 import { serviceProviderOptions } from "@/lib/constant";
 import { closeSidebar } from "@/redux/features/sidebar/sidebar.slice";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"; 
 
-export default function SidebarDrawer() {
+export default function SidebarDrawer() { 
   const dispatch = useDispatch();
   const [selectValue, setSelectValue] = React.useState(
     serviceProviderOptions[0].options[0].value
   );
   const theme = useTheme();
   const borderColor = theme.palette.sidebar?.border || theme.palette.divider;
+  const handlePortfolioSwitch = (event) => {
+    const newValue = event.target.value;
+    setSelectValue(newValue);
+     
+    console.log("Selected Portfolio:", newValue);
+  };
   return (
     <Box
       bgcolor="inherit"
@@ -29,11 +35,11 @@ export default function SidebarDrawer() {
         <SidebarSelect
           label="Service Provider"
           value={selectValue}
-          onValueChange={({ target }) => setSelectValue(target.value)}
+          onValueChange={handlePortfolioSwitch}
         />
         <IconButton
           id="btn-dashboard-togglePortfolios"
-          onClick={()=>dispatch(closeSidebar())}
+          onClick={() => dispatch(closeSidebar())}
           sx={{
             ml: "auto",
             p: 0,
