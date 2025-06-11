@@ -23,7 +23,12 @@ const EditableTextCell = lazy(() =>
   }))
 );
 
-const EditableCell = ({ type, ...props }) => (
+const EditableCell = ({ type, ...props }) => {
+  console.log({
+    type,
+  props
+  })
+  return(
   <Suspense fallback={props.value ?? ""}>
     {type === "select" ? (
       <EditableSelectCell {...props} />
@@ -31,7 +36,7 @@ const EditableCell = ({ type, ...props }) => (
       <EditableTextCell {...props} />
     )}
   </Suspense>
-);
+)};
 
 EditableCell.propTypes = {
   type: PropTypes.string.isRequired,
@@ -85,9 +90,10 @@ export default function GetInstanceColumn() {
 
   const renderEditableTextCell = useCallback(
     (field) =>
-      ({ getValue, row, isEditing }) =>
+      ({ getValue, row, isEditing ,table}) =>
         isEditing ? (
           <EditableCell
+          table={table}
           id ={`tableCell_${row.index}_${field}_cell`}
             type="text"
             value={getValue()}

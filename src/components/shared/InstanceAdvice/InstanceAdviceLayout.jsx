@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
-import React from "react";
-import Footer from "../Footer/Footer/Footer";
+import React from "react"; 
 import InstanceAdviceBottomBar from "./InstanceAdviceBottomBar";
 import Header from "../header/Header";
 import Sidebar from "../Sidebar/Sidebar";
@@ -9,6 +8,7 @@ import costAdvisor from "@/lib/instanceAdvice.json";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { CostAdvisoryColumn } from "./CostAdvisoryColumn";
 import Dashboard from "./Dashboard";
+import Footer from "../Footer/Footer";
 
 function InstanceAdviceLayout() {
   const [ isAnnually, setIsAnnually ] = React.useState(false);

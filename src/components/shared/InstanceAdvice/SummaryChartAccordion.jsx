@@ -42,7 +42,7 @@ const SummaryChartAccordion = ({ data, height = 300 }) => {
     if (summaryRef.current) {
       setChartHeight(Math.max(height - summaryRef.current.offsetHeight, 100));
     }
-  }, []);
+  }, [height]);
 
   useEffect(() => {
     if (!window.Highcharts || !chartRef.current) return;

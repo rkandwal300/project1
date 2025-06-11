@@ -1,4 +1,4 @@
-import SelectHoc from "@/components/ui/Select";
+import SelectHoc from "@/components/ui/Select"; 
 import { TextField } from "@mui/material";
 import PropTypes from "prop-types";
 
@@ -45,9 +45,12 @@ export const EditableSelectCell = ({
   />
 );
 
-export const EditableTextCell = ({ value, onChange, ...props }) => (
+export const EditableTextCell = ({ value, onChange, table, ...props }) => (
   <TextField
     value={value}
+    onBlur={() =>
+      table.options.meta.setEditingCell({ rowIndex: null, columnId: null })
+    }
     onChange={(e) => e.target.value > 0 && onChange(e.target.value)}
     sx={{
       height: 40,
@@ -77,6 +80,7 @@ export const EditableTextCell = ({ value, onChange, ...props }) => (
 
 EditableTextCell.propTypes = {
   value: PropTypes.any,
+  table: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

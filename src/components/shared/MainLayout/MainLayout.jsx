@@ -1,10 +1,11 @@
 import BottomBar from "@/components/shared/BottomBar";
-import Header from "@/components/shared/header/Header";
-import Footer from "@/components/shared/Footer/Footer/Footer";
+import Header from "@/components/shared/header/Header"; 
 import { Box } from "@mui/material";
 import MainContent from "./MainContent";
+import Footer from "../Footer/Footer";
 
 function MainLayout() {
+  
   return (
     <Box
       sx={{
