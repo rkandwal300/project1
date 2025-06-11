@@ -8,7 +8,7 @@ import CustomTable from "@/components/ui/table/CustomTable";
 
 const TableMenuItem = ({  logo, label }) => (<MenuItem style={{ display: "flex", alignItems: "center", gap: "8px", padding: '10px' }}>
   <img src={logo} alt={label} width={24} height={24} />
-  <span>{label}</span>
+  <span style={{fontSize:'14px'}}>{label}</span>
 </MenuItem>
 );
 
@@ -29,9 +29,9 @@ const columns = [
     cell: ({ getValue }) => getValue() &&(
       <TableMenuItem {...getValue()}  />
     ),
-    size: 165,
-    minSize: 165,
-    maxSize: 165
+    size: 150,
+    minSize: 150,
+    maxSize: 150
   },
 ];
 
@@ -53,7 +53,7 @@ const ProviderDisplay = () => {
       data={tableData}
       columns={columns}
       variant={"provider"}
-      size={320}
+      size={350}
     />
   );
 };

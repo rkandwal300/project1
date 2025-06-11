@@ -1,14 +1,11 @@
 import React from "react";
-import {
-  ListSubheader,
+import { 
   useTheme,
   Select,
   FormControl,
-  InputLabel,
-  MenuItem,
-} from "@mui/material";
-import { serviceProviderOptions } from "@/lib/constant";
-import ProviderDisplay from "./ProviderList";
+  InputLabel, 
+} from "@mui/material"; 
+import ProviderDisplay from "./ProviderDisplay";
 
 const SidebarSelect = ({ label = "", value = "", onValueChange }) => {
   const theme = useTheme();
@@ -23,12 +20,20 @@ const SidebarSelect = ({ label = "", value = "", onValueChange }) => {
         MenuProps={{
           PaperProps: {
             sx: {
+              padding: 0,
               maxHeight: 300,
               overflowY: "auto",
               bgcolor: "transparent",
+              boxShadow: "none",  
+              backgroundImage: "none",  
+            },
+            elevation: 0, // Remove elevation
+          },
+          MenuListProps: {
+            sx: {
+              bgcolor: "transparent",
             },
           },
-          
         }}
       >
          <ProviderDisplay />
