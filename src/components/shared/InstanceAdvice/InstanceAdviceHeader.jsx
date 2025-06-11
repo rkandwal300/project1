@@ -171,7 +171,7 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
 
   const handleRefresh = useCallback(() => {
     setLoading(true);
-    setTimeout(() => setLoading(false), 3000);
+    setTimeout(() => setLoading(false), 1000);
   }, []);
 
   return (
