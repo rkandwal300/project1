@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   Typography,
   Button,
@@ -10,11 +10,15 @@ import {
   List,
   ListItem,
   ListItemText,
+  useMediaQuery,
+  Slider,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import PropTypes from "prop-types";
 import TooltipHoc from "@/components/ui/Tooltip";
 import DialogHoc from "@/components/ui/Dialog";
+import { useTheme } from "@emotion/react";
 
 const EXPLANATION_LIST = [
   "Instances for which performance data is unavailable.",
@@ -22,15 +26,52 @@ const EXPLANATION_LIST = [
   "Graviton instances, which are not currently supported by EIA.",
 ];
 
+const Spinner = () => (
+  <>
+    <Box sx={spinnerStyles.loader} />
+    <style>
+      {`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}
+    </style>
+  </>
+);
+
+const spinnerStyles = {
+  loader: {
+    opacity: 1,
+    width: 100,
+    height: 100,
+    border: "10px solid #ccc",
+    borderTop: "10px solid #1976d2",
+    borderRadius: "50%",
+    animation: "spin 1s linear infinite",
+  },
+};
+
 const ExplanationDialogContent = ({ handleClose }) => (
-  <Box sx={{ p: 0 }}>
-    <Box display="flex" justifyContent="space-between" alignItems="center" p={2}>
+  <Box p={0}>
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      p={2}
+    >
       <Box>
-        <Typography variant="body2" fontSize={16} fontWeight="bold" gutterBottom>
+        <Typography
+          variant="body2"
+          fontSize={16}
+          fontWeight="bold"
+          gutterBottom
+        >
           Invalid or Unsupported Scenarios:
         </Typography>
         <Typography variant="subtitle1" fontSize={16} gutterBottom>
-          Region or Instance input data is invalid or specifies an unsupported instance type
+          Region or Instance input data is invalid or specifies an unsupported
+          instance type
         </Typography>
       </Box>
       <IconButton onClick={handleClose}>
@@ -38,7 +79,7 @@ const ExplanationDialogContent = ({ handleClose }) => (
       </IconButton>
     </Box>
     <Divider />
-    <Box sx={{ p: 2, pl: 3 }}>
+    <Box p={2} pl={3}>
       <List
         sx={{
           listStyleType: "decimal",
@@ -47,16 +88,19 @@ const ExplanationDialogContent = ({ handleClose }) => (
         }}
         dense
       >
-        {EXPLANATION_LIST.map((text, idx) => (
+        {EXPLANATION_LIST.map((text) => (
           <ListItem
-            key={idx}
+            key={text}
             sx={{
               display: "list-item",
               p: "2px 0",
               alignItems: "flex-start",
             }}
           >
-            <ListItemText primary={text} primaryTypographyProps={{ fontSize: 16 }} />
+            <ListItemText
+              primary={text}
+              primaryTypographyProps={{ fontSize: 16 }}
+            />
           </ListItem>
         ))}
       </List>
@@ -68,7 +112,7 @@ ExplanationDialogContent.propTypes = {
   handleClose: PropTypes.func.isRequired,
 };
 
-const ExportButton = () => (
+const ExportButton = React.memo(() => (
   <TooltipHoc message="Export detailed recommendation">
     <Button
       id="btn-cost-advice-export"
@@ -87,11 +131,13 @@ const ExportButton = () => (
       Export
     </Button>
   </TooltipHoc>
-);
+));
 
-const AnnuallyCheckbox = ({ isAnnually, setIsAnnually }) => (
+const AnnuallyCheckbox = React.memo(({ isAnnually, setIsAnnually }) => (
   <FormControlLabel
+    id="annuallyPrice"
     sx={{
+      width: "fit-content",
       px: 1,
       "& .MuiFormControlLabel-label": {
         fontWeight: 600,
@@ -101,8 +147,6 @@ const AnnuallyCheckbox = ({ isAnnually, setIsAnnually }) => (
     }}
     control={
       <Checkbox
-        id="annuallyPrice"
-        value={isAnnually}
         checked={isAnnually}
         onChange={(e) => setIsAnnually(e.target.checked)}
         inputProps={{
@@ -113,67 +157,134 @@ const AnnuallyCheckbox = ({ isAnnually, setIsAnnually }) => (
     }
     label="Annually"
   />
-);
+));
 
 AnnuallyCheckbox.propTypes = {
   isAnnually: PropTypes.bool.isRequired,
   setIsAnnually: PropTypes.func.isRequired,
 };
 
-const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => (
-  <>
-    <Box display="flex" justifyContent="space-between" alignItems="center">
-      <Typography
-        variant="h6"
-        sx={{ fontSize: "1.3rem", fontWeight: "bold", color: "primary.main" }}
+const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
+  const [loading, setLoading] = useState(false);
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+
+  const handleRefresh = useCallback(() => {
+    setLoading(true);
+    setTimeout(() => setLoading(false), 3000);
+  }, []);
+
+  return (
+    <>
+      {loading && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            bgcolor: theme.palette.grey[700],
+            opacity: 0.8,
+            zIndex: 1000,
+          }}
+        >
+          <Spinner />
+        </Box>
+      )}
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography
+          variant="h6"
+          sx={{ fontSize: "1.3rem", fontWeight: "bold", color: "primary.main" }}
+        >
+          Instance advice
+        </Typography>
+        <ExportButton />
+      </Box>
+      <AnnuallyCheckbox isAnnually={isAnnually} setIsAnnually={setIsAnnually} />
+      <Box
+        display="flex"
+        flexDirection={isMd ? "row" : "column"}
+        justifyContent="space-between"
+        alignItems="center"
+        gap={2}
+        ml="auto"
+        mb={3}
       >
-        Instance advice
-      </Typography>
-      <ExportButton />
-    </Box>
-
-    <Typography
-      variant="body2"
-      sx={{ fontSize: 13, color: "primary.main", px: 1, pt: 2.5 }}
-    >
-      *Note : All measurements are per month
-    </Typography>
-
-    <AnnuallyCheckbox isAnnually={isAnnually} setIsAnnually={setIsAnnually} />
-
-    <Typography
-      variant="body2"
-      sx={{
-        fontFamily: '"Open Sans", Arial, sans-serif',
-        fontSize: 13,
-        ml: "auto",
-        mb: 3,
-      }}
-    >
-      CI-Current Instance Data,{" "}
-      <span style={{ marginLeft: 8, fontFamily: '"Open Sans", Arial, sans-serif' }}>
-        Performance Improvement*
-      </span>
-      <DialogHoc
-        trigger={({ onClick }) => (
-          <span
-            onClick={onClick}
-            style={{
-              marginLeft: 8,
-              fontFamily: '"Open Sans", Arial, sans-serif',
-              cursor: "pointer",
-              textDecoration: "underline",
-              fontWeight: 700,
-            }}
+        <Typography
+          variant="body2"
+          sx={{
+            fontFamily: '"Open Sans", Arial, sans-serif',
+            fontSize: 13,
+          }}
+        >
+          CI-Current Instance Data,{" "}
+          <Box
+            component="span"
+            sx={{ ml: 1, fontFamily: '"Open Sans", Arial, sans-serif' }}
           >
-            Input Errors Explanation
-          </span>
-        )}
-        content={ExplanationDialogContent}
-      />
-    </Typography>
-  </>
-);
+            Performance Improvement*
+          </Box>
+          <DialogHoc
+            trigger={({ onClick }) => (
+              <Box
+                component="span"
+                onClick={onClick}
+                sx={{
+                  ml: 1,
+                  fontFamily: '"Open Sans", Arial, sans-serif',
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  fontWeight: 700,
+                }}
+              >
+                Input Errors Explanation
+              </Box>
+            )}
+            content={ExplanationDialogContent}
+          />
+        </Typography>
+        <Box
+          sx={{
+            width: 350,
+            mr: 2.5,
+            display: "flex",
+            gap: 1.25,
+            alignItems: "center",
+          }}
+        >
+          <Slider
+            defaultValue={20}
+            step={10}
+            marks
+            min={0}
+            max={100}
+            valueLabelDisplay="on"
+          />
+          <Button onClick={handleRefresh} disabled={loading}>
+            <RefreshIcon
+              sx={
+                loading
+                  ? {
+                      "@keyframes spin": {
+                        from: { transform: "rotate(0deg)" },
+                        to: { transform: "rotate(360deg)" },
+                      },
+                      animation: "spin 2s linear infinite",
+                    }
+                  : undefined
+              }
+              fontSize="large"
+            />
+          </Button>
+        </Box>
+      </Box>
+    </>
+  );
+};
 
 InstanceAdviceHeader.propTypes = {
   isAnnually: PropTypes.bool.isRequired,

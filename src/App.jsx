@@ -31,10 +31,11 @@ const App = () => {
   }, []);
  
   useEffect(() => {
-    if (pathname !== "/" && !currentInstance) {
+    if (pathname == "/" && currentInstance== null) {
       navigate("/");
     }
-  }, [pathname, currentInstance, navigate]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Decide which bottom bar to render
   const BottomBarComponent = pathname === "/instanceAdvice"

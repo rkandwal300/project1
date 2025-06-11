@@ -1,11 +1,5 @@
 import React, { useEffect, useCallback, lazy, Suspense } from "react";
-import {
-  Box,
-  Button,
-  Typography,
-  useTheme,
-  Divider,
-} from "@mui/material";
+import { Box, Button, Typography, useTheme, Divider } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -56,9 +50,8 @@ function BottomBar() {
   const selfPrefAssessmentData = useSelector(selectSelfAssessment);
 
   const formId = currentInstanceId || nanoid();
-
-  // Memoized handlers for optimization
-  const handleSavePortFolio = useCallback(() => {
+ 
+  const handleSavePortFolio =  () => {
     const trimmedName = portfolioName?.trim();
     if (!trimmedName) {
       dispatch(
@@ -96,26 +89,15 @@ function BottomBar() {
     } else {
       dispatch(addInstance(payload));
     }
-
-    // dispatch(resetInstanceState());
-    // dispatch(addCurrentInstance(formId));
+ 
+    navigate(`/${formId}`);
     dispatch(
       setMessage({
         type: errorMessageType.SUCCESS,
         message: `${trimmedName} saved successfully`,
       })
     );
-    navigate(`/${formId}`);
-  }, [
-    portfolioName,
-    instanceList,
-    currentInstanceId,
-    formId,
-    instances,
-    selfPrefAssessmentData,
-    dispatch,
-    navigate,
-  ]);
+  } ;
 
   const handleDeletePortfolio = useCallback(() => {
     dispatch(deletePortfolioFromList({ id: formId }));
@@ -205,6 +187,7 @@ function BottomBar() {
             Cancel
           </Button>
         </Suspense>
+
         {currentInstanceId && (
           <Suspense fallback={null}>
             <DialogHoc

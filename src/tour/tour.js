@@ -3,6 +3,7 @@ import "shepherd.js/dist/css/shepherd.css";
 import steps from "./steps.tour";
 import { CONSUMPTION_FIELDS, GENERIC_FIELDS } from "@/lib/constant";
 import { mockFormDataResponse } from "@/lib/data";
+import { store } from "@/redux/store";
 
 // --- Utilities ---
 
@@ -95,7 +96,19 @@ const actionHandlers = {
   },
   input(el) {
     const name = el.getAttribute("name");
-    const value = mockFormDataResponse[name];
+    const previousValue = el.value;
+
+    let value = mockFormDataResponse[name];
+    const portfolioList = store
+      .getState()
+      .instanceList.data.map((instance) => instance.name);
+
+    console.log({ value, portfolioList, name, previousValue });
+
+    if (portfolioList.includes(value) && name == "portfolioName") {
+      value = "test Portfolio1.2";
+    }
+
     if (value !== undefined) {
       setInputValue(el, value);
     } else {

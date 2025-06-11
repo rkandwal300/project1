@@ -6,7 +6,7 @@ import {
   instanceOptions,
   pricingModelOptions,
   regionOptions,
-} from "@/lib/constant"; 
+} from "@/lib/constant";
 import { useTheme } from "@emotion/react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { updateSingleInstance } from "@/redux/features/instance/instance.slice.js";
@@ -14,7 +14,7 @@ import { updateSingleInstance } from "@/redux/features/instance/instance.slice.j
 // Lazy load editable cells for performance
 const EditableSelectCell = lazy(() =>
   import("./EditableCells.jsx").then((mod) => ({
-  default: mod.EditableSelectCell,
+    default: mod.EditableSelectCell,
   }))
 );
 const EditableTextCell = lazy(() =>
@@ -24,16 +24,16 @@ const EditableTextCell = lazy(() =>
 );
 
 const EditableCell = ({ type, ...props }) => {
- 
-  return(
-  <Suspense fallback={props.value ?? ""}>
-    {type === "select" ? (
-      <EditableSelectCell {...props} />
-    ) : (
-      <EditableTextCell {...props} />
-    )}
-  </Suspense>
-)};
+  return (
+    <Suspense fallback={props.value ?? ""}>
+      {type === "select" ? (
+        <EditableSelectCell {...props} />
+      ) : (
+        <EditableTextCell {...props} />
+      )}
+    </Suspense>
+  );
+};
 
 EditableCell.propTypes = {
   type: PropTypes.string.isRequired,
@@ -87,11 +87,11 @@ export default function GetInstanceColumn() {
 
   const renderEditableTextCell = useCallback(
     (field) =>
-      ({ getValue, row, isEditing ,table}) =>
+      ({ getValue, row, isEditing, table }) =>
         isEditing ? (
           <EditableCell
-          table={table}
-          id ={`tableCell_${row.index}_${field}_cell`}
+            table={table}
+            id={`tableCell_${row.index}_${field}_cell`}
             type="text"
             value={getValue()}
             onChange={(val) => handleValueChange(row.index, field, val)}
@@ -119,7 +119,7 @@ export default function GetInstanceColumn() {
             }}
           />
         ),
-        cell: ({ row }) =>  (
+        cell: ({ row }) => (
           <Checkbox
             checked={row.getIsSelected()}
             indeterminate={row.getIsSomeSelected()}
@@ -166,7 +166,7 @@ export default function GetInstanceColumn() {
         header: "Maximum Bandwidth Used",
         columns: [
           {
-            id:"maxCpuUtilization",
+            id: "maxCpuUtilization",
             accessorKey: "maxCpuUtilization",
             header: "CPU(%)",
             cell: renderEditableTextCell("maxCpuUtilization"),
@@ -216,9 +216,45 @@ export default function GetInstanceColumn() {
         header: () => "Pricing Model",
         accessorKey: "pricingModel",
         cell: renderEditableCell("select", "pricingModel"),
-         minSize: 150,
+        minSize: 150,
         size: 150,
         maxSize: 200,
+      },
+      {
+        id: "uavg",
+        header: () => "UAVG",
+        accessorKey: "uavg",
+        cell:()=> "-",
+        minSize: 90,
+        size: 90,
+        maxSize: 90,
+      },
+      {
+        id: "pavg",
+        header: () => "PAVG",
+        accessorKey: "pavg",
+        cell:()=> "-",
+        minSize: 90,
+        size: 90,
+        maxSize: 90,
+      },
+      {
+        id: "u95",
+        header: () => "U95",
+        accessorKey: "p95",
+        cell:()=> "-",
+        minSize: 90,
+        size: 90,
+        maxSize: 90,
+      },
+      {
+        id: "p95",
+        header: () => "P95",
+        accessorKey: "p95",
+        cell:()=> "-",
+        minSize: 90,
+        size: 90,
+        maxSize: 90,
       },
       {
         id: "action",
