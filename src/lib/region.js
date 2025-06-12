@@ -6,6 +6,7 @@ export const providerData = {
 
             aws: {
 
+                type: "cloud",
                 name: "AWS",
                 logo: "/logo/aws.webp",
 
@@ -55,6 +56,8 @@ export const providerData = {
             },
 
             azure: {
+
+                type: "cloud",
                 logo: "/logo/azure.webp",
                 name: "AZURE",
 
@@ -114,6 +117,8 @@ export const providerData = {
             },
 
             gcp: {
+
+                type: "cloud",
                 logo: "/logo/GCP.webp",
                 name: "GCP",
 
@@ -171,82 +176,84 @@ export const providerData = {
 
 
     telematry: {
-         name: "Telemetry Connector",
-       list:{  
-        datadog: {
+        name: "Telemetry Connector",
+        list: {
+            datadog: {
+                
+                type: "telemetry",
+                name: "Datadog",
+                logo: "/logo/datadog.webp",
 
-            name: "Datadog",
-            logo: "/logo/datadog.webp",
+                regions: {
 
-            regions: {
+                    "us-central1": ["us-east1", "us-west1", "us-east4", "us-west2"],
 
-                "us-central1": ["us-east1", "us-west1", "us-east4", "us-west2"],
+                    "europe-west1": ["europe-west2", "europe-west3", "europe-west4"],
 
-                "europe-west1": ["europe-west2", "europe-west3", "europe-west4"],
+                    "asia-east1": ["asia-northeast1", "asia-southeast1", "asia-south1"],
 
-                "asia-east1": ["asia-northeast1", "asia-southeast1", "asia-south1"],
-
+                },
             },
-        },
-        cloudWatch: {
+            cloudWatch: {
+                
+                type: "telemetry",
+                name: "AWS CloudWatch",
+                logo: "/logo/cloudwatch.webp",
 
-            name: "AWS CloudWatch",
-            logo:"/logo/cloudwatch.webp",
+                regions: {
 
-            regions: {
+                    australiacentral: [
 
-                australiacentral: [
+                        "standard_a1_v2",
+                        "standard_a2_v2",
+                        "standard_a2m_v2",
+                        "standard_a4_v2",
+                        "standard_a4m_v2",
 
-                    "standard_a1_v2",
-                    "standard_a2_v2",
-                    "standard_a2m_v2",
-                    "standard_a4_v2",
-                    "standard_a4m_v2",
+                    ],
 
-                ],
+                    australiacentral2: [
 
-                australiacentral2: [
+                        "standard_a1_v2",
+                        "standard_a2_v2",
+                        "standard_a2m_v2",
+                        "standard_a4_v2",
+                        "standard_a4m_v2",
+                    ],
 
-                    "standard_a1_v2",
-                    "standard_a2_v2",
-                    "standard_a2m_v2",
-                    "standard_a4_v2",
-                    "standard_a4m_v2",
-                ],
+                    australiaeast: [
 
-                australiaeast: [
+                        "standard_a1_v2",
+                        "standard_a2_v2",
+                        "standard_a2m_v2",
+                        "standard_a4_v2",
+                        "standard_a4m_v2",
 
-                    "standard_a1_v2",
-                    "standard_a2_v2",
-                    "standard_a2m_v2",
-                    "standard_a4_v2",
-                    "standard_a4m_v2",
+                    ],
 
-                ],
+                    australiasoutheast: [
 
-                australiasoutheast: [
+                        "standard_a1_v2",
+                        "standard_a2_v2",
+                        "standard_a2m_v2",
+                        "standard_a4_v2",
+                        "standard_a4m_v2",
 
-                    "standard_a1_v2",
-                    "standard_a2_v2",
-                    "standard_a2m_v2",
-                    "standard_a4_v2",
-                    "standard_a4m_v2",
-
-                ],
+                    ],
 
 
-                brazilsouth: [
-                    "standard_a1_v2",
-                    "standard_a2_v2",
-                    "standard_a2m_v2",
-                    "standard_a4_v2",
-                    "standard_a4m_v2",
+                    brazilsouth: [
+                        "standard_a1_v2",
+                        "standard_a2_v2",
+                        "standard_a2m_v2",
+                        "standard_a4_v2",
+                        "standard_a4m_v2",
 
-                ],
+                    ],
 
-            },
+                },
+            }
         }
     }
-}
 };
 

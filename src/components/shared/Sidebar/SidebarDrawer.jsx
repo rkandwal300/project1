@@ -9,10 +9,7 @@ import { closeSidebar } from "@/redux/features/sidebar/sidebar.slice";
 import { useDispatch } from "react-redux";
 
 export default function SidebarDrawer() {
-  const dispatch = useDispatch();
-  const [selectValue, setSelectValue] = React.useState(
-    serviceProviderOptions[0].options[0].value
-  );
+  const dispatch = useDispatch(); 
   const theme = useTheme();
   const borderColor = theme.palette.sidebar?.border || theme.palette.divider;
   return (
@@ -27,9 +24,7 @@ export default function SidebarDrawer() {
     >
       <Box sx={{ display: "flex", alignItems: "center", pt: 2, pl: "4px" }}>
         <SidebarSelect
-          label="Service Provider"
-          value={selectValue}
-          onValueChange={({ target }) => setSelectValue(target.value)}
+         
         />
         <IconButton
           id="btn-dashboard-togglePortfolios"

@@ -122,7 +122,7 @@ const defaultRegions = providerData.cloud.list[firstProviderKey].regions;
 
 const initialState = {
   type: defaultType,
-  provider: null,
+  name: null,
   providerList: defaultProviders,
   regions: Object.keys(defaultRegions),
   instanceTypes: Object.values(defaultRegions).flat(),
@@ -135,7 +135,7 @@ const regionsSlice = createSlice({
   reducers: {
     setProvider(state, action) {
       state.type = action.payload.type;
-      state.provider = action.payload.name;
+      state.name = action.payload.name;
       // Optionally update regions and instanceTypes here if needed
     },
     setRegions(state, action) {
