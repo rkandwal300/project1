@@ -4,12 +4,15 @@ import { store } from "@/redux/store";
 const steps = () => [
   {
     id: "step-1",
+    label: "releaseNotes",
     text: "Click this button to view previous releases.",
     attachTo: {
       element: "#step-one-target",
       on: "bottom",
       offset: "0 10",
     },
+    isStart: true,
+    isSkip: true,
   },
   {
     id: "step-2",
@@ -20,6 +23,7 @@ const steps = () => [
       offset: "0 20",
     },
     type: "wait",
+    label: "releaseNotes",
   },
   {
     id: "step-3",
@@ -29,6 +33,8 @@ const steps = () => [
       on: "right",
     },
     offset: "0 20",
+    label: "supportMenu",
+    isSkip: true,
   },
   {
     id: "step-4",
@@ -38,6 +44,7 @@ const steps = () => [
       on: "right",
       offset: "0 20",
     },
+    label: "supportMenu",
   },
   {
     id: "step-5",
@@ -47,6 +54,8 @@ const steps = () => [
       on: "right",
       offset: "0 20",
     },
+    label: "profileMenu",
+    isSkip: true,
   },
   {
     id: "step-6",
@@ -55,6 +64,8 @@ const steps = () => [
       element: "#step-four-target",
       on: "right",
     },
+    label: "profileMenu",
+    isSkip: true,
   },
   {
     id: "step-7",
@@ -64,6 +75,8 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "downloadMenu",
+    isSkip: true,
   },
   {
     id: "step-8",
@@ -73,6 +86,7 @@ const steps = () => [
       on: "right",
     },
     type: "wait",
+    label: "downloadMenu",
     action: {
       next: () => {
         const state = store.getState();
@@ -82,6 +96,7 @@ const steps = () => [
         }
       },
     },
+    isSkip: true,
   },
   {
     id: "step-9",
@@ -91,6 +106,8 @@ const steps = () => [
       on: "left",
     },
     type: "wait",
+    label: "serviceProviderMenu",
+    isSkip: true,
   },
   {
     id: "step-9.1",
@@ -100,6 +117,8 @@ const steps = () => [
       on: "left",
     },
     type: "wait",
+    label: "serviceProviderMenu",
+    isSkip: true,
   },
   {
     id: "step-10",
@@ -109,14 +128,16 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "portfolioName",
   },
   {
     id: "step-11",
-    text: "Upload the instance file or updated template here. The Maximum limit is 20,000 records. Once uploaded, the data will auto-populate in the table below.",
+    text: "Upload the instance file or updated template here. The data will auto-populate in the table below.",
     attachTo: {
       element: "#uploadInstances",
       on: "bottom",
     },
+    label: "uploadInstances",
   },
   {
     id: "step-12",
@@ -125,6 +146,7 @@ const steps = () => [
       element: "#savePortfolio",
       on: "top",
     },
+    label: "savePortfolio",
   },
   {
     id: "step-13",
@@ -134,6 +156,8 @@ const steps = () => [
       on: "top",
     },
     type: "wait",
+    label: "deletePortfolio",
+    isSkip: true,
   },
   {
     id: "step-14",
@@ -143,6 +167,8 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "deletePortfolio",
+    isSkip: true,
   },
   {
     id: "step-15",
@@ -152,6 +178,7 @@ const steps = () => [
       on: "top",
     },
     type: "wait",
+    label: "instanceAdvice",
   },
   {
     id: "step-16",
@@ -161,6 +188,8 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "costAdviceExport",
+    isSkip: true,
   },
   {
     id: "step-17",
@@ -170,6 +199,8 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "costAdviceSummary",
+    isSkip: true,
   },
   {
     id: "step-17.1",
@@ -179,6 +210,8 @@ const steps = () => [
       on: "top",
     },
     type: "wait",
+    label: "costAdviceSummary",
+    isSkip: true,
   },
   {
     id: "step-18",
@@ -188,6 +221,8 @@ const steps = () => [
       on: "top",
     },
     type: "wait",
+    label: "pricingSwitch",
+      isSkip: true,
   },
   {
     id: "step-19",
@@ -197,6 +232,8 @@ const steps = () => [
       on: "top",
     },
     type: "wait",
+    label: "pricingSwitch",
+      isSkip: true,
   },
   {
     id: "step-20",
@@ -206,45 +243,10 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "costAdvisoryTable",
+      isSkip: true,
   },
-  {
-    id: "step-21",
-    text: "Continue scrolling the cost advisory table.",
-    attachTo: {
-      element: "#instance-advice-table",
-      on: "bottom",
-    },
-    type: "wait",
-    popperOptions: {
-      modifiers: [
-        {
-          name: "offset",
-          options: {
-            offset: [100, 10],
-          },
-        },
-      ],
-    },
-  },
-  {
-    id: "step-22",
-    text: "Keep scrolling for more cost advisory data.",
-    attachTo: {
-      element: "#instance-advice-table",
-      on: "bottom",
-    },
-    popperOptions: {
-      modifiers: [
-        {
-          name: "offset",
-          options: {
-            offset: [100, 10], // [x-offset, y-offset] → moves right and down
-          },
-        },
-      ],
-    },
-    type: "wait",
-  },
+
   {
     id: "step-23",
     text: "Click to close the cost advisory view.",
@@ -252,8 +254,8 @@ const steps = () => [
       element: "#close-instance-advice",
       on: "bottom",
     },
-
     type: "wait",
+    label: "closeCostAdvice",
   },
   {
     id: "step-24",
@@ -262,8 +264,9 @@ const steps = () => [
       element: "#btn-dashboard-createPortfolio",
       on: "bottom",
     },
-
     type: "wait",
+    label: "createPortfolio",
+      isSkip: true,
   },
   {
     id: "step-25",
@@ -273,6 +276,7 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "createPortfolio",
   },
   {
     id: "step-25.1",
@@ -282,6 +286,7 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "createPortfolio",
   },
   {
     id: "step-25.2",
@@ -291,6 +296,7 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "createPortfolio",
   },
   {
     id: "step-26",
@@ -300,6 +306,7 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "createPortfolio",
   },
   {
     id: "step-27",
@@ -309,6 +316,8 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "replaceInstanceFields",
+    isSkip: true,
   },
   {
     id: "step-28",
@@ -318,6 +327,8 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "replaceInstanceFields",
+     isSkip: true,
   },
   {
     id: "step-29",
@@ -327,6 +338,8 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "replaceInstanceFields",
+     isSkip: true,
   },
   {
     id: "step-30",
@@ -336,6 +349,8 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    label: "replaceInstanceFields",
+     isSkip: true,
   },
   {
     id: "step-31",
@@ -345,6 +360,8 @@ const steps = () => [
       on: "top",
     },
     type: "wait",
+    label: "editInstanceField",
+     isSkip: true,
   },
   {
     id: "step-32",
@@ -354,6 +371,8 @@ const steps = () => [
       on: "top",
     },
     type: "wait",
+    label: "editInstanceField",
+     isSkip: true,
   },
   {
     id: "step-33",
@@ -362,6 +381,8 @@ const steps = () => [
       element: "#savePortfolio",
       on: "top",
     },
+    label: "savePortfolio",
+    type: "wait",
   },
   {
     id: "step-34",
@@ -371,6 +392,7 @@ const steps = () => [
       on: "top",
     },
     type: "wait",
+    label: "instanceAdvice",
   },
   {
     id: "step-35",
@@ -379,8 +401,8 @@ const steps = () => [
       element: "#close-instance-advice",
       on: "bottom",
     },
-
     type: "wait",
+    label: "closeCostAdvice",
   },
   {
     id: "step-36",
@@ -389,8 +411,9 @@ const steps = () => [
       element: "#btn-stat-collector",
       on: "bottom",
     },
-
     type: "wait",
+    label: "statCollectorInfo",
+     isSkip: true,
   },
   {
     id: "step-37",
@@ -401,6 +424,8 @@ const steps = () => [
     },
 
     type: "wait",
+    label: "statCollectorInfo",
+     isSkip: true,
   },
   {
     id: "step-38",
@@ -410,6 +435,7 @@ const steps = () => [
       on: "right",
       offset: "0 20",
     },
+    label: "profileMenu",
   },
   {
     id: "step-39",
@@ -420,6 +446,7 @@ const steps = () => [
       offset: "0 20",
     },
     type: "wait",
+    label: "logout",
     isEnd: true,
   },
 ];

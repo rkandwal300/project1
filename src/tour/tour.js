@@ -144,7 +144,7 @@ const actionHandlers = {
     if (role === "table-container") {
       const maxScrollLeft = el.scrollWidth - el.clientWidth;
       if (el.scrollLeft < maxScrollLeft) {
-        el.scrollBy({ left: 200, behavior: "smooth" });
+        el.scrollBy({ left: 300, behavior: "smooth" });
       }
     }
     if (role === "GenericMetadataForm") await processFields(GENERIC_FIELDS);
@@ -209,9 +209,11 @@ const tour = new Shepherd.Tour({
     classes: "shepherd-theme-arrows",
     scrollTo: { behavior: "smooth", block: "center" },
   },
+  useModalOverlay: true,
 });
 
-steps().forEach((step) => {
+const allSteps = steps();
+allSteps.forEach((step, currentStepIndex) => {
   // Skip step if attachTo is missing, attachTo.element is missing, or element is not found in DOM
   // if ( !step.attachTo?.element || !document.querySelector(step.attachTo.element)) {
   //   return;
@@ -222,6 +224,75 @@ steps().forEach((step) => {
     attachTo: step.attachTo,
     buttons: [
       {
+        text: "Previous",
+        disabled: step.isStart,
+        secondary: step.isStart,
+        action: () => {
+          const currentLabel = allSteps[currentStepIndex].label;
+
+          // Find previous label
+          let prevLabelIndex = currentStepIndex - 1;
+          while (
+            prevLabelIndex >= 0 &&
+            allSteps[prevLabelIndex].label === currentLabel
+          ) {
+            prevLabelIndex--;
+          }
+
+          if (prevLabelIndex >= 0) {
+            const prevLabel = allSteps[prevLabelIndex].label;
+
+            // Go to first occurrence of previous label
+            const firstOccurrence = allSteps.findIndex(
+              (s) => s.label === prevLabel
+            );
+            if (firstOccurrence !== -1) {
+              currentStepIndex = firstOccurrence;
+              tour.show(firstOccurrence);
+            }
+          } else {
+            // At the very first label group
+            tour.show(0);
+            currentStepIndex = 0;
+          }
+        },
+      },
+       {
+        text: "Skip All", 
+        action: () => {
+
+          removeHighlight(step.attachTo.element);
+          window.speechSynthesis.cancel();
+          tour.complete()
+        }},
+      {
+        text: "Skip",
+        disabled: !step.isSkip,
+        secondary: !step.isSkip||step.isEnd,
+        action: () => {
+          const currentLabel = step?.label ?? "";
+          let nextIndex = currentStepIndex + 1;
+
+          while (
+            nextIndex < allSteps.length &&
+            allSteps[nextIndex].label === currentLabel
+          ) {
+            nextIndex++;
+          }
+
+          if (nextIndex < allSteps.length) {
+            currentStepIndex = nextIndex;
+            const el = document.getElementById("root");
+            if (el) {
+              el.click();
+            }
+            tour.show(nextIndex);
+          } else {
+            tour.complete(); // or tour.cancel();
+          }
+        },
+      },
+      {
         text: step.isEnd ? "Finish" : "Next",
         action: async () => {
           const id = step.attachTo.element.replace("#", "");
@@ -230,9 +301,16 @@ steps().forEach((step) => {
             tour.next();
             return;
           }
-          await handleElementAction(el, id);
-          if (step?.action?.next) step.action.next();
-          tour.next();
+          try {
+            await handleElementAction(el, id);
+          } catch (err) {
+            console.error(`Error handling action for ${id}:`, err);
+            alert(`Action failed for ${id}: ${err.message}`);
+          } finally {
+            await handleElementAction(el, id);
+            if (step?.action?.next) step.action.next();
+            step.isEnd ? tour.complete() : tour.next();
+          }
         },
       },
     ],

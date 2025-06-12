@@ -10,7 +10,7 @@ import Header from "./components/shared/header/Header";
 import Footer from "./components/shared/Footer/Footer";
 import BottomBar from "./components/shared/BottomBar";
 import InstanceAdviceBottomBar from "./components/shared/InstanceAdvice/InstanceAdviceBottomBar";
-import SidebarWith from "./components/shared/Sidebar/Sidebar";
+import Sidebar from "./components/shared/Sidebar/Sidebar";
 import MainContent from "./components/shared/MainLayout/MainContent";
 import InstanceAdviceLayout from "./components/shared/InstanceAdvice/InstanceAdviceLayout";
 
@@ -36,8 +36,7 @@ const App = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Decide which bottom bar to render
+ 
   const BottomBarComponent = pathname === "/instanceAdvice"
     ? InstanceAdviceBottomBar
     : BottomBar;
@@ -57,7 +56,7 @@ const App = () => {
               p: 0,
             }}
           >
-            <SidebarWith />
+            <Sidebar />
             <Routes>
               <Route path="/" element={<MainContent />} />
               <Route path="/:id" element={<MainContent />} />
