@@ -14,6 +14,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Suspense, lazy } from "react";
 import DialogHoc from "../../../ui/Dialog";
 import MenuHoc from "../../../ui/Menu";
+import { userEmail } from "@/lib/constant";
 
 // Lazy loaded components
 const ReleaseNotes = lazy(() => import("./ReleaseNotes/ReleaseNotes"));
@@ -23,7 +24,6 @@ const StatCollectorDescription = lazy(() => import("./StatCollectorDescription")
 
 function SubMenuList() {
   const theme = useTheme();
-  const userEmail = "testuser@infobellit.com";
 
   const iconButtonStyle = {
     width: 24,

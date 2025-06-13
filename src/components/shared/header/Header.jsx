@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, useTheme } from "@mui/material";
+import { AppBar, Toolbar, useTheme } from "@mui/material";
 import SubMenu from "./SubMenu/SubMenu";
 import Logo from "./Logo";
 import Title from "./Title";

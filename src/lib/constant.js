@@ -176,3 +176,5 @@ export const supportMailtoLink = `mailto:support@example.com?subject=${encodeURI
   subject
 )}&body=${encodeURIComponent(body)}`;
 export const supportMobileNumber = `tel:+1 (502) 388-6228`;
+
+export const userEmail = "testuser@infobellit.com";
