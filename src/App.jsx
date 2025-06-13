@@ -14,7 +14,8 @@ import Sidebar from "./components/shared/Sidebar/Sidebar";
 import Footer from "./components/shared/Footer/Footer";
 import MainContent from "./components/shared/MainLayout/MainContent";
 import InstanceAdviceLayout from "./components/shared/InstanceAdvice/InstanceAdviceLayout";
-import DataDogTelemetry from "./components/shared/Telemetry/DataDogTelemetry"; 
+import DataDogTelemetry from "./components/shared/Telemetry/TelemetryForm"; 
+import TelemetryBottomBar from "./components/shared/Telemetry/TelemetryBottomBar";
 
 const App = () => {
   const location = useLocation();
@@ -45,9 +46,19 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
  
-  const BottomBarComponent = pathname === "/instanceAdvice"
-    ? InstanceAdviceBottomBar
-    : BottomBar;
+  
+    let BottomBarComponent = ()=><></>;
+  switch (pathname) {
+    case "/telemetry":
+    case "/telemetry/aws":
+      BottomBarComponent = TelemetryBottomBar ;
+      break;
+    case "/instanceAdvice":
+      BottomBarComponent = InstanceAdviceBottomBar ;
+      break;
+    default:
+      BottomBarComponent = BottomBar 
+  }
 
   return (
     <ThemeProvider theme={theme}>
