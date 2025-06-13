@@ -24,7 +24,7 @@ const providerSlice = createSlice({
       state.type = action.payload.type;
       state.name = action.payload.name;
       const filteredProviders = instanceList.filter(
-        (provider) =>     
+        (provider) =>
           provider.type === action.payload.type &&
           provider.name === action.payload.name
       );
@@ -33,23 +33,12 @@ const providerSlice = createSlice({
           filteredProviders.flatMap((provider) => provider.region || [])
         ),
       ];
-      state.region = filteredProviders[0]?.region || null;
-      state.instanceTypes = [
-        ...new Set(
-          filteredProviders.flatMap((provider) =>
-            provider.region == state.region ? provider.instanceType : []
-          )
-        ),
-      ];
     },
     setRegion(state, action) {
       state.region = action.payload;
       const filteredProviders = instanceList.filter(
-        (provider) =>
-          provider.type === action.payload.type &&
-          provider.name === action.payload.name
+        (provider) => provider.name === state.name
       );
-
       state.instanceTypes = [
         ...new Set(
           filteredProviders.flatMap((provider) =>
@@ -66,7 +55,6 @@ const providerSlice = createSlice({
       if (!state.type || !state.name) {
         state.type = data[0]?.type || null;
         state.name = data[0]?.name || null;
-        state.region = data[0]?.region || null;
       }
 
       const filteredProviders = data.filter(
@@ -79,16 +67,9 @@ const providerSlice = createSlice({
           filteredProviders.flatMap((provider) => provider.region || [])
         ),
       ];
-      state.instanceTypes = [
-        ...new Set(
-          filteredProviders.flatMap((provider) =>
-            provider.region == state.regions[0] ? provider.instanceType : []
-          )
-        ),
-      ];
     });
   },
 });
 
-export const { setProvider,setRegion } = providerSlice.actions;
+export const { setProvider, setRegion } = providerSlice.actions;
 export default providerSlice.reducer;

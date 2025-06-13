@@ -22,13 +22,13 @@ const GenericMetadata = ({ form }) => {
     pricingModel: useSelector(selectCurrentProviderPricingModels),
   };
 
-  const renderField = ({ name, label, tooltipMessage }) => (
+  const renderField = ({ name, label,type, tooltipMessage }) => (
     <Controller
       key={name}
       name={name}
       control={form.control}
       render={({ field, fieldState }) =>
-        options ? (
+        type =="select" ?(
           <HoverSelect
             id={`${name}Target`}
             name={name}
@@ -38,14 +38,14 @@ const GenericMetadata = ({ form }) => {
             fullWidth
             value={field.value}
             error={!!fieldState.error}
-            onChange={(e) => {
+            {...field}
+            onChange={(e) => { 
               field.onChange(e);
               if (name === "region") {
                 form.setValue("instanceType", "");
-              }
-              dispatch(setRegion({ region: e.target.value }));
+                dispatch(setRegion( e.target.value ));
+              } 
             }}
-            {...field}
           />
         ) : (
           <HoverInput
