@@ -26,7 +26,7 @@ export const useTableStyles = (variant, theme) =>
     if (variant === 'provider') {
       const borderColor= theme.palette.grey[400]
         return {
-        row: {  },
+        
         bodyRow: { backgroundColor: theme.palette.grey[700] },
         cell: {
           color: theme.palette.grey[700],

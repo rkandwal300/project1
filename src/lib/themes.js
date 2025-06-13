@@ -136,7 +136,7 @@ const theme = createTheme({
           borderRadius: 6,
         },
         icon: {
-          color: "#FFFFFF", // Fallback if needed
+          color: "#FFFFFF",
         },
         standardError: {
           backgroundColor: "#b00020",
@@ -181,6 +181,29 @@ const theme = createTheme({
           border: "1px solid #43A047",
           "& .MuiAlert-icon": {
             color: "#FFFFFF",
+          },
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: { 
+          marginBottom: 4,
+          padding: 8,
+          backgroundColor: "#FFFFFF",
+          color: "#1A1A1A",
+          borderRadius: "4px",
+          "&:hover": {
+            backgroundColor: "#EEEEEE",
+            color: "#FFFFFF",
+          },
+          "&.Mui-selected": {
+            backgroundColor: "#1A1A1A",
+            color: "#FFFFFF",
+            "&:hover": {
+              backgroundColor: "#333333",
+              color: "#FFFFFF",
+            },
           },
         },
       },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { IconButton } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import SidebarDrawer from "./SidebarDrawer";
@@ -7,34 +7,37 @@ import { useDispatch, useSelector } from "react-redux";
 import { openSidebar } from "@/redux/features/sidebar/sidebar.slice";
 import { selectIsSidebarOpen } from "@/redux/features/sidebar/sidebar.selector";
 
-function Sidebar() {
+const SidebarComponent = () => {
   const dispatch = useDispatch();
-  const open = useSelector(selectIsSidebarOpen);
-  if (open) return <SidebarDrawer />;
+  const isSidebarOpen = useSelector(selectIsSidebarOpen);
+
+  const handleOpenSidebar = useCallback(() => {
+    dispatch(openSidebar());
+  }, [dispatch]);
+
+  if (isSidebarOpen) return <SidebarDrawer />;
+
   return (
     <IconButton
-      component="button"
-      id="btn-dashboard-sidebarHideShow-toggle"
       sx={{
         mt: 2,
-        padding: 0,
-        width: "40px",
-        height: "40px",
-        color: "black",
-        "&:hover": {
-          backgroundColor: "transparent",
-        },
+        p: 0,
+        width: 40,
+        height: 40,
+        color: "theme.palette.black",
+        "&:hover": { backgroundColor: "transparent" },
       }}
-      onClick={() => dispatch(openSidebar())}
+      onClick={handleOpenSidebar}
+      aria-label="Open sidebar"
     >
-      <ChevronRightIcon fontSize="medium" />
+      <ChevronRightIcon fontSize="large" />
     </IconButton>
   );
-}
+};
 
-const SidebarWithBoundary = withErrorBoundary(
-  Sidebar,
-  "Sidebar component has some Errors"
+const Sidebar = withErrorBoundary(
+  SidebarComponent,
+  "Sidebar component has some errors"
 );
 
-export default SidebarWithBoundary;
+export default Sidebar;

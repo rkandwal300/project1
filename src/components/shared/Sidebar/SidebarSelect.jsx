@@ -1,59 +1,44 @@
 import React from "react";
-import { 
-  useTheme,
-  Select,
+import {
   FormControl,
-  InputLabel, 
-} from "@mui/material"; 
+  InputLabel,
+  OutlinedInput,
+  Box,
+  Typography,
+} from "@mui/material";
 import ProviderDisplay from "./ProviderDisplay";
-import { useSelector } from "react-redux"; 
+import { useSelector } from "react-redux";
 import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector";
-import { useState } from "react";
+import PopoverHoc from "@/components/ui/Popover";
 
-
-const SidebarSelect = ( ) => {
-  const theme = useTheme();
-  const currentProvider  =  useSelector(selectCurrentProviderName)
-  // const[change,setChange] = useState("")
-
-  console.log("Current Provider:",currentProvider)
-
-  // console.log("Value:",change)
-
-  // const handleChange = (e)=>{
-  //     console.log(e.target.value)
-  // }
- 
+const SidebarSelect = () => {
+  const currentProvider = useSelector(selectCurrentProviderName); 
   return (
-    <FormControl fullWidth variant="outlined">
-      <InputLabel>Service Provider</InputLabel>
-      <Select
-        value={currentProvider}
-        // onChange = {(e)=>{handleChange(e)}}
-        label={"Service Provider"}
-        id="step-six-target"
-        MenuProps={{
-          PaperProps: {
-            sx: {
-              padding: 0,
-              maxHeight: 300,
-              overflowY: "auto",
-              bgcolor: "transparent",
-              boxShadow: "none",  
-              backgroundImage: "none",  
-            },
-            elevation: 0, // Remove elevation
-          },
-          MenuListProps: {
-            sx: {
-              bgcolor: "transparent",
-            },
-          },
-        }}
-      >
-         <ProviderDisplay />
-      </Select>
-    </FormControl>
+    <PopoverHoc
+      trigger={({ handleOpen }) => (
+        <FormControl fullWidth size="small" variant="outlined">
+          <InputLabel sx={{ fontWeight: 500 }}>Service Provider</InputLabel>
+          <OutlinedInput
+            readOnly
+            label="Service Provider"
+            value={currentProvider || "Select Provider"}
+            onClick={handleOpen}
+            endAdornment={<Box sx={{ pointerEvents: "none", pr: 1 }}>▾</Box>}
+            inputProps={{
+              style: { 
+                fontSize: "16px",
+                fontWeight: 300,
+                cursor: "pointer",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+              },
+            }}
+          />
+        </FormControl>
+      )}
+      content={(handleClose) => <ProviderDisplay onClose={handleClose} />}
+    />
   );
 };
 

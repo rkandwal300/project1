@@ -6,10 +6,12 @@ import MainLayout from "./components/shared/MainLayout/MainLayout";
 import InstanceAdviceLayout from "./components/shared/InstanceAdvice/InstanceAdviceLayout";
 import { useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { selectCurrentInstance } from "./redux/features/instanceList/instanceList.selector";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchInstanceType } from "./redux/features/providerData/providerData.slice";
 
 function App() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { pathname } = location;
@@ -28,9 +30,11 @@ function App() {
     if (pathname !== "/" && currentInstance == null) {
       navigate("/");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  useEffect(() => {
+    dispatch(fetchInstanceType());
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={theme}>

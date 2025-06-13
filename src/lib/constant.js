@@ -86,14 +86,12 @@ export const CONSUMPTION_FIELDS = [
 export const GENERIC_FIELDS = [
   {
     name: "region",
-    label: "Region",
-    options: regionOptions,
+    label: "Region", 
     tooltipMessage: "Select Region associated with CSP",
   },
   {
     name: "instanceType",
-    label: "Instance Type",
-    options: instanceOptions,
+    label: "Instance Type", 
     tooltipMessage: "Select Instance associated with Region",
   },
   {
@@ -103,8 +101,7 @@ export const GENERIC_FIELDS = [
   },
   {
     name: "pricingModel",
-    label: "Pricing Model",
-    options: pricingModelOptions,
+    label: "Pricing Model", 
     tooltipMessage: "Pricing Model",
   },
 ];
