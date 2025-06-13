@@ -3,13 +3,17 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 import GetInstanceColumn from "./PortfolioTable/portfolioColumn";
 import { selfPrefAssessmentColumn } from "./PortfolioTable/selfPrefAssessmentColumn";
 import TableSkeleton from "../ui/table/table_components/TableSkeleton ";
 import ErrorBoundary from "./ErrorBoundary";
-import { selectInstances, selectSelfAssessment } from "@/redux/features/instance/instance.selector";
+import {
+  selectInstances,
+  selectSelfAssessment,
+} from "@/redux/features/instance/instance.selector";
 import { removeInstance } from "@/redux/features/instance/instance.slice";
+import { Slider } from "@mui/material";
 
 const CustomTable = lazy(() => import("../ui/table/CustomTable"));
 
@@ -30,14 +34,14 @@ const TABS = [
   {
     label: "Instance Stats",
     value: "instance_stats",
-    getColumns: GetInstanceColumn, 
+    getColumns: GetInstanceColumn,
     showNote: true,
     isAction: true,
   },
   {
     label: "Self Perf Assessment",
     value: "self_perf_assessment",
-    getColumns: selfPrefAssessmentColumn, 
+    getColumns: selfPrefAssessmentColumn,
     showNote: false,
     isAction: false,
   },
@@ -81,11 +85,34 @@ function PortfolioBody() {
         {TABS.map((tab) => (
           <TabPanel key={tab.value} value={value} index={tab.value}>
             {tab.showNote && (
-              <p
-                style={{ fontSize: 16, fontWeight: 500, color: "rgb(0,0,225)" }}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
               >
-                Note: Double-click to update input values.
-              </p>
+                <p
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 500,
+                    color: "rgb(0,0,225)",
+                  }}
+                >
+                  Note: Double-click to update input values.
+                </p>
+                <div style={{ width: "300px", marginRight: "20px" }}>
+                  <Slider
+                    defaultValue={20}
+                    step={10}
+                    marks
+                    min={0}
+                    max={100}
+                    valueLabelDisplay="on"
+                  />
+                </div>
+              </div>
             )}
             <CustomTable
               variant="primary"
@@ -94,7 +121,6 @@ function PortfolioBody() {
               isPagination
               isAction={tab.isAction}
               onDelete={tab.isAction ? onDelete : undefined}
-               
             />
           </TabPanel>
         ))}

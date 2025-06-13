@@ -20,16 +20,6 @@ const ConsumptionMetadata = lazy(() =>
   import("./Consumption Metadata/ConsumptionMetadata")
 );
 
-InstanceForm.propTypes = {
-  initialValues: PropTypes.shape({
-    portfolioName: PropTypes.string,
-    region: PropTypes.string,
-    instanceType: PropTypes.string,
-    uuid: PropTypes.string,
-    pricingModel: PropTypes.string,
-  }),
-};
-
 function InstanceForm() {
   const dispatch = useDispatch();
 
@@ -102,6 +92,17 @@ function InstanceForm() {
     </Box>
   );
 }
+
+
+InstanceForm.propTypes = {
+  initialValues: PropTypes.shape({
+    portfolioName: PropTypes.string,
+    region: PropTypes.string,
+    instanceType: PropTypes.string,
+    uuid: PropTypes.string,
+    pricingModel: PropTypes.string,
+  }),
+};
 
 const InstanceFormWithBoundary = () => (
   <ErrorBoundary fallback="Instance form component has some Errors">

@@ -55,7 +55,10 @@ export const serviceProviderOptions = [
   },
   {
     label: "Telemetry Collector",
-    options: [{ label: "Datalog", value: "datalog" }],
+    options: [
+      { label: "Datalog", value: "datalog" },
+      { label: "AWS CloudWatch", value: "aws_cloudWatch" },
+    ],
   },
 ];
 export const CONSUMPTION_FIELDS = [
@@ -173,3 +176,5 @@ export const supportMailtoLink = `mailto:support@example.com?subject=${encodeURI
   subject
 )}&body=${encodeURIComponent(body)}`;
 export const supportMobileNumber = `tel:+1 (502) 388-6228`;
+
+export const userEmail = "testuser@infobellit.com";
