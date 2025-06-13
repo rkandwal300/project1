@@ -1,21 +1,28 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { MenuItem } from "@mui/material";
 import CustomTable from "@/components/ui/table/CustomTable";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { setProvider } from "@/redux/features/providerData/providerData.slice";
-import { selectProviderList } from "@/redux/features/providerData/providerData.selector";
 
-const ProviderDisplay = ({onClose}) => {
+const ProviderDisplay = ({ onClose, data }) => {
   const dispatch = useDispatch();
-  const providers = useSelector(selectProviderList);
+  const navigate = useNavigate();
 
   const handleTableCell = ({ getValue }) => {
     const { type, name, logo } = getValue();
+    const handleClick = () => {
+      dispatch(setProvider({ type, name }));
+      onClose();
+       
+        navigate("/telemetry?type="+name.replace(/\s+/g, '_').toLowerCase());
+    
+    };
     return (
       <MenuItem
         value={name}
-        onClick={() => {dispatch(setProvider({ type, name }));
-      onClose();}}
+        onClick={handleClick}
         style={{
           display: "flex",
           alignItems: "center",
@@ -38,13 +45,29 @@ const ProviderDisplay = ({onClose}) => {
   }));
   return (
     <CustomTable
-      data={providers}
+      data={data}
       columns={columns}
       variant={"provider"}
-       
-      sx={ {maxWidth:`${350}px`, overflow:'hidden', left:'0px', position:'relative', zIndex:1000} }
+      sx={{
+        maxWidth: `${350}px`,
+        overflow: "hidden",
+        left: "0px",
+        position: "relative",
+        zIndex: 1000,
+      }}
     />
   );
+};
+
+ProviderDisplay.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      logo: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default ProviderDisplay;

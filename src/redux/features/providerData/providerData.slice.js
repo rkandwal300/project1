@@ -10,6 +10,7 @@ const initialState = {
   type: null,
   name: null,
   region: null,
+  telemetryCloud: null,
   providerList: providerList,
   regions: [],
   instanceTypes: [],
@@ -22,6 +23,10 @@ const providerSlice = createSlice({
   reducers: {
     setProvider(state, action) {
       state.type = action.payload.type;
+      if ( action .payload.type === "telemetry") {
+     
+        state.telemetryCloud = 'AWS';
+      }
       state.name = action.payload.name;
       const filteredProviders = instanceList.filter(
         (provider) =>
@@ -34,6 +39,10 @@ const providerSlice = createSlice({
         ),
       ];
     },
+    setTelemetryCloud:(state, action) => {
+      state.telemetryCloud = action.payload;
+       
+    },
     setRegion(state, action) {
       state.region = action.payload;
       const filteredProviders = instanceList.filter(
@@ -45,7 +54,7 @@ const providerSlice = createSlice({
             provider.region == action.payload ? provider.instanceType : []
           )
         ),
-      ];
+      ];     
     },
   },
   extraReducers: (builder) => {
@@ -71,5 +80,5 @@ const providerSlice = createSlice({
   },
 });
 
-export const { setProvider, setRegion } = providerSlice.actions;
+export const { setProvider, setRegion ,setTelemetryCloud} = providerSlice.actions;
 export default providerSlice.reducer;

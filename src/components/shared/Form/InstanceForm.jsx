@@ -61,7 +61,7 @@ function InstanceForm() {
       width="100%"
       sx={{
         p: 0,
-        py: 2,
+        pb: 2,
         bgcolor: "primary.contrastText",
         display: "flex",
         flexDirection: "column",

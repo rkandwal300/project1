@@ -54,7 +54,7 @@ const SidebarDrawer = () => {
       aria-label="sidebar-drawer"
       bgcolor="inherit"
       sx={{
-        mt: 1,
+        
         width: { xs: 123, sm:168, md: 262 , lg:273},
         flexShrink: 0,
         borderRight: `1px solid ${borderColor}`,
@@ -63,19 +63,22 @@ const SidebarDrawer = () => {
     >
       {/* Header */}
       <Box
-        sx={{
-          display: "flex",
+        sx={{ 
+          display: "flex", 
           alignItems: "center",
           pt: 2,
           pl: 0.5,
+          minHeight: "74px",
         }}
       >
-        <SidebarSelect />
+         
+        <SidebarSelect /> 
         <IconButton
           id="btn-dashboard-togglePortfolios"
           aria-label="Close sidebar"
           onClick={handleCloseSidebar}
           sx={{
+            
             ml: "auto",
             p: 0,
             color: "black",
@@ -86,7 +89,7 @@ const SidebarDrawer = () => {
         </IconButton>
       </Box>
 
-      <Divider sx={{ my: 2 }} />
+      <Divider  />
 
       {/* Portfolios section header */}
       <Box
