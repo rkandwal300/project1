@@ -1,59 +1,82 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
-import { MenuItem } from "@mui/material";
+import { MenuItem, Box, Typography, Avatar } from "@mui/material";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setProvider } from "@/redux/features/providerData/providerData.slice";
+import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.slice";
+import { resetInstanceState } from "@/redux/features/instance/instance.slice";
+
+// Utility to format header text
+const toTitleCase = (text) =>
+  text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 
 const ProviderDisplay = ({ onClose, data }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleTableCell = ({ getValue }) => {
-    const { type, name, logo } = getValue();
-    const handleClick = () => {
-      dispatch(setProvider({ type, name }));
-      onClose();
-       
-        navigate("/telemetry?type="+name.replace(/\s+/g, '_').toLowerCase());
-    
-    };
-    return (
-      <MenuItem
-        value={name}
-        onClick={handleClick}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          padding: "10px",
-        }}
-      >
-        <img src={logo} alt={name} width={24} height={24} />
-        <span style={{ fontSize: "14px" }}>{name}</span>
-      </MenuItem>
-    );
-  };
-  const columns = ["cloud", "telemetry"].map((key) => ({
-    accessorKey: key,
-    header: key.charAt(0).toUpperCase() + key.slice(1),
-    cell: handleTableCell,
-    size: 150,
-    minSize: 150,
-    maxSize: 150,
-  }));
+  const handleCellClick = useCallback(
+    ({ getValue }) => {
+      const { type, name, logo } = getValue();
+
+      const handleClick = () => {
+        dispatch(setProvider({ type, name }));
+        dispatch(addCurrentInstance(null));
+            dispatch(resetInstanceState());
+        const formattedName = name.replace(/\s+/g, "_") ;
+        
+        if (type === "cloud") {
+          navigate(`/?type=${formattedName}`);
+        } else if (type === "telemetry") {
+          navigate(`/telemetry?type=${formattedName}`);
+        }
+        onClose();
+      };
+
+      return (
+        <MenuItem
+          value={name}
+          onClick={handleClick}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            py: 1.25,
+          }}
+        >
+          <Avatar src={logo} alt={name} sx={{ width: 24, height: 24 }} />
+          <Typography variant="body2">{name}</Typography>
+        </MenuItem>
+      );
+    },
+    [dispatch, navigate, onClose]
+  );
+
+  const columns = useMemo(
+    () =>
+      ["cloud", "telemetry"].map((key) => ({
+        accessorKey: key,
+        header: toTitleCase(key),
+        cell: handleCellClick,
+        size: 150,
+        minSize: 150,
+        maxSize: 150,
+      })),
+    [handleCellClick]
+  );
+
   return (
     <CustomTable
       data={data}
       columns={columns}
-      variant={"provider"}
+      variant="provider"
       sx={{
-        maxWidth: `${350}px`,
+        maxWidth: 350,
         overflow: "hidden",
-        left: "0px",
         position: "relative",
         zIndex: 1000,
+        left: 0,
       }}
     />
   );

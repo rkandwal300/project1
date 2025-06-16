@@ -76,7 +76,7 @@ const SidebarSelect = () => {
         )}
       />
       {currentProviderType == "telemetry" &&
-        !["AWS CloudWatch"].includes(currentProvider) && (
+        !["AWS CloudWatch", "Azure App Insights"].includes(currentProvider) && (
           <FormControl fullWidth variant="outlined">
             <InputLabel>Cloud*</InputLabel>
             <SelectHoc

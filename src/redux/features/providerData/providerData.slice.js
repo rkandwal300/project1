@@ -31,7 +31,7 @@ const providerSlice = createSlice({
       const filteredProviders = instanceList.filter(
         (provider) =>
           provider.type === action.payload.type &&
-          provider.name === action.payload.name
+          provider.name.toLowerCase() === action.payload.name.toLowerCase()
       );
       state.regions = [
         ...new Set(

@@ -148,7 +148,7 @@ export default function GetInstanceColumn() {
         id: "region",
         header: () => "Region",
         accessorKey: "region",
-        cell: renderEditableCell("select", "region"),
+        cell: renderEditableCell("sselect", "region"),
         minSize: 150,
         size: 150,
         maxSize: 200,
