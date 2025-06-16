@@ -18,7 +18,6 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { dataDogSchema } from "@/lib/validation/dataDog.schema";
 import FormAlert from "@/components/ui/FormAlert";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import { useSelector, useDispatch } from "react-redux";
@@ -34,39 +33,43 @@ import {
 import { selectTelemetryResetFlag } from "@/redux/features/telemetry/telemetry.selector";
 import { useLocation } from "react-router-dom";
 import { selectCurrentInstance } from "@/redux/features/instanceList/instanceList.selector";
+import { azureAppSchema } from "@/lib/validation/azureInsight.schema";
 
 const inputStyle = { fontWeight: 600 };
 
-function DatadogForm() {
+const divStyle = {
+  display: "grid",
+  gridTemplateColumns: { sm: "repeat(3, 1fr)" },
+  gap: 2,
+  mb: 2,
+};
+
+function AzureInsightsForm() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const type = queryParams.get("type");
   const isEdit = queryParams.get("edit");
   const regionOptions = useSelector(selectCurrentProviderRegions);
   const telemetryResetFlag = useSelector(selectTelemetryResetFlag);
-const currentInstance= useSelector(selectCurrentInstance)
-  const [showApiKey, setShowApiKey] = useState(false);
-  const [showAppKey, setShowAppKey] = useState(false);
+  const currentInstance = useSelector(selectCurrentInstance);
+  const [showClientSecret, setShowClientSecret] = useState(false);
+  const [showClientId, setShowClientId] = useState(false);
   const [formError, setFormError] = useTimedMessage();
   const [formSuccess, setFormSuccess] = useTimedMessage();
 
-  let schema = dataDogSchema;
-
-  if (type === telemetryTypes.AWS_CLOUDWATCH) {
-    schema = dataDogSchema.omit({ hostTag: true });
-  }
-
-  const { register, handleSubmit, control, reset, setValue } = useForm({
-    resolver: zodResolver(schema),
+  const { register, handleSubmit, control, reset,formState :{errors},watch} = useForm({
+    resolver: zodResolver(azureAppSchema),
     defaultValues: {
       portfolioName: "",
       regions: [],
-      apiKey: "",
-      appKey: "",
+      clientId: "",
+      clientSecret: "",
+      tenantId: "",
+      subscriptionId: "",
     },
   });
+  console.log({watch:watch(),errors})
 
   useEffect(() => {
     if (telemetryResetFlag) {
@@ -80,16 +83,15 @@ const currentInstance= useSelector(selectCurrentInstance)
     dispatch(
       setTelemetryConnectionStatus({
         connectionStatus: telemetryConnectionStatus.CONNECTED,
-        type: telemetryTypes.DATA_DOG,
+        type: telemetryTypes.AZURE_INSIGHTS,
       })
     );
-    setFormSuccess("Datadog connection is successful");
+    setFormSuccess("Azure Insights connection is successful");
     setFormError("");
   };
 
   const handleError = (errors) => {
-    console.log(errors);
-    setFormError("Please enter the required fields.");
+    setFormError("Please enter the required fields.",errors);
   };
 
   const isAllSelected = (selected) =>
@@ -97,7 +99,7 @@ const currentInstance= useSelector(selectCurrentInstance)
 
   const handleToggleSelectAll = (selected, onChange) => {
     if (selected.includes("selectAll")) {
-      const allSelected = isAllSelected(selected);
+      const allSelected = isAllSelected(selected.filter((v) => v !== "selectAll"));
       onChange(allSelected ? [] : regionOptions);
     } else {
       onChange(selected.filter((v) => v !== "selectAll"));
@@ -105,44 +107,26 @@ const currentInstance= useSelector(selectCurrentInstance)
   };
 
   useEffect(() => {
-      if (isEdit && currentInstance?.formData){
-        reset(currentInstance.formData)
-      }
+    if (isEdit) {
+      reset(currentInstance?.formData);
+    }
   }, [currentInstance?.formData, isEdit, reset]);
-
 
   return (
     <Box
       component="form"
       noValidate
       onSubmit={handleSubmit(onSubmit, handleError)}
-      sx={{ backgroundColor: "white", px: "5px",py:"10px", width: "100%",height
-        :'fit-content'
-       }}
+      sx={{ backgroundColor: "white", p: 2, width: "100%" }}
     >
-      {/* === First Row === */}
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: { sm: "repeat(4, 1fr)" },
-          gap: '5px',
-          mb: 2,
-        }}
-      >
+      <Box sx={divStyle}>
         <TextField
           label="Portfolio Name"
-          fullWidth 
+          fullWidth
           {...register("portfolioName")}
-          sx={{ gridColumn: "span 2" }}
           InputProps={{ style: inputStyle }}
-          onChange={(e) => {
-            const value = e.target.value;
-            dispatch(setTelemetryData({ portfolioName: value }));
-            setValue("portfolioName", value, { shouldValidate: true });
-          }}
         />
-
-        <FormControl fullWidth  sx={{ gridColumn: "span 2" }}>
+        <FormControl fullWidth>
           <InputLabel id="regions-label">Regions</InputLabel>
           <Controller
             name="regions"
@@ -172,7 +156,7 @@ const currentInstance= useSelector(selectCurrentInstance)
                     {selected.length > 1 && `(+${selected.length - 1} others)`}
                   </Box>
                 )}
-                sx={{ ...inputStyle }}
+                sx={inputStyle}
               >
                 <MenuItem value="selectAll">
                   <Checkbox checked={isAllSelected(value)} />
@@ -190,119 +174,82 @@ const currentInstance= useSelector(selectCurrentInstance)
         </FormControl>
       </Box>
 
-      {/* === Second Row === */}
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: { sm: "repeat(4, 1fr)" },
-          gap: "5px",
-          mb: 2,
-          
-        }}
-      >
-        {/* API Key */}
+      <Box sx={divStyle}>
         <TextField
-          label={
-            type === telemetryTypes.AWS_CLOUDWATCH ? "Access Key" : "API Key"
-          }
-          type={showApiKey ? "text" : "password"}
-          fullWidth 
-          autoComplete="new-password"
-          {...register("apiKey")}
-         
+          label="Client ID"
+          fullWidth
+          {...register("clientId")}
+          type={showClientId ? "text" : "password"}
           InputProps={{
             style: inputStyle,
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
+                  onClick={() => setShowClientId((show) => !show)}
+                  edge="end"
                   size="small"
-                  onClick={() => setShowApiKey((prev) => !prev)}
                 >
-                  {showApiKey ? (
-                    <VisibilityIcon sx={{ fontSize: 19 }} />
+                  {showClientId ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <TextField
+          label="Client Secret"
+          fullWidth
+          {...register("clientSecret")}
+          type={showClientSecret ? "text" : "password"}
+          InputProps={{
+            style: inputStyle,
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => setShowClientSecret((show) => !show)}
+                  edge="end"
+                  size="small"
+                >
+                  {showClientSecret ? (
+                    <VisibilityOffIcon />
                   ) : (
-                    <VisibilityOffIcon sx={{ fontSize: 19 }} />
+                    <VisibilityIcon />
                   )}
                 </IconButton>
               </InputAdornment>
             ),
           }}
         />
+      </Box>
 
-        {/* App Key */}
+      <Box sx={divStyle}>
         <TextField
-          label={
-            type === telemetryTypes.AWS_CLOUDWATCH
-              ? "App Secret"
-              : "Application Key"
-          }
-          type={showAppKey ? "text" : "password"}
-          fullWidth 
-          autoComplete="new-password"
-          {...register("appKey")}
-          
-          InputProps={{
-            style: inputStyle,
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  size="small"
-                  onClick={() => setShowAppKey((prev) => !prev)}
-                >
-                  {showAppKey ? (
-                    <VisibilityIcon sx={{ fontSize: 19 }} />
-                  ) : (
-                    <VisibilityOffIcon sx={{ fontSize: 19 }} />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
+          label="Tenant ID"
+          fullWidth
+          {...register("tenantId")}
+          InputProps={{ style: inputStyle }}
         />
-
-        {/* Host Tag */}
-        {type == telemetryTypes.DATA_DOG && (
-          <TextField
-            label="Host Tag"
-            type="text"
-            fullWidth 
-            {...register("hostTag")}
-             
-            InputProps={{ style: inputStyle }}
-          />
-        )}
-
-        {/* Submit Button */}
+        <TextField
+          label="Subscription ID"
+          fullWidth
+          {...register("subsId")}
+          InputProps={{ style: inputStyle }}
+        />
         <Button
           variant="contained"
           fullWidth
           type="submit"
-          sx={{ textTransform: "none" }}
+          sx={{ gridColumn: "span 1", textTransform: "none" }}
         >
-          <Typography variant="button"  fontWeight={400}>
+          <Typography variant="body2" fontWeight={600}>
             Test Connection
           </Typography>
         </Button>
       </Box>
 
-      {/* Alerts */}
-      <FormAlert
-        open={!!formError}
-        severity="error"
-        onClose={() => setFormError("")}
-      >
-        {formError}
-      </FormAlert>
-
-      <FormAlert
-        open={!!formSuccess}
-        severity="success"
-        onClose={() => setFormSuccess("")}
-      >
-        {formSuccess}
-      </FormAlert>
+      {formError && <FormAlert severity="error">{formError}</FormAlert>}
+      {formSuccess && <FormAlert severity="success">{formSuccess}</FormAlert>}
     </Box>
   );
 }
 
-export default DatadogForm;
+export default AzureInsightsForm;

@@ -4,10 +4,10 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import GetInstanceColumn from "./PortfolioTable/portfolioColumn";
-import { selfPrefAssessmentColumn } from "./PortfolioTable/selfPrefAssessmentColumn";
-import TableSkeleton from "../ui/table/table_components/TableSkeleton ";
-import ErrorBoundary from "./ErrorBoundary";
+import GetInstanceColumn from "../PortfolioTable/portfolioColumn";
+import { selfPrefAssessmentColumn } from "../PortfolioTable/selfPrefAssessmentColumn";
+import TableSkeleton from "../../ui/table/table_components/TableSkeleton ";
+import ErrorBoundary from "../ErrorBoundary";
 import {
   selectInstances,
   selectSelfAssessment,
@@ -15,7 +15,7 @@ import {
 import { removeInstance } from "@/redux/features/instance/instance.slice";
 import { Slider } from "@mui/material";
 
-const CustomTable = lazy(() => import("../ui/table/CustomTable"));
+const CustomTable = lazy(() => import("../../ui/table/CustomTable"));
 
 const TabPanel = React.memo(function TabPanel({ children, value, index }) {
   return (

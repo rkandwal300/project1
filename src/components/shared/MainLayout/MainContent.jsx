@@ -4,6 +4,7 @@ import InstanceForm from "@/components/shared/Form/InstanceForm";
 import { useSelector } from "react-redux"; 
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 import { selectInstances } from "@/redux/features/instance/instance.selector";
+import PortfolioBody from "./PortfolioBody";
 
 
 function MainContent() {

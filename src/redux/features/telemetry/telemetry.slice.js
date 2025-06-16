@@ -12,8 +12,8 @@ export const telemetryConnectionStatus = {
 };
 export const telemetryTypes = {
   DATA_DOG: "Datadog",
-  AWS_CLOUDWATCH: "aws_cloudwatch",
-  AZURE_INSIGHTS: "azureInsights",
+  AWS_CLOUDWATCH: "AWS CloudWatch",
+  AZURE_INSIGHTS: "Azure App Insights",
 };
 
 const initialState = {

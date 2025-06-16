@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
-import { MenuItem, Box, Typography, Avatar } from "@mui/material";
+import { MenuItem, Typography, Avatar } from "@mui/material";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,7 @@ const ProviderDisplay = ({ onClose, data }) => {
         dispatch(setProvider({ type, name }));
         dispatch(addCurrentInstance(null));
             dispatch(resetInstanceState());
-        const formattedName = name.replace(/\s+/g, "_") ;
+        const formattedName = name;
         
         if (type === "cloud") {
           navigate(`/?type=${formattedName}`);
