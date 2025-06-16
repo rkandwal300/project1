@@ -58,7 +58,7 @@ function AzureInsightsForm() {
   const [formError, setFormError] = useTimedMessage();
   const [formSuccess, setFormSuccess] = useTimedMessage();
 
-  const { register, handleSubmit, control, reset,formState :{errors},watch} = useForm({
+  const { register, handleSubmit, control, reset} = useForm({
     resolver: zodResolver(azureAppSchema),
     defaultValues: {
       portfolioName: "",
@@ -68,8 +68,7 @@ function AzureInsightsForm() {
       tenantId: "",
       subscriptionId: "",
     },
-  });
-  console.log({watch:watch(),errors})
+  }); 
 
   useEffect(() => {
     if (telemetryResetFlag) {

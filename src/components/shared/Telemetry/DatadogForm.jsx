@@ -46,7 +46,7 @@ function DatadogForm() {
   const isEdit = queryParams.get("edit");
   const regionOptions = useSelector(selectCurrentProviderRegions);
   const telemetryResetFlag = useSelector(selectTelemetryResetFlag);
-const currentInstance= useSelector(selectCurrentInstance)
+  const currentInstance = useSelector(selectCurrentInstance);
   const [showApiKey, setShowApiKey] = useState(false);
   const [showAppKey, setShowAppKey] = useState(false);
   const [formError, setFormError] = useTimedMessage();
@@ -87,10 +87,7 @@ const currentInstance= useSelector(selectCurrentInstance)
     setFormError("");
   };
 
-  const handleError = (errors) => {
-    console.log(errors);
-    setFormError("Please enter the required fields.");
-  };
+  const handleError = () => setFormError("Please enter the required fields.");
 
   const isAllSelected = (selected) =>
     regionOptions.length > 0 && selected.length === regionOptions.length;
@@ -105,33 +102,36 @@ const currentInstance= useSelector(selectCurrentInstance)
   };
 
   useEffect(() => {
-      if (isEdit && currentInstance?.formData){
-        reset(currentInstance.formData)
-      }
+    if (isEdit && currentInstance?.formData) {
+      reset(currentInstance.formData);
+    }
   }, [currentInstance?.formData, isEdit, reset]);
-
 
   return (
     <Box
       component="form"
       noValidate
       onSubmit={handleSubmit(onSubmit, handleError)}
-      sx={{ backgroundColor: "white", px: "5px",py:"10px", width: "100%",height
-        :'fit-content'
-       }}
+      sx={{
+        backgroundColor: "white",
+        px: "5px",
+        py: "10px",
+        width: "100%",
+        height: "fit-content",
+      }}
     >
       {/* === First Row === */}
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: { sm: "repeat(4, 1fr)" },
-          gap: '5px',
+          gap: "5px",
           mb: 2,
         }}
       >
         <TextField
           label="Portfolio Name"
-          fullWidth 
+          fullWidth
           {...register("portfolioName")}
           sx={{ gridColumn: "span 2" }}
           InputProps={{ style: inputStyle }}
@@ -142,7 +142,7 @@ const currentInstance= useSelector(selectCurrentInstance)
           }}
         />
 
-        <FormControl fullWidth  sx={{ gridColumn: "span 2" }}>
+        <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
           <InputLabel id="regions-label">Regions</InputLabel>
           <Controller
             name="regions"
@@ -197,7 +197,6 @@ const currentInstance= useSelector(selectCurrentInstance)
           gridTemplateColumns: { sm: "repeat(4, 1fr)" },
           gap: "5px",
           mb: 2,
-          
         }}
       >
         {/* API Key */}
@@ -206,10 +205,9 @@ const currentInstance= useSelector(selectCurrentInstance)
             type === telemetryTypes.AWS_CLOUDWATCH ? "Access Key" : "API Key"
           }
           type={showApiKey ? "text" : "password"}
-          fullWidth 
+          fullWidth
           autoComplete="new-password"
           {...register("apiKey")}
-         
           InputProps={{
             style: inputStyle,
             endAdornment: (
@@ -237,10 +235,9 @@ const currentInstance= useSelector(selectCurrentInstance)
               : "Application Key"
           }
           type={showAppKey ? "text" : "password"}
-          fullWidth 
+          fullWidth
           autoComplete="new-password"
           {...register("appKey")}
-          
           InputProps={{
             style: inputStyle,
             endAdornment: (
@@ -265,9 +262,8 @@ const currentInstance= useSelector(selectCurrentInstance)
           <TextField
             label="Host Tag"
             type="text"
-            fullWidth 
+            fullWidth
             {...register("hostTag")}
-             
             InputProps={{ style: inputStyle }}
           />
         )}
@@ -279,7 +275,7 @@ const currentInstance= useSelector(selectCurrentInstance)
           type="submit"
           sx={{ textTransform: "none" }}
         >
-          <Typography variant="button"  fontWeight={400}>
+          <Typography variant="button" fontWeight={400}>
             Test Connection
           </Typography>
         </Button>

@@ -106,8 +106,7 @@ function generateButtons(step, currentStepIndex) {
         }
         try {
           await handleElementAction(el, id);
-        } catch (err) {
-          console.error(`Error handling action for ${id}:`, err);
+        } catch (err) { 
           alert(`Action failed for ${id}: ${err.message}`);
         } finally {
           if (step?.action?.next) step.action.next();

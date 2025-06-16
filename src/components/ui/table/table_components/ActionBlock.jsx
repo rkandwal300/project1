@@ -1,22 +1,20 @@
 import React from "react";
 import { Box, Button, Link } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete"; 
-import ArrowRightIcon from '@mui/icons-material/East';
-import PropTypes from "prop-types"; 
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowRightIcon from "@mui/icons-material/East";
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector";
 
 export default function ActionBlock({ table, onDelete }) {
   const selectedRows = table.getSelectedRowModel().rows;
 
-  const portfolioName = useSelector(selectCurrentProviderName)
+  const portfolioName = useSelector(selectCurrentProviderName);
 
-  // console.log("Name:",portfolioName)
-   
   const handleDelete = () => {
     if (!selectedRows || selectedRows.length === 0) return;
 
-    onDelete({ selectedRows }); 
+    onDelete({ selectedRows });
     table.resetRowSelection();
   };
   return (
@@ -44,7 +42,8 @@ export default function ActionBlock({ table, onDelete }) {
           textTransform: "none",
         }}
       >
-        {"Delete" + (selectedRows.length > 0 ? " (" + selectedRows.length + ")" : "")}
+        {"Delete" +
+          (selectedRows.length > 0 ? " (" + selectedRows.length + ")" : "")}
       </Button>
 
       <Link
@@ -59,7 +58,7 @@ export default function ActionBlock({ table, onDelete }) {
           alignItems: "center",
           fontSize: "0.875rem",
 
-          '&:hover': {
+          "&:hover": {
             textDecoration: "underline",
           },
         }}

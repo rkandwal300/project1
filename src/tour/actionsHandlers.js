@@ -83,15 +83,12 @@ export const actionHandlers = {
     setInputValue(el, 35);
   },
   input(el) {
-    const name = el.getAttribute("name");
-    const previousValue = el.value;
-
+    const name = el.getAttribute("name"); 
     let value = mockFormDataResponse[name];
     const portfolioList = store
       .getState()
       .instanceList.data.map((instance) => instance.name);
-
-    console.log({ value, portfolioList, name, previousValue });
+ 
 
     if (portfolioList.includes(value) && name == "portfolioName") {
       value = "test Portfolio1.2";
