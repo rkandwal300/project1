@@ -2,7 +2,7 @@ import React, { Suspense, useMemo, useCallback } from "react";
 import { Box, Grid, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useLocation, matchPath } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import {
   resetTelemetryData,
@@ -120,9 +120,7 @@ const TelemetryBottomBar = () => {
     formData,
     dispatch,
     navigate,
-  ]);
-  const isUpdatePage = matchPath("/telemetry/:id/edit", location.pathname);
-  console.log({ isUpdatePage });
+  ]); 
   return (
     <Box
       id="manage-portfolio-footer-action-container"
