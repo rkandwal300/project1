@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 import { setTelemetryCloud } from "@/redux/features/providerData/providerData.slice";
+import { telemetryTypes } from "@/redux/features/telemetry/telemetry.slice";
 
 const SidebarSelect = () => {
   const theme = useTheme();
@@ -76,7 +77,7 @@ const SidebarSelect = () => {
         )}
       />
       {currentProviderType == "telemetry" &&
-        !["AWS CloudWatch", "Azure App Insights"].includes(currentProvider) && (
+        ![telemetryTypes.AWS_CLOUDWATCH, telemetryTypes.AZURE_INSIGHTS].includes(currentProvider) && (
           <FormControl fullWidth variant="outlined">
             <InputLabel>Cloud*</InputLabel>
             <SelectHoc
