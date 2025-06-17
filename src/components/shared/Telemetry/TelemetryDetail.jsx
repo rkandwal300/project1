@@ -36,7 +36,6 @@ function TelemetryDetail() {
         data={data.data}
         columns={telemetryColumns}
         isPagination
-        id="instance-advice-table"
       />
     </Box>
   );

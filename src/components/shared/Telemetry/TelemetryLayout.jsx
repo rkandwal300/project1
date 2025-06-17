@@ -1,41 +1,43 @@
-import { Box } from "@mui/material";
-import React from "react";
-import DatadogForm from "./DatadogForm";
+import { Box, Skeleton } from "@mui/material";
+import React, { Suspense, lazy } from "react";
 import { useSelector } from "react-redux";
 import { selectTelemetryState } from "@/redux/features/telemetry/telemetry.selector";
 import { telemetryColumns } from "./telemetryColumns";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { useLocation } from "react-router-dom";
 import { telemetryTypes } from "@/redux/features/telemetry/telemetry.slice";
-import AzureInsightsForm from "./AzureInsightsForm";
+
+// Lazy load the forms
+const DatadogForm = lazy(() => import("./DatadogForm"));
+const AzureInsightsForm = lazy(() => import("./AzureInsightsForm"));
 
 function TelemetryLayout() {
   const { data, showData } = useSelector(selectTelemetryState);
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const type = queryParams.get("type");
-
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const type = queryParams.get("type");
 
   return (
     <Box
       sx={{
-        height: "fit-content",
-        overflowY: "auto",
-        bgcolor: "error.contrastText",
+        width: "100%",
+        height: "100%",
+        overflowY: "auto", 
         display: "flex",
         flexDirection: "column",
         padding: 0,
       }}
-    >{type ===  telemetryTypes.AZURE_INSIGHTS ?<AzureInsightsForm />:
-      <DatadogForm />}
+    >
+      <Suspense fallback={<Skeleton variant="rectangular" height={400} />}>
+        {type === telemetryTypes.AZURE_INSIGHTS ? <AzureInsightsForm /> : <DatadogForm />}
+      </Suspense>
 
       {showData && (
         <CustomTable
           variant="primary"
           data={data}
           columns={telemetryColumns}
-          isPagination
-          id="instance-advice-table"
+          isPagination 
         />
       )}
     </Box>
