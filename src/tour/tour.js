@@ -131,8 +131,11 @@ allSteps.forEach((step, currentStepIndex) => {
     id: step.id,
     text: step.text,
     attachTo: step.attachTo,
-
     buttons: generateButtons(step, currentStepIndex),
+showOn: () => {
+    const el = document.querySelector(step.attachTo.element);
+    return !!el;
+  },
     beforeShowPromise: () =>
       new Promise((resolve) => {
         const checkExist = setInterval(() => {

@@ -1,15 +1,20 @@
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import HoverInput from "@/components/ui/form/Input";
-import { Box, InputAdornment, IconButton } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  Chip,
+} from "@mui/material";
 import React, { useEffect } from "react";
-import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import { mockFormDataResponse } from "@/lib/data";
 import {
   addInstanceList,
   addSelfAssessmentList,
 } from "@/redux/features/instance/instance.slice";
 import { useWatch } from "react-hook-form";
+import HoverComponent from "@/components/ui/form/HoverComponent";
 
 const TOOLTIP_MESSAGES = {
   "Upload Self Perf assessment": "Upload file for metrics",
@@ -34,15 +39,24 @@ const FileUploadField = ({ label, form, ...props }) => {
     name: "instanceFile",
     defaultValue: "",
   });
-  const fileName = label === "Upload Self Perf assessment" ? selfPrefFile : instanceFile;
-  const isFileUploaded = useWatch({
-    control: form.control,
-    name: "isFileUploaded",
-    defaultValue: "",
-  }); 
+
+  const fileName =
+    label === "Upload Self Perf assessment" ? selfPrefFile : instanceFile;
+
+   
+  // Clear filename when form value changes externally
+  useEffect(() => {
+    if (
+      (label === "Upload Self Perf assessment" && !selfPrefFile) ||
+      (label !== "Upload Self Perf assessment" && !instanceFile)
+    ) {
+      form.setValue("isFileUploaded", false);
+    }
+    // eslint-disable-next-line
+  }, [selfPrefFile, instanceFile]);
 
   const handleInputClick = () => {
-     form.setValue("isFileUploaded", true);
+    form.setValue("isFileUploaded", true);
     if (label === "Upload Self Perf assessment") {
       dispatch(
         addSelfAssessmentList([
@@ -59,43 +73,56 @@ const FileUploadField = ({ label, form, ...props }) => {
     }
   };
 
-  useEffect(() => {
-    if (!fileName && !isFileUploaded) return;
-    const timeout = setTimeout(() => {
-      form.setValue("isFileUploaded", false);
-    }, 2000);
-    return () => clearTimeout(timeout);
-  }, [fileName, isFileUploaded, form]);
+  // Clear filename handler
+  const handleClear = () => {
+    if (label === "Upload Self Perf assessment") {
+      form.setValue("selfPrefFile", "");
+    } else {
+      form.setValue("instanceFile", "");
+    }
+    form.setValue("isFileUploaded", false);
+  };
 
   return (
-    <Box maxWidth={"268px"}>
-      <HoverInput
-        tooltipMessage={getTooltipMessage(label)}
-        label={label}
-        value={fileName}
-        onClick={handleInputClick}
-        onClear={() => {
-          form.setValue("fileName", "");
-          form.setValue("isFileUploaded", false);
-        }}
-        slotProps={{
-          input: {
-            readOnly: true,
-            startAdornment: (
-              <InputAdornment position="start">
-                <IconButton>
-                  <AttachFileOutlinedIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          },
-        }}
-        name={props?.name ?? props?.id}
-        {...props}
-      />
+    <Box maxWidth="268px">
+      <FormControl fullWidth>
+        <InputLabel shrink={!!fileName}>{label}</InputLabel>
+
+        <HoverComponent
+          tooltipMessage={getTooltipMessage(label)}
+          value={fileName}
+          onClear={handleClear}
+        >
+          <OutlinedInput
+            notched={!!fileName}
+            label={label}
+            inputProps={{ readOnly: true }}
+            endAdornment={null}
+            name={props?.name ?? props?.id}
+            value=""
+            style={{ height: "40px" }}
+            onClick={handleInputClick}
+            startAdornment={
+              fileName ? (
+                <Chip
+                  label={fileName}
+                  size="small"
+                  sx={{
+                    ml: 0.5,
+                    height: "20px",
+                    fontSize: "0.625rem",
+                  }}
+                />
+              ) : null
+            }
+            {...props}
+          />
+        </HoverComponent>
+      </FormControl>
     </Box>
   );
 };
+
 FileUploadField.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string,

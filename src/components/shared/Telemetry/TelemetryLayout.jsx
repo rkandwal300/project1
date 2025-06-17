@@ -22,22 +22,24 @@ function TelemetryLayout() {
       sx={{
         width: "100%",
         height: "100%",
-        overflowY: "auto", 
+        overflowY: "auto",
         display: "flex",
         flexDirection: "column",
         padding: 0,
       }}
     >
-      <Suspense fallback={<Skeleton variant="rectangular" height={400} />}>
-        {type === telemetryTypes.AZURE_INSIGHTS ? <AzureInsightsForm /> : <DatadogForm />}
-      </Suspense>
+      {type === telemetryTypes.AZURE_INSIGHTS ? (
+        <AzureInsightsForm />
+      ) : (
+        <DatadogForm />
+      )}
 
       {showData && (
         <CustomTable
           variant="primary"
           data={data}
           columns={telemetryColumns}
-          isPagination 
+          isPagination
         />
       )}
     </Box>

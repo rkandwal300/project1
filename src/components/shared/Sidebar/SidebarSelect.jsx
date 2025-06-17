@@ -45,6 +45,7 @@ const SidebarSelect = () => {
       }}
     >
       <PopoverHoc
+      
         trigger={({ handleOpen }) => (
           <FormControl
             fullWidth
@@ -54,6 +55,7 @@ const SidebarSelect = () => {
           >
             <InputLabel sx={{ fontWeight: 500 }}>Service Provider</InputLabel>
             <OutlinedInput
+            id="step-six-target"
               readOnly
               label="Service Provider"
               value={currentProvider || "Select Provider"}

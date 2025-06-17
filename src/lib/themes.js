@@ -189,21 +189,22 @@ const theme = createTheme({
       styleOverrides: {
         root: { 
           marginBottom: 4,
-          padding: 8,
+          padding: '8px',
+          height:"35px",
           backgroundColor: "#FFFFFF",
           color: "#1A1A1A",
           borderRadius: "4px",
           "&:hover": {
-            backgroundColor: "#EEEEEE",
+            backgroundColor: "#1A1A1A",
             color: "#FFFFFF",
           },
           "&.Mui-selected": {
             backgroundColor: "#1A1A1A",
             color: "#FFFFFF",
-            "&:hover": {
-              backgroundColor: "#333333",
-              color: "#FFFFFF",
-            },
+           "&:hover": {
+            backgroundColor: "#EEEEEE",
+            color: "#FFFFFF",
+          },
           },
         },
       },

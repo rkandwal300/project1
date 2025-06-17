@@ -1,8 +1,10 @@
+import { telemetryTypes } from "@/redux/features/telemetry/telemetry.slice";
+
 export const getProviderConfig = (routes, type) => {
   if (routes.includes("telemetry")) {
     return {
       type: "telemetry",
-      name: type || "Datadog",
+      name: type || telemetryTypes.DATA_DOG,
     };
   }
   return {

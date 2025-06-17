@@ -36,6 +36,7 @@ const ProviderDisplay = ({ onClose, data }) => {
 
       return (
         <MenuItem
+        id={`menuItem-${type}-${name}`}
           value={name}
           onClick={handleClick}
           sx={{

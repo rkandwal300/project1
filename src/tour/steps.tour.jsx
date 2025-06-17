@@ -113,7 +113,7 @@ const steps = () => [
     id: "step-9.1",
     text: "Select your preferred Service Provider from the list.",
     attachTo: {
-      element: "#MenuItem-azure",
+      element: "#menuItem-cloud-AZURE",
       on: "left",
     },
     type: "wait",
