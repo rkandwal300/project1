@@ -106,11 +106,12 @@ const App = () => {
         sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
       >
         <Header />
-        <Box display="flex" flexDirection="column" flex={1}>
+        <Box height={'100vh'} display="flex" flexDirection="column" flex={1}>
           <Box
             sx={{
               display: "flex",
               flex: 1,
+
               justifyContent: "flex-start",
               mt: 8,
               p: 0,

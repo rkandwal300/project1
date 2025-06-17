@@ -1,3 +1,5 @@
+import { telemetryTypes } from "@/redux/features/telemetry/telemetry.slice";
+
 export const instanceList = [
   // AWS
   {
@@ -792,7 +794,7 @@ export const providerList = [
     telemetry: {
       id: 5,
       type: "telemetry",
-      name: "Datadog",
+      name:telemetryTypes.DATA_DOG,
       logo: "/logo/datadog.svg",
     },
   },
@@ -806,7 +808,7 @@ export const providerList = [
     telemetry: {
       id: 6,
       type: "telemetry",
-      name: "AWS CloudWatch",
+      name: telemetryTypes.AWS_CLOUDWATCH,
       logo: "/logo/cloudWatch.svg",
     },
   },
@@ -820,7 +822,7 @@ export const providerList = [
     telemetry: {
       id: 7,
       type: "telemetry",
-      name: "Azure App Insights",
+      name:  telemetryTypes.AZURE_INSIGHTS,
       logo: "/logo/azureInsights.svg",
     },
   },
