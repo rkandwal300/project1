@@ -7,6 +7,6 @@ export const getProviderConfig = (routes, type) => {
   }
   return {
     type: "cloud",
-    name: type || "aws",
+    name: type ||"AWS",
   };
 };

@@ -33,6 +33,7 @@ function InstanceForm() {
     defaultValues: {},
     mode: "onTouched",
   });
+  console.log({ errors: form.formState.errors, form: form.watch() });
 
   const handleSubmit = useCallback(
     (data) => {
@@ -41,7 +42,7 @@ function InstanceForm() {
       );
       setFormSuccess("Instance added successfully");
       setFormError("");
-      form.reset({ portfolioName: data.portfolioName });
+      form.reset({});
     },
     [dispatch, setFormSuccess, setFormError, form]
   );
@@ -92,7 +93,6 @@ function InstanceForm() {
     </Box>
   );
 }
-
 
 InstanceForm.propTypes = {
   initialValues: PropTypes.shape({

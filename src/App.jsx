@@ -1,8 +1,8 @@
 import "./index.css";
 import theme from "./lib/themes";
 import "shepherd.js/dist/css/shepherd.css";
-import { Box, CssBaseline, ThemeProvider } from "@mui/material";
-import { useEffect, useMemo } from "react";
+import { Box, CssBaseline, Skeleton, ThemeProvider } from "@mui/material";
+import { useEffect, useMemo, Suspense, lazy } from "react";
 import {
   Route,
   Routes,
@@ -16,34 +16,37 @@ import {
   fetchInstanceType,
   setProvider,
 } from "./redux/features/providerData/providerData.slice";
-import InstanceAdviceBottomBar from "./components/shared/InstanceAdvice/InstanceAdviceBottomBar";
-import BottomBar from "./components/shared/BottomBar";
+import { getProviderConfig } from "./lib/utils";
+import Footer from "./components/shared/Footer/Footer";
 import Header from "./components/shared/header/Header";
 import Sidebar from "./components/shared/Sidebar/Sidebar";
-import Footer from "./components/shared/Footer/Footer";
-import MainContent from "./components/shared/MainLayout/MainContent";
-import InstanceAdviceLayout from "./components/shared/InstanceAdvice/InstanceAdviceLayout";
-import TelemetryBottomBar from "./components/shared/Telemetry/TelemetryBottomBar";
-import TelemetryLayout from "./components/shared/Telemetry/TelemetryLayout";
-import TelemetryDetail from "./components/shared/Telemetry/TelemetryDetail";
-import { getProviderConfig } from "./lib/utils";
-import TelemetryDetailBottomBar from "./components/shared/TelemetryDetailBottombar";
+import NotFound from "./components/shared/NotFound";
 
-// Helper to get provider config
-
-const NotFound = () => (
-  <Box
-    sx={{
-      height: "100%",
-      width: "100%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    404 page not found
-  </Box>
+// Lazy loaded components
+const MainContent = lazy(() =>
+  import("./components/shared/MainLayout/MainContent")
 );
+const InstanceAdviceLayout = lazy(() =>
+  import("./components/shared/InstanceAdvice/InstanceAdviceLayout")
+);
+const TelemetryLayout = lazy(() =>
+  import("./components/shared/Telemetry/TelemetryLayout")
+);
+const TelemetryDetail = lazy(() =>
+  import("./components/shared/Telemetry/TelemetryDetail")
+);
+const InstanceAdviceBottomBar = lazy(() =>
+  import("./components/shared/InstanceAdvice/InstanceAdviceBottomBar")
+);
+const BottomBar = lazy(() => import("./components/shared/BottomBar"));
+const TelemetryBottomBar = lazy(() =>
+  import("./components/shared/Telemetry/TelemetryBottomBar")
+);
+const TelemetryDetailBottomBar = lazy(() =>
+  import("./components/shared/TelemetryDetailBottombar")
+);
+
+// NotFound can be inline since it's very small
 
 const App = () => {
   const location = useLocation();
@@ -51,7 +54,6 @@ const App = () => {
   const navigate = useNavigate();
   const currentInstance = useSelector(selectCurrentInstance);
 
-  // Memoize search params and routes
   const searchParams = useMemo(
     () => new URLSearchParams(location.search),
     [location.search]
@@ -80,7 +82,6 @@ const App = () => {
     if (pathname === "/" && !currentInstance) {
       navigate("/");
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -90,9 +91,9 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routes.join(","), type]);
 
+  // Dynamically select BottomBar component
   const BottomBarComponent = useMemo(() => {
-    if (matchPath("/telemetry/:id", pathname))
-      return TelemetryDetailBottomBar;
+    if (matchPath("/telemetry/:id", pathname)) return TelemetryDetailBottomBar;
     if (pathname.startsWith("/telemetry")) return TelemetryBottomBar;
     if (pathname === "/instanceAdvice") return InstanceAdviceBottomBar;
     return BottomBar;
@@ -116,19 +117,29 @@ const App = () => {
             }}
           >
             <Sidebar />
-            <Routes>
-              <Route path="/" element={<MainContent />} />
-              <Route path="/:id" element={<MainContent />} />
-              <Route
-                path="/instanceAdvice"
-                element={<InstanceAdviceLayout />}
-              />
-              <Route path="/telemetry" element={<TelemetryLayout />} />
-              <Route path="/telemetry/:id" element={<TelemetryDetail />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense
+              fallback={
+                <Box flex={1} p={3}>
+                  <Skeleton variant="rectangular" width="100%" height={400} />
+                </Box>
+              }
+            >
+              <Routes>
+                <Route path="/" element={<MainContent />} />
+                <Route path="/:id" element={<MainContent />} />
+                <Route
+                  path="/instanceAdvice"
+                  element={<InstanceAdviceLayout />}
+                />
+                <Route path="/telemetry" element={<TelemetryLayout />} />
+                <Route path="/telemetry/:id" element={<TelemetryDetail />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </Box>
-          <BottomBarComponent />
+          <Suspense fallback={null}>
+            <BottomBarComponent />
+          </Suspense>
         </Box>
         <Footer />
       </Box>
