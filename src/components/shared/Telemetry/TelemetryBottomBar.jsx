@@ -29,6 +29,7 @@ import {
   selectMessage,
   selectMessageType,
 } from "@/redux/features/instance/instance.selector";
+import { mockFormDataResponse } from "@/lib/data";
 
 // Dynamic import for FormAlert
 const FormAlert = lazy(() => import("@/components/ui/FormAlert"));
@@ -43,13 +44,7 @@ const isDuplicateInstance = (instances, name, providerType, currentProvider) =>
   );
 
 // Utility: build instance payload
-const buildInstancePayload = ({
-  id,
-  data,
-  provider,
-  name,
-  formData,
-}) => ({
+const buildInstancePayload = ({ id, data, provider, name, formData }) => ({
   id,
   data,
   type: "telemetry",
@@ -67,7 +62,7 @@ const TelemetryBottomBar = () => {
   const {
     connectionStatus,
     name: portfolioName,
-    data,
+    data: telemetryState,
     formData,
     showData,
   } = useSelector(selectTelemetryState);
@@ -114,6 +109,15 @@ const TelemetryBottomBar = () => {
     [dispatch]
   );
 
+  const telemetryData = [
+    mockFormDataResponse,
+    mockFormDataResponse,
+    mockFormDataResponse,
+  ].map((item) => ({
+    ...item,
+    id: nanoid(),
+    uuid: currentProviderName,
+  }));
   const handleSaveInstances = useCallback(() => {
     if (!trimmedName) {
       return showAlert(errorMessageType.ERROR, "Portfolio name is required");
@@ -124,7 +128,8 @@ const TelemetryBottomBar = () => {
 
     const payload = buildInstancePayload({
       id: generatedFormId,
-      data,
+      data: telemetryData,
+      telemetryState,
       provider: currentProviderName,
       name: trimmedName,
       formData,
@@ -143,7 +148,8 @@ const TelemetryBottomBar = () => {
     isDuplicate,
     currentInstance?.id,
     generatedFormId,
-    data,
+    telemetryData,
+    telemetryState,
     currentProviderName,
     formData,
     dispatch,

@@ -34,7 +34,7 @@ const TABS = [
   {
     label: "Instance Stats",
     value: "instance_stats",
-    getColumns: GetInstanceColumn,
+    getColumns: GetInstanceColumn ,
     showNote: true,
     isAction: true,
   },
@@ -57,7 +57,7 @@ function PortfolioBody() {
   };
 
   const columnsMap = {
-    instance_stats: GetInstanceColumn(),
+    instance_stats: GetInstanceColumn({isTelemetry: false}),
     self_perf_assessment: selfPrefAssessmentColumn,
   };
 

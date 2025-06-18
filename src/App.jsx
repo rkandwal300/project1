@@ -21,6 +21,7 @@ import Footer from "./components/shared/Footer/Footer";
 import Header from "./components/shared/header/Header";
 import Sidebar from "./components/shared/Sidebar/Sidebar";
 import NotFound from "./components/shared/NotFound";
+import { selectCurrentProviderName } from "./redux/features/providerData/providerData.selector";
 
 // Lazy loaded components
 const MainContent = lazy(() =>
@@ -54,11 +55,7 @@ const App = () => {
   const navigate = useNavigate();
   const currentInstance = useSelector(selectCurrentInstance);
 
-  const searchParams = useMemo(
-    () => new URLSearchParams(location.search),
-    [location.search]
-  );
-  const type = searchParams.get("type") || "";
+  const type = useSelector(selectCurrentProviderName);
   const routes = useMemo(
     () => location.pathname.split("/").filter(Boolean),
     [location.pathname]
@@ -106,7 +103,7 @@ const App = () => {
         sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
       >
         <Header />
-        <Box height={'100vh'} display="flex" flexDirection="column" flex={1}>
+        <Box height={"100vh"} display="flex" flexDirection="column" flex={1}>
           <Box
             sx={{
               display: "flex",
@@ -120,7 +117,13 @@ const App = () => {
             <Sidebar />
             <Suspense
               fallback={
-                <Box flex={1} p={3} gap="20px" display="flex" flexDirection="column">
+                <Box
+                  flex={1}
+                  p={3}
+                  gap="20px"
+                  display="flex"
+                  flexDirection="column"
+                >
                   <Skeleton variant="rectangular" width="100%" height={80} />
                   <Skeleton variant="rectangular" width="100%" height={80} />
                   <Skeleton variant="rectangular" width="100%" height={80} />

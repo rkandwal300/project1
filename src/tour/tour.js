@@ -41,7 +41,7 @@ function generateButtons(step, currentStepIndex) {
       },
     },
     {
-      text: 'Skip All',
+      text: "Skip All",
       action: () => {
         removeHighlight(step.attachTo.element);
         window.speechSynthesis.cancel();
@@ -106,7 +106,7 @@ function generateButtons(step, currentStepIndex) {
         }
         try {
           await handleElementAction(el, id);
-        } catch (err) { 
+        } catch (err) {
           alert(`Action failed for ${id}: ${err.message}`);
         } finally {
           if (step?.action?.next) step.action.next();
@@ -132,10 +132,10 @@ allSteps.forEach((step, currentStepIndex) => {
     text: step.text,
     attachTo: step.attachTo,
     buttons: generateButtons(step, currentStepIndex),
-showOn: () => {
-    const el = document.querySelector(step.attachTo.element);
-    return !!el;
-  },
+    // showOn: () => {
+    //     const el = document.querySelector(step.attachTo.element);
+    //     return !!el;
+    //   },
     beforeShowPromise: () =>
       new Promise((resolve) => {
         const checkExist = setInterval(() => {

@@ -1,5 +1,4 @@
-import { BorderRight, WidthFull } from "@mui/icons-material";
-import { useMemo } from "react";
+ import { useMemo } from "react";
 
 export const useTableStyles = (variant, theme) =>
   useMemo(() => {

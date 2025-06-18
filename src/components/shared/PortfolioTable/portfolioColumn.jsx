@@ -40,7 +40,7 @@ EditableCell.propTypes = {
 };
 
 
-export default function GetInstanceColumn() {
+export default function GetInstanceColumn({isTelemetry = false}) {
   const dispatch = useDispatch();
   const regionOptions = useSelector  (selectCurrentProviderRegions)
   const instanceOptions = useSelector  (selectCurrentProviderInstanceTypes)
@@ -103,7 +103,7 @@ export default function GetInstanceColumn() {
 
   return useMemo(
     () => [
-      {
+    (!isTelemetry &&  {
         id: "select",
         header: ({ table }) => (
           <Checkbox
@@ -134,7 +134,7 @@ export default function GetInstanceColumn() {
         size: 70,
         maxSize: 70,
         minSize: 70,
-      },
+      })  ,
       {
         id: "uuid",
         header: () => "UUID/Instance Name",
