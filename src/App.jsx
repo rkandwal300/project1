@@ -120,8 +120,11 @@ const App = () => {
             <Sidebar />
             <Suspense
               fallback={
-                <Box flex={1} p={3}>
-                  <Skeleton variant="rectangular" width="100%" height={400} />
+                <Box flex={1} p={3} gap="20px" display="flex" flexDirection="column">
+                  <Skeleton variant="rectangular" width="100%" height={80} />
+                  <Skeleton variant="rectangular" width="100%" height={80} />
+                  <Skeleton variant="rectangular" width="100%" height={80} />
+                  <Skeleton variant="rectangular" width="100%" height={80} />
                 </Box>
               }
             >

@@ -43,7 +43,7 @@ const formControlSx = {
 const DownloadSelect = () => {
   return (
     <FormControl fullWidth variant="filled" size="small" sx={formControlSx}>
-      <InputLabel id="download-select-label">Downloads</InputLabel>
+      <InputLabel id="download-select-label" shrink={false}>Downloads</InputLabel>
       <SelectHoc
         menucomponent="a"
         labelId="download-select-label"

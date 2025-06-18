@@ -5,20 +5,18 @@ import { useCallback, lazy, Suspense, useEffect } from "react";
 import { Box, Divider } from "@mui/material";
 import { instanceSchema } from "@/lib/validation/instance.schema";
 import { nanoid } from "@reduxjs/toolkit";
-
 import PropTypes from "prop-types";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import ErrorBoundary from "../ErrorBoundary";
 import FormSkeleton from "./FormSkeleton";
 import { addInstance } from "@/redux/features/instance/instance.slice";
 import { useLocation } from "react-router-dom";
+import PortfolioDetails from "./PortfolioDetails";
+import GenericMetadata from "./GenericMetadata";
+import ConsumptionMetadata from "./Consumption Metadata/ConsumptionMetadata";
 
 const FormAlert = lazy(() => import("@/components/ui/FormAlert"));
-const PortfolioDetails = lazy(() => import("./PortfolioDetails"));
-const GenericMetadata = lazy(() => import("./GenericMetadata"));
-const ConsumptionMetadata = lazy(() =>
-  import("./Consumption Metadata/ConsumptionMetadata")
-);
+
 
 function InstanceForm() {
   const dispatch = useDispatch();
@@ -33,8 +31,7 @@ function InstanceForm() {
     defaultValues: {},
     mode: "onTouched",
   });
-  console.log({ errors: form.formState.errors, form: form.watch() });
-
+ 
   const handleSubmit = useCallback(
     (data) => {
       dispatch(

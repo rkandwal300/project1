@@ -72,14 +72,37 @@ function PortfolioBody() {
     [dispatch]
   );
 
+console.log({data:dataMap['instance_stats']})
+
   return (
     <Box sx={{ width: "100%", p: 0, bgcolor: "primary.contrastText" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange} aria-label="portfolio tabs">
+       <Box sx={{ display: "flex", justifyContent: "space-between", p: 1 }}> <Tabs value={value} onChange={handleChange} aria-label="portfolio tabs">
           {TABS.map((tab) => (
             <Tab key={tab.value} label={tab.label} value={tab.value} />
           ))}
         </Tabs>
+          <Box
+            sx={{
+              width: 300,
+              px: 2,
+              overflow: "visible", 
+              position: "relative", 
+              marginLeft: "auto",
+              display: "flex",
+              alignItems: "center",
+              
+            }}
+          >
+            <Slider
+              defaultValue={20}
+              step={10}
+              marks
+              min={0}
+              max={100}
+              valueLabelDisplay="on"
+            />
+          </Box></Box>
       </Box>
       <Suspense fallback={<TableSkeleton />}>
         {TABS.map((tab) => (
@@ -102,16 +125,6 @@ function PortfolioBody() {
                 >
                   Note: Double-click to update input values.
                 </p>
-                <div style={{ width: "300px", marginRight: "20px" }}>
-                  <Slider
-                    defaultValue={20}
-                    step={10}
-                    marks
-                    min={0}
-                    max={100}
-                    valueLabelDisplay="on"
-                  />
-                </div>
               </div>
             )}
             <CustomTable

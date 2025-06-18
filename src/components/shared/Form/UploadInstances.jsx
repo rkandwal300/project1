@@ -86,7 +86,14 @@ const FileUploadField = ({ label, form, ...props }) => {
   return (
     <Box maxWidth="268px">
       <FormControl fullWidth>
-        <InputLabel shrink={!!fileName}>{label}</InputLabel>
+        <InputLabel shrink={!!fileName}  sx={{
+    // Only apply when label is not shrunk
+    ...(!fileName && {
+      top: '50%',
+      transform: 'translate(14px, -50%) scale(1)',
+      fontSize: '0.875rem',
+    }),
+  }}>{label}</InputLabel>
 
         <HoverComponent
           tooltipMessage={getTooltipMessage(label)}

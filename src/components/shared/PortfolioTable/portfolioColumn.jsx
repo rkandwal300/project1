@@ -1,15 +1,11 @@
 import { useMemo, useCallback, lazy, Suspense } from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
 import { Checkbox, IconButton } from "@mui/material";
-import {
-  instanceOptions,
-  pricingModelOptions,
-  regionOptions,
-} from "@/lib/constant";
 import { useTheme } from "@emotion/react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { updateSingleInstance } from "@/redux/features/instance/instance.slice.js";
+import { useDispatch ,useSelector } from "react-redux";
+import { selectCurrentProviderInstanceTypes, selectCurrentProviderPricingModels, selectCurrentProviderRegions } from "@/redux/features/providerData/providerData.selector.js";
 
 // Lazy load editable cells for performance
 const EditableSelectCell = lazy(() =>
@@ -43,21 +39,24 @@ EditableCell.propTypes = {
   table: PropTypes.object,
 };
 
-const getOptionsByField = (field) => {
-  switch (field) {
-    case "region":
-      return regionOptions;
-    case "instanceType":
-      return instanceOptions;
-    case "pricingModel":
-      return pricingModelOptions;
-    default:
-      return undefined;
-  }
-};
 
 export default function GetInstanceColumn() {
   const dispatch = useDispatch();
+  const regionOptions = useSelector  (selectCurrentProviderRegions)
+  const instanceOptions = useSelector  (selectCurrentProviderInstanceTypes)
+  const pricingModelOptions = useSelector  (selectCurrentProviderPricingModels)
+  const getOptionsByField = (field) => {
+    switch (field) {
+      case "region":
+        return regionOptions;
+      case "instanceType":
+        return instanceOptions;
+      case "pricingModel":
+        return pricingModelOptions;
+      default:
+        return undefined;
+    }
+  };
   const theme = useTheme();
 
   const handleValueChange = useCallback(
@@ -148,7 +147,7 @@ export default function GetInstanceColumn() {
         id: "region",
         header: () => "Region",
         accessorKey: "region",
-        cell: renderEditableCell("sselect", "region"),
+        cell: renderEditableCell("select", "region"),
         minSize: 150,
         size: 150,
         maxSize: 200,
@@ -224,7 +223,7 @@ export default function GetInstanceColumn() {
         id: "uavg",
         header: () => "UAVG",
         accessorKey: "uavg",
-        cell:()=> "-",
+        cell:({getValue})=>getValue()?? "-",
         minSize: 90,
         size: 90,
         maxSize: 90,
@@ -233,7 +232,7 @@ export default function GetInstanceColumn() {
         id: "pavg",
         header: () => "PAVG",
         accessorKey: "pavg",
-        cell:()=> "-",
+        cell:({getValue})=>getValue()?? "-",
         minSize: 90,
         size: 90,
         maxSize: 90,
@@ -242,7 +241,7 @@ export default function GetInstanceColumn() {
         id: "u95",
         header: () => "U95",
         accessorKey: "p95",
-        cell:()=> "-",
+        cell:({getValue})=>getValue()?? "-",
         minSize: 90,
         size: 90,
         maxSize: 90,
@@ -251,7 +250,7 @@ export default function GetInstanceColumn() {
         id: "p95",
         header: () => "P95",
         accessorKey: "p95",
-        cell:()=> "-",
+        cell:({getValue})=>getValue()?? "-",
         minSize: 90,
         size: 90,
         maxSize: 90,

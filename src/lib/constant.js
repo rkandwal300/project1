@@ -61,6 +61,8 @@ export const serviceProviderOptions = [
     ],
   },
 ];
+
+
 export const CONSUMPTION_FIELDS = [
   {
     label: "Max CPU %",
@@ -84,6 +86,28 @@ export const CONSUMPTION_FIELDS = [
     tooltipMessage: "Maximum Disk Bandwidth (Megabyte/sec).",
   },
   { label: "Max IOPS", name: "maxIOPS", tooltipMessage: "Maximum Disk IOPS." },
+];
+export const CONSUMPTION_AVG_FIELDS = [
+  {
+    label: "UAVG",
+    name: "uavg",
+    tooltipMessage: "UAVG.",
+  },
+  {
+    label: "PAVG",
+    name: "pavg",
+    tooltipMessage:"PAVG",
+  },
+  {
+    label: "U95",
+    name: "u95",
+    tooltipMessage: "U95",
+  },
+    {
+    label: "P95",
+    name: "p95",
+    tooltipMessage: "P95.",
+  },
 ];
 
 export const GENERIC_FIELDS = [

@@ -1,18 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { Typography, Button, Box, IconButton, Divider } from "@mui/material";
+import React, { useEffect, useState, Suspense, memo, useCallback } from "react";
+import {
+  Typography,
+  Button,
+  Box,
+  IconButton,
+  Divider,
+  Skeleton,
+} from "@mui/material";
 import { Add } from "@mui/icons-material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
-import { CONSUMPTION_FIELDS } from "@/lib/constant";
+import { CONSUMPTION_AVG_FIELDS, CONSUMPTION_FIELDS } from "@/lib/constant";
 import { AnimatedIconButton } from "./AnimatedIconButton";
+import DialogHoc from "@/components/ui/Dialog";
+import TooltipHoc from "@/components/ui/Tooltip";
 
-// Dynamic imports for optimization
-const DialogHoc = React.lazy(() => import("@/components/ui/Dialog"));
+// Lazy imports
+const CorrectionAndGuideLines = React.lazy(() =>
+  import("./CorrectionAndGuideLines")
+);
 const FindAndReplace = React.lazy(() => import("./FindAndReplace"));
-const TooltipHoc = React.lazy(() => import("@/components/ui/Tooltip"));
 const HoverInput = React.lazy(() => import("@/components/ui/form/Input"));
-const CloseIcon = React.lazy(() => import("@mui/icons-material/Close"));
+
+const FIELD_GRID = {
+  CONSUMPTION: { xs: "1fr", sm: "repeat(5, 1fr)" },
+  AVG: { xs: "1fr", sm: "repeat(4, 1fr)" },
+};
+
+const SKELETON = <Skeleton variant="rectangular" width="100%" height={400} />;
 
 function ConsumptionMetadata({ form }) {
   const [animate, setAnimate] = useState(false);
@@ -22,49 +38,47 @@ function ConsumptionMetadata({ form }) {
     return () => clearInterval(interval);
   }, []);
 
-  const renderFields = ({ name, tooltipMessage, label }) => (
-    <Controller
-      key={name}
-      name={name}
-      control={form.control}
-      render={({ field, fieldState }) => (
-        <HoverInput
-          id={`${name}Target`}
-          label={label}
-          fullWidth
-          hideClearIcon={true}
-          value={field.value ?? ""}
-          error={!!fieldState.error}
-          tooltipMessage={tooltipMessage}
-          onChange={(e) => {
-            const value = e.target.value;
-            if (value === "" || !isNaN(Number(value))) {
-              field.onChange(Number(value));
-            }
-          }}
-        />
-      )}
-    />
+  // Memoized field renderer for performance
+  const renderField = useCallback(
+    ({ name, tooltipMessage, label }) => (
+      <Controller
+        key={name}
+        name={name}
+        control={form.control}
+        render={({ field, fieldState }) => (
+          <HoverInput
+            id={`${name}Target`}
+            label={label}
+            fullWidth
+            hideClearIcon
+            value={field.value ?? ""}
+            error={!!fieldState.error}
+            tooltipMessage={tooltipMessage}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === "" || !isNaN(Number(value))) {
+                field.onChange(Number(value));
+              }
+            }}
+          />
+        )}
+      />
+    ),
+    [form.control]
   );
 
   return (
     <Box
       display="flex"
-      gap="16px"
-      sx={{
-        px: 2,
-        flexDirection: { xs: "column", md: "row" },
-      }}
+      gap={2}
+      px={2}
+      flexDirection={{ xs: "column", md: "row" }}
     >
-      <Box
-        display="flex"
-        flexDirection="row"
-        gap="16px"
-        sx={{ width: "100%", alignItems: "center" }}
-      >
-        <Box sx={{ minWidth: "141px", width: "141px" }}>
+      {/* Left: Metadata Fields */}
+      <Box display="flex" gap={2} width="100%" alignItems="flex-start">
+        <Box minWidth={141} width={141}>
           <Typography
-            fontSize="14px"
+            fontSize={14}
             color="secondary.default"
             variant="body1"
             gutterBottom
@@ -72,113 +86,107 @@ function ConsumptionMetadata({ form }) {
             Consumption Metadata
           </Typography>
         </Box>
-
         <Box
           id="consumption-metadata-form"
           role="ConsumptionMetadataForm"
-          sx={{
-            display: "grid",
-            gap: "16px",
-            gridTemplateColumns: { xs: "1fr", sm: "repeat(5, 1fr)" },
-            width: "100%",
-          }}
+          display="flex"
+          flexDirection="column"
+          gap={2}
+          width="100%"
         >
-          {CONSUMPTION_FIELDS.map(renderFields)}
+          <Box
+            display="grid"
+            gap={2}
+            gridTemplateColumns={FIELD_GRID.CONSUMPTION}
+            width="100%"
+          >
+            {CONSUMPTION_FIELDS.map(renderField)}
+          </Box>
+          <Box
+            display="grid"
+            gap={2}
+            gridTemplateColumns={FIELD_GRID.AVG}
+            width="100%"
+          >
+            {CONSUMPTION_AVG_FIELDS.map(renderField)}
+          </Box>
         </Box>
       </Box>
+
+      {/* Right: Actions */}
       <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: "16px",
-          ml: { xs: "155px", md: "0px" },
-        }}
+        display="flex"
+        alignItems="center"
+        gap={2}
+        ml={{ xs: "155px", md: 0 }}
+        mt="auto"
       >
-        <TooltipHoc message={"Add Instance"}>
-          <Button
-            id="addInstanceFormTarget"
-            variant="contained"
-            color="primary"
-            type="submit"
-            size="small"
-          >
-            <Add />
-          </Button>
-        </TooltipHoc>
-        <DialogHoc
-          trigger={({ onClick }) => (
-            <TooltipHoc message={"Find & Replace"}>
-              <Button
-                id="findAndReplace"
-                variant="contained"
-                color="primary"
-                size="small"
-                onClick={onClick}
-                sx={{  padding: "6px" }}
-              >
-                <Box
-                  component="img"
-                  src="/file-replace.svg"
-                  alt="Find & Replace"
-                  sx={{ width: 24, height: 24 }}
-                />
-              </Button>
-            </TooltipHoc>
-          )}
-          content={({ handleClose }) => (
-            <FindAndReplace onClose={handleClose} />
-          )}
-          sx={{ width: "400px", m: "auto" }}
-        />
+        {/* Add Instance Button */}
+        <Suspense fallback={SKELETON}>
+          <TooltipHoc message="Add Instance">
+            <Button
+              id="addInstanceFormTarget"
+              variant="contained"
+              color="primary"
+              type="submit"
+              size="small"
+            >
+              <Add />
+            </Button>
+          </TooltipHoc>
+        </Suspense>
+
+        {/* Find & Replace Dialog */}
+        <Suspense fallback={SKELETON}>
+          <DialogHoc
+            trigger={({ onClick }) => (
+              <TooltipHoc message="Find & Replace">
+                <Button
+                  id="findAndReplace"
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={onClick}
+                  sx={{ p: "6px" }}
+                >
+                  <Box
+                    component="img"
+                    src="/file-replace.svg"
+                    alt="Find & Replace"
+                    sx={{ width: 24, height: 24 }}
+                  />
+                </Button>
+              </TooltipHoc>
+            )}
+            content={({ handleClose }) => (
+              <Suspense fallback={SKELETON}>
+                <FindAndReplace onClose={handleClose} />
+              </Suspense>
+            )}
+            sx={{ width: 400, m: "auto" }}
+          />
+        </Suspense>
+
+        {/* Help/Guidelines Dialog */}
         <DialogHoc
           maxWidth="md"
-          fullWidth={true}
+          fullWidth
           trigger={({ onClick }) => (
-            <TooltipHoc message={"Data correction & adjustment guidelines"}>
-              <AnimatedIconButton
-                onClick={onClick}
-                className={animate ? "animate" : ""}
-              >
-                <HelpOutlineIcon />
-              </AnimatedIconButton>
-            </TooltipHoc>
+            <Suspense fallback={SKELETON}>
+              <TooltipHoc message="Data correction & adjustment guidelines">
+                <AnimatedIconButton
+                  onClick={onClick}
+                  className={animate ? "animate" : ""}
+                >
+                  <HelpOutlineIcon />
+                </AnimatedIconButton>
+              </TooltipHoc>
+            </Suspense>
           )}
           content={({ handleClose }) => (
-            <Box sx={{ p: 0 }} gap={0} width={"full"} color={"primary.main"}>
-              <Box
-                display={"flex"}
-                justifyContent="space-between"
-                alignItems="center"
-                p={"10px 24px"}
-              >
-                <Typography
-                  variant="h6"
-                  fontWeight="bold"
-                  fontSize={"18px"}
-                  gutterBottom
-                >
-                  How data corrections are applied:
-                </Typography>
-
-                <Box display="flex" justifyContent="flex-end">
-                  <IconButton onClick={handleClose}>
-                    <CloseIcon />
-                  </IconButton>
-                </Box>
-              </Box>
-              <Divider />
-              <Box p={" 24px 24px"}>
-                <Typography fontSize={"16px"} fontWeight={600}>
-                  Cloud Selection:
-                </Typography>
-
-                <Typography fontSize={"16px"} margin={"4px 0 0 16px"}>
-                  If the cloud value is empty, invalid, or unsupported, it will
-                  be automatically set to the default Cloud Service Provider
-                  (CSP).
-                </Typography>
-              </Box>
-            </Box>
+            <Suspense fallback={SKELETON}>
+              <CorrectionAndGuideLines handleClose={handleClose} />
+            </Suspense>
           )}
         />
       </Box>
@@ -192,4 +200,4 @@ ConsumptionMetadata.propTypes = {
   }).isRequired,
 };
 
-export default React.memo(ConsumptionMetadata);
+export default memo(ConsumptionMetadata);

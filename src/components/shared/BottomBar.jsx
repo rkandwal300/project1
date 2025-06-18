@@ -62,7 +62,8 @@ function BottomBar() {
       dispatch(
         setMessage({
           type: errorMessageType.ERROR,
-          message: "Portfolio name is required",
+          message:
+            "Please enter a portfolio name with at least 3 characters. Only letters, numbers, underscores (_), and hyphens (-) are allowed; no other special characters.",
         })
       );
       return;

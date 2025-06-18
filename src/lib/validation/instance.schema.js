@@ -10,4 +10,8 @@ export const instanceSchema = z.object({
   maxNetworkBandwidth: z.number().min(0, "Required"),
   maxDiskBandwidth: z.number().min(0, "Required"),
   maxIOPS: z.number().min(0, "Required"),
+  uavg: z.number().optional(),
+  pavg: z.number().optional(),  
+  u95: z.number().optional(),
+  p95: z.number().optional(),
 });

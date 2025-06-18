@@ -13,7 +13,7 @@ const theme = createTheme({
       default: "#8a8a8a",
     },
     error: {
-      main: "#E53935",
+      main: "#B00020",
       contrastText: "#FFFFFF",
     },
     success: {
@@ -71,7 +71,7 @@ const theme = createTheme({
           "&.Mui-disabled": {
             backgroundColor: "#757575",
             color: "#FFFFFF",
-          },
+        },
         },
         containedSecondary: {
           backgroundColor: "#E53935",
@@ -82,7 +82,7 @@ const theme = createTheme({
         },
 
         containedError: {
-          backgroundColor: "#E53935",
+          backgroundColor: "#B00020",
           color: "#FFFFFF",
           "&:hover": {
             backgroundColor: "#C62828",
@@ -201,8 +201,8 @@ const theme = createTheme({
           "&.Mui-selected": {
             backgroundColor: "#1A1A1A",
             color: "#FFFFFF",
-           "&:hover": {
-            backgroundColor: "#EEEEEE",
+            "&:hover": {
+            backgroundColor: "#1A1A1A",
             color: "#FFFFFF",
           },
           },
