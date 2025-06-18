@@ -3,7 +3,7 @@ import React from "react";
 const FeatureList = ({ features }) => (
   <div className="text-left" style={{ whiteSpace: "pre-wrap" }}>
     {features?.map((feature) => (
-      <div key={feature.label}>
+      <div key={feature.label} style={{fontSize:"14px"}}>
         <strong>{feature.label}:</strong>
         <ul className="list-disc pl-5">
           {feature.values.map((val, i) => (
@@ -20,7 +20,7 @@ const FeatureList = ({ features }) => (
 const UpcomingList = ({ items }) => (
   <ul className="list-disc pl-5" style={{ whiteSpace: "pre-wrap" }}>
     {items?.map((item) => (
-      <li key={item.label}>
+      <li key={item.label} style={{fontSize:"14px"}}>
         <strong>{item.label}:</strong>
         <ul className="list-disc pl-5">
           {item.values.map((val, i) => (
@@ -37,19 +37,17 @@ const UpcomingList = ({ items }) => (
 export const releaseNotesTableColumns = [
   {
     accessorKey: "version",
-    header: () => <div className="text-left font-medium">Version</div>,
-    
-    size: 80,
-    maxSize: 80,
-    minSize: 80,
+    header: "Version",
+    size: 75,
+    maxSize: 75,
+    minSize: 75,
   },
   {
     accessorKey: "releaseDate",
-    header: () => <div className="text-left font-medium">Release Date</div>,
-     
-    size: 122,
-    maxSize: 122,
-    minSize: 122,
+    header: "Release Date",
+    size: 90,
+    maxSize: 90,
+    minSize: 90,
   },
   {
     header: "What's New",
@@ -60,8 +58,8 @@ export const releaseNotesTableColumns = [
         cell: ({ row }) => (
           <FeatureList features={row.getValue("majorFeatures")} />
         ),
-        size: 300,
-        maxSize: 500,
+          size: 200,
+        maxSize: 400,
         minSize: 200,
       },
       {

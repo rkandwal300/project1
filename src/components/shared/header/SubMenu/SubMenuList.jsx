@@ -20,7 +20,9 @@ import { userEmail } from "@/lib/constant";
 const ReleaseNotes = lazy(() => import("./ReleaseNotes/ReleaseNotes"));
 const SupportMenu = lazy(() => import("./SupportMenu"));
 const UserMenu = lazy(() => import("./UserMenu"));
-const StatCollectorDescription = lazy(() => import("./StatCollectorDescription"));
+const StatCollectorDescription = lazy(() =>
+  import("./StatCollectorDescription")
+);
 
 function SubMenuList() {
   const theme = useTheme();
@@ -48,7 +50,14 @@ function SubMenuList() {
 
   // Fallback loader for Suspense
   const Loader = (
-    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 80 }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: 80,
+      }}
+    >
       <CircularProgress size={24} />
     </Box>
   );
@@ -95,7 +104,15 @@ function SubMenuList() {
             <ReleaseNotes {...props} />
           </Suspense>
         )}
-        maxWidth="lg"
+        sx={{
+          width: 950,
+          height: 512,
+          m: "auto",
+          p: 0,
+          gap: "8px",
+          display: "flex",
+          flexDirection: "column",
+        }}
       />
       <MenuHoc
         trigger={({ onClick }) => (

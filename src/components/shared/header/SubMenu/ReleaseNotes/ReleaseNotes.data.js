@@ -1,5 +1,67 @@
 export const releaseNotesTableData = [
   {
+    version: "v3.0.0",
+    releaseDate: "May, 2025",
+    majorFeatures: [
+      {
+        label: "Google Cloud Platform (GCP)",
+        values: [
+          "GCP support extended to all the regions across globe.(regional availability should be considered)",
+        ],
+      },
+      {
+        label: "Microsoft Azure",
+        values: ["Azure is now supported across all countries and regions."],
+      },
+      {
+        label: "Spot Instance Pricing",
+        values: [
+          "Users can now link their AWS CloudWatch account to view all instances and receive recommendations and cost advice.",
+        ],
+      },
+    ],
+
+    minorImprovements: [
+      {
+        label: "Excel export",
+        values: [
+          "Enhancement of font size and modification of note colors in the exported file for improved visibility.",
+
+          "The Current instance details such as Instance Type, Cost, Power, and Carbon emission has been frozen for more accurate comparison in the Excel document.",
+        ],
+      },
+      {
+        label: "Bug fixes and performance improvements",
+        values: [],
+      },
+    ],
+    upComing: [
+      {
+        label: "Azure app insights support:",
+        values: [
+          "Extended telemetry tool with Azure Application Insights to further enhance data collection and analysis.",
+        ],
+      },
+      {
+        label:
+          "Hyper-V VM’s support for recommendations/cost advice Automated CUR ingests",
+        values: [
+          "Customers can upload a data file, and the EPYC advisory service will extract the necessary data and create an input file for the cost advisor and instance advisor.",
+        ],
+      },
+      {
+        label:
+          "Custom headroom recommendations Improvised interactive demo Refined EIA recommendations",
+        values: [
+          "Clear differentiation between the recommendations for EIA",
+          "Cost optimized",
+          "Performance optimized",
+          "Less power and less carbon producing instances",
+        ],
+      },
+    ],
+  },
+  {
     version: "v2.0.0",
     releaseDate: "Apr, 2025",
     majorFeatures: [
