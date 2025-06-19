@@ -1,18 +1,20 @@
 import React from "react";
-import { Button, FormControl, InputLabel } from "@mui/material";
+import { FormControl, InputLabel } from "@mui/material";
 import SelectHoc from "@/components/ui/Select";
+import Download_Template from "@/assets/downloads/download_sample_template.xlsx";
+import Download_Self_Pref_Template from "@/assets/downloads/download_self_perf_assessment.xlsx";
 
 const menuItems = [
   {
     value: "download_template",
     label: "Download Template",
-    href: "/Sample_template.xlsx",
+    href: Download_Template,
     id: "downloadSelectTemplate",
   },
   {
     value: "download_self_pref_template",
     label: "Download Self Perf Assessment",
-    href: "/self_perf_assessment.xlsx",
+    href: Download_Self_Pref_Template,
     id: "downloadSelectSelfPerfTemplate",
   },
 ];
@@ -52,7 +54,7 @@ const DownloadSelect = () => {
         options={menuItems} 
         getOptionLabel={(option) => option.label}
         getOptionValue={(option) => option.value}
-        menuprops={
+        getMenuProps={
           option =>({
             href: option.href,
           })

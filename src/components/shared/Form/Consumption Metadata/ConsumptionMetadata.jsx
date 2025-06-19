@@ -2,9 +2,7 @@ import React, { useEffect, useState, Suspense, memo, useCallback } from "react";
 import {
   Typography,
   Button,
-  Box,
-  IconButton,
-  Divider,
+  Box, 
   Skeleton,
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
@@ -15,6 +13,7 @@ import { CONSUMPTION_AVG_FIELDS, CONSUMPTION_FIELDS } from "@/lib/constant";
 import { AnimatedIconButton } from "./AnimatedIconButton";
 import DialogHoc from "@/components/ui/Dialog";
 import TooltipHoc from "@/components/ui/Tooltip";
+import Find_And_Replace_Icon from '@/assets/icons/find-replace.svg'
 
 // Lazy imports
 const CorrectionAndGuideLines = React.lazy(() =>
@@ -151,7 +150,7 @@ function ConsumptionMetadata({ form }) {
                 >
                   <Box
                     component="img"
-                    src="/file-replace.svg"
+                    src={Find_And_Replace_Icon}
                     alt="Find & Replace"
                     sx={{ width: 24, height: 24 }}
                   />

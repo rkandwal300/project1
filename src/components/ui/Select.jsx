@@ -12,6 +12,7 @@ const SelectHoc = ({
   getOptionLabel = (option) => option,
   getOptionValue = (option) => option,
   menuprops = {},
+  getMenuProps,
   ...props
 }) => {
   const mergedMenuProps = {
@@ -48,7 +49,7 @@ const SelectHoc = ({
           value={getOptionValue(option)}
           key={getOptionValue(option)}
           id={option.id}
-          {...(props?.menuProps ? props.menuProps(option) : {})}
+          {...(getMenuProps ? getMenuProps(option) : {})}
         >
           {getOptionLabel(option)}
         </MenuItem>
@@ -68,9 +69,9 @@ SelectHoc.propTypes = {
   getOptionLabel: PropTypes.func,
   getOptionValue: PropTypes.func,
   renderNone: PropTypes.bool,
-  MenuProps: PropTypes.object,
+  menuprops: PropTypes.object,
   menucomponent: PropTypes.string,
-  menuProps: PropTypes.func,
+  getMenuProps: PropTypes.func,
 };
 
 export default SelectHoc;

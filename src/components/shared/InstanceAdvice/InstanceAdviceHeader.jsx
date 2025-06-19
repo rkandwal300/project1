@@ -19,6 +19,8 @@ import PropTypes from "prop-types";
 import TooltipHoc from "@/components/ui/Tooltip";
 import DialogHoc from "@/components/ui/Dialog";
 import { useTheme } from "@emotion/react";
+import cost_advisor from "@/assets/downloads/cost_advisor.xlsx";
+import Excel_Icon from "@/assets/icons/file-excel.svg";
 
 const EXPLANATION_LIST = [
   "Instances for which performance data is unavailable.",
@@ -118,11 +120,11 @@ const ExportButton = React.memo(() => (
       id="btn-cost-advice-export"
       variant="outlined"
       size="small"
-      href="/cost_advisor.xlsx"
+      href={cost_advisor}
       startIcon={
         <Box
           component="img"
-          src="/file-excel.svg"
+          src={Excel_Icon}
           alt="Excel Export"
           sx={{ width: 18, height: 18 }}
         />

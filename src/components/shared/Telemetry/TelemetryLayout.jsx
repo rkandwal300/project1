@@ -1,5 +1,5 @@
-import { Box, Skeleton } from "@mui/material";
-import React, { Suspense, lazy } from "react";
+import { Box } from "@mui/material";
+import React, {  lazy } from "react";
 import { useSelector } from "react-redux";
 import { selectTelemetryState } from "@/redux/features/telemetry/telemetry.selector";
 import { telemetryColumns } from "./telemetryColumns";
