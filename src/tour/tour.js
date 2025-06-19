@@ -119,7 +119,7 @@ function generateButtons(step, currentStepIndex) {
 
 const tour = new Shepherd.Tour({
   defaultStepOptions: {
-    cancelIcon: { enabled: true },
+    cancelIcon: { enabled: false },
     classes: "shepherd-theme-arrows",
     scrollTo: { behavior: "smooth", block: "center" },
   },
@@ -138,17 +138,17 @@ allSteps.forEach((step, currentStepIndex) => {
     //   },
     beforeShowPromise: () =>
       new Promise((resolve) => {
-        if (step.speak) {
-          speakText(step?.speak);
-        }
+        const speakIfNeeded = () => {
+          
+          if (step.speak) speakText(step.speak, isMuted);
+        };
+
         const checkExist = setInterval(() => {
           const el = document.querySelector(step.attachTo.element);
           if (el) {
             clearInterval(checkExist);
             highlightElement(step.attachTo.element);
-            if (step?.speak) {
-              speakText(step.speak);
-            }
+            speakIfNeeded();
             resolve();
           }
         }, 100);
@@ -156,7 +156,6 @@ allSteps.forEach((step, currentStepIndex) => {
     when: {
       hide: () => {
         removeHighlight(step.attachTo.element);
-        // window.speechSynthesis.cancel();
       },
     },
   });

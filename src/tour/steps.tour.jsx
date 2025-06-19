@@ -6,9 +6,6 @@ const steps = () => [
     id: "step-1",
     label: "releaseNotes",
     text: "Click this button to view previous releases.",
-    speak: `
-      Welcome to the AMD EPYC Cloud Instance Advisor, or EIA — a powerful recommendation engine that helps you select the best-fit cloud instances based on your system’s performance data. On the home page, you’ll find a navigation bar with the following options: Click the release notes icon to view what's new. This dialog will appear automatically on your first login and whenever a new version is released. Click the support icon to reach out for help. You can call the hotline or email us directly. Your email is shown on the top-right. Click the profile icon to access account settings and permissions. You can also click the icons to access the user guide , online documentation , about , or to log out . To start gathering metrics, click on the “Download Stat Collector” button. This tool collects CPU, memory, disk, and network stats, and generates an XLSX file used for recommendations. Once downloaded, unzip the file and follow the instructions in the included user guide to execute it.
-    `,
     attachTo: {
       element: "#step-one-target",
       on: "bottom",
@@ -20,6 +17,9 @@ const steps = () => [
   {
     id: "step-2",
     text: "Click here to close the dialog box.",
+    speak: `
+      Welcome to the AMD EPYC Cloud Instance Advisor, or EIA — a powerful recommendation engine that helps you select the best-fit cloud instances based on your system’s performance data. On the home page, you’ll find a navigation bar with the following options: Click the release notes icon to view what's new. This dialog will appear automatically on your first login and whenever a new version is released. Click the support icon to reach out for help. You can call the hotline or email us directly. Your email is shown on the top-right. Click the profile icon to access account settings and permissions. You can also click the icons to access the user guide , online documentation , about , or to log out . To start gathering metrics, click on the “Download Stat Collector” button. This tool collects CPU, memory, disk, and network stats, and generates an XLSX file used for recommendations. Once downloaded, unzip the file and follow the instructions in the included user guide to execute it.
+    `,
     attachTo: {
       element: "#step-two-target",
       on: "top",
@@ -132,8 +132,8 @@ const steps = () => [
     attachTo: {
       element: "#portfolio-name",
       on: "bottom",
-      speak: `To manually add instances to an existing portfolio: Select the portfolio. Under “Generic Metadata”, select the region, instance type, enter the UUID, and choose the pricing model. Under “Consumption Metadata”, enter performance values for CPU, memory, disk, network, and IOPS. Click the Add Instance button, indicated by the “+” icon. Then click “Save” to add it to the portfolio. To remove unsaved entries, click “Cancel” and confirm in the popup.`,
     },
+    speak: `To manually add instances to an existing portfolio: Select the portfolio. Under “Generic Metadata”, select the region, instance type, enter the UUID, and choose the pricing model. Under “Consumption Metadata”, enter performance values for CPU, memory, disk, network, and IOPS. Click the Add Instance button, indicated by the “+” icon. Then click “Save” to add it to the portfolio. To remove unsaved entries, click “Cancel” and confirm in the popup.`,
     type: "wait",
     label: "portfolioName",
   },

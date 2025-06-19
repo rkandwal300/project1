@@ -64,6 +64,7 @@ const App = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
+      window.speechSynthesis.cancel();
       import("@/tour/tour").then((tour) => {
         tour.default?.start();
       });
