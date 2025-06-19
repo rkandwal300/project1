@@ -1,4 +1,4 @@
- import { useMemo } from "react";
+import { useMemo } from "react";
 
 export const useTableStyles = (variant, theme) =>
   useMemo(() => {
@@ -9,8 +9,8 @@ export const useTableStyles = (variant, theme) =>
           color: theme.palette.success.contrastText,
           backgroundColor: theme.palette.grey[700],
           verticalAlign: "middle",
-
-          borderBottom: `1px solid ${theme.palette.secondary.default}`,
+          borderBottom: "1px solid",
+          borderColor: theme.palette.secondary.default,
         },
         head: {
           verticalAlign: "top",
@@ -22,37 +22,35 @@ export const useTableStyles = (variant, theme) =>
         },
       };
     }
-    if (variant === 'provider') {
-      const borderColor= theme.palette.grey[400]
-        return {
-        
+    if (variant === "provider") {
+      const borderColor = theme.palette.grey[400];
+      return {
         bodyRow: { backgroundColor: theme.palette.grey[700] },
         cell: {
           color: theme.palette.grey[700],
           backgroundColor: theme.palette.primary.contrastText,
-          padding:0,
+          padding: 0,
           verticalAlign: "top",
           alignItems: "center",
           border: "0px",
-          borderBottom: "none", 
+          borderBottom: "none",
           height: "40px",
-          fontSize:"13px",
-          borderLeft: `2px solid ${borderColor}`,
-
-
+          fontSize: "13px",
+          borderLeft: "1px solid",
+          borderColor: borderColor,
         },
         head: {
           alignItems: "stretch",
           verticalAlign: "center",
           padding: 1,
-          height:"45px",
-          color:  theme.palette.dark,
-          fontWeight:600,
-          fontSize:"15px",
+          height: "45px",
+          color: theme.palette.dark,
+          fontWeight: 600,
+          fontSize: "15px",
           backgroundColor: theme.palette.primary.contrastText,
-          borderLeft:`2px solid ${borderColor}`,
-          borderBottom: `2px solid ${borderColor}`,
-
+          borderLeft: `1px solid`,
+          borderBottom: `1px solid`,
+          borderColor: borderColor,
         },
       };
     }

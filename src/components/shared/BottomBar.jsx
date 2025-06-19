@@ -42,9 +42,7 @@ function BottomBar() {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  const currentInstanceId = location.pathname.split("/")[1];
-  const queryParams = new URLSearchParams(location.search);
-  const type = queryParams.get("type");
+  const currentInstanceId = location.pathname.split("/")[1]; 
 
   const currentProviderName = useSelector(selectCurrentProviderName);
   const alertMessage = useSelector(selectMessage);
@@ -71,10 +69,9 @@ function BottomBar() {
 
     const isDuplicate = instanceList.some(
       (instance) =>
-        instance.name === trimmedName &&
-        instance.id !== currentInstanceId &&
-        type == currentProviderName
-    );
+        instance.name === trimmedName && 
+        instance.provider === currentProviderName
+    ); 
 
     if (isDuplicate) {
       dispatch(

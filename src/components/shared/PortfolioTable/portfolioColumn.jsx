@@ -4,8 +4,12 @@ import { Checkbox, IconButton } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { updateSingleInstance } from "@/redux/features/instance/instance.slice.js";
-import { useDispatch ,useSelector } from "react-redux";
-import { selectCurrentProviderInstanceTypes, selectCurrentProviderPricingModels, selectCurrentProviderRegions } from "@/redux/features/providerData/providerData.selector.js";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCurrentProviderInstanceTypes,
+  selectCurrentProviderPricingModels,
+  selectCurrentProviderRegions,
+} from "@/redux/features/providerData/providerData.selector.js";
 
 // Lazy load editable cells for performance
 const EditableSelectCell = lazy(() =>
@@ -39,12 +43,11 @@ EditableCell.propTypes = {
   table: PropTypes.object,
 };
 
-
-export default function GetInstanceColumn({isTelemetry = false}) {
+export default function GetInstanceColumn({ isTelemetry = false }) {
   const dispatch = useDispatch();
-  const regionOptions = useSelector  (selectCurrentProviderRegions)
-  const instanceOptions = useSelector  (selectCurrentProviderInstanceTypes)
-  const pricingModelOptions = useSelector  (selectCurrentProviderPricingModels)
+  const regionOptions = useSelector(selectCurrentProviderRegions);
+  const instanceOptions = useSelector(selectCurrentProviderInstanceTypes);
+  const pricingModelOptions = useSelector(selectCurrentProviderPricingModels);
   const getOptionsByField = (field) => {
     switch (field) {
       case "region":
@@ -101,9 +104,9 @@ export default function GetInstanceColumn({isTelemetry = false}) {
     [handleValueChange]
   );
 
-  return useMemo(
+  const columns = useMemo(
     () => [
-    (!isTelemetry &&  {
+      {
         id: "select",
         header: ({ table }) => (
           <Checkbox
@@ -134,7 +137,7 @@ export default function GetInstanceColumn({isTelemetry = false}) {
         size: 70,
         maxSize: 70,
         minSize: 70,
-      })  ,
+      },
       {
         id: "uuid",
         header: () => "UUID/Instance Name",
@@ -162,6 +165,7 @@ export default function GetInstanceColumn({isTelemetry = false}) {
         maxSize: 200,
       },
       {
+        id: "maxCpuUtilization",
         header: "Maximum Bandwidth Used",
         columns: [
           {
@@ -201,6 +205,7 @@ export default function GetInstanceColumn({isTelemetry = false}) {
             maxSize: 200,
           },
           {
+            id: "maxIOPS",
             accessorKey: "maxIOPS",
             header: "IOPS",
             cell: renderEditableTextCell("maxIOPS"),
@@ -223,7 +228,7 @@ export default function GetInstanceColumn({isTelemetry = false}) {
         id: "uavg",
         header: () => "UAVG",
         accessorKey: "uavg",
-        cell:({getValue})=>getValue()?? "-",
+        cell: ({ getValue }) => getValue() ?? "-",
         minSize: 90,
         size: 90,
         maxSize: 90,
@@ -232,7 +237,7 @@ export default function GetInstanceColumn({isTelemetry = false}) {
         id: "pavg",
         header: () => "PAVG",
         accessorKey: "pavg",
-        cell:({getValue})=>getValue()?? "-",
+        cell: ({ getValue }) => getValue() ?? "-",
         minSize: 90,
         size: 90,
         maxSize: 90,
@@ -241,7 +246,7 @@ export default function GetInstanceColumn({isTelemetry = false}) {
         id: "u95",
         header: () => "U95",
         accessorKey: "p95",
-        cell:({getValue})=>getValue()?? "-",
+        cell: ({ getValue }) => getValue() ?? "-",
         minSize: 90,
         size: 90,
         maxSize: 90,
@@ -250,7 +255,7 @@ export default function GetInstanceColumn({isTelemetry = false}) {
         id: "p95",
         header: () => "P95",
         accessorKey: "p95",
-        cell:({getValue})=>getValue()?? "-",
+        cell: ({ getValue }) => getValue() ?? "-",
         minSize: 90,
         size: 90,
         maxSize: 90,
@@ -294,4 +299,8 @@ export default function GetInstanceColumn({isTelemetry = false}) {
     ],
     [renderEditableCell, renderEditableTextCell, theme]
   );
+  if (isTelemetry) {
+    columns.shift();
+  }
+  return columns;
 }

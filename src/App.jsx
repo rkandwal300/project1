@@ -65,7 +65,7 @@ const App = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       import("@/tour/tour").then((tour) => {
-        tour.default.start();
+        tour.default?.start();
       });
     }, 1000);
     return () => clearTimeout(timeoutId);
@@ -84,11 +84,11 @@ const App = () => {
 
   useEffect(() => {
     const provider = getProviderConfig(routes, type);
+    console.log({provider})
     dispatch(setProvider(provider));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routes.join(","), type]);
-
-  // Dynamically select BottomBar component
+ 
   const BottomBarComponent = useMemo(() => {
     if (matchPath("/telemetry/:id", pathname)) return TelemetryDetailBottomBar;
     if (pathname.startsWith("/telemetry")) return TelemetryBottomBar;

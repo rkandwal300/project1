@@ -11,7 +11,7 @@ const SelectHoc = ({
   menuPosition = "bottom",
   getOptionLabel = (option) => option,
   getOptionValue = (option) => option,
-  MenuProps = {},
+  menuprops = {},
   ...props
 }) => {
   const mergedMenuProps = {
@@ -27,11 +27,11 @@ const SelectHoc = ({
       style: {
         maxHeight: 300,
         overflowY: "auto",
-        ...MenuProps?.PaperProps?.style,
+        ...menuprops?.PaperProps?.style,
       },
-      ...MenuProps?.PaperProps,
+      ...menuprops?.PaperProps,
     },
-    ...MenuProps,
+    ...menuprops,
   };
 
   return (

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { useCallback, lazy, Suspense, useEffect } from "react";
 import { Box, Divider } from "@mui/material";
 import { instanceSchema } from "@/lib/validation/instance.schema";
@@ -9,19 +9,18 @@ import PropTypes from "prop-types";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import ErrorBoundary from "../ErrorBoundary";
 import FormSkeleton from "./FormSkeleton";
-import { addInstance } from "@/redux/features/instance/instance.slice";
-import { useLocation } from "react-router-dom";
+import { addInstance } from "@/redux/features/instance/instance.slice"; 
 import PortfolioDetails from "./PortfolioDetails";
 import GenericMetadata from "./GenericMetadata";
-import ConsumptionMetadata from "./Consumption Metadata/ConsumptionMetadata";
+import ConsumptionMetadata from "./Consumption Metadata/ConsumptionMetadata"; 
+import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector";
 
 const FormAlert = lazy(() => import("@/components/ui/FormAlert"));
 
-
 function InstanceForm() {
   const dispatch = useDispatch();
-
-  const location = useLocation();
+ 
+  const providerName = useSelector(selectCurrentProviderName);
 
   const [formError, setFormError] = useTimedMessage();
   const [formSuccess, setFormSuccess] = useTimedMessage();
@@ -31,7 +30,7 @@ function InstanceForm() {
     defaultValues: {},
     mode: "onTouched",
   });
- 
+
   const handleSubmit = useCallback(
     (data) => {
       dispatch(
@@ -50,7 +49,7 @@ function InstanceForm() {
 
   useEffect(() => {
     form.reset({});
-  }, [form, location.pathname]);
+  }, [form, providerName]);
   return (
     <Box
       component="form"

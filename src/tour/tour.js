@@ -138,12 +138,17 @@ allSteps.forEach((step, currentStepIndex) => {
     //   },
     beforeShowPromise: () =>
       new Promise((resolve) => {
+        if (step.speak) {
+          speakText(step?.speak);
+        }
         const checkExist = setInterval(() => {
           const el = document.querySelector(step.attachTo.element);
           if (el) {
             clearInterval(checkExist);
             highlightElement(step.attachTo.element);
-            speakText(step.text);
+            if (step?.speak) {
+              speakText(step.speak);
+            }
             resolve();
           }
         }, 100);
@@ -151,7 +156,7 @@ allSteps.forEach((step, currentStepIndex) => {
     when: {
       hide: () => {
         removeHighlight(step.attachTo.element);
-        window.speechSynthesis.cancel();
+        // window.speechSynthesis.cancel();
       },
     },
   });

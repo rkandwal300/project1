@@ -71,8 +71,7 @@ function PortfolioBody() {
     },
     [dispatch]
   );
-
-console.log({data:dataMap['instance_stats']})
+ 
 
   return (
     <Box sx={{ width: "100%", p: 0, bgcolor: "primary.contrastText" }}>

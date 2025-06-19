@@ -9,7 +9,7 @@ import {
   setTelemetryData,
   setTelemetryConnectionStatus,
   telemetryConnectionStatus,
-  telemetryTypes,
+  TELEMETRY_TYPES,
   toggleResetTelemetry,
 } from "@/redux/features/telemetry/telemetry.slice";
 import { selectTelemetryResetFlag } from "@/redux/features/telemetry/telemetry.selector";
@@ -82,7 +82,7 @@ function AzureInsightsForm() {
       dispatch(
         setTelemetryConnectionStatus({
           connectionStatus: telemetryConnectionStatus.CONNECTED,
-          type: telemetryTypes.AZURE_INSIGHTS,
+          type: TELEMETRY_TYPES.AZURE_INSIGHTS,
         })
       );
       setFormSuccess("Azure Insights connection is successful");

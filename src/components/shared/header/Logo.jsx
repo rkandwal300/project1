@@ -4,6 +4,8 @@ import React from 'react'
 function Logo() {
   return (
       <Box
+      component={'a'}
+      href="/"
           sx={{
             display: "flex",
             alignItems: "center",

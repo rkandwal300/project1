@@ -1,6 +1,6 @@
 import { instanceList, providerList } from "@/lib/instanceList";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { CLOUD_TYPES } from "../telemetry/telemetry.slice";
 export const fetchInstanceType = createAsyncThunk(
   "provider/fetchInstanceType",
   async () => instanceList
@@ -22,26 +22,57 @@ const providerSlice = createSlice({
   initialState,
   reducers: {
     setProvider(state, action) {
-      state.type = action.payload.type;
-      if ( action .payload.type === "telemetry") {
-     
-        state.telemetryCloud = 'AWS';
+      let { type = "cloud", name = CLOUD_TYPES.AWS } = action.payload;
+      state.type = type;
+      state.name = name;
+
+      let filteredProviders = [];
+
+      if (type === "telemetry") {
+        const validTelemetryClouds = state.providerList
+          .filter((provider) => provider.type === "telemetry")
+          .map((provider) => provider.cloud);
+
+        if (validTelemetryClouds.includes(name)) {
+          state.telemetryCloud = name;
+        } else {
+          state.telemetryCloud = validTelemetryClouds[0] || null;
+          name = state.telemetryCloud;
+        }
+
+        filteredProviders = instanceList.filter(
+          (provider) =>
+            provider.type === "telemetry" &&
+            provider.cloud.toLowerCase() === name.toLowerCase()
+        );
+      } else {
+        state.telemetryCloud = null;
+        filteredProviders = instanceList.filter(
+          (provider) =>
+            provider.type === type &&
+            provider.name &&
+            provider.name.toLowerCase() === name?.toLowerCase()
+        );
       }
-      state.name = action.payload.name;
-      const filteredProviders = instanceList.filter(
-        (provider) =>
-          provider.type === action.payload.type &&
-          provider.name.toLowerCase() === action.payload.name.toLowerCase()
-      );
+
       state.regions = [
         ...new Set(
           filteredProviders.flatMap((provider) => provider.region || [])
         ),
       ];
     },
-    setTelemetryCloud:(state, action) => {
+    setTelemetryCloud: (state, action) => {
       state.telemetryCloud = action.payload;
-       
+      const filteredProviders = instanceList.filter(
+        (provider) =>
+          provider.type === "telemetry" &&
+          provider.cloud.toLowerCase() === action.payload.toLowerCase()
+      );
+      state.regions = [
+        ...new Set(
+          filteredProviders.flatMap((provider) => provider.region || [])
+        ),
+      ];
     },
     setRegion(state, action) {
       state.region = action.payload;
@@ -54,7 +85,7 @@ const providerSlice = createSlice({
             provider.region == action.payload ? provider.instanceType : []
           )
         ),
-      ];     
+      ];
     },
   },
   extraReducers: (builder) => {
@@ -80,5 +111,6 @@ const providerSlice = createSlice({
   },
 });
 
-export const { setProvider, setRegion ,setTelemetryCloud} = providerSlice.actions;
+export const { setProvider, setRegion, setTelemetryCloud } =
+  providerSlice.actions;
 export default providerSlice.reducer;

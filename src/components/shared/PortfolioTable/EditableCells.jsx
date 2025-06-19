@@ -28,7 +28,7 @@ export const EditableSelectCell = ({
       "& .MuiSelect-select": { p: "8px 16px" },
       "& .MuiSelect-icon": { color: "#fff" },
     }}
-    MenuProps={{
+    menuprops={{
       PaperProps: {
         sx: {
           bgcolor: "#212121",

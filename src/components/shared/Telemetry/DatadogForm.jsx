@@ -12,7 +12,7 @@ import {
   setTelemetryData,
   setTelemetryConnectionStatus,
   telemetryConnectionStatus,
-  telemetryTypes,
+  TELEMETRY_TYPES,
   toggleResetTelemetry,
 } from "@/redux/features/telemetry/telemetry.slice";
 import { selectTelemetryResetFlag } from "@/redux/features/telemetry/telemetry.selector";
@@ -24,15 +24,15 @@ import RegionsSelect from "@/components/ui/RegionSelect";
 const inputStyle = { fontWeight: 600 };
 
 const getSchema = (type) =>
-  type === telemetryTypes.AWS_CLOUDWATCH
+  type === TELEMETRY_TYPES.AWS_CLOUDWATCH
     ? dataDogSchema.omit({ hostTag: true })
     : dataDogSchema;
 
 const getApiKeyLabel = (type) =>
-  type === telemetryTypes.AWS_CLOUDWATCH ? "Access Key" : "API Key";
+  type === TELEMETRY_TYPES.AWS_CLOUDWATCH ? "Access Key" : "API Key";
 
 const getAppKeyLabel = (type) =>
-  type === telemetryTypes.AWS_CLOUDWATCH ? "App Secret" : "Application Key";
+  type === TELEMETRY_TYPES.AWS_CLOUDWATCH ? "App Secret" : "Application Key";
 
 function DatadogForm() {
   const theme = useTheme();
@@ -89,7 +89,7 @@ function DatadogForm() {
       dispatch(
         setTelemetryConnectionStatus({
           connectionStatus: telemetryConnectionStatus.CONNECTED,
-          type: telemetryTypes.DATA_DOG,
+          type: TELEMETRY_TYPES.DATA_DOG,
         })
       );
       setFormSuccess("Datadog connection is successful");
@@ -172,7 +172,7 @@ function DatadogForm() {
           name="appKey"
         />
 
-        {type === telemetryTypes.DATA_DOG && (
+        {type === TELEMETRY_TYPES.DATA_DOG && (
           <TextField
             label="Host Tag"
             type="text"

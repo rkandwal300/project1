@@ -5,7 +5,7 @@ import { selectTelemetryState } from "@/redux/features/telemetry/telemetry.selec
 import { telemetryColumns } from "./telemetryColumns";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { useLocation } from "react-router-dom";
-import { telemetryTypes } from "@/redux/features/telemetry/telemetry.slice";
+import { TELEMETRY_TYPES } from "@/redux/features/telemetry/telemetry.slice";
 
 // Lazy load the forms
 const DatadogForm = lazy(() => import("./DatadogForm"));
@@ -28,7 +28,7 @@ function TelemetryLayout() {
         padding: 0,
       }}
     >
-      {type === telemetryTypes.AZURE_INSIGHTS ? (
+      {type === TELEMETRY_TYPES.AZURE_INSIGHTS ? (
         <AzureInsightsForm />
       ) : (
         <DatadogForm />

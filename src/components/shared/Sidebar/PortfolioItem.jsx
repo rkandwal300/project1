@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { ListItemButton, ListItemText, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.slice";
 import { updateInstanceState } from "@/redux/features/instance/instance.slice";
@@ -8,8 +8,7 @@ import propsTypes from "prop-types";
 import {
   selectCurrentProviderName,
   selectCurrentProviderType,
-} from "@/redux/features/providerData/providerData.selector";
-import { useSelector } from "react-redux";
+} from "@/redux/features/providerData/providerData.selector"; 
 import { selectCurrentInstance } from "@/redux/features/instanceList/instanceList.selector";
 
 export default function PortfolioItem({ portfolio }) {

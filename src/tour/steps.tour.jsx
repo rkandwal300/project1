@@ -6,6 +6,9 @@ const steps = () => [
     id: "step-1",
     label: "releaseNotes",
     text: "Click this button to view previous releases.",
+    speak: `
+      Welcome to the AMD EPYC Cloud Instance Advisor, or EIA — a powerful recommendation engine that helps you select the best-fit cloud instances based on your system’s performance data. On the home page, you’ll find a navigation bar with the following options: Click the release notes icon to view what's new. This dialog will appear automatically on your first login and whenever a new version is released. Click the support icon to reach out for help. You can call the hotline or email us directly. Your email is shown on the top-right. Click the profile icon to access account settings and permissions. You can also click the icons to access the user guide , online documentation , about , or to log out . To start gathering metrics, click on the “Download Stat Collector” button. This tool collects CPU, memory, disk, and network stats, and generates an XLSX file used for recommendations. Once downloaded, unzip the file and follow the instructions in the included user guide to execute it.
+    `,
     attachTo: {
       element: "#step-one-target",
       on: "bottom",
@@ -75,6 +78,7 @@ const steps = () => [
       on: "bottom",
     },
     type: "wait",
+    speak: `Click on the “Downloads” button to get the templates. Download the Instance Details Template and fill in data such as UUID, CSP, instance type, region, CPU, memory, disk and network utilization. Optionally, download the Self-Performance Assessment Template, if applicable.`,
     label: "downloadMenu",
     isSkip: true,
   },
@@ -107,16 +111,18 @@ const steps = () => [
     },
     type: "wait",
     label: "serviceProviderMenu",
+    speak: `Once your file is ready, click on the Upload Instances button. Choose the Cloud Service Provider from the dropdown — AWS, Azure, or GCP. Enter a portfolio name. Click “Upload Instances” to browse and upload your XLSX file containing up to 20,000 records. Once uploaded, the details will appear under the “Instance Stats” section. To upload performance assessment data, check the box to enable the upload field. Click “Upload Self-Perf Assessment”, then browse and select your XLSX file. The details can be viewed under the “Self-Perf Assessment” tab. `,
     isSkip: true,
   },
   {
     id: "step-9.1",
     text: "Select your preferred Service Provider from the list.",
     attachTo: {
-      element: "#menuItem-cloud-AZURE",
+      element: "#menuItem-cloud-Azure",
       on: "left",
     },
     type: "wait",
+
     label: "serviceProviderMenu",
     isSkip: true,
   },
@@ -126,6 +132,7 @@ const steps = () => [
     attachTo: {
       element: "#portfolio-name",
       on: "bottom",
+      speak: `To manually add instances to an existing portfolio: Select the portfolio. Under “Generic Metadata”, select the region, instance type, enter the UUID, and choose the pricing model. Under “Consumption Metadata”, enter performance values for CPU, memory, disk, network, and IOPS. Click the Add Instance button, indicated by the “+” icon. Then click “Save” to add it to the portfolio. To remove unsaved entries, click “Cancel” and confirm in the popup.`,
     },
     type: "wait",
     label: "portfolioName",
@@ -137,6 +144,7 @@ const steps = () => [
       element: "#uploadInstances",
       on: "bottom",
     },
+
     label: "uploadInstances",
   },
   {
@@ -156,6 +164,10 @@ const steps = () => [
       on: "top",
     },
     type: "wait",
+    speak: `To delete a portfolio, select it and click “Delete Portfolio”, then confirm in the popup. To delete selected instances, click “Delete” at the bottom of the table and confirm.`,
+    //     speak: `To remove all error records, click “Delete Error Records”.
+    // A confirmation popup will appear. Click “Delete” to proceed.
+    // Then, click “Save” to apply the changes.`,
     label: "deletePortfolio",
     isSkip: true,
   },
@@ -222,7 +234,7 @@ const steps = () => [
     },
     type: "wait",
     label: "pricingSwitch",
-      isSkip: true,
+    isSkip: true,
   },
   {
     id: "step-19",
@@ -233,7 +245,7 @@ const steps = () => [
     },
     type: "wait",
     label: "pricingSwitch",
-      isSkip: true,
+    isSkip: true,
   },
   {
     id: "step-20",
@@ -244,7 +256,7 @@ const steps = () => [
     },
     type: "wait",
     label: "costAdvisoryTable",
-      isSkip: true,
+    isSkip: true,
   },
 
   {
@@ -264,9 +276,10 @@ const steps = () => [
       element: "#btn-dashboard-createPortfolio",
       on: "bottom",
     },
+    speak: `Click the “+” icon in the portfolios section to start a new portfolio and reset the instance table.`,
     type: "wait",
     label: "createPortfolio",
-      isSkip: true,
+    isSkip: true,
   },
   {
     id: "step-25",
@@ -315,6 +328,7 @@ const steps = () => [
       element: "#findAndReplace",
       on: "bottom",
     },
+    speak: `To quickly update instance types, regions, or pricing models, click “Find & Replace”. Select values from the “From” and “To” dropdowns. Click “Replace All” to apply changes across the dataset. Click “Save” to finalize.`,
     type: "wait",
     label: "replaceInstanceFields",
     isSkip: true,
@@ -328,7 +342,7 @@ const steps = () => [
     },
     type: "wait",
     label: "replaceInstanceFields",
-     isSkip: true,
+    isSkip: true,
   },
   {
     id: "step-29",
@@ -339,7 +353,7 @@ const steps = () => [
     },
     type: "wait",
     label: "replaceInstanceFields",
-     isSkip: true,
+    isSkip: true,
   },
   {
     id: "step-30",
@@ -350,7 +364,7 @@ const steps = () => [
     },
     type: "wait",
     label: "replaceInstanceFields",
-     isSkip: true,
+    isSkip: true,
   },
   {
     id: "step-31",
@@ -360,8 +374,9 @@ const steps = () => [
       on: "top",
     },
     type: "wait",
+    speak: `If any upload errors occur, they’ll be flagged with specific messages. To fix them, double-click the field and make the necessary updates. Click anywhere on the table to apply the changes. Click “Save” to confirm all updates.`,
     label: "editInstanceField",
-     isSkip: true,
+    isSkip: true,
   },
   {
     id: "step-32",
@@ -372,7 +387,7 @@ const steps = () => [
     },
     type: "wait",
     label: "editInstanceField",
-     isSkip: true,
+    isSkip: true,
   },
   {
     id: "step-33",
@@ -413,7 +428,7 @@ const steps = () => [
     },
     type: "wait",
     label: "statCollectorInfo",
-     isSkip: true,
+    isSkip: true,
   },
   {
     id: "step-37",
@@ -425,7 +440,7 @@ const steps = () => [
 
     type: "wait",
     label: "statCollectorInfo",
-     isSkip: true,
+    isSkip: true,
   },
   {
     id: "step-38",
@@ -435,6 +450,7 @@ const steps = () => [
       on: "right",
       offset: "0 20",
     },
+    speak: `That wraps up your guided tour of the AMD EPYC Cloud Instance Advisor. For further help, refer to the user guide or click the support icon. Start optimizing your cloud workloads today.`,
     label: "profileMenu",
   },
   {

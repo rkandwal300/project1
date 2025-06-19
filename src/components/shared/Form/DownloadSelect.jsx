@@ -52,7 +52,7 @@ const DownloadSelect = () => {
         options={menuItems} 
         getOptionLabel={(option) => option.label}
         getOptionValue={(option) => option.value}
-        menuProps={
+        menuprops={
           option =>({
             href: option.href,
           })

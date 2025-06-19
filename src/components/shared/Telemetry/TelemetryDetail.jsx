@@ -22,6 +22,7 @@ function TelemetryDetail() {
     );
   }
   const columns = GetInstanceColumn({isTelemetry : true});
+  console.log({data})
   return (
     <Box
       sx={{

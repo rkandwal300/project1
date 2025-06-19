@@ -10,11 +10,16 @@ export const telemetryConnectionStatus = {
   CONNECTING: "connecting",
   DISCONNECTED: "disconnected",
 };
-export const telemetryTypes = {
+export const TELEMETRY_TYPES = {
   DATA_DOG: "Datadog",
   AWS_CLOUDWATCH: "AWS CloudWatch",
   AZURE_INSIGHTS: "Azure App Insights",
 };
+export const CLOUD_TYPES ={
+  AWS: "AWS",
+  AZURE: "Azure",
+  GCP: "GCP",
+}
 
 const initialState = {
   data: [],
@@ -44,13 +49,13 @@ const telemetrySlice = createSlice({
       state.connectionStatus = action.payload.connectionStatus;
       state.type = action.payload.type;
       switch (action.payload.type) {
-        case telemetryTypes.DATA_DOG:
+        case TELEMETRY_TYPES.DATA_DOG:
           state.data = dataDogTelemetryData;
           break;
-        case telemetryTypes.AWS_CLOUDWATCH:
+        case TELEMETRY_TYPES.AWS_CLOUDWATCH:
           state.data = awsCloudWatchTelemetryData;
           break;
-        case telemetryTypes.AZURE_INSIGHTS:
+        case TELEMETRY_TYPES.AZURE_INSIGHTS:
           state.data = azureInsightsTelemetryData;
           break;
         default:

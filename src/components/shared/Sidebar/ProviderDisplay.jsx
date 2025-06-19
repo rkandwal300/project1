@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
-import { MenuItem, Typography, Avatar } from "@mui/material";
+import { MenuItem, Typography, Avatar, Box, Divider } from "@mui/material";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setProvider } from "@/redux/features/providerData/providerData.slice";
 import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.slice";
-import { resetInstanceState } from "@/redux/features/instance/instance.slice";
+import { resetInstanceState } from "@/redux/features/instance/instance.slice"; 
 
 // Utility to format header text
 const toTitleCase = (text) =>
@@ -23,9 +23,9 @@ const ProviderDisplay = ({ onClose, data }) => {
       const handleClick = () => {
         dispatch(setProvider({ type, name }));
         dispatch(addCurrentInstance(null));
-            dispatch(resetInstanceState());
+        dispatch(resetInstanceState());
         const formattedName = name;
-        
+
         if (type === "cloud") {
           navigate(`/?type=${formattedName}`);
         } else if (type === "telemetry") {
@@ -35,8 +35,8 @@ const ProviderDisplay = ({ onClose, data }) => {
       };
 
       return (
-        <MenuItem
-        id={`menuItem-${type}-${name}`}
+        <MenuItem 
+          id={`menuItem-${type}-${name}`}
           value={name}
           onClick={handleClick}
           sx={{
@@ -68,18 +68,36 @@ const ProviderDisplay = ({ onClose, data }) => {
   );
 
   return (
-    <CustomTable
-      data={data}
-      columns={columns}
-      variant="provider"
-      sx={{
-        maxWidth: 350,
-        overflow: "hidden",
-        position: "relative",
-        zIndex: 1000,
-        left: 0,
-      }}
-    />
+    <Box sx={{ pb: 2, maxWidth: 350 }}>
+      <CustomTable
+        data={data}
+        columns={columns}
+        variant="provider"
+        sx={{
+          backgroundColor: "transparent",
+          boxShadow: "none",
+          borderRadius: 0,
+          borderBottom:'1px solid',
+          borderColor: "grey.400",
+          maxWidth: 350,
+          overflow: "hidden",
+          transform: "translateX(-2px)",
+        }}
+      /> 
+      <Box sx={{ px: 2 }}>
+      
+        <Typography
+          variant="caption"
+          sx={{
+            color: "text.secondary",
+
+            fontSize: "12px",
+          }}
+        >
+          <strong>Note:</strong> All third-party logos and icons used are the property of their respective owners and are displayed for informational purposes only, without implying any affiliation, endorsement, or sponsorship.
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 

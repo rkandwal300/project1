@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 import { setTelemetryCloud } from "@/redux/features/providerData/providerData.slice";
-import { telemetryTypes } from "@/redux/features/telemetry/telemetry.slice";
+import { TELEMETRY_TYPES } from "@/redux/features/telemetry/telemetry.slice";
 
 const SidebarSelect = () => {
   const theme = useTheme();
@@ -79,14 +79,14 @@ const SidebarSelect = () => {
         )}
       />
       {currentProviderType == "telemetry" &&
-        ![telemetryTypes.AWS_CLOUDWATCH, telemetryTypes.AZURE_INSIGHTS].includes(currentProvider) && (
+        ![TELEMETRY_TYPES.AWS_CLOUDWATCH, TELEMETRY_TYPES.AZURE_INSIGHTS].includes(currentProvider) && (
           <FormControl fullWidth variant="outlined">
             <InputLabel>Cloud*</InputLabel>
             <SelectHoc
               value={currentTelemetryCloud}
               onChange={handleTelemetryCloudChange}
               label="Cloud*"
-              MenuProps={{
+              menuprops={{
                 PaperProps: {
                   sx: {
                     maxHeight: 300,
