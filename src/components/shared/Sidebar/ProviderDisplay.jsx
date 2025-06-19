@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
-import { MenuItem, Typography, Avatar, Box, Divider } from "@mui/material";
+import { MenuItem, Typography, Avatar, Box } from "@mui/material";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -94,7 +94,7 @@ const ProviderDisplay = ({ onClose, data }) => {
             fontSize: "12px",
           }}
         >
-          <strong>Note:</strong> All third-party logos and icons used are the property of their respective owners and are displayed for informational purposes only, without implying any affiliation, endorsement, or sponsorship.
+          <strong>Disclaimer:</strong> All third-party logos and icons used are the property of their respective owners and are displayed for informational purposes only, without implying any affiliation, endorsement, or sponsorship.
         </Typography>
       </Box>
     </Box>

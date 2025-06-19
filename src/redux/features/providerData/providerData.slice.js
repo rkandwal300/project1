@@ -1,6 +1,6 @@
 import { instanceList, providerList } from "@/lib/instanceList";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CLOUD_TYPES } from "../telemetry/telemetry.slice";
+import { CLOUD_TYPES, TELEMETRY_TYPES } from "../telemetry/telemetry.slice";
 export const fetchInstanceType = createAsyncThunk(
   "provider/fetchInstanceType",
   async () => instanceList
@@ -29,23 +29,27 @@ const providerSlice = createSlice({
       let filteredProviders = [];
 
       if (type === "telemetry") {
-        console.log({type})
-        const validTelemetryClouds = state.providerList
-          .filter((provider) => provider.type === "telemetry")
-          .map((provider) => provider.cloud);
-
-        if (validTelemetryClouds.includes(name)) {
-          state.telemetryCloud = name;
-        } else {
-          state.telemetryCloud = validTelemetryClouds[0] || null;
-          name = state.telemetryCloud;
+        switch (name) {
+          case TELEMETRY_TYPES.DATA_DOG:
+          case TELEMETRY_TYPES.AWS_CLOUDWATCH:
+            state.telemetryCloud = CLOUD_TYPES.AWS;
+            break;
+          case TELEMETRY_TYPES.AZURE_INSIGHTS:
+            state.telemetryCloud = CLOUD_TYPES.AZURE;
+            break;
         }
+         if (name  == TELEMETRY_TYPES.DATA_DOG) {
 
-        filteredProviders = instanceList.filter(
-          (provider) =>
-            provider.type === "telemetry" &&
-            provider.cloud === name 
-        );
+           filteredProviders = instanceList.filter(
+             (provider) => provider.type === "telemetry" && provider.cloud === state.telemetryCloud
+           );
+       
+         } else {
+           filteredProviders = instanceList.filter(
+             (provider) => provider.type === "telemetry" && provider.name === name
+           );
+
+         }
       } else {
         state.telemetryCloud = null;
         filteredProviders = instanceList.filter(
