@@ -17,35 +17,36 @@ import {
   setProvider,
 } from "./redux/features/providerData/providerData.slice";
 import { getProviderConfig } from "./lib/utils";
-import Footer from "./components/shared/Footer/Footer";
-import Header from "./components/shared/header/Header";
-import Sidebar from "./components/shared/Sidebar/Sidebar";
-import NotFound from "./components/shared/NotFound";
-import { selectCurrentProviderName } from "./redux/features/providerData/providerData.selector";
+import Footer from "./features/Footer/Footer";
+import Header from "./features/header/Header";
+import Sidebar from "./features/Sidebar/Sidebar";
+import NotFound from "./features/NotFound";
+import { selectCurrentProviderName } from "./redux/features/providerData/providerData.selector"; 
 
-// Lazy loaded components
+
 const MainContent = lazy(() =>
-  import("./components/shared/MainLayout/MainContent")
+  import("./features/MainLayout/MainContent")
 );
 const InstanceAdviceLayout = lazy(() =>
-  import("./components/shared/InstanceAdvice/InstanceAdviceLayout")
+  import("./features/InstanceAdvice/InstanceAdviceLayout")
 );
 const TelemetryLayout = lazy(() =>
-  import("./components/shared/Telemetry/TelemetryLayout")
+  import("./features/Telemetry/TelemetryLayout")
 );
 const TelemetryDetail = lazy(() =>
-  import("./components/shared/Telemetry/TelemetryDetail")
+  import("./features/Telemetry/TelemetryDetail")
 );
 const InstanceAdviceBottomBar = lazy(() =>
-  import("./components/shared/InstanceAdvice/InstanceAdviceBottomBar")
+  import("./features/InstanceAdvice/InstanceAdviceBottomBar")
 );
-const BottomBar = lazy(() => import("./components/shared/BottomBar"));
+const BottomBar = lazy(() => import("./features/BottomBar"));
 const TelemetryBottomBar = lazy(() =>
-  import("./components/shared/Telemetry/TelemetryBottomBar")
+  import("./features/Telemetry/TelemetryBottomBar")
 );
 const TelemetryDetailBottomBar = lazy(() =>
-  import("./components/shared/TelemetryDetailBottombar")
+  import("./features/TelemetryDetailBottombar")
 );
+// import("./features/TelemetryDetailBottombar")
 
 // NotFound can be inline since it's very small
 

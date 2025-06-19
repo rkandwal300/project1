@@ -1,4 +1,4 @@
-import ErrorBoundary from "@/components/shared/ErrorBoundary";
+import ErrorBoundary from "@/features/ErrorBoundary";
 
 export const withErrorBoundary = (Component, fallback) => (props) =>
   (
