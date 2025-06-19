@@ -131,7 +131,7 @@ allSteps.forEach((step, currentStepIndex) => {
     id: step.id,
     text: step.text,
     attachTo: step.attachTo,
-    buttons: generateButtons(step, currentStepIndex),
+    buttons: [],
     // showOn: () => {
     //     const el = document.querySelector(step.attachTo.element);
     //     return !!el;
@@ -139,7 +139,6 @@ allSteps.forEach((step, currentStepIndex) => {
     beforeShowPromise: () =>
       new Promise((resolve) => {
         const speakIfNeeded = () => {
-          
           if (step.speak) speakText(step.speak, isMuted);
         };
 
@@ -149,6 +148,12 @@ allSteps.forEach((step, currentStepIndex) => {
             clearInterval(checkExist);
             highlightElement(step.attachTo.element);
             speakIfNeeded();
+             const currentStep = tour.getCurrentStep();
+            if (currentStep) {
+              currentStep.updateStepOptions({
+                buttons: generateButtons(step, currentStepIndex),
+              });
+            }
             resolve();
           }
         }, 100);
