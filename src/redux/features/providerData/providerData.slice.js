@@ -29,6 +29,7 @@ const providerSlice = createSlice({
       let filteredProviders = [];
 
       if (type === "telemetry") {
+        console.log({type})
         const validTelemetryClouds = state.providerList
           .filter((provider) => provider.type === "telemetry")
           .map((provider) => provider.cloud);
@@ -43,7 +44,7 @@ const providerSlice = createSlice({
         filteredProviders = instanceList.filter(
           (provider) =>
             provider.type === "telemetry" &&
-            provider.cloud.toLowerCase() === name.toLowerCase()
+            provider.cloud === name 
         );
       } else {
         state.telemetryCloud = null;
