@@ -1,57 +1,105 @@
 import React from "react";
+import { FormControl, InputLabel, OutlinedInput, Box } from "@mui/material";
+import ProviderDisplay from "./ProviderDisplay";
 import {
-  ListSubheader,
-  useTheme,
-  Select,
-  FormControl,
-  InputLabel,
-  MenuItem,
-} from "@mui/material";
-import { serviceProviderOptions } from "@/lib/constant";
+  selectCurrentProviderName,
+  selectCurrentProviderTelemetryCloud,
+  selectCurrentProviderType,
+  selectProviderList,
+} from "@/redux/features/providerData/providerData.selector";
+import PopoverHoc from "@/components/ui/Popover";
+import { useTheme } from "@emotion/react";
+import SelectHoc from "@/components/ui/Select";
+import { useSelector, useDispatch } from "react-redux";
 
-const SidebarSelect = ({ label = "", value = "", onValueChange }) => {
+import { useNavigate } from "react-router-dom";
+import { setTelemetryCloud } from "@/redux/features/providerData/providerData.slice";
+import { TELEMETRY_TYPES } from "@/redux/features/telemetry/telemetry.slice";
+
+const SidebarSelect = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const providers = useSelector(selectProviderList);
+  const currentProvider = useSelector(selectCurrentProviderName);
+  const currentProviderType = useSelector(selectCurrentProviderType);
+  const currentTelemetryCloud = useSelector(
+    selectCurrentProviderTelemetryCloud
+  );
+
+  const telemetryOptions = providers.map((provider) => provider.cloud.name);
+
+  const handleTelemetryCloudChange = (event) => {
+    const selectedCloud = event.target.value;
+    dispatch(setTelemetryCloud(selectedCloud));
+    navigate("/telemetry");
+  };
   return (
-    <FormControl fullWidth variant="outlined">
-      <InputLabel>Service Provider</InputLabel>
-      <Select
-        value={value}
-        onChange={onValueChange}
-        label={label}
-        id="step-six-target"
-        MenuProps={{
-          PaperProps: {
-            sx: {
-              maxHeight: 300,
-              overflowY: "auto",
-              color: theme.palette.grey[800],
-            },
-          },
-        }}
-      >
-        {serviceProviderOptions.map((group) => [
-          <ListSubheader
-            key={group.label}
-            sx={{
-              color: theme.palette.dark,
-              fontSize: "16px",
-            }}
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <PopoverHoc
+      
+        trigger={({ handleOpen }) => (
+          <FormControl
+            fullWidth
+            size="small"
+            variant="outlined"
+            sx={{ height: "58px" }}
           >
-            {group.label}
-          </ListSubheader>,
-          ...group.options.map((option) => (
-            <MenuItem
-              key={option.value}
-              value={option.value}
-              sx={{ height: "40px" }}
-              id={`MenuItem-${option.value}`}
-            >
-              {option.label}
-            </MenuItem>
-          )),
-        ])}
-      </Select>
-    </FormControl>
+            <InputLabel sx={{ fontWeight: 500 }}>Service Provider</InputLabel>
+            <OutlinedInput
+            id="step-six-target"
+              readOnly
+              label="Service Provider"
+              value={currentProvider || "Select Provider"}
+              onClick={handleOpen}
+              endAdornment={<Box sx={{ pointerEvents: "none", pr: 1 }}>▾</Box>}
+              inputProps={{
+                style: {
+                  fontSize: "16px",
+                  fontWeight: 300,
+                  cursor: "pointer",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                },
+              }}
+            />
+          </FormControl>
+        )}
+        content={(handleClose) => (
+          <ProviderDisplay data={providers} onClose={handleClose} />
+        )}
+      />
+      {currentProviderType == "telemetry" &&
+        ![TELEMETRY_TYPES.AWS_CLOUDWATCH, TELEMETRY_TYPES.AZURE_INSIGHTS].includes(currentProvider) && (
+          <FormControl fullWidth variant="outlined">
+            <InputLabel>Cloud*</InputLabel>
+            <SelectHoc
+              value={currentTelemetryCloud}
+              onChange={handleTelemetryCloudChange}
+              label="Cloud*"
+              menuprops={{
+                PaperProps: {
+                  sx: {
+                    maxHeight: 300,
+                    overflowY: "auto",
+                    color: theme.palette.grey[800],
+                  },
+                },
+              }}
+              options={telemetryOptions}
+            />
+          </FormControl>
+        )}
+    </div>
   );
 };
 

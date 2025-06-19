@@ -4,27 +4,48 @@ import { GENERIC_FIELDS } from "@/lib/constant";
 import { Controller } from "react-hook-form";
 import PropTypes from "prop-types";
 import HoverSelect from "@/components/ui/form/Select";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectCurrentProviderInstanceTypes,
+  selectCurrentProviderPricingModels,
+  selectCurrentProviderRegions,
+} from "@/redux/features/providerData/providerData.selector";
+import { setRegion } from "@/redux/features/providerData/providerData.slice";
 
 const HoverInput = lazy(() => import("@/components/ui/form/Input"));
 
 const GenericMetadata = ({ form }) => {
-  const renderField = ({ name, label, options, tooltipMessage }) => (
+  const dispatch = useDispatch();
+  const options = {
+    region: useSelector(selectCurrentProviderRegions),
+    instanceType: useSelector(selectCurrentProviderInstanceTypes),
+    pricingModel: useSelector(selectCurrentProviderPricingModels),
+  };
+
+  const renderField = ({ name, label,type, tooltipMessage }) => (
     <Controller
       key={name}
       name={name}
       control={form.control}
       render={({ field, fieldState }) =>
-        options ? (
+        type =="select" ?(
           <HoverSelect
-            id={`${name}Target`}
+            id={`${name}Target`} 
             name={name}
             tooltipMessage={tooltipMessage}
             label={label}
-            options={options}
+            options={options[name] || []}
             fullWidth
             value={field.value}
             error={!!fieldState.error}
             {...field}
+            onChange={(e) => { 
+              field.onChange(e);
+              if (name === "region") {
+                form.setValue("instanceType", "");
+                dispatch(setRegion( e.target.value ));
+              } 
+            }}
           />
         ) : (
           <HoverInput
@@ -58,7 +79,7 @@ const GenericMetadata = ({ form }) => {
           Generic Metadata
         </Typography>
       </Box>
-      <Box 
+      <Box
         width="100%"
         display="grid"
         id="generic-metadata-form"

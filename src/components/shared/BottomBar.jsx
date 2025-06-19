@@ -1,11 +1,5 @@
 import React, { useEffect, useCallback, lazy, Suspense } from "react";
-import {
-  Box,
-  Button,
-  Typography,
-  useTheme,
-  Divider,
-} from "@mui/material";
+import { Box, Button, Typography, useTheme, Divider } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -40,6 +34,7 @@ import {
   updateInstanceState,
 } from "@/redux/features/instance/instance.slice";
 import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
+import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector";
 
 function BottomBar() {
   const theme = useTheme();
@@ -47,7 +42,9 @@ function BottomBar() {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  const currentInstanceId = location.pathname.split("/")[1];
+  const currentInstanceId = location.pathname.split("/")[1]; 
+
+  const currentProviderName = useSelector(selectCurrentProviderName);
   const alertMessage = useSelector(selectMessage);
   const alertMessageType = useSelector(selectMessageType);
   const portfolioName = useSelector(selectPortfolioName);
@@ -57,14 +54,14 @@ function BottomBar() {
 
   const formId = currentInstanceId || nanoid();
 
-  // Memoized handlers for optimization
-  const handleSavePortFolio = useCallback(() => {
+  const handleSavePortFolio = () => {
     const trimmedName = portfolioName?.trim();
     if (!trimmedName) {
       dispatch(
         setMessage({
           type: errorMessageType.ERROR,
-          message: "Portfolio name is required",
+          message:
+            "Please enter a portfolio name with at least 3 characters. Only letters, numbers, underscores (_), and hyphens (-) are allowed; no other special characters.",
         })
       );
       return;
@@ -72,8 +69,9 @@ function BottomBar() {
 
     const isDuplicate = instanceList.some(
       (instance) =>
-        instance.name === trimmedName && instance.id !== currentInstanceId
-    );
+        instance.name === trimmedName && 
+        instance.provider === currentProviderName
+    ); 
 
     if (isDuplicate) {
       dispatch(
@@ -88,6 +86,8 @@ function BottomBar() {
     const payload = {
       id: formId,
       instances,
+      type: "cloud",
+      provider: currentProviderName,
       name: trimmedName,
       selfPrefAssessment: selfPrefAssessmentData,
     };
@@ -97,25 +97,14 @@ function BottomBar() {
       dispatch(addInstance(payload));
     }
 
-    // dispatch(resetInstanceState());
-    // dispatch(addCurrentInstance(formId));
+    navigate(`/${formId}`);
     dispatch(
       setMessage({
         type: errorMessageType.SUCCESS,
         message: `${trimmedName} saved successfully`,
       })
     );
-    navigate(`/${formId}`);
-  }, [
-    portfolioName,
-    instanceList,
-    currentInstanceId,
-    formId,
-    instances,
-    selfPrefAssessmentData,
-    dispatch,
-    navigate,
-  ]);
+  };
 
   const handleDeletePortfolio = useCallback(() => {
     dispatch(deletePortfolioFromList({ id: formId }));
@@ -205,6 +194,7 @@ function BottomBar() {
             Cancel
           </Button>
         </Suspense>
+
         {currentInstanceId && (
           <Suspense fallback={null}>
             <DialogHoc

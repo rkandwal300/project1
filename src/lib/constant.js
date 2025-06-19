@@ -55,9 +55,14 @@ export const serviceProviderOptions = [
   },
   {
     label: "Telemetry Collector",
-    options: [{ label: "Datalog", value: "datalog" }],
+    options: [
+      { label: "Datalog", value: "datalog" },
+      { label: "AWS CloudWatch", value: "aws_cloudWatch" },
+    ],
   },
 ];
+
+
 export const CONSUMPTION_FIELDS = [
   {
     label: "Max CPU %",
@@ -82,18 +87,40 @@ export const CONSUMPTION_FIELDS = [
   },
   { label: "Max IOPS", name: "maxIOPS", tooltipMessage: "Maximum Disk IOPS." },
 ];
+export const CONSUMPTION_AVG_FIELDS = [
+  {
+    label: "UAVG",
+    name: "uavg",
+    tooltipMessage: "UAVG.",
+  },
+  {
+    label: "PAVG",
+    name: "pavg",
+    tooltipMessage:"PAVG",
+  },
+  {
+    label: "U95",
+    name: "u95",
+    tooltipMessage: "U95",
+  },
+    {
+    label: "P95",
+    name: "p95",
+    tooltipMessage: "P95.",
+  },
+];
 
 export const GENERIC_FIELDS = [
   {
     name: "region",
     label: "Region",
-    options: regionOptions,
+    type: "select",
     tooltipMessage: "Select Region associated with CSP",
   },
   {
     name: "instanceType",
     label: "Instance Type",
-    options: instanceOptions,
+    type: "select",
     tooltipMessage: "Select Instance associated with Region",
   },
   {
@@ -104,7 +131,7 @@ export const GENERIC_FIELDS = [
   {
     name: "pricingModel",
     label: "Pricing Model",
-    options: pricingModelOptions,
+    type: "select",
     tooltipMessage: "Pricing Model",
   },
 ];
@@ -173,3 +200,5 @@ export const supportMailtoLink = `mailto:support@example.com?subject=${encodeURI
   subject
 )}&body=${encodeURIComponent(body)}`;
 export const supportMobileNumber = `tel:+1 (502) 388-6228`;
+
+export const userEmail = "testuser@infobellit.com";

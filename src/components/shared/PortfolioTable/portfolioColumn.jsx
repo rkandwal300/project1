@@ -1,20 +1,20 @@
 import { useMemo, useCallback, lazy, Suspense } from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
 import { Checkbox, IconButton } from "@mui/material";
-import {
-  instanceOptions,
-  pricingModelOptions,
-  regionOptions,
-} from "@/lib/constant"; 
 import { useTheme } from "@emotion/react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { updateSingleInstance } from "@/redux/features/instance/instance.slice.js";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCurrentProviderInstanceTypes,
+  selectCurrentProviderPricingModels,
+  selectCurrentProviderRegions,
+} from "@/redux/features/providerData/providerData.selector.js";
 
 // Lazy load editable cells for performance
 const EditableSelectCell = lazy(() =>
   import("./EditableCells.jsx").then((mod) => ({
-  default: mod.EditableSelectCell,
+    default: mod.EditableSelectCell,
   }))
 );
 const EditableTextCell = lazy(() =>
@@ -23,15 +23,17 @@ const EditableTextCell = lazy(() =>
   }))
 );
 
-const EditableCell = ({ type, ...props }) => (
-  <Suspense fallback={props.value ?? ""}>
-    {type === "select" ? (
-      <EditableSelectCell {...props} />
-    ) : (
-      <EditableTextCell {...props} />
-    )}
-  </Suspense>
-);
+const EditableCell = ({ type, ...props }) => {
+  return (
+    <Suspense fallback={props.value ?? ""}>
+      {type === "select" ? (
+        <EditableSelectCell {...props} />
+      ) : (
+        <EditableTextCell {...props} />
+      )}
+    </Suspense>
+  );
+};
 
 EditableCell.propTypes = {
   type: PropTypes.string.isRequired,
@@ -41,21 +43,23 @@ EditableCell.propTypes = {
   table: PropTypes.object,
 };
 
-const getOptionsByField = (field) => {
-  switch (field) {
-    case "region":
-      return regionOptions;
-    case "instanceType":
-      return instanceOptions;
-    case "pricingModel":
-      return pricingModelOptions;
-    default:
-      return undefined;
-  }
-};
-
-export default function GetInstanceColumn() {
+export default function GetInstanceColumn({ isTelemetry = false }) {
   const dispatch = useDispatch();
+  const regionOptions = useSelector(selectCurrentProviderRegions);
+  const instanceOptions = useSelector(selectCurrentProviderInstanceTypes);
+  const pricingModelOptions = useSelector(selectCurrentProviderPricingModels);
+  const getOptionsByField = (field) => {
+    switch (field) {
+      case "region":
+        return regionOptions;
+      case "instanceType":
+        return instanceOptions;
+      case "pricingModel":
+        return pricingModelOptions;
+      default:
+        return undefined;
+    }
+  };
   const theme = useTheme();
 
   const handleValueChange = useCallback(
@@ -85,10 +89,11 @@ export default function GetInstanceColumn() {
 
   const renderEditableTextCell = useCallback(
     (field) =>
-      ({ getValue, row, isEditing }) =>
+      ({ getValue, row, isEditing, table }) =>
         isEditing ? (
           <EditableCell
-          id ={`tableCell_${row.index}_${field}_cell`}
+            table={table}
+            id={`tableCell_${row.index}_${field}_cell`}
             type="text"
             value={getValue()}
             onChange={(val) => handleValueChange(row.index, field, val)}
@@ -99,7 +104,7 @@ export default function GetInstanceColumn() {
     [handleValueChange]
   );
 
-  return useMemo(
+  const columns = useMemo(
     () => [
       {
         id: "select",
@@ -116,7 +121,7 @@ export default function GetInstanceColumn() {
             }}
           />
         ),
-        cell: ({ row }) =>  (
+        cell: ({ row }) => (
           <Checkbox
             checked={row.getIsSelected()}
             indeterminate={row.getIsSomeSelected()}
@@ -160,10 +165,11 @@ export default function GetInstanceColumn() {
         maxSize: 200,
       },
       {
+        id: "maxCpuUtilization",
         header: "Maximum Bandwidth Used",
         columns: [
           {
-            id:"maxCpuUtilization",
+            id: "maxCpuUtilization",
             accessorKey: "maxCpuUtilization",
             header: "CPU(%)",
             cell: renderEditableTextCell("maxCpuUtilization"),
@@ -199,6 +205,7 @@ export default function GetInstanceColumn() {
             maxSize: 200,
           },
           {
+            id: "maxIOPS",
             accessorKey: "maxIOPS",
             header: "IOPS",
             cell: renderEditableTextCell("maxIOPS"),
@@ -213,9 +220,45 @@ export default function GetInstanceColumn() {
         header: () => "Pricing Model",
         accessorKey: "pricingModel",
         cell: renderEditableCell("select", "pricingModel"),
-         minSize: 150,
+        minSize: 150,
         size: 150,
         maxSize: 200,
+      },
+      {
+        id: "uavg",
+        header: () => "UAVG",
+        accessorKey: "uavg",
+        cell: ({ getValue }) => getValue() ?? "-",
+        minSize: 90,
+        size: 90,
+        maxSize: 90,
+      },
+      {
+        id: "pavg",
+        header: () => "PAVG",
+        accessorKey: "pavg",
+        cell: ({ getValue }) => getValue() ?? "-",
+        minSize: 90,
+        size: 90,
+        maxSize: 90,
+      },
+      {
+        id: "u95",
+        header: () => "U95",
+        accessorKey: "p95",
+        cell: ({ getValue }) => getValue() ?? "-",
+        minSize: 90,
+        size: 90,
+        maxSize: 90,
+      },
+      {
+        id: "p95",
+        header: () => "P95",
+        accessorKey: "p95",
+        cell: ({ getValue }) => getValue() ?? "-",
+        minSize: 90,
+        size: 90,
+        maxSize: 90,
       },
       {
         id: "action",
@@ -256,4 +299,8 @@ export default function GetInstanceColumn() {
     ],
     [renderEditableCell, renderEditableTextCell, theme]
   );
+  if (isTelemetry) {
+    columns.shift();
+  }
+  return columns;
 }

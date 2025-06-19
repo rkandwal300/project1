@@ -77,9 +77,7 @@ const Dashboard = ({ data }) => {
         <SummaryChartAccordion
           data={data}
           height={height}
-          width={chartWidth}
-          pdfUrl="/Advice_aws_test_Summary.pdf"
-          csvUrl="/Advice_aws_test_Summary.csv"
+           
         />
       </div>
     </div>

@@ -16,6 +16,7 @@ const HoverSelect = memo(function HoverSelect({
   ...rest
 }) {
   const [internalValue, setInternalValue] = useState("");
+  const [selectOpen, setSelectOpen] = useState(false);
 
   const isControlled = controlledValue !== undefined;
   const value = isControlled ? controlledValue : internalValue;
@@ -34,11 +35,13 @@ const HoverSelect = memo(function HoverSelect({
     if (!isControlled) setInternalValue("");
   }, [onChange, isControlled]);
 
+  const handleOpen = useCallback(() => setSelectOpen(true), []);
+  const handleClose = useCallback(() => setSelectOpen(false), []);
+
   return (
     <HoverComponent
-      tooltipMessage={tooltipMessage}
-      value={value}
-      position={rest?.tooltipPosition}
+      tooltipMessage={selectOpen?"":tooltipMessage}
+      value={value} 
       onClear={handleClear}
     >
       <FormControl fullWidth={fullWidth} required={required} size={size}>
@@ -48,6 +51,8 @@ const HoverSelect = memo(function HoverSelect({
           onChange={handleChange}
           label={label}
           options={options}
+          onOpen={handleOpen}
+          onClose={handleClose}
           {...rest}
           error={false} // TODO: change it to props.error if error handling is needed
         />

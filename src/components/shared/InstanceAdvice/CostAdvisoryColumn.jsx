@@ -1,35 +1,52 @@
+import TooltipHoc from "@/components/ui/Tooltip";
+
+// Utility: Default column sizes
+const DEFAULT_SIZE = 150;
+const DEFAULT_MIN_SIZE = 150;
+const DEFAULT_MAX_SIZE = 200;
+
+// Utility: Numeric cell renderer
+const renderNumericCell = ({ getValue }) => {
+  const value = getValue();
+  return value !== undefined && value !== null ? Number(value).toFixed(2) : "-";
+};
+
+// Utility: Plain cell renderer
+const renderPlainCell = ({ getValue }) => {
+  const value = getValue();
+  return value && value.length > 0 ? value : "-";
+};
+
+// Column Factory: Numeric
 const numericColumn = ({
   id,
   accessorKey,
   header,
-  minSize = 150,
-  size = 150,
-  maxSize = 200,
+  minSize = DEFAULT_MIN_SIZE,
+  size = DEFAULT_SIZE,
+  maxSize = DEFAULT_MAX_SIZE,
   pin,
 }) => ({
   id,
   accessorKey,
   header,
-  cell: ({ getValue }) => {
-    const value = getValue();
-    return value !== undefined && value !== null
-      ? Number(value).toFixed(2)
-      : "-";
-  },
+  cell: renderNumericCell,
   minSize,
   size,
   maxSize,
-  ...(pin ? { pin } : {}),
+  ...(pin && { pin }),
 });
 
+// Column Factory: Plain
 const plainColumn = ({
   id,
   accessorKey,
   header,
-  minSize = 150,
-  size = 150,
-  maxSize = 200,
+  minSize = DEFAULT_MIN_SIZE,
+  size = DEFAULT_SIZE,
+  maxSize = DEFAULT_MAX_SIZE,
   pin,
+  cell,
 }) => ({
   id,
   accessorKey,
@@ -37,20 +54,35 @@ const plainColumn = ({
   minSize,
   size,
   maxSize,
-  cell: ({ getValue }) => {
-    const value = getValue();
-    return value ?? "-";
-  },
-  
-  ...(pin ? { pin } : {}),
+  cell: cell || renderPlainCell,
+  ...(pin && { pin }),
 });
-
-const currentColumns1 = [
+ 
+const tooltipCell = ({ getValue }) => {
+  const value = getValue();
+  return (
+    <TooltipHoc message={value || "-"}>
+      <p
+        style={{
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          margin: 0,
+          maxWidth: "100%",
+          cursor: "pointer", 
+        }}
+      >
+        {value && value.length > 0 ? value : "-"}
+      </p>
+    </TooltipHoc>
+  );
+};
+ 
+const currentMetricColumns = [
   plainColumn({
     id: "instanceType",
     accessorKey: "data.currentPlatform.type",
     header: "Instance Type",
-    size: 150,
   }),
   numericColumn({
     id: "cost",
@@ -72,77 +104,76 @@ const currentColumns1 = [
     pin: "left",
   }),
 ];
-const currentColumns2 = [
-      plainColumn({
-        id: "uuid",
-        accessorKey: "id",
-        header: "UUID/Instance Name",
-        size: 200,
-      }),
-      plainColumn({
-        id: "csp",
-        accessorKey: "csp",
-        header: "Cloud",
-        size: 150,
-      }),
-      plainColumn({
-        id: "pricingModel",
-        accessorKey: "data.currentPlatform.pricingModel",
-        header: "Pricing Model",
-        size: 150,
-      }),
-      plainColumn({
-        id: "vCPU",
-        accessorKey: "data.currentPlatform.vCPU",
-        header: "vCPU(s)",
-        size: 120,
-      }),
-      plainColumn({
-        id: "status",
-        accessorKey: "data.currentPlatform.status",
-        header: "Remark",
-        minSize: 300,
-        size: 300,
-        maxSize: 300,
-      }),
-    ]
-
-const recommendationColumns = (idx, val) => [
+ 
+const currentDetailColumns = [
   plainColumn({
-    id: `${val}_instanceType`,
-    accessorKey: `data.recommendations.${idx}.type`,
-    header: "Instance Type",
-    size: 150,
+    id: "uuid",
+    accessorKey: "id",
+    header: "UUID/Instance Name",
+    cell: tooltipCell,
+    size: 200,
   }),
   plainColumn({
-    id: `${val}_vCPU`,
+    id: "csp",
+    accessorKey: "csp",
+    header: "Cloud",
+  }),
+  plainColumn({
+    id: "pricingModel",
+    accessorKey: "data.currentPlatform.pricingModel",
+    header: "Pricing Model",
+  }),
+  plainColumn({
+    id: "vCPU",
+    accessorKey: "data.currentPlatform.vCPU",
+    header: "vCPU(s)",
+    size: 120,
+  }),
+  plainColumn({
+    id: "status",
+    accessorKey: "data.currentPlatform.status",
+    header: "Remark",
+    minSize: 300,
+    size: 300,
+    maxSize: 300,
+  }),
+];
+ 
+const recommendationColumns = (idx, label) => [
+  plainColumn({
+    id: `${label}_instanceType`,
+    accessorKey: `data.recommendations.${idx}.type`,
+    header: "Instance Type",
+  }),
+  plainColumn({
+    id: `${label}_vCPU`,
     accessorKey: `data.recommendations.${idx}.vCPU`,
     header: "vCPU(s)",
     size: 120,
   }),
   numericColumn({
-    id: `${val}_cost`,
+    id: `${label}_cost`,
     accessorKey: `data.recommendations.${idx}.cost`,
     header: "Cost($)",
   }),
   numericColumn({
-    id: "power",
-    accessorKey: "data.currentPlatform.power",
-    header: "Power(kw)", 
+    id: `${label}_power`,
+    accessorKey: `data.recommendations.${idx}.power`,
+    header: "Power(kw)",
   }),
   numericColumn({
-    id: `${val}_carbon_detail`,
+    id: `${label}_carbon`,
     accessorKey: `data.recommendations.${idx}.carbon`,
     header: "Carbon (kgCO2eq)",
     size: 200,
   }),
   numericColumn({
-    id: `${val}_saving`,
+    id: `${label}_saving`,
     accessorKey: `data.recommendations.${idx}.monthlySavings`,
     header: "Savings($)",
   }),
   numericColumn({
-    id: `${val}_perf`,
+    id: `${label}_perf`,
     accessorKey: `data.recommendations.${idx}.perf`,
     header: "Performance Improvement*",
     size: 210,
@@ -151,31 +182,30 @@ const recommendationColumns = (idx, val) => [
   }),
 ];
 
+
 export const CostAdvisoryColumn = [
   {
     id: "current1",
     header: "Current",
-    columns: currentColumns1,
+    columns: currentMetricColumns,
     meta: {
       align: "center",
       colSpan: 4,
     },
   },
-
   {
     id: "current2",
     header: "",
-    columns: currentColumns2,
+    columns: currentDetailColumns,
     meta: {
       align: "center",
       colSpan: 4,
     },
   },
-
-  ...["Optimal", "Best", "Good"].map((val, idx) => ({
-    id: val.toLowerCase(),
-    header: val,
-    columns: recommendationColumns(idx, val),
+  ...["Optimal", "Best", "Good"].map((label, idx) => ({
+    id: label.toLowerCase(),
+    header: label,
+    columns: recommendationColumns(idx, label),
     meta: {
       align: "center",
     },

@@ -39,7 +39,7 @@ const CustomTableBody = ({
   }
 
   return (
-    <TableBody>
+    <TableBody sx={variant === "default" ? { overflowY: "auto" } : {}}>
       {rows.map((row) => (
         <CustomTableRow
           key={row.id}

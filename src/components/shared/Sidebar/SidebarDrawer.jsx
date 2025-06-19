@@ -1,56 +1,142 @@
-import React from "react";
-import { Box, Divider, useTheme, IconButton } from "@mui/material";
+import React, { useEffect, useCallback } from "react";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Typography,
+  List,
+  useTheme,
+} from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import SidebarSelect from "@/components/shared/Sidebar/SidebarSelect";
-import PortfolioHeader from "./PortfolioHeader";
-import PortfolioList from "./PortfolioList";
-import { serviceProviderOptions } from "@/lib/constant";
-import { closeSidebar } from "@/redux/features/sidebar/sidebar.slice";
-import { useDispatch } from "react-redux";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 
-export default function SidebarDrawer() {
-  const dispatch = useDispatch();
-  const [selectValue, setSelectValue] = React.useState(
-    serviceProviderOptions[0].options[0].value
-  );
+import SidebarSelect from "@/components/shared/Sidebar/SidebarSelect";
+import TooltipHoc from "@/components/ui/Tooltip";
+import PortfolioItem from "./PortfolioItem";
+
+import { closeSidebar } from "@/redux/features/sidebar/sidebar.slice";
+import { resetInstanceState } from "@/redux/features/instance/instance.slice";
+import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.slice";
+import {
+  selectCurrentProviderName,
+  selectCurrentProviderType,
+} from "@/redux/features/providerData/providerData.selector";
+import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
+import { resetTelemetryData } from "@/redux/features/telemetry/telemetry.slice";
+
+const SidebarDrawer = () => {
   const theme = useTheme();
-  const borderColor = theme.palette.sidebar?.border || theme.palette.divider;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const portfolio = useSelector(selectCurrentProviderName);
+  const portfolioType = useSelector(selectCurrentProviderType);
+  const instances = useSelector(selectInstanceList);
+
+  const data = instances.filter((instance) => instance.provider === portfolio);
+
+  const borderColor = theme.palette.sidebar?.border || theme.palette.divider; 
+  useEffect(() => {
+    if (instances.length === 0) {
+      dispatch(addCurrentInstance(null));
+    }
+  }, [instances.length, dispatch]);
+
+  const handleCloseSidebar = useCallback(() => {
+    dispatch(closeSidebar());
+  }, [dispatch]);
+
+  const handleOpenNewForm = useCallback(() => {
+    dispatch(addCurrentInstance(null));
+    if (portfolioType === "telemetry") {
+      dispatch(resetTelemetryData());
+    } else {
+      dispatch(resetInstanceState());
+    }
+
+    const basePath = location.pathname.includes("telemetry")
+      ? "/telemetry"
+      : "/";
+
+    navigate(`${basePath}?type=${portfolio}`);
+  }, [dispatch, location.pathname, navigate, portfolio, portfolioType]);
+
   return (
     <Box
-      bgcolor="inherit"
+      id="sidebar-drawer"
+      aria-label="sidebar-drawer"
       sx={{
-        mt: 1,
-        width: { xs: 201, md: 262 },
+        width: { xs: 123, sm: 168, md: 262, lg: 273 },
         flexShrink: 0,
         borderRight: `1px solid ${borderColor}`,
+        bgcolor: "sidebar.background",
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", pt: 2, pl: "4px" }}>
-        <SidebarSelect
-          label="Service Provider"
-          value={selectValue}
-          onValueChange={({ target }) => setSelectValue(target.value)}
-        />
+      {/* Header */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          pt: 2,
+          pl: 0.5,
+          minHeight: 74,
+        }}
+      >
+        <SidebarSelect />
         <IconButton
           id="btn-dashboard-togglePortfolios"
-          onClick={()=>dispatch(closeSidebar())}
+          aria-label="Close sidebar"
+          onClick={handleCloseSidebar}
           sx={{
             ml: "auto",
             p: 0,
             color: "black",
-            "&:hover": {
-              backgroundColor: "transparent",
-            },
+            "&:hover": { backgroundColor: "transparent" },
           }}
         >
           <ChevronLeftIcon fontSize="large" />
         </IconButton>
       </Box>
 
-      <Divider sx={{ my: 2 }} />
+      <Divider />
 
-      <PortfolioHeader />
-      <PortfolioList />
+      {/* Portfolios Header */}
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        px={1}
+        height="2.5rem"
+      >
+        <Typography fontWeight={500}>Portfolios</Typography>
+        <TooltipHoc message="Create New Portfolio">
+          <IconButton
+            id="btn-dashboard-createPortfolio"
+            aria-label="Create New Portfolio"
+            onClick={handleOpenNewForm}
+            size="small"
+            sx={{
+              backgroundColor: "transparent",
+              "&:hover": { backgroundColor: "transparent" },
+            }}
+          >
+            <AddCircleIcon fontSize="small" />
+          </IconButton>
+        </TooltipHoc>
+      </Box>
+
+      {/* Portfolio List */}
+      <Box sx={{ height: "70vh", overflowY: "auto" }}>
+        <List id="dashboard-portfolio-list">
+          {data.map((portfolio) => (
+            <PortfolioItem key={portfolio.id} portfolio={portfolio} />
+          ))}
+        </List>
+      </Box>
     </Box>
   );
-}
+};
+
+export default SidebarDrawer;
