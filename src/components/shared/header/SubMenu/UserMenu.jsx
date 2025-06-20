@@ -23,8 +23,7 @@ const HelpDialogContent = lazy(() => import("./HelpDialogContent"));
 const menuConfig = [
   {
     label: "Profile",
-    value: "https://epycadvisory.amd.com/profile/request-role?appName=EIA",
-    type: "link",
+
     icon: <AccountCircleIcon />,
   },
   {
@@ -33,7 +32,7 @@ const menuConfig = [
     type: "link",
     icon: <MenuBookIcon />,
   },
-  
+
   {
     label: "About",
     icon: <InfoIcon />,
@@ -58,7 +57,6 @@ function UserMenu({ onClose }) {
   const Node = ({ icon, label, onClick }) => (
     <MenuItem
       onClick={onClick}
-    
       sx={{
         borderBottom: "1px solid transparent",
         borderRadius: 0,
@@ -86,7 +84,13 @@ function UserMenu({ onClose }) {
                 />
               )}
               content={({ handleClose }) => (
-                <Suspense fallback={<Box p={2}><CircularProgress size={24} /></Box>}>
+                <Suspense
+                  fallback={
+                    <Box p={2}>
+                      <CircularProgress size={24} />
+                    </Box>
+                  }
+                >
                   <DialogComponent onClose={handleClose} />
                 </Suspense>
               )}
@@ -112,15 +116,10 @@ function UserMenu({ onClose }) {
             </MenuItem>
           );
         }
-        return (
-          <Node key={label} icon={icon} label={label} onClick={onClose} />
-        );
+        return <Node key={label} icon={icon} label={label} onClick={onClose} />;
       })}
       <Divider sx={{ borderColor: theme.palette.divider }} />
       <MenuItem
-        component="a"
-        href="https://eia-prod.amd.com"
-        target="_blank"
         id="logout-link"
         sx={{
           borderBottom: "1px solid transparent",
@@ -139,5 +138,5 @@ function UserMenu({ onClose }) {
 UserMenu.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
- 
+
 export default UserMenu;

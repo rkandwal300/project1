@@ -3,7 +3,7 @@ import "shepherd.js/dist/css/shepherd.css";
 import steps from "./steps.tour";
 import {
   handleElementAction,
-  highlightElement,
+  highlightElement, 
   removeHighlight,
 } from "./actionsHandlers";
 
