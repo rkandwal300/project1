@@ -152,12 +152,7 @@ function ResponsiveSubMenu() {
             );
           })}
           <Divider sx={{ my: 1 }} />
-          <MenuItem
-            component="a"
-            href={"https://eia-prod.amd.com/"}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <MenuItem rel="noopener noreferrer">
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <LogoutIcon />
               {"Log Out"}

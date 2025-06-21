@@ -3,7 +3,7 @@ import "shepherd.js/dist/css/shepherd.css";
 import steps from "./steps.tour";
 import {
   handleElementAction,
-  highlightElement,
+  highlightElement, 
   removeHighlight,
 } from "./actionsHandlers";
 
@@ -119,7 +119,7 @@ function generateButtons(step, currentStepIndex) {
 
 const tour = new Shepherd.Tour({
   defaultStepOptions: {
-    cancelIcon: { enabled: true },
+    cancelIcon: { enabled: false },
     classes: "shepherd-theme-arrows",
     scrollTo: { behavior: "smooth", block: "center" },
   },
@@ -131,23 +131,28 @@ allSteps.forEach((step, currentStepIndex) => {
     id: step.id,
     text: step.text,
     attachTo: step.attachTo,
-    buttons: generateButtons(step, currentStepIndex),
+    buttons: [],
     // showOn: () => {
     //     const el = document.querySelector(step.attachTo.element);
     //     return !!el;
     //   },
     beforeShowPromise: () =>
       new Promise((resolve) => {
-        if (step.speak) {
-          speakText(step?.speak);
-        }
+        const speakIfNeeded = () => {
+          speakText(step.text, isMuted);
+        };
+
         const checkExist = setInterval(() => {
           const el = document.querySelector(step.attachTo.element);
           if (el) {
             clearInterval(checkExist);
             highlightElement(step.attachTo.element);
-            if (step?.speak) {
-              speakText(step.speak);
+            speakIfNeeded();
+             const currentStep = tour.getCurrentStep();
+            if (currentStep) {
+              currentStep.updateStepOptions({
+                buttons: generateButtons(step, currentStepIndex),
+              });
             }
             resolve();
           }
@@ -156,7 +161,6 @@ allSteps.forEach((step, currentStepIndex) => {
     when: {
       hide: () => {
         removeHighlight(step.attachTo.element);
-        // window.speechSynthesis.cancel();
       },
     },
   });

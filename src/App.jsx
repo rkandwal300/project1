@@ -63,6 +63,7 @@ const App = () => {
   const pathname = location.pathname;
 
   useEffect(() => {
+    window.speechSynthesis.cancel();
     const timeoutId = setTimeout(() => {
       import("@/tour/tour").then((tour) => {
         tour.default?.start();
@@ -84,11 +85,11 @@ const App = () => {
 
   useEffect(() => {
     const provider = getProviderConfig(routes, type);
-    console.log({provider})
+    console.log({ provider });
     dispatch(setProvider(provider));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routes.join(","), type]);
- 
+
   const BottomBarComponent = useMemo(() => {
     if (matchPath("/telemetry/:id", pathname)) return TelemetryDetailBottomBar;
     if (pathname.startsWith("/telemetry")) return TelemetryBottomBar;
