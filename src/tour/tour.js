@@ -139,7 +139,7 @@ allSteps.forEach((step, currentStepIndex) => {
     beforeShowPromise: () =>
       new Promise((resolve) => {
         const speakIfNeeded = () => {
-          if (step.speak) speakText(step.speak, isMuted);
+          speakText(step.text, isMuted);
         };
 
         const checkExist = setInterval(() => {
