@@ -15,6 +15,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import HelpIcon from "@mui/icons-material/Help";
 import DialogHoc from "@/components/ui/Dialog";
 import PropTypes from "prop-types";
+import UserGuideContent from "./userGuideContent";
 
 // Lazy load dialog content components
 const AboutDialogContent = lazy(() => import("./AboutDialogContent"));
@@ -23,13 +24,12 @@ const HelpDialogContent = lazy(() => import("./HelpDialogContent"));
 const menuConfig = [
   {
     label: "Profile",
-
     icon: <AccountCircleIcon />,
   },
   {
     label: "User Guide",
-    value: "https://eia-prod.amd.com/assets/EIA%20User%20Guide-UyjIb5PG.pdf",
-    type: "link",
+    type: "dialog",
+    component: UserGuideContent,
     icon: <MenuBookIcon />,
   },
 

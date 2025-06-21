@@ -22,9 +22,11 @@ const DIALOG_COMPONENTS = {
   About: AboutDialogContent,
   "Release Note": ReleaseNotes,
   Support: SupportDialog,
+  "User Guide": UserGuideContent,
 };
 
 import PropTypes from "prop-types";
+import UserGuideContent from "./userGuideContent";
 
 function DialogMenuItem(props) {
   const { label, icon, DialogComponent } = props;
@@ -81,9 +83,7 @@ function ResponsiveSubMenu() {
       {
         label: "User Guide",
         icon: <BookIcon />,
-        type: "link",
-        value:
-          "https://eia-prod.amd.com/assets/EIA%20User%20Guide-UyjIb5PG.pdf",
+        type: "dialog",
       },
       {
         label: "Help",
