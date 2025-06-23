@@ -116,7 +116,7 @@ function ConsumptionMetadata({ form }) {
       <Box
         display="flex"
         alignItems="center"
-        gap={2}flexDirection={()}
+        gap={2}
         ml={{ xs: "155px", md: 0 }}
         mt="auto"
       >
