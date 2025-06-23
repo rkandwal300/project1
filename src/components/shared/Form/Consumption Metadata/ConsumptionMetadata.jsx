@@ -104,7 +104,7 @@ function ConsumptionMetadata({ form }) {
           <Box
             display="grid"
             gap={2}
-            gridTemplateColumns={FIELD_GRID.AVG}
+            gridTemplateColumns={FIELD_GRID.CONSUMPTION}
             width="100%"
           >
             {CONSUMPTION_AVG_FIELDS.map(renderField)}
@@ -116,7 +116,7 @@ function ConsumptionMetadata({ form }) {
       <Box
         display="flex"
         alignItems="center"
-        gap={2}
+        gap={2}flexDirection={()}
         ml={{ xs: "155px", md: 0 }}
         mt="auto"
       >

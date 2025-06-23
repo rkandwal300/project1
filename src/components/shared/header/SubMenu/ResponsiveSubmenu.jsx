@@ -9,6 +9,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import BookIcon from "@mui/icons-material/Book";
 import MenuHoc from "@/components/ui/Menu";
 import { lazy, Suspense, useMemo } from "react";
+import UserGuidePDF from "@/assets/EIA_User_Guide.pdf";
 
 // Lazy load dialogs
 const DialogHoc = lazy(() => import("@/components/ui/Dialog"));
@@ -83,8 +84,7 @@ function ResponsiveSubMenu() {
         label: "User Guide",
         icon: <BookIcon />,
         type: "link",
-        value:
-          "https://eia-prod.amd.com/assets/EIA%20User%20Guide-UyjIb5PG.pdf",
+        value: UserGuidePDF,
       },
       {
         label: "Help",

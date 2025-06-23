@@ -7,26 +7,21 @@ export const releaseNotesTableData = [
     majorFeatures: [
       {
         label: "Azure App Insights",
-
         values: [
           "Introduced support for Azure Application Insights as a telemetry connector.",
         ],
       },
+      {
+        label: "Headroom-based Recommendations",
+        values: ["Added cost advice/recommendation support via headroom."],
+      },
+      {
+        label: "Expanded Telemetry Support: UAVG & U95 metric support",
+        values: ["All the telemetry support is extended to include UAVG and U95 metrics."],
+      },
     ],
 
     minorImprovements: [
-      {
-        label: "Code Snippet",
-
-        values: [
-          "Customers can view the code snippet for applicable APIs.",
-
-          "Currently, only the CURL format is supported.",
-
-          "Once an API key is generated, users can use the code snippet directly in API testing tools.",
-        ],
-      },
-
       {
         label: "Enhanced Admin Visibility",
 

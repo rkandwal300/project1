@@ -94,20 +94,10 @@ export const CONSUMPTION_AVG_FIELDS = [
     tooltipMessage: "UAVG.",
   },
   {
-    label: "PAVG",
-    name: "pavg",
-    tooltipMessage:"PAVG",
-  },
-  {
     label: "U95",
     name: "u95",
     tooltipMessage: "U95",
-  },
-    {
-    label: "P95",
-    name: "p95",
-    tooltipMessage: "P95.",
-  },
+  }
 ];
 
 export const GENERIC_FIELDS = [
