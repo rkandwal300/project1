@@ -1,5 +1,80 @@
 export const releaseNotesTableData = [
   {
+    version: "v3.1.0",
+
+    releaseDate: "June, 2025",
+
+    majorFeatures: [
+      {
+        label: "Azure App Insights",
+
+        values: [
+          "Introduced support for Azure Application Insights as a telemetry connector.",
+        ],
+      },
+    ],
+
+    minorImprovements: [
+      {
+        label: "Code Snippet",
+
+        values: [
+          "Customers can view the code snippet for applicable APIs.",
+
+          "Currently, only the CURL format is supported.",
+
+          "Once an API key is generated, users can use the code snippet directly in API testing tools.",
+        ],
+      },
+
+      {
+        label: "Enhanced Admin Visibility",
+
+        values: [
+          "Administrator can now view all portfolios across their organization.",
+        ],
+      },
+
+      {
+        label: "Interactive Demo Enhancements",
+
+        values: [
+          "Faster loading times",
+
+          "Added audio and visual guidance to improve user onboarding.",
+
+          "New controls to mute or skip instructions.",
+        ],
+      },
+
+      {
+        label: "General Bug Fixes & Performance Improvements",
+
+        values: [],
+      },
+    ],
+
+    upComing: [
+      {
+        label: "AWS Legacy Recommendations Support",
+
+        values: [
+          "Upcoming support for instance recommendations on AWS v2 and v3 instance types",
+        ],
+      },
+
+      {
+        label: "Telemetry Expansion",
+
+        values: [
+          "Planned support for GCP Open Telemetry integration",
+
+          "Prometheus-based telemetry support.",
+        ],
+      },
+    ],
+  },
+  {
     version: "v3.0.0",
     releaseDate: "May, 2025",
     majorFeatures: [
