@@ -8,8 +8,12 @@ import { selectCurrentProviderName } from "@/redux/features/providerData/provide
 import CloudwatchGuide from "./CloudwatchGuide";
 import AzureInsightsGuide from "./AzureInsightsGuide";
 import DatadogGuide from "./DatadogGuide";  
-const lablelist = ["Manage Portfolio", "Add Instances via Telemetry Connector (Datadog)", "Add Instances via Telemetry Connector (AWS CloudWatch)","Add Instances via Telemetry Connector (AZURE APP INSIGHTS)", ];
+import { useLocation,matchPath } from "react-router-dom";
+import InstanceAdviceGuide from "./InstanceAdviceGuide";
+
+const lablelist = ["Manage Portfolio", "Add Instances via Telemetry Connector (Datadog)", "Add Instances via Telemetry Connector (AWS CloudWatch)","Add Instances via Telemetry Connector (AZURE APP INSIGHTS)","Instance Advice" ];
 export default function HelpDialogContent({ onClose }) { 
+  const {pathname} = useLocation();
   const portfolioName = useSelector(selectCurrentProviderName);
   let label =  lablelist[0]
   let Component = () => <></>;
@@ -29,8 +33,11 @@ export default function HelpDialogContent({ onClose }) {
     default:
       label = lablelist[0];
       Component = CloudwatchGuide;
+  } 
+  if(matchPath("/instanceAdvice", pathname)){
+    label = lablelist[3];
+    Component = InstanceAdviceGuide;
   }
-  
 
   return (
     <Box sx={{ p: 0 }} gap={0}>

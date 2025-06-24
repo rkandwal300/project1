@@ -8,7 +8,7 @@ const AzureInsightsGuide = () => {
 
       <Typography variant="body1" mt={2}>
         With the Telemetry Connector option, you can link your Azure App Insights account by providing your{" "}
-        <b>Client ID</b>, <b>Client Secret</b>,fix() <b>Tenant ID</b>, <b>Subscription ID</b>. The platform will authenticate your Azure account and retrieve the instances that are already being monitored through Azure App Insights' telemetry data.
+        <b>Client ID</b>, <b>Client Secret</b>, <b>Tenant ID</b>, <b>Subscription ID</b>. The platform will authenticate your Azure account and retrieve the instances that are already being monitored through Azure App Insights' telemetry data.
       </Typography>
 
       <Typography variant="body1" mt={3} fontWeight={500}>
