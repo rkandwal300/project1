@@ -84,8 +84,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const provider = getProviderConfig(routes, type);
-    console.log({ provider });
+    const provider = getProviderConfig(routes, type); 
     dispatch(setProvider(provider));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routes.join(","), type]);
