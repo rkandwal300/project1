@@ -23,16 +23,15 @@ const HelpDialogContent = lazy(() => import("./HelpDialogContent"));
 
 const menuConfig = [
   {
-    label: "Profile",
+    label: "Admin Panel",
     icon: <AccountCircleIcon />,
   },
-  {
-    label: "User Guide",
-    value:UserGuidePDF,
-    type: "link",
-    icon: <MenuBookIcon />,
-  },
-
+  // {
+  //   label: "User Guide",
+  //   value:UserGuidePDF,
+  //   type: "link",
+  //   icon: <MenuBookIcon />,
+  // },
   {
     label: "About",
     icon: <InfoIcon />,

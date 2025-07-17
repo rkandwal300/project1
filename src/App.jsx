@@ -22,6 +22,8 @@ import Header from "./components/shared/header/Header";
 import Sidebar from "./components/shared/Sidebar/Sidebar";
 import NotFound from "./components/shared/NotFound";
 import { selectCurrentProviderName } from "./redux/features/providerData/providerData.selector";
+import Support from "./components/shared/Support";
+import ReleaseNotesPage from "./components/shared/ReleaseNotesPage";
 
 // Lazy loaded components
 const MainContent = lazy(() =>
@@ -133,6 +135,8 @@ const App = () => {
             >
               <Routes>
                 <Route path="/" element={<MainContent />} />
+                <Route path="/support" element={<Support />} />
+                <Route path="/release-notes" element={<ReleaseNotesPage />} />
                 <Route path="/:id" element={<MainContent />} />
                 <Route
                   path="/instanceAdvice"

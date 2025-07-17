@@ -2,7 +2,6 @@ import { CONSUMPTION_FIELDS, GENERIC_FIELDS } from "@/lib/constant";
 import { mockFormDataResponse } from "@/lib/data";
 import { store } from "@/redux/store";
 
-
 export const highlightElement = (selector) => {
   const el = document.querySelector(selector);
   if (el) el.style.border = "2px solid red";
@@ -50,8 +49,6 @@ const selectDropdownValue = async (inputEl, fieldName) => {
   throw new Error(`Listbox not found for ${fieldName}`);
 };
 
-
-
 const processFields = async (fields) => {
   for (const field of fields) {
     const id = `${field.name}Target`;
@@ -74,7 +71,6 @@ const processFields = async (fields) => {
   }
 };
 
-
 export const actionHandlers = {
   async instanceType(el) {
     await selectDropdownValue(el, "instanceType");
@@ -83,12 +79,11 @@ export const actionHandlers = {
     setInputValue(el, 35);
   },
   input(el) {
-    const name = el.getAttribute("name"); 
+    const name = el.getAttribute("name");
     let value = mockFormDataResponse[name];
     const portfolioList = store
       .getState()
       .instanceList.data.map((instance) => instance.name);
- 
 
     if (portfolioList.includes(value) && name == "portfolioName") {
       value = "test Portfolio1.2";
@@ -169,7 +164,7 @@ export const handleElementAction = async (el, id) => {
     }
   } else if (id === "tableCell_0_maxCpuUtilization_cell") {
     actionHandlers.tableCell(el);
-  } else if (tag === "input") {
+  } else if (tag === "input" ) {
     actionHandlers.input(el);
   } else if (tag === "a") {
     actionHandlers.anchor(el);

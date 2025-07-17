@@ -14,6 +14,8 @@ export const TELEMETRY_TYPES = {
   DATA_DOG: "Datadog",
   AWS_CLOUDWATCH: "AWS CloudWatch",
   AZURE_INSIGHTS: "Azure App Insights",
+  GOOGLE_CLOUD_OPS: "Google Cloud Ops Agent",
+  PROMETHEUS: "Prometheus",
 };
 export const CLOUD_TYPES ={
   AWS: "AWS",

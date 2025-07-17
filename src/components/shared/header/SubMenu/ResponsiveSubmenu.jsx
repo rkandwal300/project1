@@ -80,12 +80,12 @@ function ResponsiveSubMenu() {
   const menuItems = useMemo(
     () => [
       { label: "Stat collector", icon: <CloudDownloadIcon /> },
-      {
-        label: "User Guide",
-        icon: <BookIcon />,
-        type: "link",
-        value: UserGuidePDF,
-      },
+      // {
+      //   label: "User Guide",
+      //   icon: <BookIcon />,
+      //   type: "link",
+      //   value: UserGuidePDF,
+      // },
       {
         label: "Help",
         icon: <HelpIcon />,

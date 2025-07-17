@@ -41,9 +41,9 @@ const steps = () => [
   },
   {
     id: "step-4",
-    text: "Access all support options here.",
+    text: "Click here to go home.",
     attachTo: {
-      element: "#step-three-target",
+      element: "#redirectToHome",
       on: "right",
       offset: "0 20",
     },

@@ -87,6 +87,7 @@ const TelemetryBottomBar = () => {
     () => getTrimmedName(portfolioName),
     [portfolioName]
   );
+
   const isDuplicate = useMemo(
     () =>
       isDuplicateInstance(
@@ -118,6 +119,7 @@ const TelemetryBottomBar = () => {
     id: nanoid(),
     uuid: currentProviderName,
   }));
+
   const handleSaveInstances = useCallback(() => {
     if (!trimmedName) {
       return showAlert(errorMessageType.ERROR, "Portfolio name is required");
