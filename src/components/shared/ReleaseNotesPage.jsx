@@ -7,12 +7,9 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
-import { releaseNotesTableData } from "./header/SubMenu/ReleaseNotes/ReleaseNotes.data";
-import { useTheme } from "@emotion/react";
-
+import { releaseNotesTableData } from "./header/SubMenu/ReleaseNotes/ReleaseNotes.data"; 
 const ReleaseNotesPage = () => {
-  const sectionRefs = useRef({});
-  const themes = useTheme();
+  const sectionRefs = useRef({}); 
   const [activeVersion, setActiveVersion] = useState(null);
 
   useEffect(() => {
