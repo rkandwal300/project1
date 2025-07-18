@@ -9,6 +9,7 @@ import {
   Grid,
   Paper,
   Divider,
+  ListItemText,
 } from "@mui/material";
 import {
   Add as AddIcon,
@@ -24,6 +25,8 @@ import denmark from "@/assets/denmark.svg";
 import germany from "@/assets/Germany.svg";
 import DialogHoc from "../ui/Dialog";
 import UserGuideContent from "./header/SubMenu/UserGuideContent";
+import { supportEmailBody, supportEmailSubject } from "@/lib/constant";
+import { useNavigate } from "react-router-dom";
 
 const CONTACTS = [
   {
@@ -52,14 +55,17 @@ const CONTACTS = [
   },
 ];
 
-const CustomAccordion = memo(({ title, children }) => {
+const CustomAccordion = memo(({ title, id, children }) => {
   const [expanded, setExpanded] = useState(false);
   return (
     <Accordion
       expanded={expanded}
       onChange={() => setExpanded((prev) => !prev)}
     >
-      <AccordionSummary expandIcon={expanded ? <RemoveIcon /> : <AddIcon />}>
+      <AccordionSummary
+        id={id}
+        expandIcon={expanded ? <RemoveIcon /> : <AddIcon />}
+      >
         <Typography fontWeight={600}>{title}</Typography>
       </AccordionSummary>
       <AccordionDetails>{children}</AccordionDetails>
@@ -74,7 +80,6 @@ const ContactCard = memo(({ contact }) => (
       borderRadius: 3,
       overflow: "hidden",
       boxShadow: 3,
-      width: 1,
       minWidth: 220,
       maxWidth: 320,
       mx: "auto",
@@ -114,20 +119,43 @@ const ContactCard = memo(({ contact }) => (
         />
         {contact.country}
       </Typography>
-      <Box display="flex" alignItems="center" gap={1} mt={1}>
+      <Link
+        component="a"
+        href={`tel:${contact.phone}`}
+        display="flex"
+        alignItems="center"
+        gap={1}
+        mt={1}
+        color={"black"}
+        underline="none"
+      >
         <PhoneIcon fontSize="small" />
         <Typography variant="body2">{contact.phone}</Typography>
-      </Box>
-      <Box display="flex" alignItems="center" gap={1} mt={0.5}>
+      </Link>
+      <Link
+        component="a"
+        href={`mailto:${contact.email}?subject=${encodeURIComponent(
+          supportEmailSubject
+        )}&body=${encodeURIComponent(supportEmailBody)}`}
+        display="flex"
+        alignItems="center"
+        gap={1}
+        mt={0.5}
+        color={"black"}
+        underline="none"
+      >
         <MailIcon fontSize="small" />
+
         <Typography variant="body2">{contact.email}</Typography>
-      </Box>
+      </Link>
     </Box>
   </Paper>
 ));
 
-const Support = () => (
-  <Box sx={{ p: { xs: 2, md: 6 } }}>
+const Support = () => {
+  const navigate = useNavigate()
+  return(
+  <Box sx={{ width: "100%", p: { xs: 2, md: 6 } }}>
     <Typography variant="h5" fontWeight="bold" align="center" gutterBottom>
       Need Help Finding Something?
     </Typography>
@@ -158,14 +186,14 @@ const Support = () => (
       support.
     </Typography>
 
-    <CustomAccordion title="Getting Started">
+    <CustomAccordion id="gettingStarted" title="Getting Started">
       <Typography>
         Learn the basics of setting up and using your instance advisor
         effectively.
       </Typography>
     </CustomAccordion>
 
-    <CustomAccordion title="User Guide">
+    <CustomAccordion id="userGuide" title="User Guide">
       <Typography sx={{ mb: "10px" }}>
         Full user documentation including features, workflows, and examples.
       </Typography>
@@ -189,14 +217,14 @@ const Support = () => (
       />
     </CustomAccordion>
 
-    <CustomAccordion title="Release Notes">
+    <CustomAccordion id="step-one-target" title="Release Notes">
       <Typography gutterBottom>
         Stay updated with the latest enhancements, new feature additions, and
         bug fixes introduced in each release of EPYC Cloud Instance Advisor.
       </Typography>
-      <Link href="/release-notes" underline="hover">
+      <Typography id="openReleaseNotes" onClick={()=>navigate("/release-notes")} underline="hover">
         View Release Notes ↗
-      </Link>
+      </Typography>
     </CustomAccordion>
 
     <Divider sx={{ my: 4 }} />
@@ -209,14 +237,23 @@ const Support = () => (
       Contact Details
     </Typography>
 
-    <Grid container spacing={4}>
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: {
+          xs: "1fr",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(4, 1fr)",
+        },
+        gap: 3,
+        my: 2,
+      }}
+    >
       {CONTACTS.map((contact) => (
-        <Grid item xs={12} sm={6} md={3} key={contact.country}>
-          <ContactCard contact={contact} />
-        </Grid>
+        <ContactCard key={contact.country} contact={contact} />
       ))}
-    </Grid>
+    </Box>
   </Box>
-);
+)};
 
 export default memo(Support);

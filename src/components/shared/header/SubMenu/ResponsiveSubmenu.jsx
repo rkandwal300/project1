@@ -96,15 +96,16 @@ function ResponsiveSubMenu() {
         icon: <InfoIcon />,
         type: "dialog",
       },
-      {
-        label: "Release Note",
-        icon: <ArticleIcon />,
-        type: "dialog",
-      },
+      // {
+      //   label: "Release Note",
+      //   icon: <ArticleIcon />,
+      //   type: "dialog",
+      // },
       {
         label: "Support",
-        icon: <SupportIcon />,
-        type: "dialog",
+        icon: <SupportIcon />, 
+             type: "link",
+        value: "/support",
       },
     ],
     []

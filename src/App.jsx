@@ -86,7 +86,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const provider = getProviderConfig(routes, type); 
+    const provider = getProviderConfig(routes, type);
     dispatch(setProvider(provider));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routes.join(","), type]);
@@ -116,7 +116,7 @@ const App = () => {
               p: 0,
             }}
           >
-            <Sidebar />
+            {!["/support", "/release-notes"].includes(pathname) && <Sidebar />}
             <Suspense
               fallback={
                 <Box

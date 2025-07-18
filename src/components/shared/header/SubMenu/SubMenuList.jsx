@@ -15,10 +15,7 @@ import { Suspense, lazy } from "react";
 import DialogHoc from "../../../ui/Dialog";
 import MenuHoc from "../../../ui/Menu";
 import { userEmail } from "@/lib/constant";
-import { useNavigate } from "react-router-dom";
-// Lazy loaded components
-const ReleaseNotes = lazy(() => import("./ReleaseNotes/ReleaseNotes"));
-const SupportMenu = lazy(() => import("./SupportMenu"));
+import { useNavigate } from "react-router-dom"; 
 const UserMenu = lazy(() => import("./UserMenu"));
 const StatCollectorDescription = lazy(() =>
   import("./StatCollectorDescription")
@@ -89,7 +86,7 @@ function SubMenuList() {
           </Suspense>
         )}
       />
-      <DialogHoc
+      {/* <DialogHoc
         trigger={({ onClick }) => (
           <Tooltip title="Release Notes" {...tooltipProps}>
             <IconButton id="step-one-target" onClick={onClick}>
@@ -113,7 +110,7 @@ function SubMenuList() {
           display: "flex",
           flexDirection: "column",
         }}
-      />
+      /> */}
       {/* <MenuHoc
         trigger={({ onClick }) => (
           <Tooltip title="Support" {...tooltipProps}>
