@@ -153,7 +153,7 @@ function PrometheusTelemetry() {
           control={control}
           render={({ field: { value = [], onChange } }) => (
             <TextField
-              label={"Client Email"}
+              label={"Prometheus URL*"}
               name="url"
               value={value}
               onChange={onChange}
