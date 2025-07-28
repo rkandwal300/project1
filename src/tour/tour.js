@@ -3,7 +3,7 @@ import "shepherd.js/dist/css/shepherd.css";
 import steps from "./steps.tour";
 import {
   handleElementAction,
-  highlightElement, 
+  highlightElement,
   removeHighlight,
 } from "./actionsHandlers";
 
@@ -46,53 +46,6 @@ function generateButtons(step, currentStepIndex) {
         removeHighlight(step.attachTo.element);
         window.speechSynthesis.cancel();
         tour.complete();
-      },
-    },
-    // {
-    //   text: "Skip",
-    //   disabled: !step.isSkip,
-    //   secondary: !step.isSkip || step.isEnd,
-    //   action: () => {
-    //     const currentLabel = step?.label ?? "";
-    //     let nextIndex = currentStepIndex + 1;
-    //     while (
-    //       nextIndex < allSteps.length &&
-    //       allSteps[nextIndex].label === currentLabel
-    //     ) {
-    //       nextIndex++;
-    //     }
-    //     if (nextIndex < allSteps.length) {
-    //       tour.show(nextIndex);
-    //     } else {
-    //       tour.complete();
-    //     }
-    //   },
-    // },
-    {
-      text: "Previous",
-      disabled: step.isStart,
-      secondary: step.isStart,
-      action: () => {
-        const currentLabel = allSteps[currentStepIndex].label;
-        let prevLabelIndex = currentStepIndex - 1;
-        while (
-          prevLabelIndex >= 0 &&
-          allSteps[prevLabelIndex].label === currentLabel
-        ) {
-          prevLabelIndex--;
-        }
-
-        if (prevLabelIndex >= 0) {
-          const prevLabel = allSteps[prevLabelIndex].label;
-          const firstOccurrence = allSteps.findIndex(
-            (s) => s.label === prevLabel
-          );
-          if (firstOccurrence !== -1) {
-            tour.show(firstOccurrence);
-          }
-        } else {
-          tour.show(0);
-        }
       },
     },
     {
@@ -148,7 +101,7 @@ allSteps.forEach((step, currentStepIndex) => {
             clearInterval(checkExist);
             highlightElement(step.attachTo.element);
             speakIfNeeded();
-             const currentStep = tour.getCurrentStep();
+            const currentStep = tour.getCurrentStep();
             if (currentStep) {
               currentStep.updateStepOptions({
                 buttons: generateButtons(step, currentStepIndex),

@@ -6,9 +6,11 @@ import {
   Typography,
   List,
   useTheme,
+  Switch,
+  TextField,
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -25,6 +27,7 @@ import {
 } from "@/redux/features/providerData/providerData.selector";
 import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
 import { resetTelemetryData } from "@/redux/features/telemetry/telemetry.slice";
+import { useState } from "react";
 
 const SidebarDrawer = () => {
   const theme = useTheme();
@@ -34,10 +37,11 @@ const SidebarDrawer = () => {
   const portfolio = useSelector(selectCurrentProviderName);
   const portfolioType = useSelector(selectCurrentProviderType);
   const instances = useSelector(selectInstanceList);
+  const [portfolioFilter, setPortfolioFilter] = useState(false);
 
   const data = instances.filter((instance) => instance.provider === portfolio);
 
-  const borderColor = theme.palette.sidebar?.border || theme.palette.divider; 
+  const borderColor = theme.palette.sidebar?.border || theme.palette.divider;
   useEffect(() => {
     if (instances.length === 0) {
       dispatch(addCurrentInstance(null));
@@ -110,7 +114,22 @@ const SidebarDrawer = () => {
         px={1}
         height="2.5rem"
       >
-        <Typography fontWeight={500}>Portfolios</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "2px",
+          }}
+        >
+          <Switch
+            value={portfolioFilter}
+            onClick={() => setPortfolioFilter((prev) => !prev)}
+          />
+          <Typography sx={{ fontWeight: 600 }}>
+            {portfolioFilter ? "Team Portfolios" : "My Portfolios"}
+          </Typography>
+        </Box>
         <TooltipHoc message="Create New Portfolio">
           <IconButton
             id="btn-dashboard-createPortfolio"
@@ -122,13 +141,13 @@ const SidebarDrawer = () => {
               "&:hover": { backgroundColor: "transparent" },
             }}
           >
-            <AddCircleIcon fontSize="small" />
+           <CancelIcon fontSize="small" />
           </IconButton>
         </TooltipHoc>
       </Box>
-
       {/* Portfolio List */}
       <Box sx={{ height: "70vh", overflowY: "auto" }}>
+      <div style={{paddingLeft:'10px' ,marginBottom:"10px"}}><TextField placeholder="Search Portfolio"  /></div>
         <List id="dashboard-portfolio-list">
           {data.map((portfolio) => (
             <PortfolioItem key={portfolio.id} portfolio={portfolio} />

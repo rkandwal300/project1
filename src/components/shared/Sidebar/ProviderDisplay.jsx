@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setProvider } from "@/redux/features/providerData/providerData.slice";
 import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.slice";
-import { resetInstanceState } from "@/redux/features/instance/instance.slice"; 
+import { resetInstanceState } from "@/redux/features/instance/instance.slice";
 
 // Utility to format header text
 const toTitleCase = (text) =>
@@ -18,6 +18,7 @@ const ProviderDisplay = ({ onClose, data }) => {
 
   const handleCellClick = useCallback(
     ({ getValue }) => {
+      if (!getValue()) return;
       const { type, name, logo } = getValue();
 
       const handleClick = () => {
@@ -35,7 +36,7 @@ const ProviderDisplay = ({ onClose, data }) => {
       };
 
       return (
-        <MenuItem 
+        <MenuItem
           id={`menuItem-${type}-${name}`}
           value={name}
           onClick={handleClick}
@@ -55,20 +56,28 @@ const ProviderDisplay = ({ onClose, data }) => {
   );
 
   const columns = useMemo(
-    () =>
-      ["cloud", "telemetry"].map((key) => ({
-        accessorKey: key,
-        header: toTitleCase(key),
+    () => [
+      {
+        header: toTitleCase("cloud"),
+        accessorKey: "cloud",
+        cell: handleCellClick,
+        size: 100,
+        minSize: 100,
+        maxSize: 100,
+      },
+      {
+        accessorKey: "telemetry",
         cell: handleCellClick,
         size: 150,
         minSize: 150,
         maxSize: 150,
-      })),
+      },
+    ],
     [handleCellClick]
   );
 
   return (
-    <Box sx={{ pb: 2, maxWidth: 350 }}>
+    <Box sx={{ pb: 2, maxWidth: 370 }}>
       <CustomTable
         data={data}
         columns={columns}
@@ -77,15 +86,14 @@ const ProviderDisplay = ({ onClose, data }) => {
           backgroundColor: "transparent",
           boxShadow: "none",
           borderRadius: 0,
-          borderBottom:'1px solid',
+          borderBottom: "1px solid",
           borderColor: "grey.400",
-          maxWidth: 350,
+          maxWidth: 370,
           overflow: "hidden",
           transform: "translateX(-2px)",
         }}
-      /> 
+      />
       <Box sx={{ px: 2 }}>
-      
         <Typography
           variant="caption"
           sx={{
@@ -94,7 +102,10 @@ const ProviderDisplay = ({ onClose, data }) => {
             fontSize: "12px",
           }}
         >
-          <strong>Disclaimer:</strong> All third-party logos and icons used are the property of their respective owners and are displayed for informational purposes only, without implying any affiliation, endorsement, or sponsorship.
+          <strong>Disclaimer:</strong> All third-party logos and icons used are
+          the property of their respective owners and are displayed for
+          informational purposes only, without implying any affiliation,
+          endorsement, or sponsorship.
         </Typography>
       </Box>
     </Box>

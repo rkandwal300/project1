@@ -17,7 +17,7 @@ import { useWatch } from "react-hook-form";
 import HoverComponent from "@/components/ui/form/HoverComponent";
 
 const TOOLTIP_MESSAGES = {
-  "Upload Self Perf assessment": "Upload file for metrics",
+  "Upload self perf assessment": "Upload file for metrics",
   "Upload Instances": "Upload file for Instances",
   default: "Click to upload a file",
 };
@@ -41,14 +41,14 @@ const FileUploadField = ({ label, form, ...props }) => {
   });
 
   const fileName =
-    label === "Upload Self Perf assessment" ? selfPrefFile : instanceFile;
+    label === "Upload self perf assessment" ? selfPrefFile : instanceFile;
 
    
   // Clear filename when form value changes externally
   useEffect(() => {
     if (
-      (label === "Upload Self Perf assessment" && !selfPrefFile) ||
-      (label !== "Upload Self Perf assessment" && !instanceFile)
+      (label === "Upload self perf assessment" && !selfPrefFile) ||
+      (label !== "Upload self perf assessment" && !instanceFile)
     ) {
       form.setValue("isFileUploaded", false);
     }
@@ -57,7 +57,7 @@ const FileUploadField = ({ label, form, ...props }) => {
 
   const handleInputClick = () => {
     form.setValue("isFileUploaded", true);
-    if (label === "Upload Self Perf assessment") {
+    if (label === "Upload self perf assessment") {
       dispatch(
         addSelfAssessmentList([
           {
@@ -66,7 +66,7 @@ const FileUploadField = ({ label, form, ...props }) => {
           },
         ])
       );
-      form.setValue("selfPrefFile", "Self Pref File");
+      form.setValue("selfPrefFile", "Self Perf File");
     } else {
       dispatch(addInstanceList([mockFormDataResponse]));
       form.setValue("instanceFile", "Test Instance File");
@@ -75,7 +75,7 @@ const FileUploadField = ({ label, form, ...props }) => {
 
   // Clear filename handler
   const handleClear = () => {
-    if (label === "Upload Self Perf assessment") {
+    if (label === "Upload self perf assessment") {
       form.setValue("selfPrefFile", "");
     } else {
       form.setValue("instanceFile", "");

@@ -22,6 +22,8 @@ import Header from "./components/shared/header/Header";
 import Sidebar from "./components/shared/Sidebar/Sidebar";
 import NotFound from "./components/shared/NotFound";
 import { selectCurrentProviderName } from "./redux/features/providerData/providerData.selector";
+import Support from "./components/shared/Support";
+import ReleaseNotesPage from "./components/shared/ReleaseNotesPage";
 
 // Lazy loaded components
 const MainContent = lazy(() =>
@@ -85,7 +87,6 @@ const App = () => {
 
   useEffect(() => {
     const provider = getProviderConfig(routes, type);
-    console.log({ provider });
     dispatch(setProvider(provider));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routes.join(","), type]);
@@ -115,7 +116,7 @@ const App = () => {
               p: 0,
             }}
           >
-            <Sidebar />
+            {!["/support", "/release-notes"].includes(pathname) && <Sidebar />}
             <Suspense
               fallback={
                 <Box
@@ -134,6 +135,8 @@ const App = () => {
             >
               <Routes>
                 <Route path="/" element={<MainContent />} />
+                <Route path="/support" element={<Support />} />
+                <Route path="/release-notes" element={<ReleaseNotesPage />} />
                 <Route path="/:id" element={<MainContent />} />
                 <Route
                   path="/instanceAdvice"

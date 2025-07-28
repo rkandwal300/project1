@@ -1,8 +1,8 @@
 import React from "react";
 import { FormControl, InputLabel } from "@mui/material";
 import SelectHoc from "@/components/ui/Select";
-import Download_Template from "@/assets/downloads/download_sample_template.xlsx";
-import Download_Self_Pref_Template from "@/assets/downloads/download_self_perf_assessment.xlsx";
+import Download_Template from "@/assets/downloads/Sample_template.xlsx";
+import Download_Self_Pref_Template from "@/assets/downloads/Self_perf_assessment.xlsx";
 
 const menuItems = [
   {

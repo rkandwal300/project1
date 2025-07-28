@@ -15,10 +15,7 @@ import { Suspense, lazy } from "react";
 import DialogHoc from "../../../ui/Dialog";
 import MenuHoc from "../../../ui/Menu";
 import { userEmail } from "@/lib/constant";
-
-// Lazy loaded components
-const ReleaseNotes = lazy(() => import("./ReleaseNotes/ReleaseNotes"));
-const SupportMenu = lazy(() => import("./SupportMenu"));
+import { useNavigate } from "react-router-dom"; 
 const UserMenu = lazy(() => import("./UserMenu"));
 const StatCollectorDescription = lazy(() =>
   import("./StatCollectorDescription")
@@ -26,7 +23,7 @@ const StatCollectorDescription = lazy(() =>
 
 function SubMenuList() {
   const theme = useTheme();
-
+  const navigate = useNavigate();
   const iconButtonStyle = {
     width: 24,
     height: 24,
@@ -89,7 +86,7 @@ function SubMenuList() {
           </Suspense>
         )}
       />
-      <DialogHoc
+      {/* <DialogHoc
         trigger={({ onClick }) => (
           <Tooltip title="Release Notes" {...tooltipProps}>
             <IconButton id="step-one-target" onClick={onClick}>
@@ -113,33 +110,38 @@ function SubMenuList() {
           display: "flex",
           flexDirection: "column",
         }}
-      />
-      <MenuHoc
+      /> */}
+      {/* <MenuHoc
         trigger={({ onClick }) => (
           <Tooltip title="Support" {...tooltipProps}>
-            <IconButton
-              onClick={onClick}
-              id="step-three-target"
-              sx={{
-                ...iconButtonStyle,
-                borderRadius: "50%",
-                backgroundColor: theme.palette.error.contrastText,
-                "&:hover": {
-                  backgroundColor: theme.palette.error.contrastText,
-                },
-              }}
-            >
+            
               <HeadsetMicIcon sx={{ color: "black", fontSize: 15 }} />
             </IconButton>
           </Tooltip>
-        )}
+        )}b
         content={() => (
           <Suspense fallback={Loader}>
             <SupportMenu />
           </Suspense>
         )}
-      />
-
+      /> */}
+      <Tooltip title="Support" {...tooltipProps}>
+        <IconButton
+          // href="/support"
+          id="step-three-target"
+          sx={{
+            ...iconButtonStyle,
+            borderRadius: "50%",
+            backgroundColor: theme.palette.error.contrastText,
+            "&:hover": {
+              backgroundColor: theme.palette.error.contrastText,
+            },
+          }}
+          onClick={() => navigate("/support")}
+        >
+          <HeadsetMicIcon sx={{ color: "black", fontSize: 15 }} />
+        </IconButton>
+      </Tooltip>
       <MenuHoc
         trigger={({ onClick }) => (
           <Tooltip title="Profile" {...tooltipProps}>

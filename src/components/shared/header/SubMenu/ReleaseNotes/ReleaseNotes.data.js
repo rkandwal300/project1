@@ -1,5 +1,75 @@
 export const releaseNotesTableData = [
   {
+    version: "v3.1.0",
+
+    releaseDate: "June, 2025",
+
+    majorFeatures: [
+      {
+        label: "Azure App Insights",
+        values: [
+          "Introduced support for Azure Application Insights as a telemetry connector.",
+        ],
+      },
+      {
+        label: "Headroom-based Recommendations",
+        values: ["Added cost advice/recommendation support via headroom."],
+      },
+      {
+        label: "Expanded Telemetry Support: UAVG & U95 metric support",
+        values: ["All the telemetry support is extended to include UAVG and U95 metrics."],
+      },
+    ],
+
+    minorImprovements: [
+      {
+        label: "Enhanced Admin Visibility",
+
+        values: [
+          "Administrator can now view all portfolios across their organization.",
+        ],
+      },
+
+      {
+        label: "Interactive Demo Enhancements",
+
+        values: [
+          "Faster loading times",
+
+          "Added audio and visual guidance to improve user onboarding.",
+
+          "New controls to mute or skip instructions.",
+        ],
+      },
+
+      {
+        label: "General Bug Fixes & Performance Improvements",
+
+        values: [],
+      },
+    ],
+
+    upComing: [
+      {
+        label: "AWS Legacy Recommendations Support",
+
+        values: [
+          "Upcoming support for instance recommendations on AWS v2 and v3 instance types",
+        ],
+      },
+
+      {
+        label: "Telemetry Expansion",
+
+        values: [
+          "Planned support for GCP Open Telemetry integration",
+
+          "Prometheus-based telemetry support.",
+        ],
+      },
+    ],
+  },
+  {
     version: "v3.0.0",
     releaseDate: "May, 2025",
     majorFeatures: [

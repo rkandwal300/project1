@@ -94,20 +94,10 @@ export const CONSUMPTION_AVG_FIELDS = [
     tooltipMessage: "UAVG.",
   },
   {
-    label: "PAVG",
-    name: "pavg",
-    tooltipMessage:"PAVG",
-  },
-  {
     label: "U95",
     name: "u95",
     tooltipMessage: "U95",
-  },
-    {
-    label: "P95",
-    name: "p95",
-    tooltipMessage: "P95.",
-  },
+  }
 ];
 
 export const GENERIC_FIELDS = [
@@ -154,9 +144,9 @@ export const FIND_AND_REPLACE_FIELD_TYPES = [
   },
 ];
 
-const subject = "EIA - Support Ticket Request - Regarding manageAccounts Page";
+export const supportEmailSubject = "EIA - Support Ticket Request - Regarding manageAccounts Page";
 
-const body = `
+export const supportEmailBody = `
 Hi [Support Team/Specific Name],
 
 I am writing to request support regarding EIA manageAccounts Page.
@@ -196,9 +186,7 @@ Best regards,
 [Your Name]
 `;
 
-export const supportMailtoLink = `mailto:support@example.com?subject=${encodeURIComponent(
-  subject
-)}&body=${encodeURIComponent(body)}`;
+export const supportMailtoLink = `mailto:support@example.com?subject=${encodeURIComponent( supportEmailSubject)}&body=${encodeURIComponent(supportEmailBody)}`;
 export const supportMobileNumber = `tel:+1 (502) 388-6228`;
 
 export const userEmail = "testuser@infobellit.com";

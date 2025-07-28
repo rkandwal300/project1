@@ -98,7 +98,7 @@ const PortfolioDetails = ({ form }) => {
         {showSelfPref && (
           <FileUploadField
             form={form}
-            label="Upload Self Perf assessment"
+            label="Upload self perf assessment"
             id="uploadSelfPerf"
             fullWidth
             sx={{ flex: 1, width: "50%" }}

@@ -32,24 +32,25 @@ const providerSlice = createSlice({
         switch (name) {
           case TELEMETRY_TYPES.DATA_DOG:
           case TELEMETRY_TYPES.AWS_CLOUDWATCH:
+          case TELEMETRY_TYPES.PROMETHEUS:
             state.telemetryCloud = CLOUD_TYPES.AWS;
             break;
           case TELEMETRY_TYPES.AZURE_INSIGHTS:
             state.telemetryCloud = CLOUD_TYPES.AZURE;
             break;
         }
-         if (name  == TELEMETRY_TYPES.DATA_DOG) {
-
-           filteredProviders = instanceList.filter(
-             (provider) => provider.type === "telemetry" && provider.cloud === state.telemetryCloud
-           );
-       
-         } else {
-           filteredProviders = instanceList.filter(
-             (provider) => provider.type === "telemetry" && provider.name === name
-           );
-
-         }
+        if (name == TELEMETRY_TYPES.DATA_DOG) {
+          filteredProviders = instanceList.filter(
+            (provider) =>
+              provider.type === "telemetry" &&
+              provider.cloud === state.telemetryCloud
+          );
+        } else {
+          filteredProviders = instanceList.filter(
+            (provider) =>
+              provider.type === "telemetry" && provider.name === name
+          );
+        }
       } else {
         state.telemetryCloud = null;
         filteredProviders = instanceList.filter(

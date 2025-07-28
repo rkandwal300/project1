@@ -9,6 +9,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import BookIcon from "@mui/icons-material/Book";
 import MenuHoc from "@/components/ui/Menu";
 import { lazy, Suspense, useMemo } from "react";
+import UserGuidePDF from "@/assets/EIA_User_Guide.pdf";
 
 // Lazy load dialogs
 const DialogHoc = lazy(() => import("@/components/ui/Dialog"));
@@ -25,6 +26,7 @@ const DIALOG_COMPONENTS = {
 };
 
 import PropTypes from "prop-types";
+import UserGuideContent from "./userGuideContent";
 
 function DialogMenuItem(props) {
   const { label, icon, DialogComponent } = props;
@@ -78,13 +80,12 @@ function ResponsiveSubMenu() {
   const menuItems = useMemo(
     () => [
       { label: "Stat collector", icon: <CloudDownloadIcon /> },
-      {
-        label: "User Guide",
-        icon: <BookIcon />,
-        type: "link",
-        value:
-          "https://eia-prod.amd.com/assets/EIA%20User%20Guide-UyjIb5PG.pdf",
-      },
+      // {
+      //   label: "User Guide",
+      //   icon: <BookIcon />,
+      //   type: "link",
+      //   value: UserGuidePDF,
+      // },
       {
         label: "Help",
         icon: <HelpIcon />,
@@ -95,15 +96,16 @@ function ResponsiveSubMenu() {
         icon: <InfoIcon />,
         type: "dialog",
       },
-      {
-        label: "Release Note",
-        icon: <ArticleIcon />,
-        type: "dialog",
-      },
+      // {
+      //   label: "Release Note",
+      //   icon: <ArticleIcon />,
+      //   type: "dialog",
+      // },
       {
         label: "Support",
-        icon: <SupportIcon />,
-        type: "dialog",
+        icon: <SupportIcon />, 
+             type: "link",
+        value: "/support",
       },
     ],
     []
