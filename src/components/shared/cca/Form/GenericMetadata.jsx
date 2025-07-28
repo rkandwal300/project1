@@ -4,7 +4,7 @@ import { Box, Typography, Button, IconButton, Divider, Grid, Tooltip } from "@mu
 import { CCA_FIELDS } from "@/lib/constant";
 import { Controller } from "react-hook-form";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
 import { AnimatedIconButton } from "@/components/shared/Form/Consumption Metadata/AnimatedIconButton";
 import { Add } from "@mui/icons-material";
 import { selectCurrentProviderInstanceTypes, selectCurrentProviderPricingModels, selectCurrentProviderRegions } from "@/redux/features/providerData/providerData.selector";
@@ -79,11 +79,10 @@ const GenericMetadata = ({ form }) => {
     <Box sx={{ p: 1, width: '100%', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2 }}>
 
 
-      <Box id="formFields" role="portfolioForm"  sx={{ width: "70%", mb: 1.5, display: 'grid', gap: '16px', gridTemplateColumns: { xs: 'repeat(1,1fr)', sm: 'repeat(4,1fr)' } }}>
+      <Box id="generic-metadata-form" role="GenericCCAMetadataForm" sx={{ width: "70%", mb: 1.5, display: 'grid', gap: '16px', gridTemplateColumns: { xs: 'repeat(1,1fr)', sm: 'repeat(4,1fr)' } }}>
         {CCA_FIELDS.map((field) => (
-          <Box key={field.name} sx={{ width: '100%', gridColumn: { xs: 'span 1', sm: field.name === "uuid" || field.name === "noOfHours" ? 'span 2' : 'span 1' } }}>
-            {renderField(field)}
-          </Box>
+          renderField(field)
+
         ))}
 
       </Box>
@@ -170,7 +169,7 @@ const GenericMetadata = ({ form }) => {
               </Box>
               <Divider sx={{ borderBottom: "1px solid black" }} />
               <Box p="24px 24px">
-     
+
                 <Typography fontSize="16px" fontWeight={600}>
                   1. Cloud Selection:
                 </Typography>
@@ -188,7 +187,7 @@ const GenericMetadata = ({ form }) => {
                   • If the value is not mentioned, it will default to 1.
                 </Typography>
 
-              
+
                 <Typography fontSize="16px" fontWeight={600} mt={2}>
                   3. Number of Hours per Month:
                 </Typography>
@@ -202,7 +201,7 @@ const GenericMetadata = ({ form }) => {
                   • If the value is a floating-point number, it will be rounded off.
                 </Typography>
 
-               
+
                 <Typography fontSize="16px" fontWeight={600} mt={2}>
                   4. Pricing Model:
                 </Typography>

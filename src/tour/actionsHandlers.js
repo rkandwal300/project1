@@ -1,4 +1,4 @@
-import { CONSUMPTION_FIELDS, GENERIC_FIELDS } from "@/lib/constant";
+import { CCA_FIELDS, CONSUMPTION_FIELDS, GENERIC_FIELDS } from "@/lib/constant";
 import { mockFormDataResponse } from "@/lib/data";
 import { store } from "@/redux/store";
 
@@ -127,6 +127,7 @@ export const actionHandlers = {
         el.scrollBy({ left: 300, behavior: "smooth" });
       }
     }
+    if (role === "GenericCCAMetadataForm") await processFields(CCA_FIELDS);
     if (role === "GenericMetadataForm") await processFields(GENERIC_FIELDS);
     if (role === "ConsumptionMetadataForm")
       await processFields(CONSUMPTION_FIELDS);

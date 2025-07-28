@@ -89,9 +89,7 @@ const GenericMetadata = ({ form }) => {
         }}
         gap={2}
         alignItems="center"
-      >
-        {GENERIC_FIELDS.map(renderField)}
-      </Box>
+      > {GENERIC_FIELDS.map(renderField)}  </Box>
     </Box>
   );
 };
