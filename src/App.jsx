@@ -100,9 +100,9 @@ const App = () => {
   }, [routes.join(","), type]);
 
   const BottomBarComponent = useMemo(() => {
-    if (matchPath("/telemetry/:id", pathname)) return TelemetryDetailBottomBar;
-    if (pathname.startsWith("/telemetry")) return TelemetryBottomBar;
-    if (pathname === "/instanceAdvice" || pathname == "/cca-costAdvisory")
+    if (matchPath(ROUTES.TELEMETRY_DETAIL, pathname)) return TelemetryDetailBottomBar;
+    if (pathname.startsWith(ROUTES.TELEMETRY)) return TelemetryBottomBar;
+    if (pathname === ROUTES.INSTANCE_ADVICE || pathname == "/cca-costAdvisory")
       return InstanceAdviceBottomBar;
     if (pathname === CCA_LINKS.CLOUD_USAGE_REPORT) return () => <></>;
     if (pathname === CCA_LINKS.EXPLORER) return () => <></>;

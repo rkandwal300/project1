@@ -37,6 +37,7 @@ import { selectInstanceList } from "@/redux/features/instanceList/instanceList.s
 import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector";
 import { CCA_LINKS } from "./header/CCATitle";
 import { AttachMoney } from "@mui/icons-material";
+import { ROUTES } from "@/lib/router";
 
 function BottomBar() {
   const theme = useTheme();
@@ -44,7 +45,7 @@ function BottomBar() {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  const currentInstanceId = location.pathname.split("/")[1];
+  const currentInstanceId = location.pathname.split("/")[2];
 
   const currentProviderName = useSelector(selectCurrentProviderName);
   const alertMessage = useSelector(selectMessage);
@@ -75,7 +76,7 @@ function BottomBar() {
         instance.provider === currentProviderName
     );
 
-    if (isDuplicate) {
+    if (isDuplicate ) {
       dispatch(
         setMessage({
           type: errorMessageType.ERROR,
@@ -102,7 +103,7 @@ function BottomBar() {
       dispatch(addInstance(payload));
     }
 
-    navigate(`/${formId}`);
+    navigate(`${ROUTES.ROOT}${formId}`);
     dispatch(
       setMessage({
         type: errorMessageType.SUCCESS,
@@ -120,7 +121,7 @@ function BottomBar() {
         message: `${portfolioName} deleted successfully`,
       })
     );
-    navigate("/");
+    navigate(ROUTES.ROOT);
   }, [dispatch, formId, portfolioName, navigate]);
 
   const handleResetFormData = useCallback(() => {
@@ -132,7 +133,7 @@ function BottomBar() {
       })
     );
     dispatch(addCurrentInstance(null));
-    navigate("/");
+    navigate(ROUTES.ROOT);
   }, [dispatch, portfolioName, selfPrefAssessmentData, instances, navigate]);
 
   const isSaveDisabled = !instances.length;
@@ -300,7 +301,7 @@ function BottomBar() {
                 location.pathname // or a hardcoded string like "/cloudInstances/abc123"
               )
                 ? navigate(CCA_LINKS.COST_ADVISORY)
-                : navigate("/instanceAdvice")
+                : navigate(ROUTES.INSTANCE_ADVICE)
             }
           >
             {location.pathname == CCA_LINKS.MANAGE_PORTFOLIO ||

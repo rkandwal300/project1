@@ -2,16 +2,12 @@ import { useTheme } from "@emotion/react";
 import { Box, Button } from "@mui/material";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate, useLocation } from "react-router-dom";
-import { CCA_LINKS } from "../header/CCATitle";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/lib/router";
 
 function InstanceAdviceBottomBar() {
   const navigate = useNavigate();
-
-  const location = useLocation();
   const theme = useTheme();
-  const route =
-    location.pathname == "cca-costAdvisory" ? "/" : CCA_LINKS.MANAGE_PORTFOLIO;
   return (
     <Box
       sx={{
@@ -29,7 +25,7 @@ function InstanceAdviceBottomBar() {
         variant="contained"
         color="error"
         startIcon={<CloseIcon />}
-        onClick={() => navigate(route)}
+        onClick={() => navigate(ROUTES.ROOt)}
       >
         Close
       </Button>

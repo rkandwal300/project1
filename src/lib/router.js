@@ -4,9 +4,9 @@ const getBasePath = () => {
   const eiaPorts = ["2000", "2001", "2002"];
  console.log({port})
   if (ccaPorts.includes(port)) {
-    return "/cca/";
+    return "/cca";
   } else if (eiaPorts.includes(port)) {
-    return "/eia/";
+    return "/eia";
   }
 
   // In production, check domain or use build-time base path
@@ -15,26 +15,25 @@ const getBasePath = () => {
     return "/";
   } else if (hostname.includes("eia")) {
     return "/";
-  }
-  return "/eia";
+  } 
 };
 
 export const basePath = getBasePath();
 
 export const ROUTES = {
-  ROOT: `${basePath}`,
+  ROOT: `${basePath}/`,
   DETAIL: `${basePath}/:id`,
   MANAGE_PORTFOLIO: `${basePath}`,
   CLOUD_USAGE_REPORT: `${basePath}/cca-cloudusagereports`,
   CLOUD_USAGE_REPORT_DETAILS: `${basePath}/cloudusagereports/:id`,
-  COST_ADVISORY: `${basePath}-costAdvisory`,
-  EXPLORER: `${basePath}-explorer`,
-  SUPPORT: `/support`,
-  RELEASE_NOTES: `/release-notes`,
+  COST_ADVISORY: `${basePath}/costAdvisory`,
+  EXPLORER: `${basePath}/explorer`,
+  SUPPORT: `${basePath}/support`,
+  RELEASE_NOTES: `${basePath}/release-notes`,
   MAIN_CONTENT_DYNAMIC: `${basePath}/:id`,
-  INSTANCE_ADVICE: `/instanceAdvice`,
-  TELEMETRY: `/telemetry`,
-  TELEMETRY_DETAIL: `/telemetry/:id`,
+  INSTANCE_ADVICE: `${basePath}/instanceAdvice`,
+  TELEMETRY: `${basePath}/telemetry`,
+  TELEMETRY_DETAIL: `${basePath}/telemetry/:id`,
   NOT_FOUND: "*",
 };
 

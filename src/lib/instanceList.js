@@ -4,11 +4,10 @@ import {
 } from "@/redux/features/telemetry/telemetry.slice";
 import awsLogo from "@/assets/provider_logos/awslogo.svg";
 import azureLogo from "@/assets/provider_logos/azurelogo.svg";
-import gcpLogo from "@/assets/provider_logos/googlelogo.svg";
+import googleLogo from "@/assets/provider_logos/googlelogo.svg";
 import dataDogLogo from "@/assets/provider_logos/datadog.svg";
 import cloudWatchLogo from "@/assets/provider_logos/cloudWatch.svg";
-import azureInsightsLogo from "@/assets/provider_logos/azureInsights.svg";
-import googleLogo from "@/assets/provider_logos/googlelogo.svg";
+import azureInsightsLogo from "@/assets/provider_logos/azureInsights.svg"; 
 import prometheusLogo from "@/assets/provider_logos/prometheus.svg";
 
 export const instanceList = [
@@ -963,7 +962,7 @@ export const providerList = [
       id: 3,
       type: "cloud",
       name: CLOUD_TYPES.GCP,
-      logo: gcpLogo,
+      logo: googleLogo,
     },
     telemetry: {
       id: 7,

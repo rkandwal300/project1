@@ -30,20 +30,18 @@ import {
   selectMessageType,
 } from "@/redux/features/instance/instance.selector";
 import { mockFormDataResponse } from "@/lib/data";
-
-// Dynamic import for FormAlert
+import { ROUTES } from "@/lib/router";
+ 
 const FormAlert = lazy(() => import("@/components/ui/FormAlert"));
-
-// Utility: get trimmed name
+ 
 const getTrimmedName = (name) => name?.trim() || "";
-
-// Utility: check duplicate
+ 
 const isDuplicateInstance = (instances, name, providerType, currentProvider) =>
   instances.some(
     (instance) => instance.name === name && providerType === currentProvider
   );
 
-// Utility: build instance payload
+ 
 const buildInstancePayload = ({ id, data, provider, name, formData }) => ({
   id,
   data,
@@ -143,7 +141,7 @@ const TelemetryBottomBar = () => {
       dispatch(addInstance(payload));
     }
     dispatch(resetTelemetryData());
-    navigate(`/telemetry/${generatedFormId}?type=${currentProviderName}`);
+    navigate(`${ROUTES.TELEMETRY}/${generatedFormId}?type=${currentProviderName}`);
     showAlert(errorMessageType.SUCCESS, `${trimmedName} saved successfully`);
   }, [
     trimmedName,

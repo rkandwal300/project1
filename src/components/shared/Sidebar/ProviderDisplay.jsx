@@ -30,7 +30,7 @@ const ProviderDisplay = ({ onClose, data }) => {
 
         if (type === "cloud") {
           navigate(`${ROUTES.ROOT}?type=${formattedName}`);
-        } else if (type === "telemetry") {
+        } else if (type === "telemetry") { 
           navigate(`${ROUTES.TELEMETRY}?type=${formattedName}`);
         }
         onClose();
