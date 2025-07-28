@@ -1,11 +1,12 @@
 import Shepherd from "shepherd.js";
 import "shepherd.js/dist/css/shepherd.css";
-import steps from "./steps.tour";
 import {
   handleElementAction,
   highlightElement,
   removeHighlight,
 } from "./actionsHandlers";
+import { isEIA } from "@/lib/router";
+import { getCcaSteps, getEiaSteps } from "./steps.tour";
 
 let isMuted = false;
 
@@ -78,7 +79,7 @@ const tour = new Shepherd.Tour({
   },
   useModalOverlay: true,
 });
-const allSteps = steps();
+const allSteps = isEIA() ? getEiaSteps() : getCcaSteps();
 allSteps.forEach((step, currentStepIndex) => {
   tour.addStep({
     id: step.id,

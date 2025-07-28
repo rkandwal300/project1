@@ -1,9 +1,7 @@
 import { openSidebar } from "@/redux/features/sidebar/sidebar.slice";
 import { store } from "@/redux/store";
 
-const steps = () => [
-
-
+export const getEiaSteps = () => [
   {
     id: "step-1",
     text: "Click to open the support menu.",
@@ -15,7 +13,7 @@ const steps = () => [
     label: "supportMenu",
     isSkip: true,
   },
-    {
+  {
     id: "step-2",
     label: "releaseNotes",
     text: "Click here to expand previous releases.",
@@ -27,7 +25,7 @@ const steps = () => [
     isStart: true,
     isSkip: true,
   },
-    {
+  {
     id: "step-3",
     text: "Click this button to view previous releases.",
     speak: `
@@ -469,4 +467,50 @@ const steps = () => [
   },
 ];
 
-export default steps;
+export const getCcaSteps = () => [ {
+    id: "step-1",
+    text: "Click to open the support menu.",
+    attachTo: {
+      element: "#step-three-target",
+      on: "right",
+    },
+    offset: "0 20",
+    label: "supportMenu",
+    isSkip: true,
+  },
+  {
+    id: "step-2",
+    label: "releaseNotes",
+    text: "Click here to expand previous releases.",
+    attachTo: {
+      element: "#step-one-target",
+      on: "bottom",
+      offset: "0 10",
+    },
+    isStart: true,
+    isSkip: true,
+  },
+  {
+    id: "step-3",
+    text: "Click this button to view previous releases.",
+    speak: `
+      Welcome to the AMD EPYC Cloud Instance Advisor, or EIA — a powerful recommendation engine that helps you select the best-fit cloud instances based on your system’s performance data. On the home page, you’ll find a navigation bar with the following options: Click the release notes icon to view what's new. This dialog will appear automatically on your first login and whenever a new version is released. Click the support icon to reach out for help. You can call the hotline or email us directly. Your email is shown on the top-right. Click the profile icon to access account settings and permissions. You can also click the icons to access the user guide , online documentation , about , or to log out . To start gathering metrics, click on the “Download Stat Collector” button. This tool collects CPU, memory, disk, and network stats, and generates an XLSX file used for recommendations. Once downloaded, unzip the file and follow the instructions in the included user guide to execute it.
+    `,
+    attachTo: {
+      element: "#openReleaseNotes",
+      on: "top",
+      offset: "0 20",
+    },
+    type: "wait",
+    label: "releaseNotes",
+  },
+  {
+    id: "step-4",
+    text: "Click here to go home.",
+    attachTo: {
+      element: "#redirectToHome",
+      on: "right",
+      offset: "0 20",
+    },
+    label: "supportMenu",
+  },];
