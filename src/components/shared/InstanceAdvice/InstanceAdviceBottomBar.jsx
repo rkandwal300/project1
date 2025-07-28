@@ -2,12 +2,14 @@ import { useTheme } from "@emotion/react";
 import { Box, Button } from "@mui/material";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ROUTES } from "@/lib/router";
 
 function InstanceAdviceBottomBar() {
   const navigate = useNavigate();
   const theme = useTheme();
+  const route =
+    location.pathname == "cca-costAdvisory" ? "/" : ROUTES.ROOT;
   return (
     <Box
       sx={{

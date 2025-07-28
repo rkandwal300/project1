@@ -26,7 +26,6 @@ import { selectCurrentProviderName } from "./redux/features/providerData/provide
 import Support from "./components/shared/Support";
 import ReleaseNotesPage from "./components/shared/ReleaseNotesPage";
 import Explorer from "./components/shared/cca/Explorer/Explorer";
-import { CCA_LINKS } from "./components/shared/header/CCATitle";
 import CostAdviceLayout from "./components/shared/cca/costAdvice/CostAdviceLayout";
 import CCAMainContent from "./components/shared/cca/MainLayout/MainContent";
 import CloudUsageReports from "./components/shared/cca/CloudUsageReport";
@@ -104,8 +103,8 @@ const App = () => {
     if (pathname.startsWith(ROUTES.TELEMETRY)) return TelemetryBottomBar;
     if (pathname === ROUTES.INSTANCE_ADVICE || pathname == "/cca-costAdvisory")
       return InstanceAdviceBottomBar;
-    if (pathname === CCA_LINKS.CLOUD_USAGE_REPORT) return () => <></>;
-    if (pathname === CCA_LINKS.EXPLORER) return () => <></>;
+    if (pathname === ROUTES.CLOUD_USAGE_REPORT) return () => <></>;
+    if (pathname === ROUTES.EXPLORER) return () => <></>;
     return BottomBar;
   }, [pathname]); 
   return (

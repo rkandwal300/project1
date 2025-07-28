@@ -7,13 +7,13 @@ import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
 import SampleFile from "@/assets/Sample_template.xlsx";
 import { useState } from "react";
-import { CCA_LINKS } from "../../header/CCATitle";
 import { mockFormDataResponse } from "@/lib/data";
 import {
   addInstanceList,
   setPortFolioName,
 } from "@/redux/features/instance/instance.slice";
 import { selectPortfolioName } from "@/redux/features/instance/instance.selector";
+import { ROUTES } from "@/lib/router";
 
 const PortfolioDetails = () => {
   const name = useSelector(selectPortfolioName);
@@ -44,7 +44,7 @@ const PortfolioDetails = () => {
   };
 
   const cloudUsageReportsRedirect = () => {
-    navigate(CCA_LINKS.CLOUD_USAGE_REPORT);
+    navigate(ROUTES.CLOUD_USAGE_REPORT);
   };
   return (
     <Box sx={{ flexGrow: 1, p: 1 }}>

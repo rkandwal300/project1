@@ -35,7 +35,6 @@ import {
 } from "@/redux/features/instance/instance.slice";
 import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
 import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector";
-import { CCA_LINKS } from "./header/CCATitle";
 import { AttachMoney } from "@mui/icons-material";
 import { ROUTES } from "@/lib/router";
 
@@ -94,7 +93,7 @@ function BottomBar() {
       name: trimmedName,
       selfPrefAssessment: selfPrefAssessmentData,
     };
-    const isValidRoute = Object.values(CCA_LINKS).some((path) =>
+    const isValidRoute = Object.values(ROUTES).some((path) =>
       matchPath({ path, end: false }, `/${currentInstanceId}`)
     ); 
     if (currentInstanceId && !isValidRoute) {
@@ -283,9 +282,9 @@ function BottomBar() {
             id={"instanceAdvice"}
             variant="contained"
             startIcon={
-              location.pathname == CCA_LINKS.MANAGE_PORTFOLIO ||
+              location.pathname == ROUTES.ROOT ||
               matchPath(
-                { path: CCA_LINKS.CLOUD_USAGE_REPORT_DETAILS, end: true },
+                { path: ROUTES.CLOUD_USAGE_REPORT_DETAILS, end: true },
                 location.pathname // or a hardcoded string like "/cloudInstances/abc123"
               ) ? (
                 <AttachMoney />
@@ -295,18 +294,18 @@ function BottomBar() {
             }
             disabled={isInstanceAdviceDisabled}
             onClick={() =>
-              location.pathname == CCA_LINKS.MANAGE_PORTFOLIO ||
+              location.pathname == ROUTES.ROOT ||
               matchPath(
-                { path: CCA_LINKS.CLOUD_USAGE_REPORT_DETAILS, end: true },
+                { path: ROUTES.CLOUD_USAGE_REPORT_DETAILS, end: true },
                 location.pathname // or a hardcoded string like "/cloudInstances/abc123"
               )
-                ? navigate(CCA_LINKS.COST_ADVISORY)
-                : navigate(ROUTES.INSTANCE_ADVICE)
+                ? navigate(ROUTES.COST_ADVISORY)
+                : navigate("/instanceAdvice")
             }
           >
-            {location.pathname == CCA_LINKS.MANAGE_PORTFOLIO ||
+            {location.pathname == ROUTES.ROOT ||
             matchPath(
-              { path: CCA_LINKS.CLOUD_USAGE_REPORT_DETAILS, end: true },
+              { path: ROUTES.CLOUD_USAGE_REPORT_DETAILS, end: true },
               location.pathname // or a hardcoded string like "/cloudInstances/abc123"
             )
               ? "Cost advice"

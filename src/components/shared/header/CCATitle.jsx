@@ -1,3 +1,4 @@
+import { ROUTES } from "@/lib/router";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useLocation, Link } from "react-router-dom";
 
@@ -16,8 +17,8 @@ function CCATitle() {
   const isSm = useMediaQuery(theme.breakpoints.down("sm"));
 
   const data = [
-    { label: "Manage Portfolio", path: CCA_LINKS.MANAGE_PORTFOLIO },
-    { label: "Explorer", path: CCA_LINKS.EXPLORER },
+    { label: "Manage Portfolio", path: ROUTES.ROOT },
+    { label: "Explorer", path: ROUTES.EXPLORER },
   ];
 
   const styles = (isActive) => ({
