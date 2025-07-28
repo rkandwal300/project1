@@ -102,7 +102,7 @@ function BottomBar() {
       dispatch(addInstance(payload));
     }
 
-    navigate(`/${CCA_LINKS.EXPLORER}/${formId}`);
+    navigate(`/${formId}`);
     dispatch(
       setMessage({
         type: errorMessageType.SUCCESS,

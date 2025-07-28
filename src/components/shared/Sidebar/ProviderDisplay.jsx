@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { setProvider } from "@/redux/features/providerData/providerData.slice";
 import { addCurrentInstance } from "@/redux/features/instanceList/instanceList.slice";
 import { resetInstanceState } from "@/redux/features/instance/instance.slice";
+import {  ROUTES } from "@/lib/router";
 
 // Utility to format header text
 const toTitleCase = (text) =>
@@ -28,9 +29,9 @@ const ProviderDisplay = ({ onClose, data }) => {
         const formattedName = name;
 
         if (type === "cloud") {
-          navigate(`/?type=${formattedName}`);
+          navigate(`${ROUTES.ROOT}?type=${formattedName}`);
         } else if (type === "telemetry") {
-          navigate(`/telemetry?type=${formattedName}`);
+          navigate(`${ROUTES.TELEMETRY}?type=${formattedName}`);
         }
         onClose();
       };

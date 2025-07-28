@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import logo from "@/assets/logos/amd-header-logo.svg";
 import { useNavigate } from "react-router-dom";
+import { basePath } from "@/lib/router";
 
 function Logo() {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ function Logo() {
     <Box
       component={"button"}
       id="redirectToHome"
-      onClick={() => navigate("/")}
+      onClick={() => navigate(basePath)}
       sx={{
         display: "flex",
         alignItems: "center",

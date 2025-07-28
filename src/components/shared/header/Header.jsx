@@ -3,14 +3,11 @@ import SubMenu from "./SubMenu/SubMenu";
 import Logo from "./Logo";
 import Title from "./Title";
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
-import CCATitle, { CCA_LINKS } from "./CCATitle";
-import { useLocation } from "react-router-dom";
+import CCATitle from "./CCATitle";
+import { isCCA } from "@/lib/router";
 
-
-function Header() { 
-  const theme = useTheme(); 
-   const location = useLocation(); 
-  const isCCA = location.pathname ==    CCA_LINKS.MANAGE_PORTFOLIO||location.pathname ==    CCA_LINKS.EXPLORER;
+function Header() {
+  const theme = useTheme();
   return (
     <AppBar
       position="fixed"
@@ -25,8 +22,8 @@ function Header() {
       }}
       id="header-bar-container"
     >
-      <Toolbar 
-          sx={{
+      <Toolbar
+        sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -35,11 +32,9 @@ function Header() {
           gap: { md: 2, xs: 2 },
         }}
       >
-         
-          <Logo />
+        <Logo />
 
-          {isCCA ? <CCATitle /> 
-          :<Title />  }
+        {isCCA() ? <CCATitle /> : <Title />}
 
         <SubMenu />
       </Toolbar>

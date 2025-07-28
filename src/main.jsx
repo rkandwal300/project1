@@ -8,14 +8,20 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { basePath } from "./lib/router";
 
+const pathname = window.location.pathname;
+
+// Redirect manually before React Router renders
+if (pathname === "/") {
+  window.location.replace(basePath);
+}
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <ErrorBoundary
         fallback={"Sorry, due to technical reason an error occurred "}
       >
-        <BrowserRouter  basename={basePath}>
-          <App basePath={basePath} />
+        <BrowserRouter  basePath={basePath}>
+          <App />
         </BrowserRouter>
       </ErrorBoundary>
     </Provider>

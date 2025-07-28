@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setTelemetryCloud } from "@/redux/features/providerData/providerData.slice";
 import { TELEMETRY_TYPES } from "@/redux/features/telemetry/telemetry.slice";
+import { ROUTES } from "@/lib/router";
 
 const SidebarSelect = () => {
   const theme = useTheme();
@@ -32,7 +33,7 @@ const SidebarSelect = () => {
   const handleTelemetryCloudChange = (event) => {
     const selectedCloud = event.target.value;
     dispatch(setTelemetryCloud(selectedCloud));
-    navigate("/telemetry");
+    navigate(ROUTES.TELEMETRY);
   };
   return (
     <div
