@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, lazy, Suspense } from "react";
 import { Box, Button, Typography, useTheme, Divider } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
-import { useNavigate, useLocation, matchPath } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 
 // Dynamic imports for icons and components
@@ -34,10 +34,9 @@ import {
   updateInstanceState,
 } from "@/redux/features/instance/instance.slice";
 import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
-import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector";
-import { CCA_LINKS } from "./header/CCATitle";
+import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector"; 
 import { AttachMoney } from "@mui/icons-material";
-import { ROUTES } from "@/lib/router";
+import { isCCA, ROUTES } from "@/lib/router";
 
 function BottomBar() {
   const theme = useTheme();
@@ -76,7 +75,7 @@ function BottomBar() {
         instance.provider === currentProviderName
     );
 
-    if (isDuplicate ) {
+    if (isDuplicate) {
       dispatch(
         setMessage({
           type: errorMessageType.ERROR,
@@ -94,10 +93,8 @@ function BottomBar() {
       name: trimmedName,
       selfPrefAssessment: selfPrefAssessmentData,
     };
-    const isValidRoute = Object.values(CCA_LINKS).some((path) =>
-      matchPath({ path, end: false }, `/${currentInstanceId}`)
-    ); 
-    if (currentInstanceId && !isValidRoute) {
+   
+    if (currentInstanceId ) {
       dispatch(updateInstance(payload));
     } else {
       dispatch(addInstance(payload));
@@ -282,35 +279,15 @@ function BottomBar() {
           <Button
             id={"instanceAdvice"}
             variant="contained"
-            startIcon={
-              location.pathname == CCA_LINKS.MANAGE_PORTFOLIO ||
-              matchPath(
-                { path: CCA_LINKS.CLOUD_USAGE_REPORT_DETAILS, end: true },
-                location.pathname // or a hardcoded string like "/cloudInstances/abc123"
-              ) ? (
-                <AttachMoney />
-              ) : (
-                <BuildIcon />
-              )
-            }
+            startIcon={isCCA() ? <AttachMoney /> : <BuildIcon />}
             disabled={isInstanceAdviceDisabled}
             onClick={() =>
-              location.pathname == CCA_LINKS.MANAGE_PORTFOLIO ||
-              matchPath(
-                { path: CCA_LINKS.CLOUD_USAGE_REPORT_DETAILS, end: true },
-                location.pathname // or a hardcoded string like "/cloudInstances/abc123"
+              navigate(
+                isCCA() ? ROUTES.COST_ADVISORY : ROUTES.INSTANCE_ADVICE
               )
-                ? navigate(CCA_LINKS.COST_ADVISORY)
-                : navigate(ROUTES.INSTANCE_ADVICE)
             }
           >
-            {location.pathname == CCA_LINKS.MANAGE_PORTFOLIO ||
-            matchPath(
-              { path: CCA_LINKS.CLOUD_USAGE_REPORT_DETAILS, end: true },
-              location.pathname // or a hardcoded string like "/cloudInstances/abc123"
-            )
-              ? "Cost advice"
-              : "Instance advice"}
+            {isCCA() ? "Cost advice" : "Instance advice"}
           </Button>
         </Suspense>
       </Box>

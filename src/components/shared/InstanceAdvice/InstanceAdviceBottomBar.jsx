@@ -25,7 +25,7 @@ function InstanceAdviceBottomBar() {
         variant="contained"
         color="error"
         startIcon={<CloseIcon />}
-        onClick={() => navigate(ROUTES.ROOt)}
+        onClick={() => navigate(ROUTES.ROOT)}
       >
         Close
       </Button>

@@ -1,13 +1,6 @@
+import { ROUTES } from "@/lib/router";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useLocation, Link } from "react-router-dom";
-
-export const CCA_LINKS = {
-  MANAGE_PORTFOLIO: "/cca",
-  EXPLORER: "/cca-explorer",
-  COST_ADVISORY:"/cca-costAdvisory",
-  CLOUD_USAGE_REPORT: '/cca-cloudusagereports',
-  CLOUD_USAGE_REPORT_DETAILS: '/cca-cloudusagereports/:id'
-};
 
 function CCATitle() {
   const location = useLocation();
@@ -16,8 +9,8 @@ function CCATitle() {
   const isSm = useMediaQuery(theme.breakpoints.down("sm"));
 
   const data = [
-    { label: "Manage Portfolio", path: CCA_LINKS.MANAGE_PORTFOLIO },
-    { label: "Explorer", path: CCA_LINKS.EXPLORER },
+    { label: "Manage Portfolio", path: ROUTES.ROOT },
+    { label: "Explorer", path: ROUTES.EXPLORER },
   ];
 
   const styles = (isActive) => ({
@@ -65,10 +58,12 @@ function CCATitle() {
           const isActive = url === item.path;
 
           return (
-            <Link key={item.path} to={item.path} style={{ textDecoration: "none" }}>
-              <Box sx={styles(isActive)}>
-                {item.label}
-              </Box>
+            <Link
+              key={item.path}
+              to={item.path}
+              style={{ textDecoration: "none" }}
+            >
+              <Box sx={styles(isActive)}>{item.label}</Box>
             </Link>
           );
         })}
@@ -78,4 +73,3 @@ function CCATitle() {
 }
 
 export default CCATitle;
- 

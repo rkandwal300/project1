@@ -30,8 +30,8 @@ import { selectInstanceList } from "@/redux/features/instanceList/instanceList.s
 import { addInstance } from "@/redux/features/instanceList/instanceList.slice";
 import { useTheme } from "@emotion/react";
 import useTimedMessage from "@/hooks/useTimedMessage";
-import FormAlert from "@/components/ui/FormAlert";
-import { CCA_LINKS } from "../header/CCATitle";
+import FormAlert from "@/components/ui/FormAlert"; 
+import { ROUTES } from "@/lib/router";
 
 const MOCK_CONFIG = {
   TEXT_INPUT_TYPE: "outlined",
@@ -168,7 +168,7 @@ const CloudUsageReports = () => {
       type: "cloudreports",
     };
     dispatch(addInstance(payload));
-    navigate(`${CCA_LINKS.CLOUD_USAGE_REPORT}/${formId}`);
+    navigate(`${ROUTES.CLOUD_USAGE_REPORT}/${formId}`);
     dispatch(setFormSuccess(`${trimmedName} saved successfully`));
   };
 
