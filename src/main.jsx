@@ -6,13 +6,13 @@ import ErrorBoundary from "./components/shared/ErrorBoundary";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { basePath } from "./lib/router";
+import { basePath, ROUTES } from "./lib/router";
 
 const pathname = window.location.pathname;
 
 // Redirect manually before React Router renders
 if (pathname === "/") {
-  window.location.replace(basePath);
+  window.location.replace(ROUTES.ROOT);
 }
 createRoot(document.getElementById("root")).render(
   <StrictMode>

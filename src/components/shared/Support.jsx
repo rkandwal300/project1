@@ -25,6 +25,7 @@ import DialogHoc from "../ui/Dialog";
 import UserGuideContent from "./header/SubMenu/UserGuideContent";
 import { supportEmailBody, supportEmailSubject } from "@/lib/constant";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/lib/router";
 
 const CONTACTS = [
   {
@@ -220,7 +221,7 @@ const Support = () => {
         Stay updated with the latest enhancements, new feature additions, and
         bug fixes introduced in each release of EPYC Cloud Instance Advisor.
       </Typography>
-      <Typography id="openReleaseNotes" onClick={()=>navigate("/release-notes")} underline="hover">
+      <Typography id="openReleaseNotes" onClick={()=>navigate(ROUTES.RELEASE_NOTES)} underline="hover">
         View Release Notes ↗
       </Typography>
     </CustomAccordion>

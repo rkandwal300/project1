@@ -54,19 +54,15 @@ function CCATitle() {
       </Typography>
 
       <Box sx={{ display: "flex", ml: 3 }}>
-        {data.map((item) => {
-          const isActive = url === item.path;
-
-          return (
-            <Link
-              key={item.path}
-              to={item.path}
-              style={{ textDecoration: "none" }}
-            >
-              <Box sx={styles(isActive)}>{item.label}</Box>
-            </Link>
-          );
-        })}
+        {data.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            style={{ textDecoration: "none" }}
+          >
+            <Box sx={styles(url === item.path)}>{item.label}</Box>
+          </Link>
+        ))}
       </Box>
     </Box>
   );
