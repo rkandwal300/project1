@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, lazy, Suspense } from "react";
 import { Box, Button, Typography, useTheme, Divider } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, matchPath } from "react-router-dom";
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
 
 // Dynamic imports for icons and components
@@ -35,6 +35,8 @@ import {
 } from "@/redux/features/instance/instance.slice";
 import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
 import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector";
+import { CCA_LINKS } from "./header/CCATitle";
+import { AttachMoney } from "@mui/icons-material";
 
 function BottomBar() {
   const theme = useTheme();
@@ -42,7 +44,7 @@ function BottomBar() {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  const currentInstanceId = location.pathname.split("/")[1]; 
+  const currentInstanceId = location.pathname.split("/")[1];
 
   const currentProviderName = useSelector(selectCurrentProviderName);
   const alertMessage = useSelector(selectMessage);
@@ -69,9 +71,9 @@ function BottomBar() {
 
     const isDuplicate = instanceList.some(
       (instance) =>
-        instance.name === trimmedName && 
+        instance.name === trimmedName &&
         instance.provider === currentProviderName
-    ); 
+    );
 
     if (isDuplicate) {
       dispatch(
@@ -91,13 +93,16 @@ function BottomBar() {
       name: trimmedName,
       selfPrefAssessment: selfPrefAssessmentData,
     };
-    if (currentInstanceId) {
+    const isValidRoute = Object.values(CCA_LINKS).some((path) =>
+      matchPath({ path, end: false }, `/${currentInstanceId}`)
+    ); 
+    if (currentInstanceId && !isValidRoute) {
       dispatch(updateInstance(payload));
     } else {
       dispatch(addInstance(payload));
     }
 
-    navigate(`/${formId}`);
+    navigate(`/${CCA_LINKS.EXPLORER}/${formId}`);
     dispatch(
       setMessage({
         type: errorMessageType.SUCCESS,
@@ -276,11 +281,35 @@ function BottomBar() {
           <Button
             id={"instanceAdvice"}
             variant="contained"
-            startIcon={<BuildIcon />}
+            startIcon={
+              location.pathname == CCA_LINKS.MANAGE_PORTFOLIO ||
+              matchPath(
+                { path: CCA_LINKS.CLOUD_USAGE_REPORT_DETAILS, end: true },
+                location.pathname // or a hardcoded string like "/cloudInstances/abc123"
+              ) ? (
+                <AttachMoney />
+              ) : (
+                <BuildIcon />
+              )
+            }
             disabled={isInstanceAdviceDisabled}
-            onClick={() => navigate("/instanceAdvice")}
+            onClick={() =>
+              location.pathname == CCA_LINKS.MANAGE_PORTFOLIO ||
+              matchPath(
+                { path: CCA_LINKS.CLOUD_USAGE_REPORT_DETAILS, end: true },
+                location.pathname // or a hardcoded string like "/cloudInstances/abc123"
+              )
+                ? navigate(CCA_LINKS.COST_ADVISORY)
+                : navigate("/instanceAdvice")
+            }
           >
-            Instance advice
+            {location.pathname == CCA_LINKS.MANAGE_PORTFOLIO ||
+            matchPath(
+              { path: CCA_LINKS.CLOUD_USAGE_REPORT_DETAILS, end: true },
+              location.pathname // or a hardcoded string like "/cloudInstances/abc123"
+            )
+              ? "Cost advice"
+              : "Instance advice"}
           </Button>
         </Suspense>
       </Box>

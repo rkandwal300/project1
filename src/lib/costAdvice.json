@@ -1,0 +1,73 @@
+{
+     "Data": [
+        {
+            "id": "cd61c1c3-a226-4be3-978b-37d43c9fba4c",
+            "data": {
+                "currentPlatform": {
+                    "zone": "af-south-1",
+                    "instanceType": "c5.12xlarge",
+                    "numberOfInstances": "1",
+                    "vCPU": "48",
+                    "monthlyCost": "1997.280000",
+                    "annualCost": "23967.360000",
+                    "cspProvider": "AWS",
+                    "pricingModel": "ondemand",
+                    "status": ""
+                },
+                "recommendations": [
+                    {
+                        "zone": "af-south-1",
+                        "instanceType": "c5a.12xlarge",
+                        "vCPU": "48",
+                        "monthlyCost": "1804.560000",
+                        "totalCost": "21654.720000",
+                        "annualSavings": "2312.640000",
+                        "savingsInPercentage": 9.65,
+                        "perf": "0.758654"
+                    },
+                    {
+                        "zone": "af-south-1",
+                        "instanceType": "c5a.12xlarge",
+                        "vCPU": "48",
+                        "monthlyCost": "2378.634221",
+                        "totalCost": "28543.610646",
+                        "annualSavings": "-4576.250646",
+                        "savingsInPercentage": 0.0,
+                        "perf": "0.758654"
+                    },
+                    {
+                        "zone": "af-south-1",
+                        "instanceType": "c5a.8xlarge",
+                        "vCPU": "32",
+                        "monthlyCost": "2356.236535",
+                        "totalCost": "28274.838418",
+                        "annualSavings": "-4307.478418",
+                        "savingsInPercentage": 0.0,
+                        "perf": "0.510577"
+                    }
+                ]
+            }
+        }
+    ],
+     "grandTotal": {
+        "Number of Instances": 1.0,
+        "Current Monthly Cost": 1997.28,
+        "Annual Cost": 23967.36,
+        "Monthly Cost I": 1804.56,
+        "Annual Cost I (perf scaled)": 21654.72,
+        "Annual Savings I": 2312.64,
+        "Perf Enhancement I": 0.76,
+        "Monthly Cost II": 2378.63,
+        "Annual Cost II (perf scaled)": 28543.61,
+        "Annual Savings II": 0,
+        "Perf Enhancement II": 0.76,
+        "Monthly Cost III": 2356.24,
+        "Annual Cost III (perf scaled)": 28274.84,
+        "Annual Savings III": 0,
+        "Perf Enhancement III": 0.51,
+        "hSavingsInPercentage": 9.65,
+        "mSavingsInPercentage": 0.0,
+        "mdSavingsInPercentage": 0.0
+    },
+    "fileName": "Advice_aws_Test384.xlsx"
+}

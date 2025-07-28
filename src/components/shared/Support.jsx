@@ -6,10 +6,8 @@ import {
   AccordionSummary,
   AccordionDetails,
   Link,
-  Grid,
   Paper,
-  Divider,
-  ListItemText,
+  Divider
 } from "@mui/material";
 import {
   Add as AddIcon,
