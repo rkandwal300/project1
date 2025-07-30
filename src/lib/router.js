@@ -1,8 +1,8 @@
 const getBasePath = () => {
   const port = window.location.port;
   const ccaPorts = ["3000", "3001", "3002"];
-  const eiaPorts = ["2000", "2001", "2002"];
- console.log({port})
+  const eiaPorts = ["2000", "2001", "2002"]; 
+
   if (ccaPorts.includes(port)) {
     return "/cca";
   } else if (eiaPorts.includes(port)) {

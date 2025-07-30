@@ -9,12 +9,7 @@
     "stage": "vite --mode stage",
     "dev:cca": "vite --mode dev --port 3001",
     "dev:eia": "vite --mode dev --port 2001",
-    "stage:cca": "vite --mode stage --port 3002",
-    "stage:eia": "vite --mode stage --port 2002",
-    "prod:cca": "vite --mode prod --port 3000",
-    "prod:eia": "vite --mode prod --port 2000",
     "dev_build": "vite build --mode dev",
-    "stage_build": "vite build --mode stage",
     "lint": "eslint .",
     "preview": "vite preview"
   },
