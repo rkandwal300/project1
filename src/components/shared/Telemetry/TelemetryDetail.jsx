@@ -8,7 +8,7 @@ import {
   selectCurrentProviderName,
   selectCurrentProviderType,
 } from "@/redux/features/providerData/providerData.selector";
-import GetInstanceColumn from "../Sidebar/PortfolioTable/portfolioColumn";
+import GetInstanceColumn from "../PortfolioTable/portfolioColumn";
 
 function TelemetryDetail() {
   const navigate = useNavigate();

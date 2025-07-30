@@ -15,10 +15,6 @@ export const mockFormDataResponse = {
   pavg: 5678,
   u95: 91011,
   p95: 121314,
-  //cca
-    cloud:'AWS',
-  noOfHours:730,
-  quantity:1
 };
 
  

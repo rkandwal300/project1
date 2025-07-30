@@ -9,7 +9,6 @@ import {
   useLocation,
   matchPath,
   useNavigate,
-  Navigate,
 } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentInstance } from "./redux/features/instanceList/instanceList.selector";
@@ -25,13 +24,6 @@ import NotFound from "./components/shared/NotFound";
 import { selectCurrentProviderName } from "./redux/features/providerData/providerData.selector";
 import Support from "./components/shared/Support";
 import ReleaseNotesPage from "./components/shared/ReleaseNotesPage";
-import Explorer from "./components/shared/cca/Explorer/Explorer";
-import { CCA_LINKS } from "./components/shared/header/CCATitle";
-import CostAdviceLayout from "./components/shared/cca/costAdvice/CostAdviceLayout";
-import CCAMainContent from "./components/shared/cca/MainLayout/MainContent";
-import CloudUsageReports from "./components/shared/cca/CloudUsageReport";
-import CloudInstances from "./components/shared/cca/CloudInstances";
-import { basePath, ROUTES } from "./lib/router";
 
 // Lazy loaded components
 const MainContent = lazy(() =>
@@ -59,7 +51,7 @@ const TelemetryDetailBottomBar = lazy(() =>
 
 // NotFound can be inline since it's very small
 
-const App = ({ basePath }) => {
+const App = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -98,22 +90,14 @@ const App = ({ basePath }) => {
     dispatch(setProvider(provider));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routes.join(","), type]);
-  
 
   const BottomBarComponent = useMemo(() => {
     if (matchPath("/telemetry/:id", pathname)) return TelemetryDetailBottomBar;
     if (pathname.startsWith("/telemetry")) return TelemetryBottomBar;
-    if (pathname === "/instanceAdvice" || pathname == "/cca-costAdvisory")
-      return InstanceAdviceBottomBar;
-    if (pathname === CCA_LINKS.CLOUD_USAGE_REPORT) return () => <></>;
-    if (pathname === CCA_LINKS.EXPLORER) return () => <></>;
+    if (pathname === "/instanceAdvice") return InstanceAdviceBottomBar;
     return BottomBar;
   }, [pathname]);
- 
-  console.log("hellow app");
-  if (location.pathname === '/') {
-    return <Navigate to={basePath} replace />;
-  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -150,34 +134,7 @@ const App = ({ basePath }) => {
               }
             >
               <Routes>
-                <Route
-                  path="/"
-                  element={
-                    basePath !== "/" ? (
-                      <Navigate to={basePath} replace />
-                    ) : (
-                      <MainContent />
-                    )
-                  }
-                />
-
-                <Route
-                  path={CCA_LINKS.MANAGE_PORTFOLIO}
-                  element={<CCAMainContent />}
-                />
-                <Route
-                  path={CCA_LINKS.CLOUD_USAGE_REPORT}
-                  element={<CloudUsageReports />}
-                />
-                <Route
-                  path={CCA_LINKS.CLOUD_USAGE_REPORT_DETAILS}
-                  element={<CloudInstances />}
-                />
-                <Route
-                  path="/cca-costAdvisory"
-                  element={<CostAdviceLayout />}
-                />
-                <Route path="/cca-explorer" element={<Explorer />} />
+                <Route path="/" element={<MainContent />} />
                 <Route path="/support" element={<Support />} />
                 <Route path="/release-notes" element={<ReleaseNotesPage />} />
                 <Route path="/:id" element={<MainContent />} />
