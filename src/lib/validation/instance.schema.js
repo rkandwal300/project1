@@ -15,7 +15,12 @@ export const instanceSchema = z.object({
 });
 
 export const CCAInstanceSchema = instanceSchema
-  .pick("pricingModel", "uuid", "region", "instanceType")
+  .pick({
+    pricingModel: true,
+    uuid: true,
+    region: true,
+    instanceType: true,
+  })
   .extend({
     quantity: z.string().min(1, "Required"),
     noOfHours: z.string().min(1, "Required"),
