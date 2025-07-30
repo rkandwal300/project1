@@ -9,8 +9,8 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import CancelIcon from '@mui/icons-material/Cancel';
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"; 
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -141,7 +141,7 @@ const SidebarDrawer = () => {
               "&:hover": { backgroundColor: "transparent" },
             }}
           >
-           <CancelIcon fontSize="small" />
+           <AddCircleIcon fontSize="small" />
           </IconButton>
         </TooltipHoc>
       </Box>

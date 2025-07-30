@@ -10,6 +10,7 @@ import BookIcon from "@mui/icons-material/Book";
 import MenuHoc from "@/components/ui/Menu";
 import { lazy, Suspense, useMemo } from "react";
 import UserGuidePDF from "@/assets/EIA_User_Guide.pdf";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 // Lazy load dialogs
 const DialogHoc = lazy(() => import("@/components/ui/Dialog"));
@@ -79,7 +80,7 @@ function LinkMenuItem({ label, icon, href }) {
 function ResponsiveSubMenu() {
   const menuItems = useMemo(
     () => [
-      { label: "Stat collector", icon: <CloudDownloadIcon /> },
+      { label: "Meta Collector", icon: <OpenInNewIcon /> },
       // {
       //   label: "User Guide",
       //   icon: <BookIcon />,

@@ -31,7 +31,7 @@ const steps = () => [
     id: "step-3",
     text: "Click this button to view previous releases.",
     speak: `
-      Welcome to the AMD EPYC Cloud Instance Advisor, or EIA — a powerful recommendation engine that helps you select the best-fit cloud instances based on your system’s performance data. On the home page, you’ll find a navigation bar with the following options: Click the release notes icon to view what's new. This dialog will appear automatically on your first login and whenever a new version is released. Click the support icon to reach out for help. You can call the hotline or email us directly. Your email is shown on the top-right. Click the profile icon to access account settings and permissions. You can also click the icons to access the user guide , online documentation , about , or to log out . To start gathering metrics, click on the “Download Stat Collector” button. This tool collects CPU, memory, disk, and network stats, and generates an XLSX file used for recommendations. Once downloaded, unzip the file and follow the instructions in the included user guide to execute it.
+      Welcome to the AMD EPYC Cloud Instance Advisor, or EIA — a powerful recommendation engine that helps you select the best-fit cloud instances based on your system’s performance data. On the home page, you’ll find a navigation bar with the following options: Click the release notes icon to view what's new. This dialog will appear automatically on your first login and whenever a new version is released. Click the support icon to reach out for help. You can call the hotline or email us directly. Your email is shown on the top-right. Click the profile icon to access account settings and permissions. You can also click the icons to access the user guide , online documentation , about , or to log out . To start gathering metrics, click on the “Meta Collector” button. This tool collects CPU, memory, disk, and network stats, and generates an XLSX file used for recommendations. Once downloaded, unzip the file and follow the instructions in the included user guide to execute it.
     `,
     attachTo: {
       element: "#openReleaseNotes",
@@ -423,7 +423,7 @@ const steps = () => [
   },
   {
     id: "step-36",
-    text: "Click to view Stat Collector information.",
+    text: "Click to view Meta Collector information.",
     attachTo: {
       element: "#btn-stat-collector",
       on: "bottom",
@@ -434,7 +434,7 @@ const steps = () => [
   },
   {
     id: "step-37",
-    text: "Download the Stat Collector file.",
+    text: "Open the Meta Collector.",
     attachTo: {
       element: "#btn-download-stat-collector",
       on: "bottom",

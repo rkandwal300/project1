@@ -1,7 +1,7 @@
 //  HelpDialogContent
 import React from "react";
 import { Box, Typography, IconButton, Divider } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close"; 
+import CloseIcon from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
 export default function AboutDialogContent({ onClose }) {
   return (
@@ -26,35 +26,25 @@ export default function AboutDialogContent({ onClose }) {
       <Box p={2} overflow={"auto"} maxHeight="70vh">
         {/* Intro Paragraph */}
         <Typography mt={2}>
-          Cloud Instance Advisor is a powerful recommendation engine designed to
-          analyze historical system statistics and provide optimal instance
-          recommendations.
+          Cloud Instance Advisor is a powerful recommendation engine designed to analyze
+          historical system statistics and generate tailored cloud instance recommendations.
         </Typography>
 
         {/* Note */}
         <Typography mt={2}>
           <span>
-            {" "}
-            To get started, download the Stat Collector package by clicking the
-          </span>
-          {""}
-          <strong>"Stat Collector"</strong>
-          {""}
-          <span>
-            This package includes executables that gather essential system
-            statistics such as CPU, memory, network, and I/O utilization. For
-            detailed instructions, refer to
-          </span>{" "}
-          <a href="https://cca-prod.amd.com/tools/README.txt">Readme.txt</a>{" "}
-          <span> file in the downloaded package</span>
-        </Typography>
-
-        {/* Main Feature List */}
-        <Typography mt={2}>
-          Once you've collected the system statistics, upload the generated
-          files to receive tailored instance recommendations. You can upload a
-          single XLSX file containing statistics for multiple systems or use the
-          downloadable template to input the required details manually.
+            To get started, download the MetaCollector package by clicking the <b>"Meta
+                                    Collector”</b>
+                                button. This will redirect you to the MetaCollector page, where you can download the
+                                executable package for both Windows and Linux platforms. The MetaCollector tool captures
+                                essential system statistics such as CPU, memory, network, and I/O utilization. For
+                                detailed setup and usage instructions, refer to the “MetaCollector User guide”. Click &nbsp;
+                                <b>User Guide</b> on the MetaCollector page to download the user guide in PDF format.
+                                </span>
+                                <p> Once you've collected the system statistics using Meta Collector, upload the generated
+                                output files to the EIA portal to receive tailored instance recommendations. You may
+                                upload a single .xlsx file containing statistics for multiple systems or use the
+                                downloadable excel template to input the required details manually.</p>
         </Typography>
       </Box>
     </Box>
