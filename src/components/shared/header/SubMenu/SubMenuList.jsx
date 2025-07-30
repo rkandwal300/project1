@@ -16,6 +16,7 @@ import DialogHoc from "../../../ui/Dialog";
 import MenuHoc from "../../../ui/Menu";
 import { userEmail } from "@/lib/constant";
 import { useNavigate } from "react-router-dom"; 
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 const UserMenu = lazy(() => import("./UserMenu"));
 const StatCollectorDescription = lazy(() =>
   import("./StatCollectorDescription")
@@ -65,7 +66,7 @@ function SubMenuList() {
         trigger={({ onClick }) => (
           <Button
             variant="outlined"
-            startIcon={<DownloadIcon />}
+            endIcon={<OpenInNewIcon />}
             id="btn-stat-collector"
             onClick={onClick}
             sx={{
@@ -77,7 +78,7 @@ function SubMenuList() {
               minWidth: "unset",
             }}
           >
-            Stat Collector
+            Meta Collector
           </Button>
         )}
         content={({ handleClose }) => (

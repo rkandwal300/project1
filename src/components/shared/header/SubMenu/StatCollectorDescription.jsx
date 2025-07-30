@@ -14,7 +14,7 @@ export default function StatCollectorDescription({ onClose }) {
         p={2}
       >
         <Typography variant="h5" fontWeight="bold" gutterBottom>
-          Stat Collector
+          Meta Collector
         </Typography>
 
         <Box display="flex" justifyContent="flex-end">
@@ -25,10 +25,14 @@ export default function StatCollectorDescription({ onClose }) {
       </Box>
       <Divider />
       <Box p={2} overflow={"auto"}>
-        <Typography mt={2}>
-          This stat collector generates a single excel file containing data for
-          one or multiple instances providing users with insights into instance
-          type, zone, CPU, memory, disk IOPS, bandwidth, and network bandwidth
+        <Typography>
+           To get started, download the MetaCollector package by clicking the <b>"Meta
+                                    Collector”</b>
+                                     button. This will redirect you to the MetaCollector page, where you can download the
+                                executable package for both Windows and Linux platforms. The MetaCollector tool captures
+                                essential system statistics such as CPU, memory, network, and I/O utilization. For
+                                detailed setup and usage instructions, refer to the “MetaCollector User guide”. Click &nbsp;
+                                <b>User Guide</b> on the MetaCollector page to download the user guide in PDF format.
         </Typography>
 
         <Box
@@ -43,12 +47,15 @@ export default function StatCollectorDescription({ onClose }) {
           </Button>
           <Button
           id="btn-download-stat-collector"
-            onClick={onClose}
+            onClick={() => {
+              onClose()
+              window.open('https://epyc-metacollector.amd.com/')
+           }}
             variant="contained"
             color="primary"
             sx={{ textTransform: "none" }}
           >
-            Download
+            Open
             </Button>
         </Box>
       </Box>
