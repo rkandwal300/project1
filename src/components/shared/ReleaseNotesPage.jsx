@@ -7,15 +7,19 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
-import { releaseNotesTableData } from "./header/SubMenu/ReleaseNotes/ReleaseNotes.data"; 
+import { eiaReleaseNotesTableData } from "./header/SubMenu/ReleaseNotes/ReleaseNotes.data";
+import { ccaReleaseNotesTableData } from "./header/SubMenu/ReleaseNotes/ReleaseNotes.data"; 
+import { isCCA } from "@/lib/router";
 const ReleaseNotesPage = () => {
   const sectionRefs = useRef({}); 
   const [activeVersion, setActiveVersion] = useState(null);
 
+  const data = isCCA() ? ccaReleaseNotesTableData : eiaReleaseNotesTableData;
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
-      for (const entry of releaseNotesTableData) {
+      for (const entry of data) {
         const el = sectionRefs.current[entry.version];
         if (el && el.offsetTop <= scrollPosition) {
           setActiveVersion(entry.version);
@@ -44,7 +48,7 @@ const ReleaseNotesPage = () => {
           availability.
         </Typography>
 
-        {releaseNotesTableData.map((entry) => (
+        {eiaReleaseNotesTableData.map((entry) => (
           <Box
             key={entry.version}
             ref={(el) => (sectionRefs.current[entry.version] = el)}
@@ -128,7 +132,7 @@ const ReleaseNotesPage = () => {
           On this Page
         </Typography>
         <List dense disablePadding>
-          {releaseNotesTableData.map((entry) => (
+          {eiaReleaseNotesTableData.map((entry) => (
             <ListItemButton
               key={entry.version}
               onClick={() => handleScrollToSection(entry.version)}

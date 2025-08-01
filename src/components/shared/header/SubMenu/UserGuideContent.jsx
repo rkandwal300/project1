@@ -1,10 +1,13 @@
 import React from "react";
 import { Button, DialogContent } from "@mui/material";
-import UserGuide  from '@/assets/EIA_User_Guide.pdf';
+import UserGuideEIA  from '@/assets/EIA_User_Guide.pdf';
+import UserGuideCCA from '@/assets/AMD_CCA1.pdf'
 import { useTheme } from "@emotion/react";
+import { isCCA } from "@/lib/router";
 
 
 export default function UserGuideContent({ onClose }) {
+    const UserGuide = isCCA() ? UserGuideCCA : UserGuideEIA;
     const theme = useTheme();
     return (
         <DialogContent

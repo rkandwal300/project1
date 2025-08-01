@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
 import CustomTable from "@/components/ui/table/CustomTable";
-import { releaseNotesTableData } from "./ReleaseNotes.data";
+import { eiaReleaseNotesTableData } from "./ReleaseNotes.data";
 import { releaseNotesTableColumns } from "./releaseNotesTableColumns";
 import PropTypes from "prop-types";
 
@@ -57,7 +57,7 @@ function ReleaseNotes({ handleClose }) {
       <Box sx={{ height: 345, overflowY: "auto", px: "12px" }}>
         <CustomTable
           variant="default"
-          data={releaseNotesTableData}
+          data={eiaReleaseNotesTableData}
           columns={releaseNotesTableColumns}
         />
       </Box>
