@@ -1,11 +1,16 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React from "react";
 import InstanceAdviceHeader from "./InstanceAdviceHeader";
 import costAdvisor from "@/lib/costAdvice.json";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { CostAdvisoryColumn } from "./CostAdvisoryColumn";
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
+import CostAdvisaryCardList from "../../MainLayout/CostAdvisaryCardList";
+
 
 function CostAdviceLayout() {
+  const [isGrid, setIsGrid] = React.useState(false);
   const data = costAdvisor.Data;
   const grandTotalRaw = costAdvisor.grandTotal;
   const grandTotal = {
@@ -57,23 +62,29 @@ function CostAdviceLayout() {
         }}
       >
         <InstanceAdviceHeader />
-        <CustomTable
-          variant="primaryBorder"
-          data={[...data, grandTotal]}
-          columns={CostAdvisoryColumn}
-          isPagination={true}
-          defaultColumnPinningState={{
-            left: [
-              "current",
-              "zone",
-              "instanceType",
-              "monthlyCost",
-              "annualCost",
-            ],
-            right: [],
-          }}
-          id="instance-advice-table"
-        />
+        <div style={{ marginLeft: "auto" }}>
+          <Button onClick={() => setIsGrid(true)}><CalendarViewMonthIcon /></Button>
+          <Button onClick={() => setIsGrid(false)}><FormatListBulletedIcon /></Button>
+        </div>
+        {isGrid ?
+          <CostAdvisaryCardList data={data} isCCa={true} />
+          : <CustomTable
+            variant="primaryBorder"
+            data={[...data, grandTotal]}
+            columns={CostAdvisoryColumn}
+            isPagination={true}
+            defaultColumnPinningState={{
+              left: [
+                "current",
+                "zone",
+                "instanceType",
+                "monthlyCost",
+                "annualCost",
+              ],
+              right: [],
+            }}
+            id="instance-advice-table"
+          />}
       </Box>
     </Box>
   );
