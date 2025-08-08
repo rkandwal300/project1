@@ -9,7 +9,6 @@ import {
   useLocation,
   matchPath,
   useNavigate,
-  Navigate,
 } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentInstance } from "./redux/features/instanceList/instanceList.selector";
@@ -74,6 +73,7 @@ const App = () => {
   useEffect(() => {
     window.speechSynthesis.cancel();
     const timeoutId = setTimeout(() => {
+
       import("@/tour/tour").then((tour) => {
         tour.default?.start();
       });

@@ -34,7 +34,7 @@ import {
   updateInstanceState,
 } from "@/redux/features/instance/instance.slice";
 import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
-import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector"; 
+import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector";
 import { AttachMoney } from "@mui/icons-material";
 import { isCCA, ROUTES } from "@/lib/router";
 
@@ -93,8 +93,8 @@ function BottomBar() {
       name: trimmedName,
       selfPrefAssessment: selfPrefAssessmentData,
     };
-   
-    if (currentInstanceId ) {
+
+    if (currentInstanceId) {
       dispatch(updateInstance(payload));
     } else {
       dispatch(addInstance(payload));

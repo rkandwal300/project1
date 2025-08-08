@@ -1,4 +1,4 @@
-import { useMemo, useCallback,  Suspense } from "react";
+import { useMemo, useCallback, Suspense } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { Checkbox, IconButton } from "@mui/material";
@@ -10,9 +10,10 @@ import {
 import { useTheme } from "@emotion/react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { updateSingleInstance } from "@/redux/features/instance/instance.slice.js";
-import { EditableSelectCell, EditableTextCell } from "../Sidebar/PortfolioTable/EditableCells";
+import { EditableSelectCell, EditableTextCell } from "../PortfolioTable/EditableCells";
+// import { EditableSelectCell, EditableTextCell } from "../Sidebar/PortfolioTable/EditableCells";
 
- 
+
 
 
 const EditableCell = ({ type, ...props }) => {

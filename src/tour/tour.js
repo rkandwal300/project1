@@ -80,6 +80,7 @@ const tour = new Shepherd.Tour({
   useModalOverlay: true,
 });
 const allSteps = isEIA() ? getEiaSteps() : getCcaSteps();
+
 allSteps.forEach((step, currentStepIndex) => {
   tour.addStep({
     id: step.id,

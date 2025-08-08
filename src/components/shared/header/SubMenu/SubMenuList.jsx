@@ -7,15 +7,17 @@ import {
   useTheme,
   CircularProgress,
 } from "@mui/material";
-import DownloadIcon from "@mui/icons-material/Download"; 
+import DownloadIcon from "@mui/icons-material/Download";
 import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Suspense, lazy } from "react";
 import DialogHoc from "../../../ui/Dialog";
 import MenuHoc from "../../../ui/Menu";
 import { userEmail } from "@/lib/constant";
-import { useNavigate } from "react-router-dom"; 
-import { ROUTES } from "@/lib/router";
+import { useNavigate } from "react-router-dom";
+import { isCCA, isEIA, ROUTES } from "@/lib/router";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+
 const UserMenu = lazy(() => import("./UserMenu"));
 const StatCollectorDescription = lazy(() =>
   import("./StatCollectorDescription")
@@ -61,11 +63,11 @@ function SubMenuList() {
 
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }}>
-      <DialogHoc
+      {isEIA() ? <DialogHoc
         trigger={({ onClick }) => (
           <Button
             variant="outlined"
-            startIcon={<DownloadIcon />}
+            endIcon={<OpenInNewIcon />}
             id="btn-stat-collector"
             onClick={onClick}
             sx={{
@@ -77,7 +79,7 @@ function SubMenuList() {
               minWidth: "unset",
             }}
           >
-            Stat Collector
+            Meta Collector
           </Button>
         )}
         content={({ handleClose }) => (
@@ -85,7 +87,7 @@ function SubMenuList() {
             <StatCollectorDescription onClose={handleClose} />
           </Suspense>
         )}
-      /> 
+      /> : <></>}
       <Tooltip title="Support" {...tooltipProps}>
         <IconButton
           // href="/support"

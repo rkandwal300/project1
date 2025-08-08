@@ -1,4 +1,4 @@
- 
+
 export const mockFormDataResponse = {
   portfolioName: "Test00Demo16",
   region: "ap-east-1",
@@ -15,10 +15,7 @@ export const mockFormDataResponse = {
   pavg: 5678,
   u95: 91011,
   p95: 121314,
-  //cca
-    cloud:'AWS',
-  noOfHours:730,
-  quantity:1
+  noOfHours: 334,
+  quantity: 32
 };
 
- 

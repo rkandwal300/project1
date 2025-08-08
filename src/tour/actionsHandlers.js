@@ -57,8 +57,7 @@ const processFields = async (fields) => {
     const role = inputEl.getAttribute("role");
     const ariaHasPopup = inputEl.getAttribute("aria-haspopup");
     const tag = inputEl.tagName.toLowerCase();
-    const value = mockFormDataResponse[field.name];
-
+    const value = mockFormDataResponse[field.name]; 
     if (tag === "input" && value !== undefined) {
       setInputValue(inputEl, value);
     } else if (role === "combobox" && ariaHasPopup === "listbox") {

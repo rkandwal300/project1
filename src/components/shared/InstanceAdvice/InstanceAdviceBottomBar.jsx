@@ -10,15 +10,15 @@ function InstanceAdviceBottomBar() {
   const theme = useTheme(); 
   return (
     <Box
-      sx={{
-        p: 2,
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        borderTop: `1px solid ${theme.palette.divider}`,
-        bgcolor: theme.palette.grey[100],
-        color: theme.palette.text.default,
-      }}
+        sx={{
+            p: 2,
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            borderTop: `1px solid ${theme.palette.divider}`,
+            bgcolor: theme.palette.grey[100],
+            color: theme.palette.text.default,
+        }}
     >
       <Button
         id={"close-instance-advice"}
@@ -30,7 +30,7 @@ function InstanceAdviceBottomBar() {
         Close
       </Button>
     </Box>
-  );
+);
 }
 
 export default InstanceAdviceBottomBar;
