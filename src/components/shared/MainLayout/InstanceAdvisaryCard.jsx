@@ -7,14 +7,15 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import TagOutlinedIcon from "@mui/icons-material/TagOutlined";
 import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
 
-const CostAdvisaryCard = ({ item, isCCa }) => {
-    const { currentPlatform, recommendations } = item.data;
+const InstanceAdvisaryCard = ({ data }) => {
+    console.log({ data });
+    const { currentPlatform, recommendations } = data.data;
     const theme = useTheme();
 
     const gridHeaderContent = [
         {
             icon: <CloudQueueIcon fontSize="small" />,
-            label: "AWS",
+            label: data.csp ?? "AWS",
         },
         {
             icon: <PlaceOutlinedIcon fontSize="small" />,
@@ -31,7 +32,7 @@ const CostAdvisaryCard = ({ item, isCCa }) => {
             border="1px solid #ddd"
             display="flex"
             flexDirection="column"
-            width="100%"
+            width={"100%"}
         >
             {/* Header Row */}
             <Box
@@ -45,7 +46,7 @@ const CostAdvisaryCard = ({ item, isCCa }) => {
                 backgroundColor={theme.palette.secondary.main}
             >
                 <Typography>
-                    {currentPlatform.instanceType || "c5.12xlarge"}
+                    {currentPlatform.instanceType}
                 </Typography>
                 {gridHeaderContent.map((headerItem, index) => (
                     <Box key={index} display="flex" alignItems="center" gap={0.5}>
@@ -58,11 +59,10 @@ const CostAdvisaryCard = ({ item, isCCa }) => {
             {/* Recommendations */}
             <Box display="flex" width="100%">
                 {recommendations.map((rec, index) => {
-                    const cost = isCCa ? rec['monthlyCost'] : rec['cost']
                     const statItems = [
                         {
                             icon: PaidOutlinedIcon,
-                            value: cost ? parseInt(cost) : null,
+                            value: rec.cost ? parseInt(rec.cost) : null,
                             suffixIcon: "↑",
                             color: "green",
                         },
@@ -104,7 +104,7 @@ const CostAdvisaryCard = ({ item, isCCa }) => {
                                     >
                                         <stat.icon fontSize="small" />
                                         <Typography variant="body2">
-                                            {stat.value ?? "-"}{" "}
+                                            {stat.value ?? "-"}
                                         </Typography>
                                         {stat.suffixIcon && (
                                             <Typography
@@ -126,4 +126,4 @@ const CostAdvisaryCard = ({ item, isCCa }) => {
     );
 };
 
-export default CostAdvisaryCard;
+export default InstanceAdvisaryCard;
