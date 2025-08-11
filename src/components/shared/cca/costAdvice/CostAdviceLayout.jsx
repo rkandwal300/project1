@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import InstanceAdviceHeader from "./InstanceAdviceHeader";
 import costAdvisor from "@/lib/costAdvice.json";
 import CustomTable from "@/components/ui/table/CustomTable";
@@ -7,12 +7,14 @@ import { CostAdvisoryColumn } from "./CostAdvisoryColumn";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import CostAdvisaryCardList from "../../MainLayout/CostAdvisaryCardList";
+import { useSelector } from "react-redux";
 
 
 function CostAdviceLayout() {
-  const [isGrid, setIsGrid] = React.useState(false);
-  const data = costAdvisor.Data;
-  const grandTotalRaw = costAdvisor.grandTotal;
+   const data = costAdvisor.Data;
+   const grandTotalRaw = costAdvisor.grandTotal;
+   const isGrid = useSelector((state) => state.customizeTable.isGrid);
+
   const grandTotal = {
     data: {
       currentPlatform: {
@@ -62,10 +64,10 @@ function CostAdviceLayout() {
         }}
       >
         <InstanceAdviceHeader />
-        <div style={{ marginLeft: "auto" }}>
+        {/* <div style={{ marginLeft: "auto" }}>
           <Button onClick={() => setIsGrid(true)}><CalendarViewMonthIcon /></Button>
           <Button onClick={() => setIsGrid(false)}><FormatListBulletedIcon /></Button>
-        </div>
+        </div> */}
         {isGrid ?
           <CostAdvisaryCardList data={data} isCCa={true} />
           : <CustomTable

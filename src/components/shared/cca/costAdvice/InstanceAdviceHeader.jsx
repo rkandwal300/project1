@@ -17,13 +17,20 @@ import TooltipHoc from "@/components/ui/Tooltip";
 import DialogHoc from "@/components/ui/Dialog";
 import { useTheme } from "@emotion/react";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import excellogo from "@/assets/logos/file-excel.svg"
+import cost_advisor from "@/assets/cost_advisor.xlsx"
+import { setGridView } from "@/redux/features/customizeTable/customizeTable.slice";
+import { useDispatch, useSelector } from "react-redux";
+import SlideshowIcon from '@mui/icons-material/Slideshow';
+
 const EXPLANATION_LIST = [
   "Instances for which performance data is unavailable.",
   "Older generation series (e.g., 3rd generations) with insufficient performance data.",
   "Graviton instances, which are not currently supported by EIA.",
 ];
-import excellogo from "@/assets/logos/file-excel.svg"
-import cost_advisor from "@/assets/cost_advisor.xlsx"
+
 
 const EIAList = [
   "EIA is recommended when a more technical analysis is needed for an optimized recommendation.",
@@ -249,16 +256,46 @@ const ExportButton = React.memo(() => (
   </TooltipHoc>
 ));
 
+function ViewToggleButton({ selected, icon, onClick }) {
+  return (
+    <Button
+      onClick={onClick}
+      sx={{
+        backgroundColor: selected ? "primary.main" : "transparent",
+        color: selected ? "white" : "text.primary",
+        minWidth: "40px",
+        borderRadius: 0, // parent controls rounding
+        border: "none", // remove own border
+        "&:hover": {
+          backgroundColor: selected ? "primary.dark" : "action.hover",
+        },
+      }}
+    >
+      {icon}
+    </Button>
+  );
+}
+
 const InstanceAdviceHeader = () => {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('')
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const headerItems = ['ALL', 'Hourly Cost Optimization', 'Modernize', 'Modernize & Downsize'];
-  const handleRefresh = useCallback(() => {
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
+
+  const dispatch = useDispatch();
+
+  // const handleRefresh = useCallback(() => {
+  //   setLoading(true);
+  //   setTimeout(() => setLoading(false), 1000);
+  // }, []);
+
+   const views = [
+    { type: "grid", icon: <CalendarViewMonthIcon fontSize="small" /> },
+    { type: "list", icon: <FormatListBulletedIcon fontSize="small" /> },
+  ];
+
+   const isGrid = useSelector((state) => state.customizeTable.isGrid);
 
   return (
     <>
@@ -281,16 +318,63 @@ const InstanceAdviceHeader = () => {
           <Spinner />
         </Box>
       )}
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{
+          marginBottom: "24px",
+        }}
+      >
         <Typography
           variant="h6"
-          sx={{ fontSize: "1.3rem", fontWeight: "bold", color: "primary.main" }}
+          sx={{
+            fontSize: "1.3rem",
+            fontWeight: "bold",
+            color: "primary.main",
+          }}
         >
           Cost advice
         </Typography>
 
+       
 
-      </Box>
+          <Box display="flex" alignItems="center">
+          <div
+            style={{
+              display: "flex",
+              marginRight: "16px",
+              border: "1px solid #ccc",
+              borderRadius: "6px",
+              overflow: "hidden", // keeps them joined
+            }}
+          >
+            {views.map((view) => (
+              <ViewToggleButton
+                key={view.type}
+                selected={isGrid ? view.type === "grid" : view.type === "list"}
+                icon={view.icon}
+                onClick={() => dispatch(setGridView(view.type === "grid"))}
+              />
+            ))}
+          </div>
+
+
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<SlideshowIcon />}
+              sx={{ marginRight: "8px" }} // gap between PPT & Export
+            >
+              PPT
+            </Button>
+
+            <ExportButton />
+          </Box>
+        </Box>
+
+
+
       <Grid container spacing={2} alignItems="center" mb={1} mt={1}>
         <Grid item size={{ xs: 12, md: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -395,11 +479,11 @@ const InstanceAdviceHeader = () => {
             placeholder="Search"
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <ExportButton />
         </Box>
 
         </Grid>
       </Grid>
+    
     </>
   );
 };

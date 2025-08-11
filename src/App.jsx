@@ -126,7 +126,7 @@ const App = () => {
               p: 0,
             }}
           >
-            {![ROUTES.SUPPORT, ROUTES.RELEASE_NOTES].includes(pathname) && (
+            {![ROUTES.SUPPORT, ROUTES.RELEASE_NOTES,ROUTES.EXPLORER].includes(pathname) && (
               <Sidebar />
             )}
             <Suspense

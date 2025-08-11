@@ -48,7 +48,7 @@ const ReleaseNotesPage = () => {
           availability.
         </Typography>
 
-        {eiaReleaseNotesTableData.map((entry) => (
+        {data.map((entry) => (
           <Box
             key={entry.version}
             ref={(el) => (sectionRefs.current[entry.version] = el)}
@@ -132,7 +132,7 @@ const ReleaseNotesPage = () => {
           On this Page
         </Typography>
         <List dense disablePadding>
-          {eiaReleaseNotesTableData.map((entry) => (
+          {data.map((entry) => (
             <ListItemButton
               key={entry.version}
               onClick={() => handleScrollToSection(entry.version)}

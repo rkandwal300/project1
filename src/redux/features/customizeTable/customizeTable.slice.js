@@ -1,5 +1,5 @@
 import { CostAdvisoryColumn } from '@/components/shared/cca/costAdvice/CostAdvisoryColumn';
-import { instanceAdvisoryColumn } from '@/components/shared/InstanceAdvice/CostAdvisoryColumn';
+import { instanceAdvisoryColumn } from '@/components/shared/InstanceAdvice/instanceAdvisoryColumn';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -26,8 +26,8 @@ const customizeTableSlice = createSlice({
             const column = action.payload;
             state.costVisibleColumns[column] = !state.costVisibleColumns[column];
         },
-        toggleGridView(state) {
-            state.isGrid = !state.isGrid;
+        setGridView(state, action) {
+            state.isGrid = action.payload; // true for grid, false for list
         },
         resetCustomizeTableColumn(state, action) {
             const columns = action.payload; // pass columns array in payload
@@ -42,7 +42,7 @@ const customizeTableSlice = createSlice({
 });
 
 export const {
-    toggleGridView,
+    setGridView,
     toggleInstanceColumnVisibility,
     toggleCostColumnVisibility,
     resetCustomizeTableColumn,

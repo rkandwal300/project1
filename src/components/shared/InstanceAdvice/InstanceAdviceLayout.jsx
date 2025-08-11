@@ -3,15 +3,18 @@ import React from "react";
 import InstanceAdviceHeader from "./InstanceAdviceHeader";
 import costAdvisor from "@/lib/instanceAdvice.json";
 import CustomTable from "@/components/ui/table/CustomTable";
-import { CostAdvisoryColumn } from "./CostAdvisoryColumn";
+import { instanceAdvisoryColumn } from "./instanceAdvisoryColumn";
 import Dashboard from "./Dashboard";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import CostAdvisaryCardList from "../MainLayout/CostAdvisaryCardList";
+import { useSelector } from "react-redux";
 
 function InstanceAdviceLayout() {
   const [isAnnually, setIsAnnually] = React.useState(false);
-  const [isGrid, setIsGrid] = React.useState(false);
+  // const [isGrid, setIsGrid] = React.useState(false);
+   const isGrid = useSelector((state) => state.customizeTable.isGrid);
+
   const data = costAdvisor.Data;
   const grandTotal = data.reduce(
     (acc, item, index) => {
@@ -110,15 +113,15 @@ function InstanceAdviceLayout() {
         />
         <Dashboard data={dashboardData} />
         <div style={{ marginLeft: "auto" }}>
-          <Button onClick={() => setIsGrid(true)}><CalendarViewMonthIcon /></Button>
-          <Button onClick={() => setIsGrid(false)}><FormatListBulletedIcon /></Button>
+          <Button ><CalendarViewMonthIcon /></Button>
+          <Button><FormatListBulletedIcon /></Button>
         </div>
         {isGrid ?
           <CostAdvisaryCardList data={data} isCCa={false} />
           : <CustomTable
             variant="primaryBorder"
             data={[...data, grandTotal]}
-            columns={CostAdvisoryColumn}
+            columns={instanceAdvisoryColumn}
             isPagination
             defaultColumnPinningState={{
               left: ["current", "instanceType", "cost", "power", "carbon"],
