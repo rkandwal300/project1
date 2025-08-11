@@ -1,16 +1,19 @@
 import { CostAdvisoryColumn } from '@/components/shared/cca/costAdvice/CostAdvisoryColumn';
-import { instanceAdvisoryColumn } from '@/components/shared/InstanceAdvice/CostAdvisoryColumn';
+import { instanceAdvisoryColumn } from '@/components/shared/InstanceAdvice/InstanceAdvisoryColumn';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    instanceVisibleColumns: instanceAdvisoryColumn.flatMap(col => col.id).reduce((acc, id) => {
-        acc[id] = true; // All columns are visible by default   
-        return acc;
-    }, {}),
-    costVisibleColumns: CostAdvisoryColumn.flatMap(col => col.id).reduce((acc, id) => {
-        acc[id] = true; // All columns are visible by default
-        return acc;
-    }, {}),
+    instanceVisibleColumns: instanceAdvisoryColumn
+        .flatMap(col => col.columns)
+        .reduce((acc, col) => {
+            acc[col.id] = true;
+            return acc;
+        }, {}),
+    costVisibleColumns: CostAdvisoryColumn.flatMap(col => col.columns)
+        .reduce((acc, col) => {
+            acc[col.id] = true;
+            return acc;
+        }, {}),
     isGrid: false
 };
 
@@ -19,24 +22,28 @@ const customizeTableSlice = createSlice({
     initialState,
     reducers: {
         toggleInstanceColumnVisibility(state, action) {
-            const column = action.payload;
-            state.instanceVisibleColumns[column] = !state.instanceVisibleColumns[column];
+            state.instanceVisibleColumns = { ...state.instanceVisibleColumns, ...action.payload };
         },
         toggleCostColumnVisibility(state, action) {
-            const column = action.payload;
-            state.costVisibleColumns[column] = !state.costVisibleColumns[column];
+            state.costVisibleColumns = { ...state.costVisibleColumns, ...action.payload };
         },
         toggleGridView(state) {
             state.isGrid = !state.isGrid;
         },
-        resetCustomizeTableColumn(state, action) {
-            const columns = action.payload; // pass columns array in payload
-            state.instanceVisibleColumns = {};
-            state.costVisibleColumns = {};
-            columns.forEach(col => {
-                state.instanceVisibleColumns[col] = true;
-                state.costVisibleColumns[col] = true;
-            });
+        resetCustomizeTableColumn(state) {  // pass columns array in payload
+            state.instanceVisibleColumns = instanceAdvisoryColumn
+                .flatMap(col => col.columns)
+                .reduce((acc, col) => {
+                    acc[col.id] = true;
+                    return acc;
+                }, {});
+            state.costVisibleColumns = CostAdvisoryColumn
+                .flatMap(col => col.columns)
+                .reduce((acc, col) => {
+                    acc[col.id] = true;
+                    return acc;
+                }, {});
+
         },
     },
 });

@@ -57,7 +57,7 @@ const plainColumn = ({
   cell: cell || renderPlainCell,
   ...(pin && { pin }),
 });
- 
+
 const tooltipCell = ({ getValue }) => {
   const value = getValue();
   return (
@@ -69,7 +69,7 @@ const tooltipCell = ({ getValue }) => {
           textOverflow: "ellipsis",
           margin: 0,
           maxWidth: "100%",
-          cursor: "pointer", 
+          cursor: "pointer",
         }}
       >
         {value && value.length > 0 ? value : "-"}
@@ -77,7 +77,7 @@ const tooltipCell = ({ getValue }) => {
     </TooltipHoc>
   );
 };
- 
+
 const currentMetricColumns = [
   plainColumn({
     id: "zone",
@@ -102,7 +102,7 @@ const currentMetricColumns = [
     pin: "left",
   })
 ];
- 
+
 const currentDetailColumns = [
   plainColumn({
     id: "uuid",
@@ -115,7 +115,7 @@ const currentDetailColumns = [
     accessorKey: "data.currentPlatform.cspProvider",
     header: "Cloud"
   }),
-    plainColumn({
+  plainColumn({
     id: "numberOfInstances",
     accessorKey: "data.currentPlatform.numberOfInstances",
     header: "Quantity"
@@ -136,7 +136,7 @@ const currentDetailColumns = [
     header: "Remark"
   }),
 ];
- 
+
 const recommendationColumns = (idx, label) => [
   plainColumn({
     id: `${label}_instanceType`,

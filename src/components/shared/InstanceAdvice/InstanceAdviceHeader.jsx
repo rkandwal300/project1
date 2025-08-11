@@ -21,6 +21,7 @@ import DialogHoc from "@/components/ui/Dialog";
 import { useTheme } from "@emotion/react";
 import cost_advisor from "@/assets/downloads/cost_advisor.xlsx";
 import Excel_Icon from "@/assets/icons/file-excel.svg";
+import CustomizeTableColumns from "./CustomizeTableColumns";
 
 const EXPLANATION_LIST = [
   "Instances for which performance data is unavailable.",
@@ -175,28 +176,28 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
     setLoading(true);
     setTimeout(() => setLoading(false), 1000);
   }, []);
-
+  if (loading) {
+    return <Box
+      sx={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        bgcolor: theme.palette.grey[700],
+        opacity: 0.8,
+        zIndex: 1000,
+      }}
+    >
+      <Spinner />
+    </Box>
+  }
   return (
     <>
-      {loading && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            bgcolor: theme.palette.grey[700],
-            opacity: 0.8,
-            zIndex: 1000,
-          }}
-        >
-          <Spinner />
-        </Box>
-      )}
+
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography
           variant="h6"
@@ -204,7 +205,13 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
         >
           Instance advice
         </Typography>
-        <ExportButton />
+        <div style={{ display: "flex", gap: '10px' }}>
+          <DialogHoc trigger={({ onClick }) => (
+            <Button onClick={onClick} variant="outlined">Filters</Button>)
+          }
+            content={({ handleClose }) => <CustomizeTableColumns onClose={handleClose} />} />
+          <ExportButton />
+        </div>
       </Box>
       <AnnuallyCheckbox isAnnually={isAnnually} setIsAnnually={setIsAnnually} />
       <Box
@@ -271,12 +278,12 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
               sx={
                 loading
                   ? {
-                      "@keyframes spin": {
-                        from: { transform: "rotate(0deg)" },
-                        to: { transform: "rotate(360deg)" },
-                      },
-                      animation: "spin 2s linear infinite",
-                    }
+                    "@keyframes spin": {
+                      from: { transform: "rotate(0deg)" },
+                      to: { transform: "rotate(360deg)" },
+                    },
+                    animation: "spin 2s linear infinite",
+                  }
                   : undefined
               }
               fontSize="large"
