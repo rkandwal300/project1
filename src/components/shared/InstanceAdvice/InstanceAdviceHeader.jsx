@@ -22,6 +22,12 @@ import { useTheme } from "@emotion/react";
 import cost_advisor from "@/assets/downloads/cost_advisor.xlsx";
 import Excel_Icon from "@/assets/icons/file-excel.svg";
 import CustomizeTableColumns from "./CustomizeTableColumns";
+import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { ViewToggleButton } from "../cca/costAdvice/InstanceAdviceHeader";
+import { useSelector } from "react-redux";
+import { setGridView } from "@/redux/features/customizeTable/customizeTable.slice";
+import { useDispatch } from "react-redux";
 
 const EXPLANATION_LIST = [
   "Instances for which performance data is unavailable.",
@@ -168,10 +174,15 @@ AnnuallyCheckbox.propTypes = {
 };
 
 const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
+  const isGrid = useSelector((state) => state.customizeTable.isGrid);
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
-
+  const views = [
+    { type: "grid", icon: <CalendarViewMonthIcon fontSize="small" /> },
+    { type: "list", icon: <FormatListBulletedIcon fontSize="small" /> },
+  ];
   const handleRefresh = useCallback(() => {
     setLoading(true);
     setTimeout(() => setLoading(false), 1000);
@@ -206,6 +217,23 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
           Instance advice
         </Typography>
         <div style={{ display: "flex", gap: '10px' }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              borderRadius: "6px",
+              overflow: "hidden", // keeps them joined
+            }}
+          >
+            {views.map((view) => (
+              <ViewToggleButton
+                key={view.type}
+                selected={isGrid ? view.type === "grid" : view.type === "list"}
+                icon={view.icon}
+                onClick={() => dispatch(setGridView(view.type === "grid"))}
+              />
+            ))}
+          </div>
           <DialogHoc trigger={({ onClick }) => (
             <Button onClick={onClick} variant="outlined">Filters</Button>)
           }

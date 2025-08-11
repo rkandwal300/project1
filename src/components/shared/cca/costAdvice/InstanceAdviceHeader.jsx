@@ -257,20 +257,13 @@ const ExportButton = React.memo(() => (
   </TooltipHoc>
 ));
 
-function ViewToggleButton({ selected, icon, onClick }) {
+export function ViewToggleButton({ selected, icon, onClick }) {
+
   return (
     <Button
       onClick={onClick}
-      sx={{
-        backgroundColor: selected ? "primary.main" : "transparent",
-        color: selected ? "white" : "text.primary",
-        minWidth: "40px",
-        borderRadius: 0, // parent controls rounding
-        border: "none", // remove own border
-        "&:hover": {
-          backgroundColor: selected ? "primary.dark" : "action.hover",
-        },
-      }}
+      variant={selected ? "contained" : "outlined"}
+      minWidth={"40px"}
     >
       {icon}
     </Button>

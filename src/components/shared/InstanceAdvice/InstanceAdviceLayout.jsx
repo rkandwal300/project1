@@ -5,8 +5,6 @@ import costAdvisor from "@/lib/instanceAdvice.json";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { instanceAdvisoryColumn } from "./instanceAdvisoryColumn";
 import Dashboard from "./Dashboard";
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import CostAdvisaryCardList from "../MainLayout/CostAdvisaryCardList";
 import { isEIA } from "@/lib/router";
 import { useSelector } from "react-redux";
@@ -14,7 +12,6 @@ import { selectCostTableColumns, selectInstanceTableColumns } from "@/redux/feat
 
 function InstanceAdviceLayout() {
   const [isAnnually, setIsAnnually] = React.useState(false);
-  // const [isGrid, setIsGrid] = React.useState(false);
   const isGrid = useSelector((state) => state.customizeTable.isGrid);
 
   const isInstance = isEIA();
@@ -97,6 +94,7 @@ function InstanceAdviceLayout() {
       })),
     };
   }, [isAnnually, grandTotal]);
+
   return (
     <Box
       sx={{
@@ -119,10 +117,7 @@ function InstanceAdviceLayout() {
           setIsAnnually={setIsAnnually}
         />
         <Dashboard data={dashboardData} />
-        <div style={{ marginLeft: "auto" }}>
-          <Button ><CalendarViewMonthIcon /></Button>
-          <Button><FormatListBulletedIcon /></Button>
-        </div>
+
         {isGrid ?
           <CostAdvisaryCardList data={data} isCCa={false} />
           : <CustomTable
