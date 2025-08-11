@@ -209,7 +209,8 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
           <DialogHoc trigger={({ onClick }) => (
             <Button onClick={onClick} variant="outlined">Filters</Button>)
           }
-            content={({ handleClose }) => <CustomizeTableColumns onClose={handleClose} />} />
+            content={({ handleClose }) => <CustomizeTableColumns onClose={handleClose} />}
+          />
           <ExportButton />
         </div>
       </Box>

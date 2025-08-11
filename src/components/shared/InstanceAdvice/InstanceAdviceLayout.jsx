@@ -15,7 +15,7 @@ import { selectCostTableColumns, selectInstanceTableColumns } from "@/redux/feat
 function InstanceAdviceLayout() {
   const [isAnnually, setIsAnnually] = React.useState(false);
   // const [isGrid, setIsGrid] = React.useState(false);
-   const isGrid = useSelector((state) => state.customizeTable.isGrid);
+  const isGrid = useSelector((state) => state.customizeTable.isGrid);
 
   const isInstance = isEIA();
 

@@ -9,7 +9,7 @@ import {
   ListItem,
   ListItemText,
   useMediaQuery,
-   FormControl, InputLabel, Select, MenuItem, TextField, Grid
+  FormControl, InputLabel, Select, MenuItem, TextField, Grid
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
@@ -24,6 +24,7 @@ import cost_advisor from "@/assets/cost_advisor.xlsx"
 import { setGridView } from "@/redux/features/customizeTable/customizeTable.slice";
 import { useDispatch, useSelector } from "react-redux";
 import SlideshowIcon from '@mui/icons-material/Slideshow';
+import CustomizeTableColumns from "../../InstanceAdvice/CustomizeTableColumns";
 
 const EXPLANATION_LIST = [
   "Instances for which performance data is unavailable.",
@@ -86,8 +87,8 @@ const ExplanationDialogContent = ({ handleClose }) => (
         </Typography>
       </Box>
       <IconButton
-      id = "input-errors-explanation-close"
-       onClick={handleClose}>
+        id="input-errors-explanation-close"
+        onClick={handleClose}>
         <CloseIcon />
       </IconButton>
     </Box>
@@ -144,10 +145,10 @@ const EIARecommendedDialogContent = ({ handleClose }) => (
         </Typography>
 
       </Box>
-      <IconButton 
-      onClick={handleClose}
-      id = "eia-recommended-dialog-close">
-       
+      <IconButton
+        onClick={handleClose}
+        id="eia-recommended-dialog-close">
+
         <CloseIcon />
       </IconButton>
     </Box>
@@ -285,17 +286,13 @@ const InstanceAdviceHeader = () => {
 
   const dispatch = useDispatch();
 
-  // const handleRefresh = useCallback(() => {
-  //   setLoading(true);
-  //   setTimeout(() => setLoading(false), 1000);
-  // }, []);
 
-   const views = [
+  const views = [
     { type: "grid", icon: <CalendarViewMonthIcon fontSize="small" /> },
     { type: "list", icon: <FormatListBulletedIcon fontSize="small" /> },
   ];
 
-   const isGrid = useSelector((state) => state.customizeTable.isGrid);
+  const isGrid = useSelector((state) => state.customizeTable.isGrid);
 
   return (
     <>
@@ -337,9 +334,9 @@ const InstanceAdviceHeader = () => {
           Cost advice
         </Typography>
 
-       
 
-          <Box display="flex" alignItems="center">
+
+        <Box display="flex" alignItems="center">
           <div
             style={{
               display: "flex",
@@ -358,20 +355,24 @@ const InstanceAdviceHeader = () => {
               />
             ))}
           </div>
+          <DialogHoc trigger={({ onClick }) => (
+            <Button onClick={onClick} variant="outlined" sx={{ marginRight: "10px" }}>Filters</Button>)
+          }
+            content={({ handleClose }) => <CustomizeTableColumns onClose={handleClose} />}
+          />
 
+          <Button
+            variant="outlined"
+            size="small"
+            startIcon={<SlideshowIcon />}
+            sx={{ marginRight: "8px" }} // gap between PPT & Export
+          >
+            PPT
+          </Button>
 
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<SlideshowIcon />}
-              sx={{ marginRight: "8px" }} // gap between PPT & Export
-            >
-              PPT
-            </Button>
-
-            <ExportButton />
-          </Box>
+          <ExportButton />
         </Box>
+      </Box>
 
 
 
@@ -425,7 +426,7 @@ const InstanceAdviceHeader = () => {
             <DialogHoc
               trigger={({ onClick }) => (
                 <Box
-                id="input-errors-explanation"
+                  id="input-errors-explanation"
                   component="span"
                   onClick={onClick}
                   sx={{
@@ -473,17 +474,17 @@ const InstanceAdviceHeader = () => {
           gap: { xs: 1, md: 2 },
           marginLeft: '80px'
         }}>
-           <Box display="flex" gap={2} alignItems="center">
-          <TextField
-            size="small"
-            placeholder="Search"
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-        </Box>
+          <Box display="flex" gap={2} alignItems="center">
+            <TextField
+              size="small"
+              placeholder="Search"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </Box>
 
         </Grid>
       </Grid>
-    
+
     </>
   );
 };

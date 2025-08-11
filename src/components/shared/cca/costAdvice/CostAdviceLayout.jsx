@@ -8,12 +8,21 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import CostAdvisaryCardList from "../../MainLayout/CostAdvisaryCardList";
 import { useSelector } from "react-redux";
+import { selectCostTableColumns, selectInstanceTableColumns } from "@/redux/features/customizeTable/customizeTable.selector";
+import { isEIA } from "@/lib/router";
 
 
 function CostAdviceLayout() {
-   const data = costAdvisor.Data;
-   const grandTotalRaw = costAdvisor.grandTotal;
-   const isGrid = useSelector((state) => state.customizeTable.isGrid);
+  const data = costAdvisor.Data;
+  const grandTotalRaw = costAdvisor.grandTotal;
+  const isGrid = useSelector((state) => state.customizeTable.isGrid);
+
+  const isInstance = isEIA();
+
+  const selector = isInstance
+    ? selectInstanceTableColumns
+    : selectCostTableColumns;
+  const columnVisibility = useSelector(selector);
 
   const grandTotal = {
     data: {
@@ -72,6 +81,7 @@ function CostAdviceLayout() {
           <CostAdvisaryCardList data={data} isCCa={true} />
           : <CustomTable
             variant="primaryBorder"
+            columnVisibility={columnVisibility}
             data={[...data, grandTotal]}
             columns={CostAdvisoryColumn}
             isPagination={true}
