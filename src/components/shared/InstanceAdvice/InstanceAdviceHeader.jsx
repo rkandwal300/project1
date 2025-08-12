@@ -220,9 +220,10 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
           <div
             style={{
               display: "flex",
-              gap: "10px",
+              marginRight: "16px",
+              border: "1px solid #ccc",
               borderRadius: "6px",
-              overflow: "hidden", // keeps them joined
+              overflow: "hidden",
             }}
           >
             {views.map((view) => (

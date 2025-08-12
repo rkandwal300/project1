@@ -15,7 +15,7 @@ import {
   useTheme,
   Box,
 } from "@mui/material";
-
+import isEqual from "lodash/isEqual";
 import TablePagination from "./TablePagination";
 import ActionBlock from "./table_components/ActionBlock";
 import CustomTableHeader from "./table_components/CustomTableHeader";
@@ -36,18 +36,12 @@ const CustomTable = ({
   const theme = useTheme();
   const styles = useTableStyles(variant, theme);
 
-  /** -----------------------
-   * State Management
-   ------------------------*/
   const [grouping, setGrouping] = useState([]);
   const [editingCell, setEditingCell] = useState({ rowIndex: null, columnId: null });
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
   const [columnPinning, setColumnPinning] = useState(defaultColumnPinningState);
   const [columnVisibilityState, setColumnVisibilityState] = useState(columnVisibility);
-
-  /** -----------------------
-   * Memoized Table Instance
-   ------------------------*/
+ 
   const table = useReactTable({
     data,
     columns,
@@ -73,9 +67,7 @@ const CustomTable = ({
     debugTable: false,
   });
 
-  /** -----------------------
-   * Derived Data
-   ------------------------*/
+ 
   const lastColumnIds = useMemo(() => {
     const ids = new Set();
     table.getHeaderGroups().forEach((headerGroup) => {
@@ -90,16 +82,13 @@ const CustomTable = ({
     return ids;
   }, [table.getHeaderGroups()]);
 
-  /** -----------------------
-   * Effects
-   ------------------------*/
   useEffect(() => {
-    setColumnVisibilityState(columnVisibility);
-  }, [columnVisibility]);
+    if (columnVisibility && !isEqual(columnVisibilityState, columnVisibility)) {
+      setColumnVisibilityState(columnVisibility);
+    }
+  }, [columnVisibility]); // run whenever prop changes
 
-  /** -----------------------
-   * Render
-   ------------------------*/
+
   return (
     <TableContainer component={Paper} sx={{ boxShadow: 3, ...sx }}>
       <Box sx={{ overflowX: "auto" }} id={id} role="table-container">

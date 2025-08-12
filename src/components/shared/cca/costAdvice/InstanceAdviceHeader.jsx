@@ -262,8 +262,8 @@ export function ViewToggleButton({ selected, icon, onClick }) {
   return (
     <Button
       onClick={onClick}
-      variant={selected ? "contained" : "outlined"}
-      minWidth={"40px"}
+      variant={selected ? "contained" : "text"}
+      minWidth="40px"
     >
       {icon}
     </Button>
@@ -274,7 +274,6 @@ const InstanceAdviceHeader = () => {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('')
   const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const headerItems = ['ALL', 'Hourly Cost Optimization', 'Modernize', 'Modernize & Downsize'];
 
   const dispatch = useDispatch();
