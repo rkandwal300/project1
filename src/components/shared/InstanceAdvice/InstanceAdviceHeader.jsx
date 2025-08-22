@@ -12,6 +12,11 @@ import {
   ListItemText,
   useMediaQuery,
   Slider,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -28,6 +33,9 @@ import { ViewToggleButton } from "../cca/costAdvice/InstanceAdviceHeader";
 import { useSelector } from "react-redux";
 import { setGridView } from "@/redux/features/customizeTable/customizeTable.slice";
 import { useDispatch } from "react-redux";
+import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
+import TuneIcon from '@mui/icons-material/Tune';
+
 
 const EXPLANATION_LIST = [
   "Instances for which performance data is unavailable.",
@@ -198,7 +206,7 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        bgcolor: theme.palette.grey[700],
+        bgcolor: theme.palette.palette.grey[700],
         opacity: 0.8,
         zIndex: 1000,
       }}
@@ -235,15 +243,10 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
               />
             ))}
           </div>
-          <DialogHoc trigger={({ onClick }) => (
-            <Button onClick={onClick} variant="outlined">Filters</Button>)
-          }
-            content={({ handleClose }) => <CustomizeTableColumns onClose={handleClose} />}
-          />
+
           <ExportButton />
         </div>
       </Box>
-      <AnnuallyCheckbox isAnnually={isAnnually} setIsAnnually={setIsAnnually} />
       <Box
         display="flex"
         flexDirection={isMd ? "row" : "column"}
@@ -251,22 +254,26 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
         alignItems="center"
         gap={2}
         ml="auto"
-        mb={3}
+        mt={"20px"}
+        width={"100%"}
       >
-        <Typography
-          variant="body2"
-          sx={{
-            fontFamily: '"Open Sans", Arial, sans-serif',
-            fontSize: 13,
-          }}
-        >
-          CI-Current Instance Data,{" "}
-          <Box
-            component="span"
-            sx={{ ml: 1, fontFamily: '"Open Sans", Arial, sans-serif' }}
-          >
-            Performance Improvement*
-          </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', width: "100%" }}>
+          <FormControl fullWidth size="small" sx={{ mr: 1, width: "200px" }}>
+            <InputLabel id="savings-type-label">Savings Type</InputLabel>
+            <Select
+              value={"All"}
+              labelId="savings-type-label"
+              label="Savings Type"
+              fullWidth
+            >
+              {["All", "Good", "Optimal"].map((item) => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <DialogHoc
             trigger={({ onClick }) => (
               <Box
@@ -285,13 +292,55 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
             )}
             content={ExplanationDialogContent}
           />
+        </Box>
+        <TextField placeholder="Search..." />
+
+      </Box>
+      <Box
+        style={{
+          fontFamily: '"Open Sans", Arial, sans-serif', display: "flex", gap: "200px", flexWrap: "wrap", fontWeight: 500, alignItems: "center", whiteSpace: "nowrap", text: "12px", color: theme.palette.grey[300]
+        }}
+      >
+        <p>*Note: All measurements are per month</p>
+
+        <Typography
+          variant="body2"
+          sx={{
+
+          }}
+        >
+          CI-Current Instance Data, Performance Improvement*
+
         </Typography>
+
+      </Box>
+      <Box
+        width={"100%"}
+        display="flex"
+        flexDirection={isMd ? "row" : "column"}
+        justifyContent="space-between"
+        alignItems="center"
+        gap={2}
+        ml="auto"
+        mb={3}
+      >
+        <AnnuallyCheckbox isAnnually={isAnnually} setIsAnnually={setIsAnnually} />
+        <div style={{
+          display: 'flex',
+          gap: "10px",
+          marginLeft: "auto",
+          alignItems: "center"
+        }}>
+          <InfoOutlineIcon />
+          <p style={{ whiteSpace: "nowrap", text: "12px", color: theme.palette.grey[300] }}>Operational Safety manager</p>
+        </div>
         <Box
           sx={{
             width: 350,
             mr: 2.5,
             display: "flex",
             gap: 1.25,
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
@@ -319,6 +368,11 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
               fontSize="large"
             />
           </Button>
+          <DialogHoc trigger={({ onClick }) => (
+            <Button onClick={onClick} variant="contained"><TuneIcon /></Button>)
+          }
+            content={({ handleClose }) => <CustomizeTableColumns onClose={handleClose} />}
+          />
         </Box>
       </Box>
     </>
