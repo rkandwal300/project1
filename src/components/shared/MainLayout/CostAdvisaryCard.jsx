@@ -1,11 +1,13 @@
 import React from "react";
-import { Box, Typography, useTheme } from "@mui/material";
-import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import { Box, Typography, useTheme, Chip } from "@mui/material";
+// import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import TagOutlinedIcon from "@mui/icons-material/TagOutlined";
 import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
 import StorageIcon from "@mui/icons-material/Storage";
 import StackedBarChartIcon from "@mui/icons-material/StackedBarChart";
+import RoomIcon from "@mui/icons-material/Room";
+import { isEIA } from "@/lib/router";
 
 
 const CostAdvisaryCard = ({ item, isCCa, page }) => {
@@ -14,11 +16,7 @@ const CostAdvisaryCard = ({ item, isCCa, page }) => {
 
     const gridHeaderContent = [
         {
-            icon: <CloudQueueIcon fontSize="small" />,
-            label: currentPlatform.cspProvider ?? "AWS",
-        },
-        {
-            icon: <PlaceOutlinedIcon fontSize="small" />,
+            // icon: <PlaceOutlinedIcon fontSize="small" />,
             label: currentPlatform.zone || "us-east-1a",
         },
         {
@@ -29,7 +27,7 @@ const CostAdvisaryCard = ({ item, isCCa, page }) => {
 
 
 
-    return (   
+    return (
         <Box
             border="1px solid #ddd"
             display="flex"
@@ -40,20 +38,20 @@ const CostAdvisaryCard = ({ item, isCCa, page }) => {
             <Box
                 display="flex"
                 alignItems="center"
-                gap={4}
+                gap={1}
                 px={2}
                 py={1}
                 borderBottom="1px solid #ddd"
-                fontWeight="bold"
-                backgroundColor={theme.palette.secondary.main}
+                backgroundColor={theme.palette.background.paper}
             >
                 <Typography>
                     {currentPlatform.instanceType || "c5.12xlarge"}
                 </Typography>
                 {gridHeaderContent.map((headerItem, index) => (
-                    <Box key={index} display="flex" alignItems="center" gap={0.5}>
-                        {headerItem.icon}
-                        <Typography variant="body2">{headerItem.label}</Typography>
+                    <Box key={index} display="flex" alignItems="center" gap={1}>
+
+                        | {headerItem.icon ? headerItem.icon : null}
+                        <Typography variant="body2">  {headerItem.label}</Typography>
 
                     </Box>
                 ))}
@@ -92,7 +90,8 @@ export default CostAdvisaryCard;
 
 
 const RecommandationList = ({ recommendations, isCCa }) => {
-    const recomandationName = ["Hourly Cost Optimization", "Modernize", "Modernize & Downside"]
+    const recomandationNameCCA = ["Hourly Cost Optimization", "Modernize", "Modernize & Downside"]
+    const recomandationNameEIA = ["Optimal", "Good"]
 
     const getStats = (cost, perf) => [
         {
@@ -108,15 +107,19 @@ const RecommandationList = ({ recommendations, isCCa }) => {
             color: "red",
         },
     ];
-    const data = recommendations.map((rec, index) => (
+   
+    const data = (isEIA() ?recommendations.slice(0, 2):recommendations).map((rec, index) => (
         <Box
             key={rec.instanceType + index}
             flex={1}
             borderRight={index !== 2 ? "1px solid #ddd" : "none"}
             p={1.5}
         >
-            <Typography fontWeight="600" variant="body2" mb={1}>
-                {recomandationName[index]}
+            <Typography
+                variant="body2"
+                sx={{ fontWeight: 600, mb: 1 }}
+            >
+                {isCCa ? recomandationNameCCA[index] : recomandationNameEIA[index]}
             </Typography>
 
             <Box display="flex" alignItems="center" gap={3}>
