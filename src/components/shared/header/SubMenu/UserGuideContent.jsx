@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, DialogContent } from "@mui/material";
-import UserGuideEIA  from '@/assets/EIA_User_Guide.pdf';
+import UserGuideEIA from '@/assets/EIA_User_Guide.pdf';
 import UserGuideCCA from '@/assets/AMD_CCA1.pdf'
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@mui/material";
 import { isCCA } from "@/lib/router";
 
 
@@ -23,7 +23,7 @@ export default function UserGuideContent({ onClose }) {
             <Button
                 variant="outlined"
                 color={"primary"}
-                sx={{ alignSelf: "flex-end", m: 1 ,bgcolor: theme.palette.dark, color: theme.palette.primary.contrastText}}
+                sx={{ alignSelf: "flex-end", m: 1, bgcolor: theme.palette.dark, color: theme.palette.primary.contrastText }}
                 onClick={onClose}
             >
                 Close

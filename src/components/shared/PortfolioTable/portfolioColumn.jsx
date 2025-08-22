@@ -1,7 +1,7 @@
 import { useMemo, useCallback, lazy, Suspense } from "react";
 import PropTypes from "prop-types";
 import { Checkbox, IconButton } from "@mui/material";
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import { updateSingleInstance } from "@/redux/features/instance/instance.slice.js";
 import { useDispatch, useSelector } from "react-redux";

@@ -15,7 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
 import TooltipHoc from "@/components/ui/Tooltip";
 import DialogHoc from "@/components/ui/Dialog";
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@mui/material";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';

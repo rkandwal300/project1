@@ -71,7 +71,7 @@ const theme = createTheme({
           "&.Mui-disabled": {
             backgroundColor: "#757575",
             color: "#FFFFFF",
-        },
+          },
         },
         containedSecondary: {
           backgroundColor: "#E53935",
@@ -187,10 +187,10 @@ const theme = createTheme({
     },
     MuiListItemButton: {
       styleOverrides: {
-        root: { 
+        root: {
           marginBottom: 4,
           padding: '8px',
-          height:"35px",
+          height: "35px",
           backgroundColor: "#FFFFFF",
           color: "#1A1A1A",
           borderRadius: "4px",
@@ -202,9 +202,9 @@ const theme = createTheme({
             backgroundColor: "#1A1A1A",
             color: "#FFFFFF",
             "&:hover": {
-            backgroundColor: "#1A1A1A",
-            color: "#FFFFFF",
-          },
+              backgroundColor: "#1A1A1A",
+              color: "#FFFFFF",
+            },
           },
         },
       },

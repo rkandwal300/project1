@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { flexRender } from "@tanstack/react-table";
 import { TableCell, TableHead, TableRow } from "@mui/material";
 import { getCommonPinningStyles } from "@/hooks/useTableStyles";
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@mui/material";
 
 const getCellStyleUtil = ({
   header,
@@ -38,8 +38,8 @@ const getCellStyleUtil = ({
     maxWidth: `${size}px`,
     borderRight:
       lastColumnIds.has(header.column.id) &&
-      variant === "primaryBorder" &&
-      !header.column.getIsPinned()
+        variant === "primaryBorder" &&
+        !header.column.getIsPinned()
         ? `1px solid ${borderColor}`
         : undefined,
   };
@@ -68,7 +68,7 @@ const CustomTableHeader = ({
   );
 
   const getCellStyle = useCallback(
-    (header, isMultiHeader, isTopParentHeader,variant) =>
+    (header, isMultiHeader, isTopParentHeader, variant) =>
       getCellStyleUtil({
         header,
         lastColumnIds,

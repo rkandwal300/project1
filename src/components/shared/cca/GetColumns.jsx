@@ -7,7 +7,7 @@ import {
   pricingModelOptions,
   regionOptions,
 } from "@/lib/constant";
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import { updateSingleInstance } from "@/redux/features/instance/instance.slice.js";
 import { EditableSelectCell, EditableTextCell } from "../PortfolioTable/EditableCells";

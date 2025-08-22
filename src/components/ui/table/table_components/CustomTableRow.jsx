@@ -2,8 +2,8 @@ import { TableRow } from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
 import CustomTableCell from "./CustomTableCell";
-import { useTheme } from "@emotion/react";
- 
+import { useTheme } from "@mui/material";
+
 const CustomTableRow = ({
   row,
   styles,
@@ -29,13 +29,13 @@ const CustomTableRow = ({
                 ...styles.cell,
                 borderRight:
                   lastColumnIds.has(cell.column.id) &&
-                  variant === "primaryBorder"
+                    variant === "primaryBorder"
                     ? `1px solid ${theme.palette.secondary.default}`
                     : "0px",
 
                 backgroundColor:
                   lastColumnIds.has(cell.column.id) &&
-                  variant === "primaryBorder"
+                    variant === "primaryBorder"
                     ? "#1e1e1e"
                     : styles.cell.backgroundColor,
               },

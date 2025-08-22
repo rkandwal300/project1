@@ -8,6 +8,7 @@ import TableSkeleton from "@/components/ui/table/table_components/TableSkeleton 
 import CustomTable from "@/components/ui/table/CustomTable";
 import { Slider } from "@mui/material";
 import GetCCAInstanceColumn from "./GetColumns";
+import { isEIA } from "@/lib/router";
 
 const TabPanel = React.memo(function TabPanel({ children, value, index }) {
   return (
@@ -84,7 +85,7 @@ function PortfolioBody() {
               paddingRight: "20px",
             }}
           >
-            <Slider
+            {isEIA() && <Slider
               defaultValue={20}
               step={10}
               marks
@@ -97,7 +98,7 @@ function PortfolioBody() {
                   padding: "2px 6px",
                 },
               }}
-            />
+            />}
           </div>
         </div>
         <CustomTable

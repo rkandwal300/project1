@@ -1,10 +1,9 @@
 import React, { Suspense, useMemo, useCallback, lazy } from "react";
-import { Box, Grid, Button } from "@mui/material";
+import { Box, Grid, Button, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
-import { useTheme } from "@emotion/react";
 
 import {
   resetTelemetryData,
@@ -31,17 +30,17 @@ import {
 } from "@/redux/features/instance/instance.selector";
 import { mockFormDataResponse } from "@/lib/data";
 import { ROUTES } from "@/lib/router";
- 
+
 const FormAlert = lazy(() => import("@/components/ui/FormAlert"));
- 
+
 const getTrimmedName = (name) => name?.trim() || "";
- 
+
 const isDuplicateInstance = (instances, name, providerType, currentProvider) =>
   instances.some(
     (instance) => instance.name === name && providerType === currentProvider
   );
 
- 
+
 const buildInstancePayload = ({ id, data, provider, name, formData }) => ({
   id,
   data,
@@ -184,8 +183,8 @@ const TelemetryBottomBar = () => {
       className="action-footer"
       sx={{
         p: 1,
-        borderTop: `1px solid ${theme.palette.divider}`,
-        bgcolor: theme.palette.grey[100],
+        borderTop: `1px solid #e8e8e8`,
+        bgcolor: "#e8e8e8",
         color: theme.palette.text.default,
       }}
     >

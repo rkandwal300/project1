@@ -15,6 +15,7 @@ import {
   DialogContent,
   DialogActions,
   Grid,
+  useTheme,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -28,9 +29,8 @@ import {
 } from "@/redux/features/providerData/providerData.selector";
 import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
 import { addInstance } from "@/redux/features/instanceList/instanceList.slice";
-import { useTheme } from "@emotion/react";
 import useTimedMessage from "@/hooks/useTimedMessage";
-import FormAlert from "@/components/ui/FormAlert"; 
+import FormAlert from "@/components/ui/FormAlert";
 import { ROUTES } from "@/lib/router";
 
 const MOCK_CONFIG = {

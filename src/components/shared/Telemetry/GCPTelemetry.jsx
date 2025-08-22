@@ -13,7 +13,7 @@ import FormAlert from "@/components/ui/FormAlert";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentProviderRegions } from "@/redux/features/providerData/providerData.selector";
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@mui/material";
 import {
   setTelemetryData,
   setTelemetryConnectionStatus,
@@ -154,7 +154,7 @@ function GCPTelemetry() {
           control={control}
           render={({ field: { value = [], onChange } }) => (
             <TextField
-              label={"Client Email"} 
+              label={"Client Email"}
               name="clientEmail"
               type="email"
               value={value}

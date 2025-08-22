@@ -6,7 +6,7 @@ import FormAlert from "@/components/ui/FormAlert";
 import useTimedMessage from "@/hooks/useTimedMessage";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentProviderRegions } from "@/redux/features/providerData/providerData.selector";
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@mui/material";
 import {
   setTelemetryData,
   setTelemetryConnectionStatus,
