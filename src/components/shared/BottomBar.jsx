@@ -35,6 +35,8 @@ import {
 } from "@/redux/features/instance/instance.slice";
 import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
 import { selectCurrentProviderName } from "@/redux/features/providerData/providerData.selector";
+import { AttachMoney } from "@mui/icons-material";
+import { isCCA, ROUTES } from "@/lib/router";
 
 function BottomBar() {
   const theme = useTheme();
@@ -42,7 +44,7 @@ function BottomBar() {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  const currentInstanceId = location.pathname.split("/")[1]; 
+  const currentInstanceId = location.pathname.split("/")[2];
 
   const currentProviderName = useSelector(selectCurrentProviderName);
   const alertMessage = useSelector(selectMessage);
@@ -69,9 +71,9 @@ function BottomBar() {
 
     const isDuplicate = instanceList.some(
       (instance) =>
-        instance.name === trimmedName && 
+        instance.name === trimmedName &&
         instance.provider === currentProviderName
-    ); 
+    );
 
     if (isDuplicate) {
       dispatch(
@@ -91,13 +93,14 @@ function BottomBar() {
       name: trimmedName,
       selfPrefAssessment: selfPrefAssessmentData,
     };
+
     if (currentInstanceId) {
       dispatch(updateInstance(payload));
     } else {
       dispatch(addInstance(payload));
     }
 
-    navigate(`/${formId}`);
+    navigate(`${ROUTES.ROOT}${formId}`);
     dispatch(
       setMessage({
         type: errorMessageType.SUCCESS,
@@ -115,7 +118,7 @@ function BottomBar() {
         message: `${portfolioName} deleted successfully`,
       })
     );
-    navigate("/");
+    navigate(ROUTES.ROOT);
   }, [dispatch, formId, portfolioName, navigate]);
 
   const handleResetFormData = useCallback(() => {
@@ -127,7 +130,7 @@ function BottomBar() {
       })
     );
     dispatch(addCurrentInstance(null));
-    navigate("/");
+    navigate(ROUTES.ROOT);
   }, [dispatch, portfolioName, selfPrefAssessmentData, instances, navigate]);
 
   const isSaveDisabled = !instances.length;
@@ -276,11 +279,15 @@ function BottomBar() {
           <Button
             id={"instanceAdvice"}
             variant="contained"
-            startIcon={<BuildIcon />}
+            startIcon={isCCA() ? <AttachMoney /> : <BuildIcon />}
             disabled={isInstanceAdviceDisabled}
-            onClick={() => navigate("/instanceAdvice")}
+            onClick={() =>
+              navigate(
+                isCCA() ? ROUTES.COST_ADVISORY : ROUTES.INSTANCE_ADVICE
+              )
+            }
           >
-            Instance advice
+            {isCCA() ? "Cost advice" : "Instance advice"}
           </Button>
         </Suspense>
       </Box>

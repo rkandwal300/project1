@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, InputLabel, OutlinedInput, Box } from "@mui/material";
+import { FormControl, InputLabel, OutlinedInput, Box, useTheme } from "@mui/material";
 import ProviderDisplay from "./ProviderDisplay";
 import {
   selectCurrentProviderName,
@@ -8,13 +8,13 @@ import {
   selectProviderList,
 } from "@/redux/features/providerData/providerData.selector";
 import PopoverHoc from "@/components/ui/Popover";
-import { useTheme } from "@emotion/react";
 import SelectHoc from "@/components/ui/Select";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 import { setTelemetryCloud } from "@/redux/features/providerData/providerData.slice";
 import { TELEMETRY_TYPES } from "@/redux/features/telemetry/telemetry.slice";
+import { ROUTES } from "@/lib/router";
 
 const SidebarSelect = () => {
   const theme = useTheme();
@@ -28,11 +28,11 @@ const SidebarSelect = () => {
     selectCurrentProviderTelemetryCloud
   );
 
-  const telemetryOptions = providers.map((provider) => provider.cloud !== null ? provider.cloud.name: undefined  ).filter(v => v!= undefined);
+  const telemetryOptions = providers.map((provider) => provider.cloud !== null ? provider.cloud.name : undefined).filter(v => v != undefined);
   const handleTelemetryCloudChange = (event) => {
     const selectedCloud = event.target.value;
     dispatch(setTelemetryCloud(selectedCloud));
-    navigate("/telemetry");
+    navigate(ROUTES.TELEMETRY);
   };
   return (
     <div
@@ -44,7 +44,7 @@ const SidebarSelect = () => {
       }}
     >
       <PopoverHoc
-      
+
         trigger={({ handleOpen }) => (
           <FormControl
             fullWidth
@@ -54,7 +54,7 @@ const SidebarSelect = () => {
           >
             <InputLabel sx={{ fontWeight: 500 }}>Service Provider</InputLabel>
             <OutlinedInput
-            id="step-six-target"
+              id="step-six-target"
               readOnly
               label="Service Provider"
               value={currentProvider || "Select Provider"}
@@ -78,7 +78,7 @@ const SidebarSelect = () => {
         )}
       />
       {currentProviderType == "telemetry" &&
-        ![TELEMETRY_TYPES.AWS_CLOUDWATCH, TELEMETRY_TYPES.AZURE_INSIGHTS,  TELEMETRY_TYPES.GOOGLE_CLOUD_OPS].includes(currentProvider) && (
+        ![TELEMETRY_TYPES.AWS_CLOUDWATCH, TELEMETRY_TYPES.AZURE_INSIGHTS, TELEMETRY_TYPES.GOOGLE_CLOUD_OPS].includes(currentProvider) && (
           <FormControl fullWidth variant="outlined">
             <InputLabel>Cloud*</InputLabel>
             <SelectHoc

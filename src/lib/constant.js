@@ -62,7 +62,38 @@ export const serviceProviderOptions = [
   },
 ];
 
-
+export const CCA_FIELDS = [
+  {
+    name: "region",
+    label: "Region*",
+    type: "select",
+    tooltipMessage: "Select Region associated with CSP",
+  },
+  {
+    name: "instanceType",
+    label: "Size*",
+    type: "select",
+    tooltipMessage: "Select Instance associated with Region",
+  },
+  {
+    name: "uuid",
+    label: "UUID / Instance Name",
+    tooltipMessage: "Enter UUID/Instance Name, For Ex: VM for AI/ML server",
+  },
+  { label: "Quantity*", name: "quantity", tooltipMessage: "Quantity" },
+  {
+    label: "Total Number of Hours per Month*",
+    name: "noOfHours",
+    tooltipMessage: "Max hours per month",
+  },
+  {
+    label: "Pricing Model*",
+    name: "pricingModel",
+    type: "select",
+    tooltipMessage: "",
+    type: "select",
+  },
+];
 export const CONSUMPTION_FIELDS = [
   {
     label: "Max CPU %",
@@ -97,7 +128,7 @@ export const CONSUMPTION_AVG_FIELDS = [
     label: "U95",
     name: "u95",
     tooltipMessage: "U95",
-  }
+  },
 ];
 
 export const GENERIC_FIELDS = [
@@ -144,7 +175,8 @@ export const FIND_AND_REPLACE_FIELD_TYPES = [
   },
 ];
 
-export const supportEmailSubject = "EIA - Support Ticket Request - Regarding manageAccounts Page";
+export const supportEmailSubject =
+  "EIA - Support Ticket Request - Regarding manageAccounts Page";
 
 export const supportEmailBody = `
 Hi [Support Team/Specific Name],
@@ -186,7 +218,9 @@ Best regards,
 [Your Name]
 `;
 
-export const supportMailtoLink = `mailto:support@example.com?subject=${encodeURIComponent( supportEmailSubject)}&body=${encodeURIComponent(supportEmailBody)}`;
+export const supportMailtoLink = `mailto:support@example.com?subject=${encodeURIComponent(
+  supportEmailSubject
+)}&body=${encodeURIComponent(supportEmailBody)}`;
 export const supportMobileNumber = `tel:+1 (502) 388-6228`;
 
 export const userEmail = "testuser@infobellit.com";

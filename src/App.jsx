@@ -24,6 +24,12 @@ import NotFound from "./components/shared/NotFound";
 import { selectCurrentProviderName } from "./redux/features/providerData/providerData.selector";
 import Support from "./components/shared/Support";
 import ReleaseNotesPage from "./components/shared/ReleaseNotesPage";
+import Explorer from "./components/shared/cca/Explorer/Explorer";
+import CostAdviceLayout from "./components/shared/cca/costAdvice/CostAdviceLayout";
+import CCAMainContent from "./components/shared/cca/MainLayout/MainContent";
+import CloudUsageReports from "./components/shared/cca/CloudUsageReport";
+import CloudInstances from "./components/shared/cca/CloudInstances";
+import { isEIA, ROUTES } from "./lib/router";
 
 // Lazy loaded components
 const MainContent = lazy(() =>
@@ -67,6 +73,7 @@ const App = () => {
   useEffect(() => {
     window.speechSynthesis.cancel();
     const timeoutId = setTimeout(() => {
+
       import("@/tour/tour").then((tour) => {
         tour.default?.start();
       });
@@ -92,12 +99,15 @@ const App = () => {
   }, [routes.join(","), type]);
 
   const BottomBarComponent = useMemo(() => {
-    if (matchPath("/telemetry/:id", pathname)) return TelemetryDetailBottomBar;
-    if (pathname.startsWith("/telemetry")) return TelemetryBottomBar;
-    if (pathname === "/instanceAdvice") return InstanceAdviceBottomBar;
+    if (matchPath(ROUTES.TELEMETRY_DETAIL, pathname))
+      return TelemetryDetailBottomBar;
+    if (pathname.startsWith(ROUTES.TELEMETRY)) return TelemetryBottomBar;
+    if (pathname === ROUTES.INSTANCE_ADVICE || pathname == ROUTES.COST_ADVISORY)
+      return InstanceAdviceBottomBar;
+    if (pathname === ROUTES.CLOUD_USAGE_REPORT) return () => <></>;
+    if (pathname === ROUTES.EXPLORER) return () => <></>;
     return BottomBar;
   }, [pathname]);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -116,7 +126,9 @@ const App = () => {
               p: 0,
             }}
           >
-            {!["/support", "/release-notes"].includes(pathname) && <Sidebar />}
+            {![ROUTES.SUPPORT, ROUTES.RELEASE_NOTES,ROUTES.EXPLORER].includes(pathname) && (
+              <Sidebar />
+            )}
             <Suspense
               fallback={
                 <Box
@@ -134,17 +146,43 @@ const App = () => {
               }
             >
               <Routes>
-                <Route path="/" element={<MainContent />} />
-                <Route path="/support" element={<Support />} />
-                <Route path="/release-notes" element={<ReleaseNotesPage />} />
-                <Route path="/:id" element={<MainContent />} />
                 <Route
-                  path="/instanceAdvice"
+                  path={ROUTES.ROOT}
+                  element={isEIA() ? <MainContent /> : <CCAMainContent />}
+                />
+
+                <Route
+                  path={ROUTES.CLOUD_USAGE_REPORT}
+                  element={<CloudUsageReports />}
+                />
+                <Route
+                  path={ROUTES.CLOUD_USAGE_REPORT_DETAILS}
+                  element={<CloudInstances />}
+                />
+                <Route
+                  path={ROUTES.COST_ADVISORY}
+                  element={<CostAdviceLayout />}
+                />
+                <Route path={ROUTES.EXPLORER} element={<Explorer />} />
+                <Route path={ROUTES.SUPPORT} element={<Support />} />
+                <Route
+                  path={ROUTES.RELEASE_NOTES}
+                  element={<ReleaseNotesPage />}
+                />
+                <Route
+                  path={ROUTES.DETAIL}
+                  element={isEIA() ? <MainContent /> : <CCAMainContent />}
+                />
+                <Route
+                  path={ROUTES.INSTANCE_ADVICE}
                   element={<InstanceAdviceLayout />}
                 />
-                <Route path="/telemetry" element={<TelemetryLayout />} />
-                <Route path="/telemetry/:id" element={<TelemetryDetail />} />
-                <Route path="*" element={<NotFound />} />
+                <Route path={ROUTES.TELEMETRY} element={<TelemetryLayout />} />
+                <Route
+                  path={ROUTES.TELEMETRY_DETAIL}
+                  element={<TelemetryDetail />}
+                />
+                <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
               </Routes>
             </Suspense>
           </Box>

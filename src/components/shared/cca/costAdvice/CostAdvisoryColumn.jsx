@@ -57,7 +57,7 @@ const plainColumn = ({
   cell: cell || renderPlainCell,
   ...(pin && { pin }),
 });
- 
+
 const tooltipCell = ({ getValue }) => {
   const value = getValue();
   return (
@@ -69,7 +69,7 @@ const tooltipCell = ({ getValue }) => {
           textOverflow: "ellipsis",
           margin: 0,
           maxWidth: "100%",
-          cursor: "pointer", 
+          cursor: "pointer",
         }}
       >
         {value && value.length > 0 ? value : "-"}
@@ -77,72 +77,70 @@ const tooltipCell = ({ getValue }) => {
     </TooltipHoc>
   );
 };
- 
+
 const currentMetricColumns = [
   plainColumn({
+    id: "zone",
+    accessorKey: "data.currentPlatform.zone",
+    header: "Region"
+  }),
+  plainColumn({
     id: "instanceType",
-    accessorKey: "data.currentPlatform.type",
+    accessorKey: "data.currentPlatform.instanceType",
     header: "Instance Type",
   }),
   numericColumn({
-    id: "cost",
-    accessorKey: "data.currentPlatform.cost",
-    header: "Cost($)",
+    id: "monthlyCost",
+    accessorKey: "data.currentPlatform.monthlyCost",
+    header: "Monthly Cost($)",
     pin: "left",
   }),
   numericColumn({
-    id: "power",
-    accessorKey: "data.currentPlatform.power",
-    header: "Power(kw)",
+    id: "annualCost",
+    accessorKey: "data.currentPlatform.annualCost",
+    header: "Annual Cost ($)",
     pin: "left",
-  }),
-  numericColumn({
-    id: "carbon",
-    accessorKey: "data.currentPlatform.carbon",
-    header: "Carbon (kgCO2eq)",
-    size: 200,
-    pin: "left",
-  }),
+  })
 ];
- 
+
 const currentDetailColumns = [
   plainColumn({
     id: "uuid",
     accessorKey: "id",
     header: "UUID/Instance Name",
-    cell: tooltipCell,
-    size: 200,
+    cell: tooltipCell
   }),
   plainColumn({
-    id: "csp",
-    accessorKey: "csp",
-    header: "Cloud",
+    id: "cspProvider",
+    accessorKey: "data.currentPlatform.cspProvider",
+    header: "Cloud"
+  }),
+  plainColumn({
+    id: "numberOfInstances",
+    accessorKey: "data.currentPlatform.numberOfInstances",
+    header: "Quantity"
   }),
   plainColumn({
     id: "pricingModel",
     accessorKey: "data.currentPlatform.pricingModel",
-    header: "Pricing Model",
+    header: "Pricing Model"
   }),
   plainColumn({
     id: "vCPU",
     accessorKey: "data.currentPlatform.vCPU",
-    header: "vCPU(s)",
-    size: 120,
+    header: "vCPU(s)"
   }),
   plainColumn({
     id: "status",
     accessorKey: "data.currentPlatform.status",
-    header: "Remark",
-    minSize: 300,
-    size: 300,
-    maxSize: 300,
+    header: "Remark"
   }),
 ];
- 
+
 const recommendationColumns = (idx, label) => [
   plainColumn({
     id: `${label}_instanceType`,
-    accessorKey: `data.recommendations.${idx}.type`,
+    accessorKey: `data.recommendations.${idx}.instanceType`,
     header: "Instance Type",
   }),
   plainColumn({
@@ -153,31 +151,30 @@ const recommendationColumns = (idx, label) => [
   }),
   numericColumn({
     id: `${label}_cost`,
-    accessorKey: `data.recommendations.${idx}.cost`,
-    header: "Cost($)",
+    accessorKey: `data.recommendations.${idx}.monthlyCost`,
+    header: "Monthly Cost($)",
   }),
   numericColumn({
-    id: `${label}_power`,
-    accessorKey: `data.recommendations.${idx}.power`,
-    header: "Power(kw)",
+    id: `${label}_totalCost`,
+    accessorKey: `data.recommendations.${idx}.totalCost`,
+    header: "Annual Cost($)",
   }),
   numericColumn({
-    id: `${label}_carbon`,
-    accessorKey: `data.recommendations.${idx}.carbon`,
-    header: "Carbon (kgCO2eq)",
+    id: `${label}_annualSavings`,
+    accessorKey: `data.recommendations.${idx}.annualSavings`,
+    header: "Annual Savings ($)",
     size: 200,
   }),
   numericColumn({
     id: `${label}_saving`,
-    accessorKey: `data.recommendations.${idx}.monthlySavings`,
+    accessorKey: `data.recommendations.${idx}.savingsInPercentage`,
     header: "Savings($)",
   }),
   numericColumn({
     id: `${label}_perf`,
     accessorKey: `data.recommendations.${idx}.perf`,
     header: "Performance Improvement*",
-    size: 210,
-    minSize: 210,
+    size: 150,
     maxSize: 210,
   }),
 ];
@@ -199,10 +196,10 @@ export const CostAdvisoryColumn = [
     columns: currentDetailColumns,
     meta: {
       align: "center",
-      colSpan: 4,
+      colSpan: 6,
     },
   },
-  ...["Optimal", "Best", "Good"].map((label, idx) => ({
+  ...["Hourly Cost Optimization", "Modernize", "Modernize & Downsize"].map((label, idx) => ({
     id: label.toLowerCase(),
     header: label,
     columns: recommendationColumns(idx, label),

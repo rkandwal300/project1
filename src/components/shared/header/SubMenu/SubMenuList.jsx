@@ -8,15 +8,16 @@ import {
   CircularProgress,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
-import DescriptionIcon from "@mui/icons-material/Description";
 import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Suspense, lazy } from "react";
 import DialogHoc from "../../../ui/Dialog";
 import MenuHoc from "../../../ui/Menu";
 import { userEmail } from "@/lib/constant";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import { isCCA, isEIA, ROUTES } from "@/lib/router";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+
 const UserMenu = lazy(() => import("./UserMenu"));
 const StatCollectorDescription = lazy(() =>
   import("./StatCollectorDescription")
@@ -62,7 +63,7 @@ function SubMenuList() {
 
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }}>
-      <DialogHoc
+      {isEIA() ? <DialogHoc
         trigger={({ onClick }) => (
           <Button
             variant="outlined"
@@ -86,46 +87,7 @@ function SubMenuList() {
             <StatCollectorDescription onClose={handleClose} />
           </Suspense>
         )}
-      />
-      {/* <DialogHoc
-        trigger={({ onClick }) => (
-          <Tooltip title="Release Notes" {...tooltipProps}>
-            <IconButton id="step-one-target" onClick={onClick}>
-              <DescriptionIcon
-                sx={{ fontSize: 24, color: theme.palette.error.contrastText }}
-              />
-            </IconButton>
-          </Tooltip>
-        )}
-        content={(props) => (
-          <Suspense fallback={Loader}>
-            <ReleaseNotes {...props} />
-          </Suspense>
-        )}
-        sx={{
-          width: 950,
-          height: 512,
-          m: "auto",
-          p: 0,
-          gap: "8px",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      /> */}
-      {/* <MenuHoc
-        trigger={({ onClick }) => (
-          <Tooltip title="Support" {...tooltipProps}>
-            
-              <HeadsetMicIcon sx={{ color: "black", fontSize: 15 }} />
-            </IconButton>
-          </Tooltip>
-        )}b
-        content={() => (
-          <Suspense fallback={Loader}>
-            <SupportMenu />
-          </Suspense>
-        )}
-      /> */}
+      /> : <></>}
       <Tooltip title="Support" {...tooltipProps}>
         <IconButton
           // href="/support"
@@ -138,7 +100,7 @@ function SubMenuList() {
               backgroundColor: theme.palette.error.contrastText,
             },
           }}
-          onClick={() => navigate("/support")}
+          onClick={() => navigate(ROUTES.SUPPORT)}
         >
           <HeadsetMicIcon sx={{ color: "black", fontSize: 15 }} />
         </IconButton>

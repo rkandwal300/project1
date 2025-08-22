@@ -1,4 +1,4 @@
-import { CONSUMPTION_FIELDS, GENERIC_FIELDS } from "@/lib/constant";
+import { CCA_FIELDS, CONSUMPTION_FIELDS, GENERIC_FIELDS } from "@/lib/constant";
 import { mockFormDataResponse } from "@/lib/data";
 import { store } from "@/redux/store";
 
@@ -57,8 +57,7 @@ const processFields = async (fields) => {
     const role = inputEl.getAttribute("role");
     const ariaHasPopup = inputEl.getAttribute("aria-haspopup");
     const tag = inputEl.tagName.toLowerCase();
-    const value = mockFormDataResponse[field.name];
-
+    const value = mockFormDataResponse[field.name]; 
     if (tag === "input" && value !== undefined) {
       setInputValue(inputEl, value);
     } else if (role === "combobox" && ariaHasPopup === "listbox") {
@@ -127,6 +126,7 @@ export const actionHandlers = {
         el.scrollBy({ left: 300, behavior: "smooth" });
       }
     }
+    if (role === "GenericCCAMetadataForm") await processFields(CCA_FIELDS);
     if (role === "GenericMetadataForm") await processFields(GENERIC_FIELDS);
     if (role === "ConsumptionMetadataForm")
       await processFields(CONSUMPTION_FIELDS);

@@ -1,10 +1,9 @@
 import React, { Suspense, useMemo, useCallback, lazy } from "react";
-import { Box, Grid, Button } from "@mui/material";
+import { Box, Grid, Button, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
-import { useTheme } from "@emotion/react";
 
 import {
   resetTelemetryData,
@@ -30,20 +29,18 @@ import {
   selectMessageType,
 } from "@/redux/features/instance/instance.selector";
 import { mockFormDataResponse } from "@/lib/data";
+import { ROUTES } from "@/lib/router";
 
-// Dynamic import for FormAlert
 const FormAlert = lazy(() => import("@/components/ui/FormAlert"));
 
-// Utility: get trimmed name
 const getTrimmedName = (name) => name?.trim() || "";
 
-// Utility: check duplicate
 const isDuplicateInstance = (instances, name, providerType, currentProvider) =>
   instances.some(
     (instance) => instance.name === name && providerType === currentProvider
   );
 
-// Utility: build instance payload
+
 const buildInstancePayload = ({ id, data, provider, name, formData }) => ({
   id,
   data,
@@ -143,7 +140,7 @@ const TelemetryBottomBar = () => {
       dispatch(addInstance(payload));
     }
     dispatch(resetTelemetryData());
-    navigate(`/telemetry/${generatedFormId}?type=${currentProviderName}`);
+    navigate(`${ROUTES.TELEMETRY}/${generatedFormId}?type=${currentProviderName}`);
     showAlert(errorMessageType.SUCCESS, `${trimmedName} saved successfully`);
   }, [
     trimmedName,
@@ -186,8 +183,8 @@ const TelemetryBottomBar = () => {
       className="action-footer"
       sx={{
         p: 1,
-        borderTop: `1px solid ${theme.palette.divider}`,
-        bgcolor: theme.palette.grey[100],
+        borderTop: `1px solid #e8e8e8`,
+        bgcolor: "#e8e8e8",
         color: theme.palette.text.default,
       }}
     >

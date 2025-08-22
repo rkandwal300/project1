@@ -13,3 +13,15 @@ export const instanceSchema = z.object({
   uavg: z.number().optional(),  
   u95: z.number().optional(), 
 });
+
+export const CCAInstanceSchema = instanceSchema
+  .pick({
+    pricingModel: true,
+    uuid: true,
+    region: true,
+    instanceType: true,
+  })
+  .extend({
+    quantity: z.string().min(1, "Required"),
+    noOfHours: z.string().min(1, "Required"),
+  });

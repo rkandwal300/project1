@@ -3,6 +3,8 @@ import SubMenu from "./SubMenu/SubMenu";
 import Logo from "./Logo";
 import Title from "./Title";
 import { withErrorBoundary } from "@/hooks/withErrorBoundary";
+import CCATitle from "./CCATitle";
+import { isCCA } from "@/lib/router";
 
 function Header() {
   const theme = useTheme();
@@ -20,8 +22,8 @@ function Header() {
       }}
       id="header-bar-container"
     >
-      <Toolbar 
-          sx={{
+      <Toolbar
+        sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -30,9 +32,9 @@ function Header() {
           gap: { md: 2, xs: 2 },
         }}
       >
-         
-          <Logo />
-          <Title /> 
+        <Logo />
+
+        {isCCA() ? <CCATitle /> : <Title />}
 
         <SubMenu />
       </Toolbar>

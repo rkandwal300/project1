@@ -1,0 +1,258 @@
+{
+    "cloud_provider": "AWS",
+    "Data":[
+        {
+    "region": "af-south-1",
+    "instance": " c5a.12xlarge",
+    "vCPU": 48,
+    "memory(GB)": 96,
+    "instancePricingOndemand": 1804.56,
+    "instancePricingReserved": 1136.61,
+    "Instance_Pricing_Spot": 330.91,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "af-south-1",
+    "instance": " c5a.16xlarge",
+    "vCPU": 64,
+    "memory(GB)": 128,
+    "instancePricingOndemand": 2406.08,
+    "instancePricingReserved": 1515.48,
+    "Instance_Pricing_Spot": 670.07,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "af-south-1",
+    "instance": " c5a.24xlarge",
+    "vCPU": 96,
+    "memory(GB)": 192,
+    "instancePricingOndemand": 3609.12,
+    "instancePricingReserved": 2273.95,
+    "Instance_Pricing_Spot": 436.69,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "af-south-1",
+    "instance": " c5a.4xlarge",
+    "vCPU": 16,
+    "memory(GB)": 32,
+    "instancePricingOndemand": 601.52,
+    "instancePricingReserved": 378.87,
+    "Instance_Pricing_Spot": 287.84,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "af-south-1",
+    "instance": " c5a.large",
+    "vCPU": 2,
+    "memory(GB)": 4,
+    "instancePricingOndemand": 75.19,
+    "instancePricingReserved": 47.45,
+    "Instance_Pricing_Spot": 20.59,
+    "CPU_Generation": "Rome"
+},
+
+{
+    "region": "ap-east-1",
+    "instance": " c5a.2xlarge",
+    "vCPU": 8,
+    "memory(GB)": 16,
+    "instancePricingOndemand": 283.24,
+    "instancePricingReserved": 178.12,
+    "Instance_Pricing_Spot": 111.84,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-east-1",
+    "instance": " c5a.12xlarge",
+    "vCPU": 48,
+    "memory(GB)": 96,
+    "instancePricingOndemand": 1699.44,
+    "instancePricingReserved": 1070.91,
+    "Instance_Pricing_Spot": 351.42,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-east-1",
+    "instance": " c5a.16xlarge",
+    "vCPU": 64,
+    "memory(GB)": 128,
+    "instancePricingOndemand": 2265.92,
+    "instancePricingReserved": 1433.21,
+    "Instance_Pricing_Spot": 377.28,
+    "CPU_Generation": "Rome"
+},
+
+{
+    "region": "ap-east-1",
+    "instance": " c5a.24xlarge",
+    "vCPU": 96,
+    "memory(GB)": 192,
+    "instancePricingOndemand": 3398.88,
+    "instancePricingReserved": 2141.09,
+    "Instance_Pricing_Spot": 354.93,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-east-1",
+    "instance": " c6a.16xlarge",
+    "vCPU": 64,
+    "memory(GB)": 128,
+    "instancePricingOndemand": 2270.59,
+    "instancePricingReserved": 1502,
+    "Instance_Pricing_Spot": 331.35,
+    "CPU_Generation": "Milan"
+},
+{
+    "region": "ap-northeast-1",
+    "instance": " c5a.12xlarge",
+    "vCPU": 48,
+    "memory(GB)": 96,
+    "instancePricingOndemand": 1681.92,
+    "instancePricingReserved": 1059.96,
+    "Instance_Pricing_Spot": 592.69,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-northeast-1",
+    "instance": " c5a.16xlarge",
+    "vCPU": 64,
+    "memory(GB)": 128,
+    "instancePricingOndemand": 2242.56,
+    "instancePricingReserved": 1412.55,
+    "Instance_Pricing_Spot": 930.97,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-northeast-1",
+    "instance": " c5a.24xlarge",
+    "vCPU": 96,
+    "memory(GB)": 192,
+    "instancePricingOndemand": 3363.84,
+    "instancePricingReserved": 2119.19,
+    "Instance_Pricing_Spot": 1063.32,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-northeast-1",
+    "instance": " c5a.2xlarge",
+    "vCPU": 8,
+    "memory(GB)": 16,
+    "instancePricingOndemand": 280.32,
+    "instancePricingReserved": 176.66,
+    "Instance_Pricing_Spot": 123.01,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-northeast-1",
+    "instance": " c5a.4xlarge",
+    "vCPU": 16,
+    "memory(GB)": 32,
+    "instancePricingOndemand": 560.64,
+    "instancePricingReserved": 353.32,
+    "Instance_Pricing_Spot": 251.34,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-northeast-2",
+    "instance": " c5a.12xlarge",
+    "vCPU": 48,
+    "memory(GB)": 96,
+    "instancePricingOndemand": 1506.72,
+    "instancePricingReserved": 949,
+    "Instance_Pricing_Spot": 742.7,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-northeast-2",
+    "instance": " c5a.16xlarge",
+    "vCPU": 64,
+    "memory(GB)": 128,
+    "instancePricingOndemand": 2008.96,
+    "instancePricingReserved": 1265.82,
+    "Instance_Pricing_Spot": 614.73,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-northeast-2",
+    "instance": " c5a.24xlarge",
+    "vCPU": 96,
+    "memory(GB)": 192,
+    "instancePricingOndemand": 3013.44,
+    "instancePricingReserved": 1898.73,
+    "Instance_Pricing_Spot": 944.84,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-northeast-2",
+    "instance": " c5a.2xlarge",
+    "vCPU": 8,
+    "memory(GB)": 16,
+    "instancePricingOndemand": 251.12,
+    "instancePricingReserved": 158.41,
+    "Instance_Pricing_Spot": 108.99,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-northeast-2",
+    "instance": " c5a.4xlarge",
+    "vCPU": 16,
+    "memory(GB)": 32,
+    "instancePricingOndemand": 502.24,
+    "instancePricingReserved": 316.09,
+    "Instance_Pricing_Spot": 214.98,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-south-1",
+    "instance": " c5a.12xlarge",
+    "vCPU": 48,
+    "memory(GB)": 96,
+    "instancePricingOndemand": 823.44,
+    "instancePricingReserved": 519.03,
+    "Instance_Pricing_Spot": 402.08,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-south-1",
+    "instance": " c5a.16xlarge",
+    "vCPU": 64,
+    "memory(GB)": 128,
+    "instancePricingOndemand": 1097.92,
+    "instancePricingReserved": 692.04,
+    "Instance_Pricing_Spot": 509.18,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-south-1",
+    "instance": " c5a.24xlarge",
+    "vCPU": 96,
+    "memory(GB)": 192,
+    "instancePricingOndemand": 1646.88,
+    "instancePricingReserved": 1037.33,
+    "Instance_Pricing_Spot": 530.05,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-south-1",
+    "instance": " c5a.2xlarge",
+    "vCPU": 8,
+    "memory(GB)": 16,
+    "instancePricingOndemand": 137.24,
+    "instancePricingReserved": 86.14,
+    "Instance_Pricing_Spot": 69.64,
+    "CPU_Generation": "Rome"
+},
+{
+    "region": "ap-south-1",
+    "instance": " c5a.4xlarge",
+    "vCPU": 16,
+    "memory(GB)": 32,
+    "instancePricingOndemand": 274.48,
+    "instancePricingReserved": 173.01,
+    "Instance_Pricing_Spot": 141.84,
+    "CPU_Generation": "Rome"
+}
+
+    ]
+}

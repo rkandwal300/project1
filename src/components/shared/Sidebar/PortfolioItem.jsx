@@ -10,6 +10,7 @@ import {
   selectCurrentProviderType,
 } from "@/redux/features/providerData/providerData.selector"; 
 import { selectCurrentInstance } from "@/redux/features/instanceList/instanceList.selector";
+import { ROUTES } from "@/lib/router";
 
 export default function PortfolioItem({ portfolio }) {
   const dispatch = useDispatch();
@@ -32,8 +33,8 @@ export default function PortfolioItem({ portfolio }) {
 
       let path =
         providerType === "telemetry"
-          ? `/telemetry/${portfolio.id}`
-          : `/${providerName}`;
+          ? `${ROUTES.TELEMETRY}/${portfolio.id}`
+          : `${ROUTES.ROOT}${portfolio.id}`;
 
       navigate(`${path}?${currentParams.toString()}`, { replace: true });
     },

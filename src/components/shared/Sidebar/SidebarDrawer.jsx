@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import {
   Box,
   Divider,
@@ -9,8 +9,8 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"; 
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -27,7 +27,7 @@ import {
 } from "@/redux/features/providerData/providerData.selector";
 import { selectInstanceList } from "@/redux/features/instanceList/instanceList.selector";
 import { resetTelemetryData } from "@/redux/features/telemetry/telemetry.slice";
-import { useState } from "react";
+import { ROUTES } from "@/lib/router";
 
 const SidebarDrawer = () => {
   const theme = useTheme();
@@ -61,8 +61,8 @@ const SidebarDrawer = () => {
     }
 
     const basePath = location.pathname.includes("telemetry")
-      ? "/telemetry"
-      : "/";
+      ? ROUTES.TELEMETRY
+      : ROUTES.ROOT;
 
     navigate(`${basePath}?type=${portfolio}`);
   }, [dispatch, location.pathname, navigate, portfolio, portfolioType]);
@@ -141,13 +141,15 @@ const SidebarDrawer = () => {
               "&:hover": { backgroundColor: "transparent" },
             }}
           >
-           <AddCircleIcon fontSize="small" />
+            <AddIcon fontSize="small" />
           </IconButton>
         </TooltipHoc>
       </Box>
       {/* Portfolio List */}
       <Box sx={{ height: "70vh", overflowY: "auto" }}>
-      <div style={{paddingLeft:'10px' ,marginBottom:"10px"}}><TextField placeholder="Search Portfolio"  /></div>
+        <div style={{ paddingLeft: "10px", marginBottom: "10px" }}>
+          <TextField placeholder="Search Portfolio" />
+        </div>
         <List id="dashboard-portfolio-list">
           {data.map((portfolio) => (
             <PortfolioItem key={portfolio.id} portfolio={portfolio} />
