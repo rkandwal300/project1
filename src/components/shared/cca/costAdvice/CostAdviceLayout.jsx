@@ -8,6 +8,7 @@ import CostAdvisaryCardList from "../../MainLayout/CostAdvisaryCardList";
 import { useSelector } from "react-redux";
 import { selectCostTableColumns, selectInstanceTableColumns } from "@/redux/features/customizeTable/customizeTable.selector";
 import { isEIA } from "@/lib/router";
+import CostAdviceCharts from "./CostAdviceCharts";
 
 
 function CostAdviceLayout() {
@@ -71,10 +72,10 @@ function CostAdviceLayout() {
         }}
       >
         <InstanceAdviceHeader />
-        {/* <div style={{ marginLeft: "auto" }}>
-          <Button onClick={() => setIsGrid(true)}><CalendarViewMonthIcon /></Button>
-          <Button onClick={() => setIsGrid(false)}><FormatListBulletedIcon /></Button>
-        </div> */}
+        <CostAdviceCharts />
+
+      
+        <Box sx ={{ mt: 4, mb: 2 }}>
         {isGrid ?
           <CostAdvisaryCardList data={data} isCCa={true} />
           : <CustomTable
@@ -95,6 +96,7 @@ function CostAdviceLayout() {
             }}
             id="instance-advice-table"
           />}
+          </Box>
       </Box>
     </Box>
   );

@@ -29,7 +29,7 @@ const CostAdvisaryCard = ({ item, isCCa, page }) => {
 
 
 
-    return (
+    return (   
         <Box
             border="1px solid #ddd"
             display="flex"
