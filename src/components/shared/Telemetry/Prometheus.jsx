@@ -17,9 +17,7 @@ import {
 import { selectTelemetryResetFlag } from "@/redux/features/telemetry/telemetry.selector";
 import { useLocation } from "react-router-dom";
 import { selectCurrentInstance } from "@/redux/features/instanceList/instanceList.selector";
-import PasswordField from "@/components/ui/PasswordField";
 import RegionsSelect from "@/components/ui/RegionSelect";
-import { Message } from "@mui/icons-material";
 import { prometheusTelemetrySchema } from "@/lib/validation/dataDog.schema";
 
 const inputStyle = { fontWeight: 600 };
@@ -136,6 +134,46 @@ function PrometheusTelemetry() {
             )}
           />
         </Box>
+        <p></p>
+      </Box>
+      {/* === Second Row === */}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { sm: "repeat(5, 1fr)" },
+          gap: "5px",
+          mb: 2,
+        }}
+      >
+
+
+        <Controller
+          name="userName"
+          control={control}
+          render={({ field: { value = '', onChange } }) => (
+            <TextField
+              label="Username"
+              value={value}
+              onChange={onChange}
+              sx={{ ...inputStyle, gridColumn: "span 2" }}
+            />
+          )}
+        />
+
+        <Controller
+          name="password"
+          control={control}
+          render={({ field: { value = '', onChange } }) => (
+            <TextField
+              label="Password"
+              type="password"
+              value={value}
+              onChange={onChange}
+              sx={{ ...inputStyle, gridColumn: "span 2" }}
+            />
+          )}
+        />
+
         <p></p>
       </Box>
 

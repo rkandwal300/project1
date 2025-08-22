@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import InstanceAdviceHeader from "./InstanceAdviceHeader";
 import costAdvisor from "@/lib/instanceAdvice.json";
@@ -94,6 +94,8 @@ function InstanceAdviceLayout() {
       })),
     };
   }, [isAnnually, grandTotal]);
+
+  console.log({ data });
 
   return (
     <Box

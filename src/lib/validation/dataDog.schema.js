@@ -28,10 +28,12 @@ export const gcpTelemetrySchema = z.object({
   projectId: z.string().min(1, "Project id is required"),
   privateKey: z.string().min(1, "Private Key is required"),
 });
-export const prometheusTelemetrySchema= z.object({
+export const prometheusTelemetrySchema = z.object({
   portfolioName: z.string({ message: "Portfolio Name is required" }).optional(),
   regions: z
     .array(z.string().min(1, "At least one region is required"))
     .min(1, { message: "At least one region is required" }),
   url: z.string().min(1, "Private Key is required"),
+  userName: z.string().min(1, { message: "userName is required" }),
+  password: z.string().min(1, { message: "userName is required" }),
 });

@@ -1,11 +1,9 @@
-import { Box, Button } from "@mui/material";
-import React, { useState } from "react";
+import { Box } from "@mui/material";
+import React from "react";
 import InstanceAdviceHeader from "./InstanceAdviceHeader";
 import costAdvisor from "@/lib/costAdvice.json";
 import CustomTable from "@/components/ui/table/CustomTable";
 import { CostAdvisoryColumn } from "./CostAdvisoryColumn";
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import CostAdvisaryCardList from "../../MainLayout/CostAdvisaryCardList";
 import { useSelector } from "react-redux";
 import { selectCostTableColumns, selectInstanceTableColumns } from "@/redux/features/customizeTable/customizeTable.selector";
