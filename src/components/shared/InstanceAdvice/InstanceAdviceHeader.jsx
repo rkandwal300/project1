@@ -266,7 +266,7 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
               label="Savings Type"
               fullWidth
             >
-              {["All", "Good", "Optimal"].map((item) => (
+              {["All", "Optimal", "Good"].map((item) => (
                 <MenuItem key={item} value={item}>
                   {item}
                 </MenuItem>
