@@ -348,11 +348,6 @@ const InstanceAdviceHeader = () => {
               />
             ))}
           </div>
-          <DialogHoc trigger={({ onClick }) => (
-            <Button onClick={onClick} variant="contained"><TuneIcon /></Button>)
-          }
-            content={({ handleClose }) => <CustomizeTableColumns onClose={handleClose} />}
-          />
 
 
           <Button
@@ -464,11 +459,12 @@ const InstanceAdviceHeader = () => {
         <Grid item size={{ xs: 12, md: 4 }} sx={{
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
-          alignItems: { xs: 'flex-start', md: 'center' },
-          gap: { xs: 1, md: 2 },
-          marginLeft: '80px'
+          alignItems: { xs: 'flex-start', md: '' },
+          gap: { xs: "10px", md: "20px" },
+          marginLeft: "auto",
+          paddingX: "20px"
         }}>
-          <Box display="flex" gap={2} alignItems="center">
+          <Box display="flex" gap={2} alignItems="center" marginLeft={"auto"}>
             <TextField
               size="small"
               placeholder="Search"
@@ -476,7 +472,13 @@ const InstanceAdviceHeader = () => {
             />
           </Box>
 
+          <DialogHoc trigger={({ onClick }) => (
+            <Button onClick={onClick} variant="contained"><TuneIcon /></Button>)
+          }
+            content={({ handleClose }) => <CustomizeTableColumns onClose={handleClose} />}
+          />
         </Grid>
+
       </Grid>
 
     </>
