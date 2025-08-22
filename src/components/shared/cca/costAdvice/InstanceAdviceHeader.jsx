@@ -25,6 +25,7 @@ import { setGridView } from "@/redux/features/customizeTable/customizeTable.slic
 import { useDispatch, useSelector } from "react-redux";
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import CustomizeTableColumns from "../../InstanceAdvice/CustomizeTableColumns";
+import TuneIcon from '@mui/icons-material/Tune';
 
 const EXPLANATION_LIST = [
   "Instances for which performance data is unavailable.",
@@ -348,10 +349,11 @@ const InstanceAdviceHeader = () => {
             ))}
           </div>
           <DialogHoc trigger={({ onClick }) => (
-            <Button onClick={onClick} variant="outlined" sx={{ marginRight: "10px" }}>Filters</Button>)
+            <Button onClick={onClick} variant="contained"><TuneIcon /></Button>)
           }
             content={({ handleClose }) => <CustomizeTableColumns onClose={handleClose} />}
           />
+
 
           <Button
             variant="outlined"

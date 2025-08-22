@@ -202,7 +202,7 @@ export const instanceAdvisoryColumn = [
       colSpan: 4,
     },
   },
-  ...["Hourly Cost Optimization", "Modernize", "Modernize & Downsize"].map((header, idx) => ({
+  ...["Optimal", "Good"].map((header, idx) => ({
     id: header.toLowerCase(),
     header: header,
     columns: recommendationColumns(idx, header),

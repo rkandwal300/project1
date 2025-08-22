@@ -22,7 +22,6 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import SaveIcon from "@mui/icons-material/Save";
 import ConnectionIcon from "@mui/icons-material/SettingsEthernet";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { nanoid } from "@reduxjs/toolkit";
 import {
   selectCurrentProviderName,
   selectCurrentProviderRegions,
