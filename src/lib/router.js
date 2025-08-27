@@ -1,7 +1,7 @@
 const getBasePath = () => {
   const port = window.location.port;
   const ccaPorts = ["3000", "3001", "3002"];
-  const eiaPorts = ["2000", "2001", "2002"]; 
+  const eiaPorts = ["2000", "2001", "2002"];
 
   if (ccaPorts.includes(port)) {
     return "/cca";
@@ -11,11 +11,22 @@ const getBasePath = () => {
 
   // In production, check domain or use build-time base path
   const hostname = window.location.hostname;
-  if (hostname.includes("cca")) {
+
+  const envMap = {
+    "d1dedbwm6ntaya.cloudfront.net": "cca",
+    "d2008bczhvnw5c.cloudfront.net": "eia"
+  };
+
+  const env = envMap[hostname];
+  if (env === "cca") {
     return "/";
-  } else if (hostname.includes("eia")) {
+  } else if (env === "eia") {
     return "/";
-  } 
+  } else {
+    // Default or unknown
+    console.warn("Unknown environment:", hostname);
+    return "/";
+  }
 };
 
 export const basePath = getBasePath();
@@ -44,7 +55,7 @@ export function isCCA() {
   return window.location.href.includes('cca') || window.location.hostname.includes('cca');
 }
 
-export function isEIA(){
+export function isEIA() {
   if (typeof window === 'undefined') return false;
   return window.location.href.includes('eia') || window.location.hostname.includes('eia');
 }
