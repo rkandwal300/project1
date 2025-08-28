@@ -44,7 +44,7 @@ function BottomBar() {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  const currentInstanceId = location.pathname.split("/")[2];
+  const currentInstanceId = location.pathname.split("/")[1];
 
   const currentProviderName = useSelector(selectCurrentProviderName);
   const alertMessage = useSelector(selectMessage);
@@ -104,7 +104,7 @@ function BottomBar() {
     dispatch(
       setMessage({
         type: errorMessageType.SUCCESS,
-        message: `${trimmedName} saved successfully`,
+        message: `${trimmedName} saved successfully`,''
       })
     );
   };
