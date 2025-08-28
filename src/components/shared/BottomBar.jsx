@@ -104,7 +104,7 @@ function BottomBar() {
     dispatch(
       setMessage({
         type: errorMessageType.SUCCESS,
-        message: `${trimmedName} saved successfully`,''
+        message: `${trimmedName} saved successfully`,
       })
     );
   };
