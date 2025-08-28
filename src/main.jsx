@@ -8,12 +8,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { basePath, ROUTES } from "./lib/router";
 
-const pathname = window.location.pathname;
 
-// Redirect manually before React Router renders
-if (pathname == '/') {
-  window.location.replace(ROUTES.ROOT);
-}
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>

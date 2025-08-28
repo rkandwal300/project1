@@ -29,7 +29,7 @@ import CostAdviceLayout from "./components/shared/cca/costAdvice/CostAdviceLayou
 import CCAMainContent from "./components/shared/cca/MainLayout/MainContent";
 import CloudUsageReports from "./components/shared/cca/CloudUsageReport";
 import CloudInstances from "./components/shared/cca/CloudInstances";
-import { isEIA, ROUTES } from "./lib/router";
+import { isCCA, isEIA, ROUTES } from "./lib/router";
 
 // Lazy loaded components
 const MainContent = lazy(() =>
@@ -63,6 +63,7 @@ const App = () => {
   const navigate = useNavigate();
   const currentInstance = useSelector(selectCurrentInstance);
 
+  console.log({ isEia: isEia(), isCCA: isCCA() });
   const type = useSelector(selectCurrentProviderName);
   const routes = useMemo(
     () => location.pathname.split("/").filter(Boolean),
@@ -126,7 +127,7 @@ const App = () => {
               p: 0,
             }}
           >
-            {![ROUTES.SUPPORT, ROUTES.RELEASE_NOTES,ROUTES.EXPLORER].includes(pathname) && (
+            {![ROUTES.SUPPORT, ROUTES.RELEASE_NOTES, ROUTES.EXPLORER].includes(pathname) && (
               <Sidebar />
             )}
             <Suspense

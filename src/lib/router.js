@@ -8,29 +8,13 @@ const getBasePath = () => {
   } else if (eiaPorts.includes(port)) {
     return "/eia";
   }
-
-  // In production, check domain or use build-time base path
-  const hostname = window.location.hostname;
-  const envMap = {
-    "d1dedbwm6ntaya.cloudfront.net": "cca",
-    "d2008bczhvnw5c.cloudfront.net": "eia"
-  };
-
-  const env = envMap[hostname];
-  if (env === "cca") {
-    return '/';
-  } else if (env === "eia") {
-    return '/';
-  } else {
-    console.warn("Unknown environment:", hostname);
-    return '/';
-  }
+  return ''
 };
 
 export const basePath = getBasePath();
 
 export const ROUTES = {
-  ROOT: `${basePath}`,
+  ROOT: `${basePath}/`,
   DETAIL: `${basePath}/:id`,
   MANAGE_PORTFOLIO: `${basePath}`,
   CLOUD_USAGE_REPORT: `${basePath}/cca-cloudusagereports`,
