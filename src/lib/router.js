@@ -11,7 +11,6 @@ const getBasePath = () => {
 
   // In production, check domain or use build-time base path
   const hostname = window.location.hostname;
-
   const envMap = {
     "d1dedbwm6ntaya.cloudfront.net": "cca",
     "d2008bczhvnw5c.cloudfront.net": "eia"
@@ -19,20 +18,19 @@ const getBasePath = () => {
 
   const env = envMap[hostname];
   if (env === "cca") {
-    return "/";
+    return '/';
   } else if (env === "eia") {
-    return "/";
+    return '/';
   } else {
-    // Default or unknown
     console.warn("Unknown environment:", hostname);
-    return "/";
+    return '/';
   }
 };
 
 export const basePath = getBasePath();
 
 export const ROUTES = {
-  ROOT: `${basePath}/`,
+  ROOT: `${basePath}`,
   DETAIL: `${basePath}/:id`,
   MANAGE_PORTFOLIO: `${basePath}`,
   CLOUD_USAGE_REPORT: `${basePath}/cca-cloudusagereports`,
@@ -49,13 +47,19 @@ export const ROUTES = {
 };
 
 // utils.js // utils/urlUtils.js
+const hostname = window.location.hostname;
+
+const envMap = {
+  "d1dedbwm6ntaya.cloudfront.net": "cca",
+  "d2008bczhvnw5c.cloudfront.net": "eia"
+};
 
 export function isCCA() {
   if (typeof window === 'undefined') return false;
-  return window.location.href.includes('cca') || window.location.hostname.includes('cca');
+  return envMap[hostname] == 'cca' ? true : false;
 }
 
 export function isEIA() {
   if (typeof window === 'undefined') return false;
-  return window.location.href.includes('eia') || window.location.hostname.includes('eia');
+  return envMap[hostname] == 'eia' ? true : false;
 }
