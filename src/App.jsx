@@ -63,7 +63,7 @@ const App = () => {
   const navigate = useNavigate();
   const currentInstance = useSelector(selectCurrentInstance);
 
-  console.log({ isEia: isEia(), isCCA: isCCA() });
+  console.log({ isEia: isEIA(), isCCA: isCCA() });
   const type = useSelector(selectCurrentProviderName);
   const routes = useMemo(
     () => location.pathname.split("/").filter(Boolean),
