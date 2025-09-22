@@ -35,6 +35,7 @@ import { setGridView } from "@/redux/features/customizeTable/customizeTable.slic
 import { useDispatch } from "react-redux";
 import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 import TuneIcon from '@mui/icons-material/Tune';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 
 const EXPLANATION_LIST = [
@@ -243,6 +244,20 @@ const InstanceAdviceHeader = ({ isAnnually, setIsAnnually }) => {
               />
             ))}
           </div>
+
+          <Button
+            color="primary"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              border: "1px solid #ccc",
+              minWidth: 80,          
+              px: 2,                
+            }}
+          >
+            <AutorenewIcon fontSize="medium" />
+          </Button>
+ 
 
           <ExportButton />
         </div>
