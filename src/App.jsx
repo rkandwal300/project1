@@ -3,8 +3,8 @@ import { useRoutes } from "react-router";
 import { routes } from "./router/router";
 import { Suspense, useState, useEffect } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import LoadingSkeleton from "./components/Loading/LoadingSkeleton";
-import { AuthProvider } from "./context/AuthContext.jsx";
+ import { AuthProvider } from "./context/AuthContext.jsx";
+import LoadingPage from "./components/Loading/LoadingPage.jsx";
 
 function App() {
   const theme = getTheme();
@@ -19,7 +19,7 @@ function App() {
     <AuthProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Suspense fallback={<LoadingSkeleton />}>{routeElements}</Suspense>
+        <Suspense fallback={<LoadingPage />}>{routeElements}</Suspense>
       </ThemeProvider>
     </AuthProvider>
   );

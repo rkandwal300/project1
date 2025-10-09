@@ -29,7 +29,7 @@ function Signin() {
           or
         </Typography>
 
-        <GradientButton onClick={handleRegister} variant="contained" fullWidth>Register</GradientButton>
+        <GradientButton onClick={handleRegister} variant="contained" fullWidth>REGISTER</GradientButton>
       </Box>
 
 

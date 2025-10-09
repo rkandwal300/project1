@@ -13,6 +13,8 @@ import {
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import { Link } from "react-router";
+import { RoutePaths } from "../../../router/routePaths";
 
 function PortfolioFilters() {
   const [rows, setRows] = useState(10);
@@ -159,6 +161,7 @@ function PortfolioFilters() {
           </FormControl>
         </Box>
 
+      <Link to={RoutePaths.PORTFOLIO_CREATE} style={{ textDecoration: 'none' }}>
         <Button
           variant="outlined"
           sx={{
@@ -171,7 +174,7 @@ function PortfolioFilters() {
           }}
         >
           + Add Portfolio
-        </Button>
+        </Button></Link>
       </Toolbar>
     </Box>
   );

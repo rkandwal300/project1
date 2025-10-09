@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import PortfolioPagination from "../components/Portfolio/PortfolioPagination";
-import PortfolioDataGrid from "../components/Portfolio/PortfolioDataGrid";
-import PortfolioFilters from "../components/Portfolio/PortFolioFilters";
+import PortfolioPagination from "../components/Portfolio/PortfolioList/PortfolioPagination";
+import PortfolioDataGrid from "../components/Portfolio/PortfolioList/PortfolioDataGrid";
+import PortfolioFilters from "../components/Portfolio/PortfolioList/PortfolioFilters";
 
 function Portfolio() {
   return (

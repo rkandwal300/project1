@@ -1,14 +1,14 @@
 import { Suspense, lazy } from "react";
 import ProtectedLayout from "../layout/ProtectedLayout.jsx";
-import LoadingSkeleton from "../components/Loading/LoadingSkeleton.jsx";
 import NotFound from "../pages/NotFound.jsx";
 import { RoutePaths } from "./routePaths.js";
+import LoadingPage from "../components/Loading/LoadingPage"; 
 
 const lazyLoad = (importFunc) => {
   const Component = lazy(importFunc);
   return function Wrapped() {
     return (
-      <Suspense fallback={<LoadingSkeleton />}>
+      <Suspense fallback={<LoadingPage />}>
         <Component />
       </Suspense>
     );
@@ -24,6 +24,7 @@ const Portfolio = lazyLoad(() => import("../pages/Portfolio.jsx"));
 const AuthLayout = lazyLoad(() => import("../layout/AuthLayout.jsx"));
 const PublicLayout = lazyLoad(() => import("../layout/PublicLayout.jsx"));
 const PrivateLayout = lazyLoad(() => import("../layout/PrivateLayout.jsx"));
+const CreatePortfolioForm = lazyLoad(() => import("../components/Portfolio/CreatePortfolio/CreatePortfolioForm.jsx"));
 
 export const routes = [
   {
@@ -55,6 +56,7 @@ export const routes = [
           { path: RoutePaths.DASHBOARD, element: <Dashboard /> },
           { path: RoutePaths.EXPLORER, element: <Explorer /> },
           { path: RoutePaths.PORTFOLIO, element: <Portfolio /> },
+          { path: RoutePaths.PORTFOLIO_DETAIL, element: <CreatePortfolioForm /> },
           { path: RoutePaths.INSIGHTS, element: <Insights /> },
         ],
       },

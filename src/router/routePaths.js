@@ -4,6 +4,8 @@ export const RoutePaths = Object.freeze({
   DASHBOARD: "/dashboard",
   EXPLORER: "/explorer",
   PORTFOLIO: "/portfolio",
+  PORTFOLIO_CREATE: "/portfolio/new",
+  PORTFOLIO_DETAIL: "/portfolio/:id",
   INSIGHTS: "/insights",
   NOT_FOUND: "*",
 });

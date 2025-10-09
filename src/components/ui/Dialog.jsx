@@ -17,7 +17,7 @@ export default function DialogHoc({ trigger, content, ...props }) {
 
   return (
     <React.Fragment>
-      {trigger ? ({ onClick }) : <Typography display={"none"}>Open Dialog</Typography>}
+      {trigger ? trigger({ onClick }) : <Typography display={"none"}>Open Dialog</Typography>}
       <Dialog
         fullScreen={props?.fullScreen}
         fullWidth={true}
