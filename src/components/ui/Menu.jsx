@@ -1,7 +1,6 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import { useTheme } from "@mui/material/styles";
-import ErrorBoundary from "../shared/ErrorBoundary";
 
 export default function MenuHoc({ trigger, content, ...props }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,7 +20,7 @@ export default function MenuHoc({ trigger, content, ...props }) {
   };
 
   return (
-    <ErrorBoundary fallback={<div>Error in menu hoc</div>}>
+   
       <div>
         {trigger({ onClick: handleClick, open })}
         <Menu
@@ -42,6 +41,5 @@ export default function MenuHoc({ trigger, content, ...props }) {
           {content({ onClose: handleClose })}
         </Menu>
       </div>
-    </ErrorBoundary>
   );
 }
