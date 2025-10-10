@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, IconButton, MenuItem, useTheme } from "@mui/material";
+import { Box, IconButton, MenuItem, Tooltip, useTheme } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -13,39 +13,60 @@ const iconButtonStyle = {
   },
 };
 
+ 
+
 
 export default function HeaderMenus() {
   const theme = useTheme();
+  const tooltipProps = {
+    componentsProps: {
+      tooltip: {
+        sx: {
+          backgroundColor: theme.palette.background.paper,
+          color: theme.palette.primary.contrastText,
+          fontSize: 12,
+          padding: "6px 12px",
+          borderRadius: 1,
+          boxShadow: 3,
+        },
+      },
+    },
+  };
   const menus = [
     {
       key: "docs",
       icon: <DescriptionIcon />,
       iconStyle: iconButtonStyle,
-      items: ["Documents", "Reports"],
+      items: ["Tools & Training", "Help Guidelines"],
+      tooltiptitle: "Document",
     },
     {
       key: "support",
       icon: <HeadsetMicIcon sx={{ transform: "translateX(2px)" }} fontSize="small" />,
-      iconStyle:iconButtonStyle,
-      items: ["Contact Support", "FAQs"],
+      iconStyle: iconButtonStyle,
+      items: ["Support", "Rise Issue","Feedback Form"],
+      tooltiptitle: "Support"
     },
     {
       key: "account",
       icon: <AccountCircleIcon />,
       iconStyle: iconButtonStyle,
       items: ["Profile", "Settings", "Logout"],
+      tooltiptitle: "Profile"
     },
   ];
 
   return (
-    <Box sx={{ display: "flex", gap: 3, ml: "auto" }}>
+    <Box sx={{ display: "flex", gap: 3, ml: "auto" , alignItems:"center" }}>
       {menus.map((menu) => (
         <MenuHoc
           key={menu.key}
           trigger={({ onClick }) => (
+             <Tooltip title={menu.tooltiptitle} {...tooltipProps}>
             <IconButton sx={menu.iconStyle} onClick={onClick}>
               {menu.icon}
             </IconButton>
+            </Tooltip>
           )}
           content={({ onClose }) => (
             <>
