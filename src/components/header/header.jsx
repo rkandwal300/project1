@@ -11,6 +11,7 @@ import { useLocation, Link as RouterLink } from "react-router";
 import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DescriptionIcon from "@mui/icons-material/Description";
+import HeaderMenu from "./HeaderMenu";
 
 function Header() {
   const iconButtonStyle = {
@@ -61,14 +62,14 @@ function Header() {
           alignItems: "center",
           height: "64px",
           paddingLeft: 2,
-          gap: 4,
+          gap: 6,
         }}
       >
         <Logo />
         <Box
           sx={{
             display: "flex",
-            gap: 2,
+            gap: 6,
           }}
         >
           {links.map((val) => (
@@ -90,36 +91,8 @@ function Header() {
             </MuiLink>
           ))}
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            gap: 2,
-            ml: "auto",
-          }}
-        >
-          <IconButton sx={iconButtonStyle}>
-            <DescriptionIcon />
-          </IconButton>
-          <IconButton
-            sx={{
-              ...iconButtonStyle,
-              color: "background.default",
-              bgcolor: "primary.contrastText",
-              "&:hover": {
-                color: "background.default",
-                bgcolor: "primary.contrastText",
-              },
-            }}
-          >
-            <HeadsetMicIcon
-              sx={{ transform: "translateX(2px)" }}
-              fontSize="small"
-            />
-          </IconButton>
-          <IconButton sx={iconButtonStyle}>
-            <AccountCircleIcon />
-          </IconButton>
-        </Box>
+        <HeaderMenu />
+      
       </Toolbar>
     </AppBar>
   );

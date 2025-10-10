@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import logo from "../../assets/auth/amdLogo.png";
+import logo from "../../assets/auth/amd_cca.svg"
 
 function Logo() {
   return (
@@ -11,13 +11,14 @@ function Logo() {
         alignItems: "center",
         bgcolor: "transparent",
         border: "none",
+        p:3,
       }}
     >
       <img
         id="header-logo-img"
         src={logo}
         alt="AMD Logo"
-        style={{ width: "80px", cursor: "pointer" }}
+        style={{ width: "5.7rem", cursor: "pointer" }}
       />
     </Box>
   );
