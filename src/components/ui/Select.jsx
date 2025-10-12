@@ -1,5 +1,5 @@
 import React from "react";
-import { Select, MenuItem } from "src/components/template/index.js";
+import { Select, MenuItem } from "../template/index.js";
 
 const SelectHoc = ({
   options = [],

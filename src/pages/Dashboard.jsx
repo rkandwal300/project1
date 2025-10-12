@@ -1,4 +1,4 @@
-import Box from "src/components/template/Box.jsx";
+import Box from "../components/template/Box.jsx";
 import React from 'react'
 
 function Dashboard() {

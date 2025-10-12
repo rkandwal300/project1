@@ -1,11 +1,10 @@
-import Box from "src/components/template/Box.jsx";
-import IconButton from "src/components/template/IconButton.jsx";
-import Snackbar from "src/components/template/Snackbar.jsx";
-import Typography from "src/components/template/Typography.jsx";
+import Box from "../components/template/Box.jsx";
+import IconButton from "../components/template/IconButton.jsx"; 
+import Typography from "../components/template/Typography.jsx";
 import { Outlet, useLocation } from "react-router";
 import authBackgroud from "../assets/auth/authScreen.mp4";
 import { RoutePaths } from "../router/routePaths";
-import { PersonIcon } from "src/components/template/icons.js";
+import { PersonIcon } from "../components/template/icons.js";
 import { getUser } from "../store/selectors/uiSelector";
 
 const AuthLayout = () => {

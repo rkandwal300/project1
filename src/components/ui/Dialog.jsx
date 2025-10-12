@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   Dialog,
   Typography,
-} from "src/components/template/index.js";
+} from "../template/index.js";
 
 export default function DialogHoc({ trigger, content, ...props }) {
   const { maxWidth = "md" } = props;

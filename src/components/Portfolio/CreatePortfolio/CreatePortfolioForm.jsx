@@ -5,8 +5,8 @@ import {
   Button,
   MenuItem, 
   DataGrid
-} from "src/components/template/index.js";
-import { AddIcon, ArrowBackIcon } from "src/components/template/icons.js"; 
+} from "../../template/index.js";
+import { AddIcon, ArrowBackIcon } from "../../template/icons.js"; 
 import {
   useForm,
   Controller,

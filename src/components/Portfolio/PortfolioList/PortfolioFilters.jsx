@@ -7,9 +7,9 @@ import {
   Select,
   TextField,
   Typography,
-} from "src/components/template/index.js";
-import Divider from "src/components/template/Divider.jsx";
-import Toolbar from "src/components/template/Toolbar.jsx";
+} from "../../template/index.js";
+import Divider from "../../template/Divider.jsx";
+import Toolbar from "../../template/Toolbar.jsx";
 import { useState } from "react";
 import {SearchIcon, FilterListIcon} from "../../template/icons"; 
 import { Link } from "react-router-dom";

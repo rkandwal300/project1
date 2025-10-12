@@ -1,7 +1,7 @@
 import Logo from "../assets/auth/amdLogo.png";
-import Box from "src/components/template/Box.jsx";
-import Typography from "src/components/template/Typography.jsx";
-import Link from "src/components/template/Link.jsx";
+import Box from "../components/template/Box.jsx";
+import Typography from "../components/template/Typography.jsx";
+import Link from "../components/template/Link.jsx";
 import {
   AuthCard,
   LogoImage,

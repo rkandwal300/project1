@@ -3,8 +3,8 @@ import {
   TextField,
   InputAdornment,
   IconButton,
-} from "src/components/template/index.js";
-import { VisibilityOffIcon, VisibilityIcon } from "src/components/template/icons.js";
+} from "../template/index.js";
+import { VisibilityOffIcon, VisibilityIcon } from "../template/icons.js";
 
 const inputStyle = { fontWeight: 600 };
 

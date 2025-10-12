@@ -1,6 +1,6 @@
-import Box from "src/components/template/Box.jsx";
-import Button from "src/components/template/Button.jsx";
-import { styled } from "src/components/template/styled.jsx";
+import Box from "../template/Box.jsx";
+import Button from "../template/Button.jsx";
+import styled  from "../template/styled.jsx";
 
 export const GRADIENT_MAIN = "linear-gradient(90deg, #08B1D0 0%, #006879 100%)";
 export const GRADIENT_HOVER = "linear-gradient(90deg, #06a0bb 0%, #005a6a 100%)";

@@ -10,4 +10,11 @@ export default defineConfig({
             src: path.resolve('src/'),
         },
     },
+    ssr: {
+        noExternal: [/@mui\/.*/],
+    },
+    test: {
+        globals: true,
+        environment: 'jsdom',
+    },
 })

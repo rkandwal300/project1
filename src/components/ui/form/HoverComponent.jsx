@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Tooltip from "src/components/template/Tooltip.jsx";
-import IconButton from "src/components/template/IconButton.jsx";
-import { ClearIcon } from "src/components/template/icons.js";
-import useTheme from "src/components/template/useTheme.jsx";
+import Tooltip from "../../template/Tooltip.jsx";
+import IconButton from "../../template/IconButton.jsx";
+import { ClearIcon } from "../../template/icons.js";
+import useTheme from "../../template/useTheme.jsx";
 
 const HoverComponent = React.memo(function HoverInput({
   tooltipMessage = "Enter something...",

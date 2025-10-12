@@ -1,5 +1,5 @@
-import Box from "src/components/template/Box.jsx";
-import Typography from "src/components/template/Typography.jsx";
+import Box from "../components/template/Box.jsx";
+import Typography from "../components/template/Typography.jsx";
 import { useNavigate } from "react-router";
 import { GradientButton } from "../components/Auth/AuthCard.styles";
 import styled from "@emotion/styled";

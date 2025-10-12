@@ -1,5 +1,5 @@
-import { TextField, Button, MenuItem, IconButton } from "src/components/template/index.js";
-import { DeleteIcon } from "src/components/template/icons.js";
+import { TextField, Button, MenuItem, IconButton } from "../../template/index.js";
+import { DeleteIcon } from "../../template/icons.js";
 import { Controller } from "react-hook-form";
 
 

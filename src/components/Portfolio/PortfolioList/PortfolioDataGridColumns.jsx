@@ -1,6 +1,6 @@
 import awsLogo from "../../../assets/logos/providers/awslogo.svg";
-import { Box, Avatar, IconButton } from "src/components/template/index.js";
-import { EditIcon, DeleteIcon, AttachMoneyIcon, LockIcon } from "src/components/template/icons.js";
+import { Box, Avatar, IconButton } from "../../template/index.js";
+import { EditIcon, DeleteIcon, AttachMoneyIcon, LockIcon } from "../../template/icons.js";
 import DialogHoc from "../../ui/Dialog";
 import ConfirmationDialogContent from "./DeleteDialogContent";
 

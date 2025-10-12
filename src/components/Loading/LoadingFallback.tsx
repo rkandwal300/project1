@@ -1,8 +1,8 @@
 import React from 'react';
-import Backdrop from 'src/components/template/Backdrop';
-import CircularProgress from 'src/components/template/CircularProgress '; 
-import useTheme from 'src/components/template/useTheme ;
-import alpha from 'src/components/template/alpha ';
+import Backdrop from '../template/Backdrop';
+import CircularProgress from '../template/CircularProgress'; 
+import useTheme from '../template/useTheme' ;
+import alpha from '../template/Alpha';
 
 /**
  * Enhanced loading fallback using MUI Backdrop for better UX
@@ -19,18 +19,9 @@ const LoadingFallback = () => {
             sx={{
                 zIndex: theme.zIndex.modal + 1,
                 backgroundColor: alpha(theme.palette.background.paper, 0.7),
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
             }}
         >
-            <CircularProgress
-                size={48}
-                sx={{
-                    color: theme.palette.primary.main,
-                }}
-            />
+            <CircularProgress color="inherit" />
         </Backdrop>
     );
 };

@@ -2,7 +2,7 @@ import {
   Alert,
   Snackbar,
   Button,
-} from "src/components/template/index.js";
+} from "../template/index.js";
 import { ALERT_TIMEOUT } from "@/hooks/useTimedMessage";
 import ErrorBoundary from "./ErrorBoundary.jsx";
 

@@ -1,12 +1,12 @@
 import { getTheme } from "./lib/theme";
 import { useRoutes } from "react-router";
 import { routes } from "./router/router";
-import { Suspense, useState, useEffect } from "react"; 
+import { Suspense, useState, useEffect } from "react";
 import LoadingPage from "./components/Loading/LoadingPage.jsx";
 import { store } from "./store/store.js";
 import CustomSnackbar from "./components/CustomSnackbar.jsx";
 import { Provider } from "react-redux";
-
+import { ThemeProvider,CssBaseline } from "./components/template/index.js"; 
 function App() {
   const theme = getTheme();
   const routeElements = useRoutes(routes);

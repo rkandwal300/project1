@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Box, Typography, IconButton, Chip } from "src/components/template/index.js";
-import { ChevronLeftIcon, ChevronRightIcon } from "src/components/template/icons.js";
-import Pagination from "src/components/template/Pagination.jsx";
+import { Box, Typography, IconButton, Chip } from "../../template/index.js";
+import { ChevronLeftIcon, ChevronRightIcon } from "../../template/icons.js";
+import Pagination from "../../template/Pagination.jsx";
 
 export default function PortfolioPagination() {
   const [currentPage, setCurrentPage] = useState(1);

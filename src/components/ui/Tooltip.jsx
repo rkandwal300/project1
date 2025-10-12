@@ -1,4 +1,4 @@
-import { Tooltip, useTheme } from "src/components/template/index.js";
+import { Tooltip, useTheme } from "../template/index.js";
 
 function TooltipHoc({ message, children }) {
   const theme = useTheme();

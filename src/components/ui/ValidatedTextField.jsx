@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { TextField, Box } from "src/components/template/index.js";
+import { TextField, Box } from "../template/index.js";
 
 const ValidatedTextField = ({
   label,

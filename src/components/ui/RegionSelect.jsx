@@ -8,7 +8,7 @@ import {
   FormControl,
   OutlinedInput,
   Checkbox,
-} from "src/components/template/index.js";
+} from "../template/index.js";
 
 const RegionsSelect = React.memo(function RegionsSelect({
   regionOptions,

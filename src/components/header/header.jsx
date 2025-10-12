@@ -2,12 +2,10 @@ import {
   Box,
   Toolbar,
   Link as MuiLink,
-  IconButton,
-} from "src/components/template/index.js";
+} from "../template/index.js";
 import Logo from "./logo";
 import { RoutePaths } from "../../router/routePaths";
-import { useLocation, Link as RouterLink } from "react-router";
-import { HeadsetMicIcon, AccountCircleIcon, DescriptionIcon } from "src/components/template/icons.js";
+import { useLocation, Link as RouterLink } from "react-router"; 
 import HeaderMenu from "./HeaderMenu";
 
 function Header() {

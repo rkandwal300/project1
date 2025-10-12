@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, CircularProgress, Fade } from "src/components/template/index.js";
+import { Box, CircularProgress, Fade } from "../template/index.js";
 
 const LoadingPage = () => (
   <Fade in timeout={700}>

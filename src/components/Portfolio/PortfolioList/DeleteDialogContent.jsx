@@ -7,8 +7,8 @@ import {
   Button,
   IconButton,
   Box,
-} from "src/components/template/index.js";
-import { CloseIcon, CancelIcon, CheckIcon } from "src/components/template/icons.js";
+} from "../..//template/index.js";
+import { CloseIcon, CancelIcon, CheckIcon } from "../..//template/icons.js";
 
 const DeleteDialogContent = ({ 
   onClose,

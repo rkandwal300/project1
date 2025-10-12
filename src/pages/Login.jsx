@@ -1,14 +1,14 @@
 // LoginPage.jsx
 import React, { useState } from "react";
-import Box from "src/components/template/Box.jsx";
-import Button from "src/components/template/Button.jsx";
-import TextField from "src/components/template/TextField.jsx";
-import Typography from "src/components/template/Typography.jsx";
-import Card from "src/components/template/Card.jsx";
-import CardContent from "src/components/template/CardContent.jsx";
-import CardActions from "src/components/template/CardActions.jsx";
-import InputAdornment from "src/components/template/InputAdornment.jsx";
-import IconButton from "src/components/template/IconButton.jsx";
+import Box from "../components/template/Box.jsx";
+import Button from "../components/template/Button.jsx";
+import TextField from "../components/template/TextField.jsx";
+import Typography from "../components/template/Typography.jsx";
+import Card from "../components/template/Card.jsx";
+import CardContent from "../components/template/CardContent.jsx";
+import CardActions from "../components/template/CardActions.jsx";
+import InputAdornment from "../components/template/InputAdornment.jsx";
+import IconButton from "../components/template/IconButton.jsx";
 import amdLogo from "../assets/auth/amdLogo-dark.png";
 import Cookies from "js-cookie";
 import apiClient from "../service/apiService";
@@ -18,7 +18,7 @@ import { setUserData, toggleUserLoggedIn } from "../store/slice/uiSlice";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { logInSchema } from "../schemas/login.schema";
-import { VisibilityIcon, VisibilityOffIcon } from "src/components/template/icons.js";
+import { VisibilityIcon, VisibilityOffIcon } from "../components/template/icons.js";
 import { showSnackbar, SNACKBAR_TYPE } from "../store/slice/snackbarSlice";
 
 const LoginPage = () => {

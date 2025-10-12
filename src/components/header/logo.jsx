@@ -1,4 +1,4 @@
-import { Box } from "src/components/template/index.js";
+import { Box } from "../template/index.js";
 import logo from "../../assets/auth/amd_cca.svg"
 
 function Logo() {

@@ -3,6 +3,8 @@ import ProtectedLayout from "../layout/ProtectedLayout.jsx";
 import NotFound from "../pages/NotFound.jsx";
 import { RoutePaths } from "./routePaths.js";
 import LoadingPage from "../components/Loading/LoadingPage";
+import ProtectedRoute from "./ProtectedRoute.jsx";
+import PublicRoute from "./PublicRoute.jsx";
 
 const lazyLoad = (importFunc) => {
   const Component = lazy(importFunc);
@@ -31,7 +33,7 @@ const CreatePortfolioForm = lazyLoad(() =>
 
 export const routes = [
   {
-    element: <PublicLayout />,
+    element: <PublicRoute><PublicLayout /></PublicRoute>,
     children: [
       {
         element: <AuthLayout />,
@@ -49,7 +51,7 @@ export const routes = [
     ],
   },
   {
-    element: <ProtectedLayout />,
+    element: <ProtectedRoute><ProtectedLayout /></ProtectedRoute>,
     children: [
       {
         path: RoutePaths.HOME,
