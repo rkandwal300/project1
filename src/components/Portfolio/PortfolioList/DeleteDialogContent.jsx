@@ -7,8 +7,8 @@ import {
   Button,
   IconButton,
   Box,
-} from "@mui/material";
-import { Close, Cancel, Check } from "@mui/icons-material";
+} from "src/components/template/index.js";
+import { CloseIcon, CancelIcon, CheckIcon } from "src/components/template/icons.js";
 
 const DeleteDialogContent = ({ 
   onClose,
@@ -50,7 +50,7 @@ const DeleteDialogContent = ({
             },
           }}
         >
-          <Close />
+          <CloseIcon />
         </IconButton>
       </DialogTitle>
 
@@ -83,7 +83,7 @@ const DeleteDialogContent = ({
         <Button
           onClick={onClose}
           variant="outlined"
-          startIcon={<Close />}
+          startIcon={<CancelIcon />}
           sx={{
             color: "#ffffff",
             borderColor: "rgba(255, 255, 255, 0.3)",
@@ -104,7 +104,7 @@ const DeleteDialogContent = ({
         <Button
           onClick={onConfirm}
           variant="outlined"
-          startIcon={<Check />}
+          startIcon={<CheckIcon />}
           sx={{
             color: confirmColor,
             borderColor: confirmColor,

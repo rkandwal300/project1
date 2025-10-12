@@ -1,0 +1,1 @@
+export { alpha as default } from '@mui/material/styles';

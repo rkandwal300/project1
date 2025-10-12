@@ -1,6 +1,7 @@
 export const RoutePaths = Object.freeze({
   SIGNIN: "/signin",
   HOME: "/",
+  LOG_IN: "/test/login",
   DASHBOARD: "/dashboard",
   EXPLORER: "/explorer",
   PORTFOLIO: "/portfolio",

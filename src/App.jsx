@@ -1,10 +1,11 @@
 import { getTheme } from "./lib/theme";
 import { useRoutes } from "react-router";
 import { routes } from "./router/router";
-import { Suspense, useState, useEffect } from "react";
-import { CssBaseline, ThemeProvider } from "@mui/material";
- import { AuthProvider } from "./context/AuthContext.jsx";
+import { Suspense, useState, useEffect } from "react"; 
 import LoadingPage from "./components/Loading/LoadingPage.jsx";
+import { store } from "./store/store.js";
+import CustomSnackbar from "./components/CustomSnackbar.jsx";
+import { Provider } from "react-redux";
 
 function App() {
   const theme = getTheme();
@@ -16,12 +17,13 @@ function App() {
 
   if (!hydration) return null;
   return (
-    <AuthProvider>
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Suspense fallback={<LoadingPage />}>{routeElements}</Suspense>
+        <CustomSnackbar />
       </ThemeProvider>
-    </AuthProvider>
+    </Provider>
   );
 }
 

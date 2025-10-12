@@ -1,6 +1,7 @@
 import React, { createContext, useMemo, useState, useContext, useEffect } from "react";
-import { ThemeProvider, CssBaseline } from "@mui/material";
 import { getTheme } from "../lib/theme";
+import ThemeProvider from "../components/template/ThemeProvider";
+import CssBaseline from "../components/template/CssBaseline";
 
 const AVAILABLE_MODES = ["light", "dark"];
 const ThemeModeContext = createContext({

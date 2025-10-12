@@ -1,21 +1,28 @@
 import Logo from "../assets/auth/amdLogo.png";
-import { Box, Typography, Link } from "@mui/material";
-import { AuthCard, LogoImage, GradientButton, LinkRow } from "../components/Auth/AuthCard.styles";
-import { useAuth } from "../context/AuthContext";
+import Box from "src/components/template/Box.jsx";
+import Typography from "src/components/template/Typography.jsx";
+import Link from "src/components/template/Link.jsx";
+import {
+  AuthCard,
+  LogoImage,
+  GradientButton,
+  LinkRow,
+} from "../components/Auth/AuthCard.styles";
+import { RoutePaths } from "../router/routePaths";
+import { useNavigate } from "react-router";
 
 function Signin() {
-  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    login({ name: 'John Doe', email: 'john@example.com' });
+    navigate(RoutePaths.LOG_IN);
   };
 
   const handleRegister = () => {
-    login({ name: 'John Doe', email: 'john@example.com' });
-  }
+    navigate(RoutePaths.LOG_IN);
+  };
   return (
     <AuthCard>
-
       <LogoImage src={Logo} alt="AMD Logo" />
 
       <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
@@ -23,15 +30,18 @@ function Signin() {
       </Typography>
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <GradientButton onClick={handleLogin} variant="contained" fullWidth>OKTA LOGIN</GradientButton>
+        <GradientButton onClick={handleLogin} variant="contained" fullWidth>
+          OKTA LOGIN
+        </GradientButton>
 
         <Typography variant="body2" sx={{ fontWeight: 500 }}>
           or
         </Typography>
 
-        <GradientButton onClick={handleRegister} variant="contained" fullWidth>REGISTER</GradientButton>
+        <GradientButton onClick={handleRegister} variant="contained" fullWidth>
+          REGISTER
+        </GradientButton>
       </Box>
-
 
       <LinkRow>
         {["Help", "Terms of Use", "Policy"].map((text) => (

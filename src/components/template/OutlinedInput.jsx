@@ -1,0 +1,1 @@
+export { OutlinedInput as default } from '@mui/material';

@@ -1,11 +1,13 @@
 import { Navigate, Outlet } from "react-router";
-import { useAuth } from "../context/AuthContext";
+import { getUser } from "../store/selectors/uiSelector";
+import Cookies from "js-cookie";
 
 export default function ProtectedRoute() {
-    const { isLoggedIn } = useAuth();
-    if (!isLoggedIn) {
-        return <Navigate to="/signin" replace />;
-    }
+  const jwtToken = Cookies.get("jwt_token");
+  // const user = getUser();
+  if (!jwtToken) {
+    return <Navigate to="/signin" replace />;
+  }
 
-    return <Outlet />;
+  return <Outlet />;
 }

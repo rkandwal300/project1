@@ -1,8 +1,6 @@
 import * as React from "react";
-import { Box, IconButton, MenuItem, Tooltip, useTheme } from "@mui/material";
-import DescriptionIcon from "@mui/icons-material/Description";
-import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Box, IconButton, Button as MenuItem, Tooltip, useTheme } from "src/components/template/index.js";
+import { DescriptionIcon, HeadsetMicIcon, AccountCircleIcon } from "src/components/template/icons.js";
 import MenuHoc from "../ui/Menu"; 
 
 const iconButtonStyle = {

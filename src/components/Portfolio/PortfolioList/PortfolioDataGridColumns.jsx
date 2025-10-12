@@ -1,6 +1,6 @@
 import awsLogo from "../../../assets/logos/providers/awslogo.svg";
-import { Box, Avatar, IconButton } from "@mui/material";
-import { Edit, Delete, AttachMoney, Lock } from "@mui/icons-material";
+import { Box, Avatar, IconButton } from "src/components/template/index.js";
+import { EditIcon, DeleteIcon, AttachMoneyIcon, LockIcon } from "src/components/template/icons.js";
 import DialogHoc from "../../ui/Dialog";
 import ConfirmationDialogContent from "./DeleteDialogContent";
 
@@ -142,7 +142,7 @@ export const PortfolioDataGridColumns = [
               },
             }}
           >
-            <Edit fontSize="small" />
+            <EditIcon fontSize="small" />
           </IconButton>
           <DialogHoc
             maxWidth="xs"
@@ -158,7 +158,7 @@ export const PortfolioDataGridColumns = [
                 }}
                 onClick={onClick}
               >
-                <Delete fontSize="small" />
+                <DeleteIcon fontSize="small" />
               </IconButton>
             )}
             content={({ handleClose }) => (
@@ -182,7 +182,7 @@ export const PortfolioDataGridColumns = [
               },
             }}
           >
-            <AttachMoney fontSize="small" />
+            <AttachMoneyIcon fontSize="small" />
           </IconButton>
           <IconButton
             size="small"
@@ -194,7 +194,7 @@ export const PortfolioDataGridColumns = [
               },
             }}
           >
-            <Lock fontSize="small" />
+            <LockIcon fontSize="small" />
           </IconButton>
         </Box>
       );

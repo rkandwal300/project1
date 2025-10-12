@@ -1,5 +1,5 @@
 import * as React from "react";
-import Popover from "@mui/material/Popover";
+import { Popover } from "src/components/template/index.js";
 
 export default function PopoverHoc({ trigger, content, ...rest }) {
   const [anchorEl, setAnchorEl] = React.useState(null);

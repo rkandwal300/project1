@@ -1,7 +1,8 @@
 import * as React from "react";
-import Dialog from "@mui/material/Dialog";
-import { Typography } from "@mui/material";
-
+import {
+  Dialog,
+  Typography,
+} from "src/components/template/index.js";
 
 export default function DialogHoc({ trigger, content, ...props }) {
   const { maxWidth = "md" } = props;

@@ -1,6 +1,5 @@
 import * as React from "react";
-import Menu from "@mui/material/Menu";
-import { useTheme } from "@mui/material/styles";
+import { Menu, useTheme } from "src/components/template/index.js";
 
 export default function MenuHoc({ trigger, content, ...props }) {
   const [anchorEl, setAnchorEl] = React.useState(null);

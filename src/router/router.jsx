@@ -2,7 +2,7 @@ import { Suspense, lazy } from "react";
 import ProtectedLayout from "../layout/ProtectedLayout.jsx";
 import NotFound from "../pages/NotFound.jsx";
 import { RoutePaths } from "./routePaths.js";
-import LoadingPage from "../components/Loading/LoadingPage"; 
+import LoadingPage from "../components/Loading/LoadingPage";
 
 const lazyLoad = (importFunc) => {
   const Component = lazy(importFunc);
@@ -16,6 +16,7 @@ const lazyLoad = (importFunc) => {
 };
 
 const Home = lazyLoad(() => import("../pages/Home.jsx"));
+const Login = lazyLoad(() => import("../pages/Login.jsx"));
 const SignIn = lazyLoad(() => import("../pages/Signin.jsx"));
 const Explorer = lazyLoad(() => import("../pages/Explorer.jsx"));
 const Insights = lazyLoad(() => import("../pages/Insights.jsx"));
@@ -24,7 +25,9 @@ const Portfolio = lazyLoad(() => import("../pages/Portfolio.jsx"));
 const AuthLayout = lazyLoad(() => import("../layout/AuthLayout.jsx"));
 const PublicLayout = lazyLoad(() => import("../layout/PublicLayout.jsx"));
 const PrivateLayout = lazyLoad(() => import("../layout/PrivateLayout.jsx"));
-const CreatePortfolioForm = lazyLoad(() => import("../components/Portfolio/CreatePortfolio/CreatePortfolioForm.jsx"));
+const CreatePortfolioForm = lazyLoad(() =>
+  import("../components/Portfolio/CreatePortfolio/CreatePortfolioForm.jsx")
+);
 
 export const routes = [
   {
@@ -34,8 +37,12 @@ export const routes = [
         element: <AuthLayout />,
         children: [
           {
-            path: "signin",
+            path: RoutePaths.SIGNIN,
             element: <SignIn />,
+          },
+          {
+            path: RoutePaths.LOG_IN,
+            element: <Login />,
           },
         ],
       },
@@ -56,7 +63,10 @@ export const routes = [
           { path: RoutePaths.DASHBOARD, element: <Dashboard /> },
           { path: RoutePaths.EXPLORER, element: <Explorer /> },
           { path: RoutePaths.PORTFOLIO, element: <Portfolio /> },
-          { path: RoutePaths.PORTFOLIO_DETAIL, element: <CreatePortfolioForm /> },
+          {
+            path: RoutePaths.PORTFOLIO_DETAIL,
+            element: <CreatePortfolioForm />,
+          },
           { path: RoutePaths.INSIGHTS, element: <Insights /> },
         ],
       },

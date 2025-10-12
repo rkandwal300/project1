@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from "src/components/template/index.js";
 import PortfolioPagination from "../components/Portfolio/PortfolioList/PortfolioPagination";
 import PortfolioDataGrid from "../components/Portfolio/PortfolioList/PortfolioDataGrid";
 import PortfolioFilters from "../components/Portfolio/PortfolioList/PortfolioFilters";

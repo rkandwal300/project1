@@ -1,6 +1,10 @@
-import { Alert, Snackbar, Button } from "@mui/material";
+import {
+  Alert,
+  Snackbar,
+  Button,
+} from "src/components/template/index.js";
 import { ALERT_TIMEOUT } from "@/hooks/useTimedMessage";
-import ErrorBoundary from "../shared/ErrorBoundary";
+import ErrorBoundary from "./ErrorBoundary.jsx";
 
 function FormAlert({ open, severity, children, onClose, ...props }) {
   return (

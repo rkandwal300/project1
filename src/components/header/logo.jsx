@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box } from "src/components/template/index.js";
 import logo from "../../assets/auth/amd_cca.svg"
 
 function Logo() {

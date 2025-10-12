@@ -1,4 +1,4 @@
-import { Tooltip, useTheme } from "@mui/material";
+import { Tooltip, useTheme } from "src/components/template/index.js";
 
 function TooltipHoc({ message, children }) {
   const theme = useTheme();

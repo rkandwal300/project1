@@ -1,19 +1,18 @@
 import {
   Box,
   Button,
-  Divider,
   FormControl,
   InputAdornment,
   MenuItem,
   Select,
   TextField,
-  Toolbar,
   Typography,
-} from "@mui/material";
+} from "src/components/template/index.js";
+import Divider from "src/components/template/Divider.jsx";
+import Toolbar from "src/components/template/Toolbar.jsx";
 import { useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import { Link } from "react-router";
+import {SearchIcon, FilterListIcon} from "../../template/icons"; 
+import { Link } from "react-router-dom";
 import { RoutePaths } from "../../../router/routePaths";
 
 function PortfolioFilters() {
@@ -161,20 +160,24 @@ function PortfolioFilters() {
           </FormControl>
         </Box>
 
-      <Link to={RoutePaths.PORTFOLIO_CREATE} style={{ textDecoration: 'none' }}>
-        <Button
-          variant="outlined"
-          sx={{
-            color: "primary.main",
-            borderColor: "primary.main",
-            textTransform: "none",
-            borderRadius: "6px",
-            px: 2,
-            fontWeight: 500,
-          }}
+        <Link
+          to={RoutePaths.PORTFOLIO_CREATE}
+          style={{ textDecoration: "none" }}
         >
-          + Add Portfolio
-        </Button></Link>
+          <Button
+            variant="outlined"
+            sx={{
+              color: "primary.main",
+              borderColor: "primary.main",
+              textTransform: "none",
+              borderRadius: "6px",
+              px: 2,
+              fontWeight: 500,
+            }}
+          >
+            + Add Portfolio
+          </Button>
+        </Link>
       </Toolbar>
     </Box>
   );

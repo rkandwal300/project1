@@ -1,16 +1,14 @@
-
-import { Navigate, Outlet } from 'react-router';
-import { useAuth } from '../context/AuthContext';
+import { Navigate, Outlet } from "react-router";
+import Cookies from "js-cookie";
 
 function PublicLayout() {
-    const { isLoggedIn } = useAuth();
+  const jwtToken = Cookies.get("jwt_token");
+  // const user = getUser();
 
-    if (isLoggedIn) {
-        return <Navigate to="/" replace />
-    }
-    return (
-        <Outlet />
-    )
+  if (jwtToken) {
+    return <Navigate to="/" replace />;
+  }
+  return <Outlet />;
 }
 
-export default PublicLayout
+export default PublicLayout;

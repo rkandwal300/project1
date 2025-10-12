@@ -1,5 +1,8 @@
 import Logo from "../assets/auth/amdLogo.png";
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import Box from "src/components/template/Box.jsx";
+import Button from "src/components/template/Button.jsx";
+import Typography from "src/components/template/Typography.jsx";
+import useTheme from "src/components/template/useTheme.jsx";
 import {
   AuthCard,
   LogoImage,
@@ -70,7 +73,6 @@ const FeatureCard = ({ data }) => {
 };
 
 function Home() {
-  const theme = useTheme();
   const [tutorial, setTutorial] = useState(null);
   const navigate = useNavigate();
   const CardList = [

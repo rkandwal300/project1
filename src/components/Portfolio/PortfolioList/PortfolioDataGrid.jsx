@@ -1,4 +1,4 @@
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from "src/components/template/index.js";
 import { useNavigate } from "react-router";
 import { PortfolioDataGridColumns } from "./PortfolioDataGridColumns";
 

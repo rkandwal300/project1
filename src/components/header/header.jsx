@@ -1,16 +1,13 @@
 import {
-  AppBar,
   Box,
   Toolbar,
   Link as MuiLink,
   IconButton,
-} from "@mui/material";
+} from "src/components/template/index.js";
 import Logo from "./logo";
 import { RoutePaths } from "../../router/routePaths";
 import { useLocation, Link as RouterLink } from "react-router";
-import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import DescriptionIcon from "@mui/icons-material/Description";
+import { HeadsetMicIcon, AccountCircleIcon, DescriptionIcon } from "src/components/template/icons.js";
 import HeaderMenu from "./HeaderMenu";
 
 function Header() {
@@ -43,7 +40,8 @@ function Header() {
     },
   ];
   return (
-    <AppBar
+    <Box
+      component="nav"
       position="fixed"
       sx={{
         backgroundColor: "black",
@@ -53,6 +51,7 @@ function Header() {
         boxShadow: 4,
         borderRadius: 0,
         paddingTop: { xs: 2, sm: 0 },
+        width: "100%",
       }}
       id="header-bar-container"
     >
@@ -92,9 +91,8 @@ function Header() {
           ))}
         </Box>
         <HeaderMenu />
-      
       </Toolbar>
-    </AppBar>
+    </Box>
   );
 }
 

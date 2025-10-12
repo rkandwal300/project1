@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
 import { Outlet } from "react-router";
 import Header from "../components/header/header";
+import Box from '../components/template/Box'
+import Typography from '../components/template/Typography'
 
 const PrivateLayout = () => {
   return (

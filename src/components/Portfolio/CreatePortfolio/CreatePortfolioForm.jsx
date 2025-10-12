@@ -1,16 +1,12 @@
 import React from "react";
 import {
-  Box,
-  Typography,
+  Box, 
   TextField,
   Button,
-  MenuItem,
-  Paper,
-  IconButton,
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { DataGrid } from "@mui/x-data-grid";
+  MenuItem, 
+  DataGrid
+} from "src/components/template/index.js";
+import { AddIcon, ArrowBackIcon } from "src/components/template/icons.js"; 
 import {
   useForm,
   Controller,
@@ -20,7 +16,6 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { portfolioFormColumns } from "./PortfolioFormColumns";
 import { portfolioSchema } from "../../../schemas/portfolio.schema";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router";
 
 // Sample select options, replace with your real data if needed

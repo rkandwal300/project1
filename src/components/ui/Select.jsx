@@ -1,6 +1,5 @@
 import React from "react";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import { Select, MenuItem } from "src/components/template/index.js";
 
 const SelectHoc = ({
   options = [],

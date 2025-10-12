@@ -1,6 +1,7 @@
 import React, { useState, useCallback, memo } from "react";
 import HoverComponent from "./HoverComponent";
-import { FormControl, InputLabel } from "@mui/material";
+import FormControl from "src/components/template/FormControl.jsx";
+import InputLabel from "src/components/template/InputLabel.jsx";
 import SelectHoc from "../Select";
 
 const HoverSelect = memo(function HoverSelect({

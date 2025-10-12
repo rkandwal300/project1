@@ -1,48 +1,23 @@
-import React from 'react';
-import { Box, CircularProgress, Typography, Paper, Fade, Container } from '@mui/material';
+import React from "react";
+import { Box, CircularProgress, Fade } from "src/components/template/index.js";
 
 const LoadingPage = () => (
   <Fade in timeout={700}>
     <Box
       sx={{
-        minHeight: '100vh',
-        bgcolor: 'background.default',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        minHeight: "100dvh",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        backgroundColor: "rgba(255, 255, 255, 0.1)",
+        border: "1px solid rgba(255, 255, 255, 0.2)",
+        boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
       }}
     >
-      <Container maxWidth="sm">
-        <Paper
-          elevation={4}
-          sx={{
-            py: 6,
-            px: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            borderRadius: 3,
-            boxShadow: 6,
-            bgcolor: 'background.paper',
-          }}
-        >
-          <CircularProgress size={56} color="primary" />
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{ mt: 4, fontWeight: 'bold', color: 'text.primary' }}
-          >
-            Loading, please wait…
-          </Typography>
-          <Typography
-            variant="subtitle2"
-            color="text.secondary"
-            sx={{ mt: 1, textAlign: 'center', px: 2 }}
-          >
-            We’re getting things ready for you. This won’t take long.
-          </Typography>
-        </Paper>
-      </Container>
+      <CircularProgress size={56} color="primary" />
     </Box>
   </Fade>
 );

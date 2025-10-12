@@ -8,7 +8,7 @@ import {
   FormControl,
   OutlinedInput,
   Checkbox,
-} from "@mui/material";
+} from "src/components/template/index.js";
 
 const RegionsSelect = React.memo(function RegionsSelect({
   regionOptions,

@@ -1,7 +1,10 @@
 import React from "react";
-import { TextField, InputAdornment, IconButton } from "@mui/material";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import {
+  TextField,
+  InputAdornment,
+  IconButton,
+} from "src/components/template/index.js";
+import { VisibilityOffIcon, VisibilityIcon } from "src/components/template/icons.js";
 
 const inputStyle = { fontWeight: 600 };
 
